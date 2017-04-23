@@ -1,2 +1,9 @@
 /ui/
 /util/
+/bll/
+/bllservice/
+/dal/
+/datahelper/
+/po/
+/test/
+/vo/
