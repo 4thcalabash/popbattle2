@@ -1,11 +1,11 @@
-<<<<<<< HEAD
-# popbattle2
-=======
-@theme
+## PopBattle
 
-EL_Contest
+# @Owner
 
-@Member
+4thcalabash||Íõ¶¬Ñî||NJU||SE
 
-Íõ¶¬Ñî ÑîÑó ºÎÌìÐÐ ÑîÓîÇå
->>>>>>> è¿ç§»å¹¶å®Œæˆäº†æŠ€èƒ½è£…å¤‡ï¼ˆå·®ä¸€ä¸¢ä¸¢ï¼‰äººç‰©æ•°æ®å±‚çš„å®Œå…¨å¼€å‘
+# @Graphics
+
+From: ÑîÑó||NJU||SE
+
+### All Rights Reserved
