@@ -8,4 +8,4 @@
 
 From: —Ó—Û||NJU||SE
 
-### All Rights Reserved
+# **All Rights Reserved**
