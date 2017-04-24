@@ -162,6 +162,9 @@ public class Player {
 		this.basicMR+=delta*Player.BASICMR;
 		this.potentialPoint-=delta;
 	}
+	public void increaseExp(int delta){
+		this.nowExp+=delta;
+	}
 	public static int getExpNumberToLevelUp(int index){
 		if (index<5){
 			return 100+index*50;
