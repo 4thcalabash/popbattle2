@@ -2,7 +2,7 @@ package bll.support;
 
 import util.*;
 
-//ֻ��Ҫ��ID��Level�Ϳ�������һ��װ��
+//只需要用ID和Level就可以生成一件装备
 public class Equip implements Calcable{
 	public static final int ID_NULL = -1;
 	public static final int ID_GOLDWEARING = 1;
@@ -47,13 +47,13 @@ public class Equip implements Calcable{
 	public static String getEquipNameByID(int i) {
 		switch (i) {
 		case Equip.ID_GOLDWEARING:
-			return "�ƽ��";
+			return "黄金甲";
 		case Equip.ID_GOLDHEADWEARING:
-			return "�ƽ�ͷ��";
+			return "黄金头盔";
 		case Equip.ID_GOLDSWORD:
-			return "�ƽ�";
+			return "黄金剑";
 		case Equip.ID_GOLDWINGS:
-			return "�ƽ���";
+			return "黄金翅膀";
 		default:
 			return null;
 		}
@@ -62,9 +62,10 @@ public class Equip implements Calcable{
 	private int ID;
 	private String[] equipIntroduction;
 	private int level;
-	private final int MAXLEVEL;// ��������ߵȼ�
+	private final int MAXLEVEL;// 允许的最高等级
 	private CalcMethod ADCalcMethod, APCalcMethod, DRCalcMethod, MRCalcMethod, DTCalcMethod, MTCalcMethod;
 	private int evolveEquipID;
+//需要加一个costCalcer ，一个int EvoluteCost 。Equip的通货是升级石和进阶石，升级石用来升级装备，进阶石用来进阶装备。
 	public Equip(int ID, int MAXLEVEL, CalcMethod ADCalcMethod, CalcMethod APCalcMethod,
 			CalcMethod DRCalcMethod, CalcMethod MRCalcMethod, CalcMethod DTCalcMethod,
 			CalcMethod MTCalcMethod, String[] equipIntroduction,int evolveEquipID) {
