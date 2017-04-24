@@ -15,7 +15,12 @@ public class Skill {
 	 * 因此战斗开始的初始化过程中，前端传送给后端几个技能ID，
 	 * 后端的battle平台来调用getSkillByID(SKILLID).calcVaue(paperplayer)来得知paperplayer释放SKILLID这个技能的效果值
 	 * 后端也可以通过getSkillByID(SKILLID).getTargetPlayer()来得知作用对象为Myself或是Enemy
+	 * skillType 指明了技能是物理伤害类型或是魔法伤害类型
 	 */
+	
+
+
+	public static final int MAGICTYPE = -10;
 	public static final int TOTALNUMOFSKILL = 4;
 	public static final int ID_NORMALATTACK = 0;
 	public static final int ID_FIREONGRASS = 1;
@@ -64,7 +69,7 @@ public class Skill {
 
 				}
 
-			}, Skill.INTRODUCTION_NORMAL);
+			}, Skill.INTRODUCTION_NORMAL,Skill.DAMAGETYPE);
 	public static final Skill FIREONGRASS = new Skill(Skill.ID_FIREONGRASS, 3, Player.ENEMY,
 			new SkillValueCalcMethod() {
 
@@ -103,7 +108,7 @@ public class Skill {
 					return cost;
 				}
 
-			}, Skill.INTRODUCTION_FIREONGRASS);
+			}, Skill.INTRODUCTION_FIREONGRASS,Skill.DAMAGETYPE);
 	public static final Skill WATERFLOW = new Skill(Skill.ID_WATERFLOW, 3, Player.ENEMY, new SkillValueCalcMethod() {
 
 		@Override
@@ -139,7 +144,7 @@ public class Skill {
 			return cost;
 		}
 
-	}, Skill.INTRODUCTION_WATERFLOW);
+	}, Skill.INTRODUCTION_WATERFLOW,Skill.MAGICTYPE);
 	public static final Skill HURRICANE = new Skill(Skill.ID_HURRICANE, 3, Player.ENEMY, new SkillValueCalcMethod() {
 
 		@Override
@@ -178,7 +183,7 @@ public class Skill {
 			return cost;
 		}
 
-	}, Skill.INTRODUCTION_HURRICANE);
+	}, Skill.INTRODUCTION_HURRICANE,Skill.DAMAGETYPE);
 
 	public static Skill getSkillByID(int i) {
 		switch (i) {
@@ -211,7 +216,11 @@ public class Skill {
 	}
 
 	private int ID;
-
+	private int skillType;
+	public static final int DAMAGETYPE= -5;
+	public int getSkillType() {
+		return skillType;
+	}
 	// private int level;//技能当前等级
 	public int getID() {
 		return ID;
@@ -230,7 +239,7 @@ public class Skill {
 	private SkillCostCalcMethod costCalcMethod;
 
 	public Skill(int SKILLID, int MAXLEVEL, int targetPlayer, SkillValueCalcMethod valueCalcMethod,
-			SkillCostCalcMethod costCalcMethod, String[] skillIntroduction) {
+			SkillCostCalcMethod costCalcMethod, String[] skillIntroduction,int skillType) {
 		this.ID = SKILLID;
 		// 查常量包设置最高等级
 		this.MAXLEVEL = MAXLEVEL;
@@ -238,6 +247,7 @@ public class Skill {
 		this.valueCalcMethod = valueCalcMethod;
 		this.costCalcMethod = costCalcMethod;
 		this.skillIntroduction = skillIntroduction;
+		this.skillType=skillType;
 	}
 
 	public int getTargetPlayer() {

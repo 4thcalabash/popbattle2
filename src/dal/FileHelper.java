@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 import bll.individual.Player;
 import bll.support.Equip;
@@ -61,6 +62,8 @@ public class FileHelper implements DataOperator{
 			playerVo.setWingsLevel(Integer.parseInt(line));
 			line = reader.readLine();
 			playerVo.setGold(Integer.parseInt(line));
+			line = reader.readLine();
+			playerVo.setPotentialPoint(Integer.parseInt(line));
 			//return null;
 			reader.close();
 			filereader.close();
@@ -114,6 +117,8 @@ public class FileHelper implements DataOperator{
 			writer.write(Integer.toString(playerVo.getWingsLevel()));
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getGold()));
+			writer.newLine();
+			writer.write(Integer.toString(playerVo.getPotentialPoint()));
 			writer.flush();
 			writer.close();
 			filewriter.close();
@@ -123,4 +128,33 @@ public class FileHelper implements DataOperator{
 		
 	}
 
+	@Override
+	public MissionVo loadMission(int index) {
+		// TODO Auto-generated method stub
+		MissionVo missionVo = new MissionVo ();
+		String filePath = FileHelper.class.getClassLoader().getResource("MissionData/"+index+".data").getPath();
+		try{
+			File save = new File (filePath);
+			FileReader filereader = new FileReader (save);
+			BufferedReader reader = new BufferedReader (filereader);
+			missionVo.setID(index);
+			String line = null;
+			line = reader.readLine();
+			missionVo.setIntroduction(line);
+			line = reader.readLine();
+			int AInum = Integer.parseInt(line);
+			ArrayList <Integer> AIID = new ArrayList ();
+			for (int i=0;i<AInum;i++){
+				line = reader.readLine();
+				AIID.add(Integer.parseInt(line));
+			}
+			missionVo.setAIID(AIID);
+			reader.close();
+			filereader.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return missionVo;
+	}
+	
 }

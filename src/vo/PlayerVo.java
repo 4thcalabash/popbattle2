@@ -8,6 +8,13 @@ public class PlayerVo {
 	private int headWearingID,weaponID,wearingID,wingsID;
 	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
 	private int gold;
+	private int potentialPoint;
+	public int getPotentialPoint() {
+		return potentialPoint;
+	}
+	public void setPotentialPoint(int potentialPoint) {
+		this.potentialPoint = potentialPoint;
+	}
 	public int getGold() {
 		return gold;
 	}

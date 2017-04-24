@@ -16,3 +16,4 @@
 [wingsID]
 [level]
 [gold]
+[potentialPoint]

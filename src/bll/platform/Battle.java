@@ -110,15 +110,6 @@ public class Battle implements BattlePlatform{
 	public void setPopHub(PopMethodHub popHub) {
 		this.popHub = popHub;
 	}
-//	public ActionPo getActionPo() {
-//		return actionPo;
-//	}
-//	public BattlePo getBattlePo() {
-//		return battlePo;
-//	}
-//	public PopPo getPopPo() {
-//		return popPo;
-//	}
 	@Override
 	public void adfasdasdassdfasdf() {
 		// TODO Auto-generated method stub

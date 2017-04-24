@@ -15,11 +15,30 @@ public class Player {
 	 */
 	
 	//基础属性
-	private int ad,ap,hp,DR,MR;//DR物理抗性 MR魔法抗性
+	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
+	public int getDT() {
+		return DT;
+	}
+	public void setDT(int dT) {
+		DT = dT;
+	}
+	public int getMT() {
+		return MT;
+	}
+	public void setMT(int mT) {
+		MT = mT;
+	}
 	private int basicad,basicap,basichp,basicDR,basicMR,level;
 //	private int playerID;
 //	private int skillPoint;
 	private int nowExp;
+	private int potentialPoint;
+	public int getPotentialPoint() {
+		return potentialPoint;
+	}
+	public void setPotentialPoint(int potentialPoint) {
+		this.potentialPoint = potentialPoint;
+	}
 	//唯一通货gold
 	private int gold;
 	//记录技能等级，0：未学习
@@ -30,7 +49,14 @@ public class Player {
 	private Equip wearing;
 	private Equip wings;
 	//读取档案生成Player,包括AI在内的Player都得读档来生成
-	
+	public static final int BASICAD=2;
+	public static final int BASICAP=2;
+	public static final int BASICHP = 10;
+	public static final int BASICDR = 3;
+	public static final int BASICMR = 3;
+	public static final int BASICPOTENTIALPOINT = 5;
+
+	public static final int INFINITEEXP = -3;
 	public static final int MYSELF = 233;
 	public static final int ENEMY = 666;
 	public Player (PlayerVo playerVo){
@@ -51,53 +77,35 @@ public class Player {
 		this.wings=Equip.getEquipByID(playerVo.getWingsID());
 		this.wings.setLevel(playerVo.getWingsLevel());
 		this.gold=playerVo.getGold();
+		this.potentialPoint= playerVo.getPotentialPoint();
 	}
 	public int getBasicad() {
 		return basicad;
 	}
-	public void setBasicad(int basicad) {
-		this.basicad = basicad;
-	}
 	public int getBasicap() {
 		return basicap;
-	}
-	public void setBasicap(int basicap) {
-		this.basicap = basicap;
 	}
 	public int getBasichp() {
 		return basichp;
 	}
-	public void setBasichp(int basichp) {
-		this.basichp = basichp;
-	}
 	public int getBasicDR() {
 		return basicDR;
-	}
-	public void setBasicDR(int basicDR) {
-		this.basicDR = basicDR;
 	}
 	public int getBasicMR() {
 		return basicMR;
 	}
-	public void setBasicMR(int basicMR) {
-		this.basicMR = basicMR;
-	}
 	public PaperPlayer createPaper(){
 		PaperPlayer paper = new PaperPlayer (this);
+		paper.setHp(this.hp);
 		return paper;
 	}
 	public int getDR() {
 		return DR;
 	}
-	public void setDR(int dR) {
-		DR = dR;
-	}
 	public int getMR() {
 		return MR;
 	}
-	public void setMR(int mR) {
-		MR = mR;
-	}
+
 //	public int getSkillPoint() {
 //		return skillPoint;
 //	}
@@ -113,50 +121,63 @@ public class Player {
 	public int getAd() {
 		return ad;
 	}
-	public void setAd(int ad) {
-		this.ad = ad;
-	}
 	public int getAp() {
 		return ap;
-	}
-	public void setAp(int ap) {
-		this.ap = ap;
 	}
 	public int getHp() {
 		return hp;
 	}
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
 	public int getLevel() {
 		return level;
 	}
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
 	public int getNowExp() {
 		return nowExp;
-	}
-	public void setNowExp(int nowExp) {
-		this.nowExp = nowExp;
 	}
 	public int[] getSkillList() {
 		return skillList;
 	}
-	public void setSkillList(int[] skillList) {
-		this.skillList = skillList;
+	public void increasePotentialPoint(int delta){
+		this.potentialPoint+=delta;
+	}
+	public void increaseGold(int delta){
+		this.gold+=delta;
 	}
 	public void increaseAd(int delta){
-		this.ad+=delta;
+		this.basicad+=delta*Player.BASICAD;
+		this.potentialPoint-=delta;
 	}
 	public void increaseAp(int delta){
-		this.ap+=delta;
+		this.basicap+=delta*Player.BASICAP;
+		this.potentialPoint-=delta;
 	}
 	public void increaseHp(int delta){
-		this.hp+=delta;
+		this.basichp+=delta*Player.BASICHP;
+		this.potentialPoint-=delta;
+	}
+	public void increaseDR(int delta){
+		this.basicDR+=delta*Player.BASICDR;
+		this.potentialPoint-=delta;
+	}
+	public void increaseMR(int delta){
+		this.basicMR+=delta*Player.BASICMR;
+		this.potentialPoint-=delta;
+	}
+	public static int getExpNumberToLevelUp(int index){
+		if (index<5){
+			return 100+index*50;
+		}else if (index<10){
+			return Player.getExpNumberToLevelUp(4)+100*(index-4);
+		}else if (index<15){
+			return Player.getExpNumberToLevelUp(9)+150*(index-9);
+		}else if (index<20){
+			return Player.getExpNumberToLevelUp(14)+200*(index-14);
+		}else{
+			return Player.INFINITEEXP;
+		}
 	}
 	public void levelUp(){
+		this.nowExp-=Player.getExpNumberToLevelUp(this.level);
 		this.level++;
+		this.potentialPoint+=Player.BASICPOTENTIALPOINT;
 	}
 }
