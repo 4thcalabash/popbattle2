@@ -4,7 +4,7 @@ import util.*;
 
 //只需要用ID和Level就可以生成一件装备
 public class Equip implements Calcable{
-
+	public static final int ID_NULL = -1;
 	public static final int ID_GOLDWEARING = 1;
 	public static final int ID_GOLDHEADWEARING =2;
 	public static final int ID_GOLDSWORD =3;
@@ -18,15 +18,17 @@ public class Equip implements Calcable{
 	
 	
 	public static final Equip GOLDWEARING = new Equip(Equip.ID_GOLDWEARING, 3, new Calcer(0,0,0),new Calcer(0,0,0), 
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0), Equip.INTRODUCTION_GOLDWEARING);
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0), Equip.INTRODUCTION_GOLDWEARING,Equip.ID_NULL);
 	public static final Equip GOLDHEADWEARING = new Equip(Equip.ID_GOLDHEADWEARING, 3,new Calcer(0,0,0),new Calcer(0,0,0),
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0), Equip.INTRODUCTION_GOLDHEADWEARING);
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0), Equip.INTRODUCTION_GOLDHEADWEARING,Equip.ID_NULL);
 	public static final Equip GOLDSWORD = new Equip (Equip.ID_GOLDSWORD,3,new Calcer(5,10,15),new Calcer(0,0,10),
-			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),Equip.INTRODUCTION_GOLDSWORD);
+			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),Equip.INTRODUCTION_GOLDSWORD,Equip.ID_NULL);
 	public static final Equip GOLDSWINGS = new Equip (Equip.ID_GOLDWINGS,3,new Calcer(3,6,9),new Calcer(3,6,9),
-			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),Equip.INTRODUCTION_GOLDWINGS);
+			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),Equip.INTRODUCTION_GOLDWINGS,Equip.ID_NULL);
 	
 	
+
+
 	public static Equip getEquipByID(int i) {
 		switch (i) {
 		case Equip.ID_GOLDWEARING:
@@ -58,19 +60,14 @@ public class Equip implements Calcable{
 	}
 
 	private int ID;
-
-	public String[] getEquipIntroduction() {
-		return equipIntroduction;
-	}
-
 	private String[] equipIntroduction;
 	private int level;
 	private final int MAXLEVEL;// 允许的最高等级
 	private CalcMethod ADCalcMethod, APCalcMethod, DRCalcMethod, MRCalcMethod, DTCalcMethod, MTCalcMethod;
-
+	private int evolveEquipID;
 	public Equip(int ID, int MAXLEVEL, CalcMethod ADCalcMethod, CalcMethod APCalcMethod,
 			CalcMethod DRCalcMethod, CalcMethod MRCalcMethod, CalcMethod DTCalcMethod,
-			CalcMethod MTCalcMethod, String[] equipIntroduction) {
+			CalcMethod MTCalcMethod, String[] equipIntroduction,int evolveEquipID) {
 		this.ID = ID;
 		this.MAXLEVEL = MAXLEVEL;
 		this.ADCalcMethod = ADCalcMethod;
@@ -80,9 +77,15 @@ public class Equip implements Calcable{
 		this.DTCalcMethod = DTCalcMethod;
 		this.MTCalcMethod = MTCalcMethod;
 		this.equipIntroduction = equipIntroduction;
+		this.evolveEquipID=evolveEquipID;
 		// this.MAXLEVEL=MAXLEVEL;
 	}
-
+	public int getEvolveEquipID() {
+		return evolveEquipID;
+	}
+	public String[] getEquipIntroduction() {
+		return equipIntroduction;
+	}
 	public int getAD() {
 		return this.ADCalcMethod.calc(this);
 	}

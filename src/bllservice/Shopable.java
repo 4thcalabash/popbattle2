@@ -1,5 +1,5 @@
 package bllservice;
 
 public interface Shopable {
-	//提供给前端shopstage的接口
+	//在商店中购买的界面（魔塔商店）
 }

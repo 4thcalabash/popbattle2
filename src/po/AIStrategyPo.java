@@ -3,7 +3,27 @@ package po;
 public class AIStrategyPo {
 	private boolean moveStrategy;
 	private DotPo dot1,dot2;
+	private int actionPlayerID,targetPlayerID;
 	private int skillID;
+	private int skillValue;
+	public int getActionPlayerID() {
+		return actionPlayerID;
+	}
+	public void setActionPlayerID(int actionPlayerID) {
+		this.actionPlayerID = actionPlayerID;
+	}
+	public int getTargetPlayerID() {
+		return targetPlayerID;
+	}
+	public void setTargetPlayerID(int targetPlayerID) {
+		this.targetPlayerID = targetPlayerID;
+	}
+	public int getSkillValue() {
+		return skillValue;
+	}
+	public void setSkillValue(int skillValue) {
+		this.skillValue = skillValue;
+	}
 	public boolean isMoveStrategy() {
 		return moveStrategy;
 	}

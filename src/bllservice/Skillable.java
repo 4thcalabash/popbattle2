@@ -1,5 +1,5 @@
 package bllservice;
 
 public interface Skillable {
-	//提供给前端skillstage的接口
+	//查看技能、升级技能的界面
 }

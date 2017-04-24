@@ -1,7 +1,7 @@
 package bll.platform;
 import bllservice.*;
 import po.FigurePo;
-public class Static implements BasicPlatform,Shopable,Achievementable,Bagable,Playerable,Skillable{
+public class Static implements BasicPlatform,Shopable,Achievementable,Equipable,Playerable,Skillable{
 
 	@Override
 	public FigurePo getPlayer1() {

@@ -6,7 +6,7 @@ import bll.matrix.*;
 import po.*;
 import bll.popMethod.*;
 import bll.popMethod.allMethod.MoreThanThreeLinePop;
-public class Battle implements BattlePlatform,NormalPlatform{
+public class Battle implements BattlePlatform{
 	//bp为提供给前端的接口，ai为提供给AI的接口，
 	private PopMethodHub popHub;
 //	private ActionPo actionPo;

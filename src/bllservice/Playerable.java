@@ -1,5 +1,5 @@
 package bllservice;
 
 public interface Playerable {
-	//提供给前端playerstage的接口
+	//显示人物属性面板、升级加点的按钮
 }

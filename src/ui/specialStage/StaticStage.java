@@ -85,7 +85,7 @@ public class StaticStage extends Stage{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				new BagStage((Bagable)basicPlatform).show();
+				new BagStage((Equipable)basicPlatform).show();
 			}
 			
 		});
