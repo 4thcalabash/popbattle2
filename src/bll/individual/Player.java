@@ -7,23 +7,18 @@ import bll.platform.*;
 import po.*;
 public class Player {
 	/**********
-	 *äººç‰©å±æ€§åˆ†ä¸ºåŸºç¡€å±æ€§å’Œå½“å‰å±æ€§
-	 *åŸºç¡€å±æ€§æ˜¯è£¸çš„äººç‰©å±æ€§
-	 *å½“å‰å±æ€§æ˜¯åŸºç¡€å±æ€§åŠ ä¸Šè£…å¤‡çš„å¢ç›Š
+	 *ÈËÎïÊôĞÔ·ÖÎª»ù´¡ÊôĞÔºÍµ±Ç°ÊôĞÔ
+	 *»ù´¡ÊôĞÔÊÇÂãµÄÈËÎïÊôĞÔ
+	 *µ±Ç°ÊôĞÔÊÇ»ù´¡ÊôĞÔ¼ÓÉÏ×°±¸µÄÔöÒæ
 	 *
-	 * äººç‰©
+	 * ÈËÎï
 	 */
-<<<<<<< HEAD
+
 	
 	//»ù´¡ÊôĞÔ
 	private int ad,ap,hp,DR,MR,DT,MT;//DRÎïÀí¿¹ĞÔ MRÄ§·¨¿¹ĞÔ
 	private Shop shop;
-=======
 
-	//éœ€è¦åŠ å…¥ä¸åŒèŒä¸šçš„æ„é€ å­˜æ¡£ï¼Œä»¥åŠ-1å·å­˜æ¡£ä¾›æ–°æ¸¸æˆä½¿ç”¨ã€‚
-	//åŸºç¡€å±æ€§
-	private int ad,ap,hp,DR,MR,DT,MT;//DRç‰©ç†æŠ—æ€§ MRé­”æ³•æŠ—æ€§
->>>>>>> 7af9e8a7dd2f3b767a4b3523cb1e5f6b504f517e
 	public int getDT() {
 		return DT;
 	}
@@ -47,16 +42,16 @@ public class Player {
 	public void setPotentialPoint(int potentialPoint) {
 		this.potentialPoint = potentialPoint;
 	}
-	//å”¯ä¸€é€šè´§gold
+
 	private int gold;
-	//è®°å½•æŠ€èƒ½ç­‰çº§ï¼Œ0ï¼šæœªå­¦ä¹ 
+
 	private int [] skillList;
-	//è®°å½•è£…å¤‡ç­‰çº§ï¼Œ0ï¼šæœªè·å¾—
+
 	private Equip headWearing;
 	private Equip weapon;
 	private Equip wearing;
 	private Equip wings;
-	//è¯»å–æ¡£æ¡ˆç”ŸæˆPlayer,åŒ…æ‹¬AIåœ¨å†…çš„Playeréƒ½å¾—è¯»æ¡£æ¥ç”Ÿæˆ
+
 	public static final int BASICAD=2;
 	public static final int BASICAP=2;
 	public static final int BASICHP = 10;
