@@ -18,6 +18,9 @@ public class Skill {
 	 * skillType 指明了技能是物理伤害类型或是魔法伤害类型
 	 */
 	//切记本身全都是静态的，本身不记录等级，只提供计算方法
+	public static final int NULLSKILL = -10000;
+	
+	
 	public static final int TOTALNUMOFGENERATESKILL = 4;
 	public static final int TOTALNUMOFSPECIALSKILL = 3;
 	public static final int ID_NORMALATTACK = 0;
@@ -324,5 +327,16 @@ public class Skill {
 	}
 	public int getLevelUpCost(Player player){
 		return this.levelUpCostCalcMethod.getCost(player);
+	}
+	public boolean canAction(PaperPlayer paperplayer){
+		boolean ans =true;
+		int [] cost = this.calcCost(paperplayer);
+		for (int i=0;i<Matrix.KIND;i++){
+			if (cost[i]>paperplayer.getElementPool()[i]){
+				ans=false;
+				break;
+			}
+		}
+		return ans;
 	}
 }

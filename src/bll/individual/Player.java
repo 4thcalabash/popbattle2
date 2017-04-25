@@ -13,6 +13,10 @@ public class Player {
 	 *
 	 * 人物
 	 */
+	public static final int USER_PLAYERID=1;
+	//设定用户永远为Player1
+	public static final int AI_PLAYERID=2;
+	//设定AI永远为Player2
 	public static final int INITSAVEPRO_1=100;
 	public static final int INITSAVEPRO_2=200;
 	//指定了两个职业的初始档案编号，以及SpecialSkill的偏移量
