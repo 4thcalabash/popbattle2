@@ -13,6 +13,7 @@ public class Player {
 	 *
 	 * 人物
 	 */
+
 	//需要加入不同职业的构造存档，以及-1号存档供新游戏使用
 	//基础属性
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
