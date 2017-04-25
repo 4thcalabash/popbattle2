@@ -17,7 +17,7 @@ public class Skill {
 	 * 后端也可以通过getSkillByID(SKILLID).getTargetPlayer()来得知作用对象为Myself或是Enemy
 	 * skillType 指明了技能是物理伤害类型或是魔法伤害类型
 	 */
-	
+	//切记本身全都是静态的，本身不记录等级，只提供计算方法
 	public static final int TOTALNUMOFGENERATESKILL = 4;
 	public static final int TOTALNUMOFSPECIALSKILL = 3;
 	public static final int ID_NORMALATTACK = 0;
@@ -67,6 +67,19 @@ public class Skill {
 
 				}
 
+			},new SkillLevelUpCalcMethod(){
+
+				@Override
+				public int getCost(Player player) {
+					// TODO Auto-generated method stub
+					int level = player.getSkillList()[Skill.ID_NORMALATTACK];
+					if (level ==1){
+						return 1;
+					}else {
+						return 2;
+					}
+				}
+				
 			}, Skill.INTRODUCTION_NORMAL,Skill.DAMAGETYPE);
 	public static final Skill FIREONGRASS = new Skill(Skill.ID_FIREONGRASS, 3, Player.ENEMY,
 			new SkillValueCalcMethod() {
@@ -106,6 +119,21 @@ public class Skill {
 					return cost;
 				}
 
+			},new SkillLevelUpCalcMethod(){
+
+				@Override
+				public int getCost(Player player) {
+					// TODO Auto-generated method stub
+					int level = player.getSkillList()[Skill.ID_FIREONGRASS];
+					if (level ==0){
+						return 3;
+					}else if (level == 1){
+						return 4;
+					}else{
+						return 5;
+					}
+				}
+				
 			}, Skill.INTRODUCTION_FIREONGRASS,Skill.DAMAGETYPE);
 	public static final Skill WATERFLOW = new Skill(Skill.ID_WATERFLOW, 3, Player.ENEMY, new SkillValueCalcMethod() {
 
@@ -142,6 +170,21 @@ public class Skill {
 			return cost;
 		}
 
+	},new SkillLevelUpCalcMethod(){
+
+		@Override
+		public int getCost(Player player) {
+			// TODO Auto-generated method stub
+			int level = player.getSkillList()[Skill.ID_WATERFLOW];
+			if (level ==0){
+				return 3;
+			}else if (level ==1){
+				return 4;
+			}else{
+				return 5;
+			}
+		}
+		
 	}, Skill.INTRODUCTION_WATERFLOW,Skill.MAGICTYPE);
 	public static final Skill HURRICANE = new Skill(Skill.ID_HURRICANE, 3, Player.ENEMY, new SkillValueCalcMethod() {
 
@@ -181,6 +224,21 @@ public class Skill {
 			return cost;
 		}
 
+	},new SkillLevelUpCalcMethod(){
+
+		@Override
+		public int getCost(Player player) {
+			// TODO Auto-generated method stub
+			int level = player.getSkillList()[Skill.ID_HURRICANE];
+			if (level ==0){
+				return 4;
+			}else if (level ==1){
+				return 6;
+			}else {
+				return 8;
+			}
+		}
+		
 	}, Skill.INTRODUCTION_HURRICANE,Skill.DAMAGETYPE);
 
 	public static Skill getSkillByID(int i) {
@@ -235,16 +293,20 @@ public class Skill {
 	// 正 扣血 ，负 回复
 	private int targetPlayer;
 	private SkillValueCalcMethod valueCalcMethod;
+	//技能施放消耗的元素
+	
 	private SkillCostCalcMethod costCalcMethod;
-
+	//升级花费
+	private SkillLevelUpCalcMethod levelUpCostCalcMethod;
 	public Skill(int SKILLID, int MAXLEVEL, int targetPlayer, SkillValueCalcMethod valueCalcMethod,
-			SkillCostCalcMethod costCalcMethod, String[] skillIntroduction,int skillType) {
+			SkillCostCalcMethod costCalcMethod,SkillLevelUpCalcMethod levelUpCostCalcMethod, String[] skillIntroduction,int skillType) {
 		this.ID = SKILLID;
 		// 查常量包设置最高等级
 		this.MAXLEVEL = MAXLEVEL;
 		this.targetPlayer = targetPlayer;
 		this.valueCalcMethod = valueCalcMethod;
 		this.costCalcMethod = costCalcMethod;
+		this.levelUpCostCalcMethod=levelUpCostCalcMethod;
 		this.skillIntroduction = skillIntroduction;
 		this.skillType=skillType;
 	}
@@ -259,5 +321,8 @@ public class Skill {
 
 	public int[] calcCost(PaperPlayer paperplayer) {
 		return this.costCalcMethod.calc(paperplayer);
+	}
+	public int getLevelUpCost(Player player){
+		return this.levelUpCostCalcMethod.getCost(player);
 	}
 }

@@ -71,6 +71,18 @@ public class Shop {
 		player.increaseExp(-num*100);
 		player.increaseGold(num*this.ExpPrice);
 	}
+	public void buySkillPoint(int num){
+		player.increaseSkillPoint(num);
+		player.increaseGold(-num*this.skillPointPrice);
+	}
+	public void buyUpGradeStone(int num){
+		player.increaseUpGradeStoneNum(num);
+		player.increaseGold(-num*this.upGradeStonePrice);
+	}
+	public void buyEvolveStone(int num){
+		player.increaseEvolveStoneNum(num);
+		player.increaseGold(-num*this.evolveStonePrice);
+	}
 	public void renewNum(){
 		//仅当升级时调用
 		int level = player.getLevel();

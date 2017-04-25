@@ -16,15 +16,15 @@ public class Equip implements Calcable{
 	public static final String[] INTRODUCTION_GOLDSWORD = {"GOLD","GOLDD","GOLDDD"};
 	public static final String[] INTRODUCTION_GOLDWINGS ={"GOLD","GOLDD","GOLDDD"};
 	
-	
+//ID,MAXLEVEL,ADCalcMethod,APCalcMethod,DRCalcMethod,MRCalcMethod,DTCalcMethod,MTCalcMethod,levelUpCostCalcMethod,equipIntroduction,evolveEquipID
 	public static final Equip GOLDWEARING = new Equip(Equip.ID_GOLDWEARING, 3, new Calcer(0,0,0),new Calcer(0,0,0), 
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0), Equip.INTRODUCTION_GOLDWEARING,Equip.ID_NULL);
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,Equip.ID_NULL), Equip.INTRODUCTION_GOLDWEARING,Equip.ID_NULL);
 	public static final Equip GOLDHEADWEARING = new Equip(Equip.ID_GOLDHEADWEARING, 3,new Calcer(0,0,0),new Calcer(0,0,0),
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0), Equip.INTRODUCTION_GOLDHEADWEARING,Equip.ID_NULL);
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,Equip.ID_NULL), Equip.INTRODUCTION_GOLDHEADWEARING,Equip.ID_NULL);
 	public static final Equip GOLDSWORD = new Equip (Equip.ID_GOLDSWORD,3,new Calcer(5,10,15),new Calcer(0,0,10),
-			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),Equip.INTRODUCTION_GOLDSWORD,Equip.ID_NULL);
+			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),new Calcer(1,2,Equip.ID_NULL),Equip.INTRODUCTION_GOLDSWORD,Equip.ID_NULL);
 	public static final Equip GOLDSWINGS = new Equip (Equip.ID_GOLDWINGS,3,new Calcer(3,6,9),new Calcer(3,6,9),
-			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),Equip.INTRODUCTION_GOLDWINGS,Equip.ID_NULL);
+			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(1,2,Equip.ID_NULL),Equip.INTRODUCTION_GOLDWINGS,Equip.ID_NULL);
 	
 	
 
@@ -63,12 +63,12 @@ public class Equip implements Calcable{
 	private String[] equipIntroduction;
 	private int level;
 	private final int MAXLEVEL;// 允许的最高等级
-	private CalcMethod ADCalcMethod, APCalcMethod, DRCalcMethod, MRCalcMethod, DTCalcMethod, MTCalcMethod;
+	private CalcMethod ADCalcMethod, APCalcMethod, DRCalcMethod, MRCalcMethod, DTCalcMethod, MTCalcMethod,levelUpCostCalcMethod;
 	private int evolveEquipID;
 //需要加一个costCalcer ，一个int EvoluteCost 。Equip的通货是升级石和进阶石，升级石用来升级装备，进阶石用来进阶装备。
 	public Equip(int ID, int MAXLEVEL, CalcMethod ADCalcMethod, CalcMethod APCalcMethod,
 			CalcMethod DRCalcMethod, CalcMethod MRCalcMethod, CalcMethod DTCalcMethod,
-			CalcMethod MTCalcMethod, String[] equipIntroduction,int evolveEquipID) {
+			CalcMethod MTCalcMethod,CalcMethod levelUpCostCalcMethod, String[] equipIntroduction,int evolveEquipID) {
 		this.ID = ID;
 		this.MAXLEVEL = MAXLEVEL;
 		this.ADCalcMethod = ADCalcMethod;
@@ -77,6 +77,7 @@ public class Equip implements Calcable{
 		this.MRCalcMethod = MRCalcMethod;
 		this.DTCalcMethod = DTCalcMethod;
 		this.MTCalcMethod = MTCalcMethod;
+		this.levelUpCostCalcMethod=levelUpCostCalcMethod;
 		this.equipIntroduction = equipIntroduction;
 		this.evolveEquipID=evolveEquipID;
 		// this.MAXLEVEL=MAXLEVEL;
@@ -110,7 +111,10 @@ public class Equip implements Calcable{
 	public int getDT() {
 		return this.DTCalcMethod.calc(this);
 	}
-
+	
+	public int getLevelUpCost(){
+		return this.levelUpCostCalcMethod.calc(this);
+	}
 	public int getID() {
 		return ID;
 	}

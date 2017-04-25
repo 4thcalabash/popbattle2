@@ -193,6 +193,15 @@ public class Player {
 	public void increaseExp(int delta){
 		this.nowExp+=delta;
 	}
+	public void increaseSkillPoint(int delta){
+		this.skillPointNum+=delta;
+	}
+	public void increaseUpGradeStoneNum(int delta){
+		this.upGradeStoneNum+=delta;
+	}
+	public void increaseEvolveStoneNum(int delta){
+		this.evolveStoneNum+=delta;
+	}
 	public static int getExpNumberToLevelUp(int index){
 		if (index<5){
 			return 100+index*50;
