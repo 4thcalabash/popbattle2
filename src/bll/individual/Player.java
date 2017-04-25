@@ -16,6 +16,7 @@ public class Player {
 	
 	//基础属性
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
+	private Shop shop;
 	public int getDT() {
 		return DT;
 	}
@@ -78,6 +79,10 @@ public class Player {
 		this.wings.setLevel(playerVo.getWingsLevel());
 		this.gold=playerVo.getGold();
 		this.potentialPoint= playerVo.getPotentialPoint();
+		this.shop.setPPPrice(playerVo.getShopVo().getPPPrice());
+		this.shop.setPPNum(playerVo.getShopVo().getPPNum());
+		this.shop.setExpPrice(playerVo.getShopVo().getExpPrice());
+		this.shop.setExpNum(playerVo.getShopVo().getExpNum());
 	}
 	public int getBasicad() {
 		return basicad;

@@ -18,6 +18,7 @@ public class FileHelper implements DataOperator{
 		// TODO Auto-generated method stub
 		//´æÈëÄÄ¸öµµ°¸index
 		PlayerVo playerVo = new PlayerVo();
+		playerVo.setShopVo(new ShopVo());
 		try{
 			String filePath = FileHelper.class.getClassLoader().getResource("Data/Save"+index+".data").getPath();
 			File save = new File (filePath);
@@ -64,6 +65,14 @@ public class FileHelper implements DataOperator{
 			playerVo.setGold(Integer.parseInt(line));
 			line = reader.readLine();
 			playerVo.setPotentialPoint(Integer.parseInt(line));
+			line = reader.readLine();
+			playerVo.getShopVo().setPPPrice(Integer.parseInt(line));
+			line = reader.readLine();
+			playerVo.getShopVo().setPPNum(Integer.parseInt(line));
+			line = reader.readLine();
+			playerVo.getShopVo().setExpPrice(Integer.parseInt(line));
+			line = reader.readLine();
+			playerVo.getShopVo().setExpNum(Integer.parseInt(line));
 			//return null;
 			reader.close();
 			filereader.close();
@@ -119,6 +128,14 @@ public class FileHelper implements DataOperator{
 			writer.write(Integer.toString(playerVo.getGold()));
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getPotentialPoint()));
+			writer.newLine();
+			writer.write(Integer.toString(playerVo.getShopVo().getPPPrice()));
+			writer.newLine();
+			writer.write(Integer.toString(playerVo.getShopVo().getPPNum()));
+			writer.newLine();
+			writer.write(Integer.toString(playerVo.getShopVo().getExpPrice()));
+			writer.newLine();
+			writer.write(Integer.toString(playerVo.getShopVo().getExpNum()));
 			writer.flush();
 			writer.close();
 			filewriter.close();

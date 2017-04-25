@@ -9,11 +9,18 @@ public class PlayerVo {
 	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
 	private int gold;
 	private int potentialPoint;
+	private ShopVo shopVo;
 	public int getPotentialPoint() {
 		return potentialPoint;
 	}
 	public void setPotentialPoint(int potentialPoint) {
 		this.potentialPoint = potentialPoint;
+	}
+	public ShopVo getShopVo() {
+		return shopVo;
+	}
+	public void setShopVo(ShopVo shopVo) {
+		this.shopVo = shopVo;
 	}
 	public int getGold() {
 		return gold;

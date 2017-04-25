@@ -17,3 +17,7 @@
 [level]
 [gold]
 [potentialPoint]
+[PPPrice]
+[PPNum]
+[ExpPrice]
+[ExpNum]
