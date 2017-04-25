@@ -10,6 +10,7 @@ public class FileHelperTestDrive {
 		FileHelper fh = new FileHelper();
 		PlayerVo read = fh.loadData(0);
 		fh.saveData(read, 200);
+		
 		for (int o = 0; o < 3; o++) {
 			MissionVo missionVo = fh.loadMission(o);
 			Mission mission = new Mission(missionVo);
