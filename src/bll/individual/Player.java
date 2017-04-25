@@ -13,7 +13,12 @@ public class Player {
 	 *
 	 * 人物
 	 */
-
+	public static final int INITSAVEPRO_1=100;
+	public static final int INITSAVEPRO_2=200;
+	//指定了两个职业的初始档案编号，以及SpecialSkill的偏移量
+	//职业的SpecialSkill的SkillID分别为
+	//104、105、106
+	//204、205、206
 	
 	//基础属性
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性

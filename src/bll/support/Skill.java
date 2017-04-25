@@ -18,10 +18,8 @@ public class Skill {
 	 * skillType 指明了技能是物理伤害类型或是魔法伤害类型
 	 */
 	
-
-
-	public static final int MAGICTYPE = -10;
-	public static final int TOTALNUMOFSKILL = 4;
+	public static final int TOTALNUMOFGENERATESKILL = 4;
+	public static final int TOTALNUMOFSPECIALSKILL = 3;
 	public static final int ID_NORMALATTACK = 0;
 	public static final int ID_FIREONGRASS = 1;
 	public static final int ID_WATERFLOW = 2;
@@ -218,6 +216,7 @@ public class Skill {
 	private int ID;
 	private int skillType;
 	public static final int DAMAGETYPE= -5;
+	public static final int MAGICTYPE = -10;
 	public int getSkillType() {
 		return skillType;
 	}

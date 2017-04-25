@@ -40,8 +40,8 @@ public class FileHelper implements DataOperator{
 			playerVo.setBasicDR(Integer.parseInt(line));
 			line = reader.readLine();
 			playerVo.setBasicMR(Integer.parseInt(line));
-			playerVo.setSkillList(new int [Skill.TOTALNUMOFSKILL]);
-			for (int i=0;i<Skill.TOTALNUMOFSKILL;i++){
+			playerVo.setSkillList(new int [Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL]);
+			for (int i=0;i<Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL;i++){
 				line = reader.readLine();
 				playerVo.getSkillList()[i]=Integer.parseInt(line);
 			}
@@ -105,7 +105,7 @@ public class FileHelper implements DataOperator{
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getBasicMR()));
 			writer.newLine();
-			for (int i=0;i<Skill.TOTALNUMOFSKILL;i++){
+			for (int i=0;i<Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL;i++){
 				writer.write(Integer.toString(playerVo.getSkillList()[i]));
 				writer.newLine();
 			}
