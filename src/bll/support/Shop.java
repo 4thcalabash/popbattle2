@@ -3,6 +3,7 @@ package bll.support;
 import bll.individual.Player;
 
 public class Shop {
+	//skillPoint upGradeStone evolveStone
 	//与player绑定的Shop
 	private Player player;
 	//可出售的PP和Exp数量，随等级更新
@@ -25,6 +26,34 @@ public class Shop {
 	public static final int EXPLOWMOSTEXPENSIVE = 40;
 	public static final int EXPHIGHCHEAPEST = 70;
 	public static final int EXPHIGHMOSTEXPENSIVE = 80;
+	//不限制购买数量
+	private int skillPointPrice;
+	public static final int BASICSKILLPOINTPRICE = 5;
+	public static final int SKILLPOINTNORMALCHEAPEST = 110;
+	public static final int SKILLPOINTNORMALMOSTEXPENSIVE = 130;
+	public static final int SKILLPOINTLOWCHEAPEST = 70;
+	public static final int SKILLPOINTLOWMOSTEXPENSIVE = 90;
+	public static final int SKILLPOINTHIGHCHEAPEST = 140;
+	public static final int SKILLPOINTHIGHMOSTEXPENSIVE = 160;
+	//不限制购买数量
+	private int upGradeStonePrice;
+	public static final int BASICUPGRADESTONEPRICE = 5;
+	public static final int UPGRADESTONENORMALCHEAPEST = 70;
+	public static final int UPGRADESTONENORMALMOSTEXPENSIVE = 90;
+	public static final int UPGRADESTONELOWCHEAPEST = 40;
+	public static final int UPGRADESTONELOWMOSTEXPENSIVE = 60;
+	public static final int UPGRADESTONEHIGHCHEAPEST = 100;
+	public static final int UPGRADESTONEHIGHMOSTEXPENSIVE = 120;
+	//不限制购买数量
+	private int evolveStonePrice;
+	public static final int BASICEVOLVESTONEPRICE = 10;
+	public static final int EVOLVESTONENORMALCHEAPEST = 140;
+	public static final int EVOLVESTONENORMALMOSTEXPENSIVE = 160;
+	public static final int EVOLVESTONELOWCHEAPEST = 110;
+	public static final int EVOLVESTONELOWMOSTEXPENSIVE = 130;
+	public static final int EVOLVESTONEHIGHCHEAPEST = 170;
+	public static final int EVOLVESTONEHIGHMOSTEXPENSIVE = 190;
+	
 	public Shop(Player player){
 		this.player=player;
 	}
@@ -89,6 +118,66 @@ public class Shop {
 		int level = player.getLevel();
 		renewPPPrice(level);
 		renewExpPrice(level);
+		renewSkillPointPrice(level);
+		renewUpGradeStonePrice(level);
+		renewEvolveStonePrice(level);
+	}
+	private void renewSkillPointPrice(int level){
+		double temp = Math.random();
+		int price =0;
+		if (temp<0.05){
+			price=(int)(Math.random()*(Shop.SKILLPOINTLOWMOSTEXPENSIVE-Shop.SKILLPOINTLOWMOSTEXPENSIVE)+Shop.SKILLPOINTLOWCHEAPEST);
+		}else if (temp<0.1){
+			price = (int)(Math.random()*(Shop.SKILLPOINTHIGHMOSTEXPENSIVE-Shop.SKILLPOINTHIGHCHEAPEST)+Shop.SKILLPOINTHIGHCHEAPEST);
+		}else{
+			price = (int)(Math.random()*(Shop.SKILLPOINTNORMALMOSTEXPENSIVE-Shop.SKILLPOINTNORMALCHEAPEST)+Shop.SKILLPOINTNORMALCHEAPEST);
+		}
+		price+=level*Shop.BASICSKILLPOINTPRICE;
+		this.skillPointPrice=price;
+	}
+	private void renewUpGradeStonePrice(int level){
+		double temp = Math.random();
+		int price = 0;
+		if (temp<0.08){
+			price = (int)(Math.random()*(Shop.UPGRADESTONELOWMOSTEXPENSIVE-Shop.UPGRADESTONELOWCHEAPEST)+Shop.UPGRADESTONELOWCHEAPEST);
+		}else if (temp<0.16){
+			price = (int)(Math.random()*(Shop.UPGRADESTONEHIGHMOSTEXPENSIVE-Shop.UPGRADESTONEHIGHCHEAPEST)+Shop.UPGRADESTONEHIGHCHEAPEST);
+		}else{
+			price = (int)(Math.random()*(Shop.UPGRADESTONENORMALMOSTEXPENSIVE-Shop.UPGRADESTONENORMALCHEAPEST)+Shop.UPGRADESTONENORMALCHEAPEST);
+		}
+		price+=Shop.BASICUPGRADESTONEPRICE*level;
+		this.upGradeStonePrice=price;
+	}
+	private void renewEvolveStonePrice(int level){
+		double temp = Math.random();
+		int price =0;
+		if (temp<0.12){
+			price = (int)(Math.random()*(Shop.EVOLVESTONELOWMOSTEXPENSIVE-Shop.EVOLVESTONELOWCHEAPEST)+Shop.EVOLVESTONELOWCHEAPEST);
+		}else if (temp<0.24){
+			price = (int)(Math.random()*(Shop.EVOLVESTONEHIGHMOSTEXPENSIVE-Shop.EVOLVESTONEHIGHCHEAPEST)+Shop.EVOLVESTONEHIGHCHEAPEST);
+		}else{
+			price = (int)(Math.random()*(Shop.EVOLVESTONENORMALMOSTEXPENSIVE-Shop.EVOLVESTONENORMALCHEAPEST)+Shop.EVOLVESTONENORMALCHEAPEST);
+		}
+		price+=Shop.BASICEVOLVESTONEPRICE*level;
+		this.evolveStonePrice=price;
+	}
+	public void setSkillPointPrice(int skillPointPrice) {
+		this.skillPointPrice = skillPointPrice;
+	}
+	public void setUpGradeStonePrice(int upGradeStonePrice) {
+		this.upGradeStonePrice = upGradeStonePrice;
+	}
+	public void setEvolveStonePrice(int evolveStonePrice) {
+		this.evolveStonePrice = evolveStonePrice;
+	}
+	public int getSkillPointPrice() {
+		return skillPointPrice;
+	}
+	public int getUpGradeStonePrice() {
+		return upGradeStonePrice;
+	}
+	public int getEvolveStonePrice() {
+		return evolveStonePrice;
 	}
 	private void renewPPPrice(int level){
 		double temp = Math.random();

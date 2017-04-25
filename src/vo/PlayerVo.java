@@ -4,10 +4,30 @@ import bll.support.Equip;
 public class PlayerVo {
 	private int basicad,basicap,basichp,basicDR,basicMR;
 	private int level,nowExp;
+	private int gold;
+	private int skillPointNum,upGradeStoneNum,evolveStoneNum;
+	public int getSkillPointNum() {
+		return skillPointNum;
+	}
+	public void setSkillPointNum(int skillPointNum) {
+		this.skillPointNum = skillPointNum;
+	}
+	public int getUpGradeStoneNum() {
+		return upGradeStoneNum;
+	}
+	public void setUpGradeStoneNum(int upGradeStoneNum) {
+		this.upGradeStoneNum = upGradeStoneNum;
+	}
+	public int getEvolveStoneNum() {
+		return evolveStoneNum;
+	}
+	public void setEvolveStoneNum(int evolveStoneNum) {
+		this.evolveStoneNum = evolveStoneNum;
+	}
 	private int [] skillList;
 	private int headWearingID,weaponID,wearingID,wingsID;
 	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
-	private int gold;
+
 	private int potentialPoint;
 	private ShopVo shopVo;
 	public int getPotentialPoint() {

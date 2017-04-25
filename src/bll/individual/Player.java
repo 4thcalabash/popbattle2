@@ -23,6 +23,8 @@ public class Player {
 	//基础属性
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
 	private Shop shop;
+	
+	private int skillPointNum,upGradeStoneNum,evolveStoneNum;
 
 	public int getDT() {
 		return DT;
@@ -75,6 +77,10 @@ public class Player {
 		this.basicMR=playerVo.getBasicMR();
 		this.level=playerVo.getLevel();
 		this.nowExp=playerVo.getNowExp();
+		this.gold=playerVo.getGold();
+		this.skillPointNum=playerVo.getSkillPointNum();
+		this.upGradeStoneNum=playerVo.getUpGradeStoneNum();
+		this.evolveStoneNum=playerVo.getEvolveStoneNum();
 		this.skillList=playerVo.getSkillList();
 		this.headWearing=Equip.getEquipByID(playerVo.getHeadWearingID());
 		this.headWearing.setLevel(playerVo.getHeadWearingLevel());
@@ -84,12 +90,15 @@ public class Player {
 		this.wearing.setLevel(playerVo.getWearingLevel());
 		this.wings=Equip.getEquipByID(playerVo.getWingsID());
 		this.wings.setLevel(playerVo.getWingsLevel());
-		this.gold=playerVo.getGold();
+
 		this.potentialPoint= playerVo.getPotentialPoint();
 		this.shop.setPPPrice(playerVo.getShopVo().getPPPrice());
 		this.shop.setPPNum(playerVo.getShopVo().getPPNum());
 		this.shop.setExpPrice(playerVo.getShopVo().getExpPrice());
 		this.shop.setExpNum(playerVo.getShopVo().getExpNum());
+		this.shop.setSkillPointPrice(playerVo.getSkillPointNum());
+		this.shop.setUpGradeStonePrice(playerVo.getUpGradeStoneNum());
+		this.shop.setEvolveStonePrice(playerVo.getEvolveStoneNum());
 	}
 	public int getBasicad() {
 		return basicad;
@@ -118,18 +127,7 @@ public class Player {
 		return MR;
 	}
 
-//	public int getSkillPoint() {
-//		return skillPoint;
-//	}
-//	public void setSkillPoint(int skillPoint) {
-//		this.skillPoint = skillPoint;
-//	}
-//	public int getPlayerID() {
-//		return playerID;
-//	}
-//	public void setPlayerID(int playerID) {
-//		this.playerID = playerID;
-//	}
+
 	public int getAd() {
 		return ad;
 	}
@@ -147,6 +145,24 @@ public class Player {
 	}
 	public int[] getSkillList() {
 		return skillList;
+	}
+	public Shop getShop() {
+		return shop;
+	}
+	public Equip getHeadWearing() {
+		return headWearing;
+	}
+	public Equip getWeapon() {
+		return weapon;
+	}
+	public Equip getWearing() {
+		return wearing;
+	}
+	public Equip getWings() {
+		return wings;
+	}
+	public int getGold() {
+		return gold;
 	}
 	public void increasePotentialPoint(int delta){
 		this.potentialPoint+=delta;

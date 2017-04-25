@@ -2,6 +2,31 @@ package vo;
 
 public class ShopVo {
 	private int PPPrice,PPNum,ExpPrice,ExpNum;
+	private int skillPointPrice,upGradeStonePrice,evolveStonePrice;
+
+	public int getSkillPointPrice() {
+		return skillPointPrice;
+	}
+
+	public void setSkillPointPrice(int skillPointPrice) {
+		this.skillPointPrice = skillPointPrice;
+	}
+
+	public int getUpGradeStonePrice() {
+		return upGradeStonePrice;
+	}
+
+	public void setUpGradeStonePrice(int upGradeStonePrice) {
+		this.upGradeStonePrice = upGradeStonePrice;
+	}
+
+	public int getEvolveStonePrice() {
+		return evolveStonePrice;
+	}
+
+	public void setEvolveStonePrice(int evolveStonePrice) {
+		this.evolveStonePrice = evolveStonePrice;
+	}
 
 	public int getPPPrice() {
 		return PPPrice;
