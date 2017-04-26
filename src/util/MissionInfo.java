@@ -2,7 +2,7 @@ package util;
 
 public class MissionInfo {
 	private int model;
-	private int ID;//¹Ø¿¨ID/ÐÝÏÐÄ£Ê½ID
+	private int ID;//
 	public int getModel() {
 		return model;
 	}
