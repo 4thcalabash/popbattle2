@@ -26,33 +26,36 @@ public class Player {
 	
 	//基础属性
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
+	public void setAd(int ad) {
+		this.ad = ad;
+	}
+	public void setAp(int ap) {
+		this.ap = ap;
+	}
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+	public void setDR(int dR) {
+		DR = dR;
+	}
+	public void setMR(int mR) {
+		MR = mR;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
 	private Shop shop;
-	
+	private int AILevel;
+
 	private int skillPointNum,upGradeStoneNum,evolveStoneNum;
 
-	public int getDT() {
-		return DT;
-	}
-	public void setDT(int dT) {
-		DT = dT;
-	}
-	public int getMT() {
-		return MT;
-	}
-	public void setMT(int mT) {
-		MT = mT;
-	}
+
 	private int basicad,basicap,basichp,basicDR,basicMR,level;
 //	private int playerID;
 //	private int skillPoint;
 	private int nowExp;
 	private int potentialPoint;
-	public int getPotentialPoint() {
-		return potentialPoint;
-	}
-	public void setPotentialPoint(int potentialPoint) {
-		this.potentialPoint = potentialPoint;
-	}
+
 
 	private int gold;
 
@@ -104,6 +107,24 @@ public class Player {
 		this.shop.setUpGradeStonePrice(playerVo.getUpGradeStoneNum());
 		this.shop.setEvolveStonePrice(playerVo.getEvolveStoneNum());
 	}
+	public int getDT() {
+		return DT;
+	}
+	public void setDT(int dT) {
+		DT = dT;
+	}
+	public int getMT() {
+		return MT;
+	}
+	public void setMT(int mT) {
+		MT = mT;
+	}
+	public int getAILevel() {
+		return AILevel;
+	}
+	public void setAILevel(int aILevel) {
+		AILevel = aILevel;
+	}
 	public int getBasicad() {
 		return basicad;
 	}
@@ -118,6 +139,12 @@ public class Player {
 	}
 	public int getBasicMR() {
 		return basicMR;
+	}
+	public int getPotentialPoint() {
+		return potentialPoint;
+	}
+	public void setPotentialPoint(int potentialPoint) {
+		this.potentialPoint = potentialPoint;
 	}
 	public PaperPlayer createPaper(){
 		PaperPlayer paper = new PaperPlayer (this);

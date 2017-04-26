@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+import bll.individual.PaperPlayer;
 import bll.individual.Player;
 import bll.support.Equip;
 import bll.support.Skill;
@@ -196,6 +197,51 @@ public class FileHelper implements DataOperator{
 			e.printStackTrace();
 		}
 		return missionVo;
+	}
+
+	@Override
+	public PaperPlayer loadAI(int ID) {
+		// TODO Auto-generated method stub
+		PlayerVo basic = this.loadData(0);
+		Player AIBasic = new Player (basic);
+		PaperPlayer AI = null;
+		try{
+			String filePath = FileHelper.class.getClassLoader().getResource("AIData/AI"+ID+".data").getPath();
+			File save = new File (filePath);
+			FileReader filereader = new FileReader(save);
+			BufferedReader reader = new BufferedReader (filereader);
+			String line = null;
+			line = reader.readLine();
+			AIBasic.setLevel(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setHp(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setAd(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setAp(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setDR(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setMR(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setDT(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setMT(Integer.parseInt(line));
+			for (int i=0;i<Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL;i++){
+				line = reader.readLine();
+				AIBasic.getSkillList()[i]=Integer.parseInt(line);
+			}
+			AI = AIBasic.createPaper();
+			line = reader.readLine();
+			AI.getAllSkills()[0]=Skill.getSkillByID(Integer.parseInt(line));
+			line = reader.readLine();
+			AI.getAllSkills()[1]=Skill.getSkillByID(Integer.parseInt(line));
+			line = reader.readLine();
+			AI.getAllSkills()[2]=Skill.getSkillByID(Integer.parseInt(line));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return AI;
 	}
 	
 }

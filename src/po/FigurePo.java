@@ -11,7 +11,7 @@ public class FigurePo {
 	private EquipPo headWearingPo;
 	private EquipPo weaponPo;
 	private EquipPo wearingPo;
-	private EquipPo swingsPo;
+	private EquipPo wingsPo;
 	public int getHp() {
 		return hp;
 	}
@@ -66,11 +66,11 @@ public class FigurePo {
 	public void setWearingPo(EquipPo wearingPo) {
 		this.wearingPo = wearingPo;
 	}
-	public EquipPo getSwingsPo() {
-		return swingsPo;
+	public EquipPo getWingsPo() {
+		return wingsPo;
 	}
-	public void setSwingsPo(EquipPo swingsPo) {
-		this.swingsPo = swingsPo;
+	public void setWingsPo(EquipPo wingsPo) {
+		this.wingsPo = wingsPo;
 	}
 	
 

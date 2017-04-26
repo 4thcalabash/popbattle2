@@ -57,6 +57,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 				chessboard.getIsPop()[i][j]=0;
 			}
 		}
+		int [] popNum1 = chessboard.getPopNum();
 		//Êä³ö¼ì²â
 		System.out.println("Matrix For Pop:");
 		for (int i=0;i<Matrix.TOTALLINE;i++){
@@ -626,6 +627,10 @@ public class MoreThanThreeLinePop extends PopMethod {
 				}
 			}
 		}
+		int [] popNum2 = chessboard.getPopNum();
+		for (int i=0;i<Matrix.NONE+1;i++){
+			chessboard.getPopNum()[i]=popNum1[i]-popNum2[i];
+		}
 		chessboard.renew();
 		
 	}
@@ -639,6 +644,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 					}
 					System.out.println();
 				}
+		int [] popNum1 = chessboard.getPopNum();
 		ArrayList<DotPo> queue = new ArrayList<DotPo>();
 		int[][] in = new int[Matrix.TOTALLINE+1][Matrix.TOTALROW];
 		int[] [] linecheck = new int [Matrix.TOTALLINE+1][Matrix.TOTALROW];
@@ -1094,6 +1100,10 @@ public class MoreThanThreeLinePop extends PopMethod {
 					chessboard.getIsPop()[i][j]=Matrix.NORMALPOP;
 				}
 			}
+		}
+		int [] popNum2 = chessboard.getPopNum();
+		for (int i=0;i<Matrix.NONE+1;i++){
+			chessboard.getPopNum()[i]=popNum1[i]-popNum2[i];
 		}
 		chessboard.renew();
 	}

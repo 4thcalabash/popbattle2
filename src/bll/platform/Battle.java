@@ -1,60 +1,54 @@
 package bll.platform;
 import bllservice.*;
+import dal.FileHelper;
+
 import java.util.ArrayList;
 import bll.individual.*;
 import bll.matrix.*;
 import po.*;
+import util.AI;
+import util.DamageCalcer;
+import vo.MissionVo;
 import bll.popMethod.*;
 import bll.popMethod.allMethod.MoreThanThreeLinePop;
+import bll.support.Skill;
 public class Battle implements BattlePlatform{
-	//bp为提供给前端的接口，ai为提供给AI的接口，
 	private PopMethodHub popHub;
-//	private ActionPo actionPo;
-	//private BattlePo battlePo;
-	//private PopPo popPo;
 	private Matrix chessboard;
-	//private Player Player1;//PVE的玩家
 	private PaperPlayer paperPlayer1;
-	//private Player Player2;
 	private PaperPlayer paperPlayer2;
-	//private Player AI;	
-//	private PaperPlayer paperAI;
-//	private int [] P1ElementPool,P2ElementPool;
+	private MissionVo missionVo;
 	
-	public Battle(){
+	public Battle(int missionID,PaperPlayer paperPlayer1){
+		this.paperPlayer1=paperPlayer1;
+		this.missionVo=new FileHelper().loadMission(missionID);
+		this.paperPlayer2=new FileHelper().loadAI(missionVo.getAIID().get(0));
 		chessboard = new Matrix ();
 		chessboard.remake();
 		ArrayList <Popable> popList = new ArrayList<Popable>();
 		popList.add(new MoreThanThreeLinePop());
 		popHub = new PopMethodHub (popList,chessboard);
-//		P1ElementPool = new int [Matrix.KIND];
-//		P2ElementPool = new int [Matrix.KIND];
 	}
+	
+	
 	@Override
-	public FigurePo getPlayer1() {
+	public BattlePo check() {
 		// TODO Auto-generated method stub
 		return null;
+		
+	}
+	
+	
+	@Override
+	public PaperPlayer getPlayer1() {
+		// TODO Auto-generated method stub
+		return paperPlayer1;
 	}
 	@Override
-	public FigurePo getPlayer2() {
+	public PaperPlayer getPlayer2() {
 		// TODO Auto-generated method stub
-		return null;
+		return paperPlayer2;
 	}
-	@Override
-	public FigurePo getAI() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-//	@Override
-//	public void pauseGame() {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void continueGame() {
-//		// TODO Auto-generated method stub
-//		
-//	}
 	@Override
 	public boolean move(DotPo dot1, DotPo dot2) {
 		// TODO Auto-generated method stub
@@ -75,32 +69,15 @@ public class Battle implements BattlePlatform{
 	@Override
 	public PopPo pop(int playerID,DotPo dot1,DotPo dot2) {
 		// TODO Auto-generated method stub
-		
-		
 		return popHub.pop(dot1, dot2);
-		
 	}
 	@Override
 	public PopPo pop(int playerID) {
 		// TODO Auto-generated method stub
 		return popHub.pop();
 	}
-//	@Override
-//	public void AIaction(ActionPo AIActionPo) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-	@Override
-	public BattlePo check() {
-		// TODO Auto-generated method stub
-		return null;
-		
-	}
-//	@Override
-//	public void Bonus(int bonusID) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	
+
 	public Matrix getChessboard() {
 		return chessboard;
 	}
@@ -140,17 +117,30 @@ public class Battle implements BattlePlatform{
 	@Override
 	public boolean skillRequest(int playerID, int skillID) {
 		// TODO Auto-generated method stub
-		return false;
+		if (playerID==1){
+			return Skill.getSkillByID(skillID).canAction(paperPlayer1);
+		}else{
+			return Skill.getSkillByID(skillID).canAction(paperPlayer2);
+		}
 	}
 	@Override
 	public ActionPo useSkill(int playerID, int skillID) {
 		// TODO Auto-generated method stub
-		return null;
+		ActionPo ans =  new ActionPo();
+		ans.setActionPlayerID(playerID);
+		ans.setSkillID(skillID);
+		ans.setTargetPlayerID(playerID==1?2:1);
+		if (playerID==1){
+			ans.setEffectValue(DamageCalcer.calc(paperPlayer1, Skill.getSkillByID(skillID), paperPlayer2));
+		}else{
+			ans.setEffectValue(DamageCalcer.calc(paperPlayer2, Skill.getSkillByID(skillID), paperPlayer1));
+		}
+		return ans;
 	}
 	@Override
 	public AIStrategyPo getAIStrategy() {
 		// TODO Auto-generated method stub
-		return null;
+		return new AI(chessboard,paperPlayer2).getAIStrategy();
 	}
 
 

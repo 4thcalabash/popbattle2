@@ -67,7 +67,6 @@ public class Matrix {
 	public static final int TOBOMBBONUS = BOMBBONUS*10;
 	private Dot[][] matrix;
 	private int [] [] isPop;
-	private int [] popNum;
 	public Matrix() {
 		// this.TOTALLINE=TOTALLINE;
 		// this.TOTALROW=TOTALROW;
@@ -78,11 +77,20 @@ public class Matrix {
 			}
 		}
 		isPop = new int [TOTALLINE*2][TOTALROW];
-		popNum = new int [200];
+
 		this.remake();
 	}
 	
 	public int[] getPopNum() {
+		int [] popNum = new int [Matrix.NONE+1];
+		for (int i=0;i<Matrix.TOTALLINE;i++){
+			for (int j=0;j<Matrix.TOTALROW;j++){
+				if (this.getMatrix()[i][j].getColor()>Matrix.NONE+1){
+					continue;
+				}
+				popNum[this.getMatrix()[i][j].getColor()]++;
+			}
+		}
 		return popNum;
 	}
 

@@ -24,7 +24,7 @@ public class StaticStage extends Stage{
 	private BasicPlatform basicPlatform;//所有静态系统和信息存在于此，需要显示的信息通过它来获取
 	public StaticStage (Main main){
 		this.main=main;
-		basicPlatform = new Static ();//实例化Static时，便已经完成了默认存档的加载
+		basicPlatform = new Static (0);//实例化Static时，便已经完成了默认存档的加载
 		/**需要完成界面的显示
 		*添加若干监听，比如当点击“任务”时，弹出任务面板stage。
 		*例如，用户点击“任务”，只需要new TaskStage(basicPlatform).show();

@@ -1,9 +1,10 @@
 package bllservice;
+import bll.individual.Player;
 import po.*;
 public interface BasicPlatform {
 	
-	public FigurePo getPlayer1();
-
+	public Player getPlayer1();
+	public BattlePlatform createBattle(int missionID,int [] allSkills);
 
 	/**
 	 * staticscene只需要显示人物系统即可，

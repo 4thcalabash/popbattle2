@@ -10,17 +10,20 @@ import bllservice.BattlePlatform;
 import po.AIStrategyPo;
 import po.DotPo;
 import po.MatrixPo;
+import po.PopPo;
 
 public class AI {
 	private Matrix matrix;
 	private PaperPlayer AI;
 	private Popable popMethod;
+	
 	public AI(Matrix matrix,PaperPlayer AI){
 		this.matrix=matrix;
 		this.AI=AI;
 		this.popMethod= new MoreThanThreeLinePop();
 	}
-	public AIStrategyPo getAIStrategy(int level){
+	public AIStrategyPo getAIStrategy(){
+		int level = AI.getPlayer().getAILevel();
 		if (level==0){
 			return lowIQStrategy();
 		}else if (level==1){
@@ -104,6 +107,283 @@ public class AI {
 			}
 		}else{
 			//带点脑子的消除
+			//拷贝棋盘
+			Matrix matrix2 = new Matrix ();
+			MatrixPo matrixPo = matrix.getboard();
+			for (int i=0;i<Matrix.TOTALLINE;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					matrix2.getMatrix()[i][j] = matrixPo.getMatrix()[i][j];
+				}
+			}
+			int a=100;
+			for (int i=Matrix.TOTALLINE;i<2*Matrix.TOTALLINE;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					matrix2.getMatrix()[i][j] = new Dot(a++,Matrix.NORMAL);
+				}
+			}
+			int [] [] []popnum = new int[Matrix.TOTALLINE][Matrix.TOTALROW][4];
+			for (int i=0;i<Matrix.TOTALLINE;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					//east
+					DotPo dot1 = new DotPo (i,j);
+					if (j+1<Matrix.TOTALROW){
+						DotPo dot2 = new DotPo (i,j+1);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][0]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][0]+=delta;
+								}
+							}
+						}
+					}
+					//west
+					if (j-1>=0){
+						DotPo dot2 = new DotPo (i,j-1);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][2]+=delta;
+								}
+							}
+						}
+					}
+					//north
+					if (i+1<Matrix.TOTALLINE){
+						DotPo dot2 = new DotPo (i+1,j);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][3]+=delta;
+								}
+							}
+						}
+					}
+					//south
+					if (i-1>=0){
+						DotPo dot2 = new DotPo (i-1,j);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][1]+=delta;
+								}
+							}
+						}
+					}
+				}
+			}
+			//寻找最优决策
+			int max=-1,ansx=-1,ansy=-1,ansdir=-1;
+			for (int ii=0;ii<Matrix.TOTALLINE;ii++){
+				for (int jj=0;jj<Matrix.TOTALROW;jj++){
+					//east
+					if (jj+1<Matrix.TOTALROW&&popnum[ii][jj][0]>max){
+						max=popnum[ii][jj][0];
+						ansx=ii;
+						ansy=jj;
+						ansdir=0;
+					}
+					//south
+					if (ii-1>=0&&popnum[ii][jj][1]>max){
+						max=popnum[ii][jj][1];
+						ansx=ii;
+						ansy=jj;
+						ansdir=1;
+					}
+					//west
+					if (jj-1>=0&&popnum[ii][jj][2]>max){
+						max=popnum[ii][jj][2];
+						ansx=ii;
+						ansy=jj;
+						ansdir=2;
+					}
+					//north
+					if (ii+1<Matrix.TOTALLINE&&popnum[ii][jj][3]>max){
+						max=popnum[ii][jj][3];
+						ansx=ii;
+						ansy=jj;
+						ansdir=3;
+					}
+				}
+			}
+			strategy.setDot1(new DotPo(ansx,ansy));
+			if (ansdir==0){
+				//east
+				strategy.setDot2(new DotPo(ansx,ansy+1));
+			}else if (ansdir==1){
+				//south
+				strategy.setDot2(new DotPo(ansx-1,ansy));
+			}else if (ansdir ==2){
+				//west
+				strategy.setDot2(new DotPo(ansx,ansy-1));
+			}else{
+				//north
+				strategy.setDot2(new DotPo(ansx+1,ansy));
+			}
+			return strategy;
 		}
 		return null;
 	}
@@ -113,11 +393,369 @@ public class AI {
 		//消除策略的计算考虑1、双特效（直接采取）2、单特效（待选）3、普通可行消除（待选）
 		//需要考虑在2X1棋盘上进行连续消除，选择带选项中消除方块权值（与技能相关的方块权重大，无关方块权重小，高优先级技能相关方块更大）最高的一个
 		AIStrategyPo strategy = new AIStrategyPo();
-	
-		
-		
-		
-		return strategy;
+		boolean canAttack = false;
+		int [] order = new int [3];
+		int [] value = new int [3];
+		for (int i=0;i<3;i++){
+			if (AI.getAllSkills()[i]!=null&&AI.getAllSkills()[i].canAction(AI)){
+				canAttack = true;
+				break;
+			}
+		}
+		if (canAttack){
+			//计算三个技能的效果值，并按照效果值排优先级
+			for (int i=0;i<3;i++){
+				order[i]=i;
+				if (AI.getAllSkills()[i]!=null){
+					value[i]=AI.getAllSkills()[i].calcVaue(AI);
+				}else{
+					value[i]=-1;
+				}
+			}
+			if (value[1]<value[2]){
+				value[1]^=value[2]^=value[1]^=value[2];
+				order[1]^=order[2]^=order[1]^=order[2];
+			}
+			if (value[0]<value[1]){
+				value[0]^=value[1]^=value[0]^=value[1];
+				order[0]^=order[1]^=order[0]^=order[1];
+			}
+			if (value[1]<value[2]){
+				value[1]^=value[2]^=value[1]^=value[2];
+				order[1]^=order[2]^=order[1]^=order[2];
+			}
+			//如果最强大的技能可以释放，直接释放
+			if (AI.getAllSkills()[order[0]].canAction(AI)){
+				strategy.setMoveStrategy(false);
+				strategy.setActionPlayerID(Player.AI_PLAYERID);
+				strategy.setTargetPlayerID(Player.USER_PLAYERID);
+				strategy.setSkillID(AI.getAllSkills()[order[0]].getID());
+				strategy.setSkillValue(value[0]);
+				return strategy;
+			}
+		}
+		//随机进行消除/释放技能
+		double temp = Math.random();
+		if (value[1]!=-1&&AI.getAllSkills()[order[1]].canAction(AI)){
+			//如果第二优先级技能存在且可以释放，概率不做调整
+			//根据hp 较大幅度增加攻击概率
+			double tttt = AI.getHp()/AI.getPlayer().getHp();
+			if (tttt<0.3){
+				temp-=0.4;
+			}else if (tttt<0.5){
+				temp-=0.3;
+			}else if (tttt<0.7){
+				temp-=0.14;
+			}
+		}else if(value[2]!=-1&&AI.getAllSkills()[order[2]].canAction(AI)){
+			//如果只能释放第三优先级技能，就调整概率，使其更有可能去移动棋盘
+			temp+=0.16;
+			//根据hp 较小幅度增加攻击概率
+			double tttt = AI.getHp()/AI.getPlayer().getHp();
+			if (tttt<0.3){
+				temp-=0.3;
+			}else if (tttt<0.5){
+				temp-=0.2;
+			}else if (tttt<0.7){
+				temp-=0.1;
+			}
+		}
+		if (temp<0.36&&canAttack){
+			//释放技能
+			strategy.setMoveStrategy(false);
+			strategy.setActionPlayerID(Player.AI_PLAYERID);
+			strategy.setTargetPlayerID(Player.USER_PLAYERID);
+			if (AI.getAllSkills()[order[1]].canAction(AI)){
+				//如果第二优先级的技能可以释放
+				strategy.setSkillID(AI.getAllSkills()[order[1]].getID());
+				strategy.setSkillValue(value[1]);
+				return strategy;
+			}else{
+				//如果第二优先级技能也不能释放，而canAttack==true 则第三优先级技能必存在且可以释放
+				strategy.setSkillID(AI.getAllSkills()[order[2]].getID());
+				strategy.setSkillValue(value[2]);
+			}
+		}else{
+			//带点脑子的消除
+			//拷贝棋盘
+			Matrix matrix2 = new Matrix ();
+			MatrixPo matrixPo = matrix.getboard();
+			for (int i=0;i<Matrix.TOTALLINE;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					matrix2.getMatrix()[i][j] = matrixPo.getMatrix()[i][j];
+				}
+			}
+			int a=100;
+			for (int i=Matrix.TOTALLINE;i<2*Matrix.TOTALLINE;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					matrix2.getMatrix()[i][j] = new Dot(a++,Matrix.NORMAL);
+				}
+			}
+			int [] [] []popnum = new int[Matrix.TOTALLINE][Matrix.TOTALROW][4];
+			for (int i=0;i<Matrix.TOTALLINE;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					//east
+					DotPo dot1 = new DotPo (i,j);
+					if (j+1<Matrix.TOTALROW){
+						DotPo dot2 = new DotPo (i,j+1);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][0]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][0]+=delta;
+								}
+							}
+						}
+					}
+					//west
+					if (j-1>=0){
+						DotPo dot2 = new DotPo (i,j-1);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][2]+=delta;
+								}
+							}
+						}
+					}
+					//north
+					if (i+1<Matrix.TOTALLINE){
+						DotPo dot2 = new DotPo (i+1,j);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][3]+=delta;
+								}
+							}
+						}
+					}
+					//south
+					if (i-1>=0){
+						DotPo dot2 = new DotPo (i-1,j);
+						//复制临时棋盘
+						Matrix matrix3 = new Matrix();
+						for (int ii=0;ii<Matrix.TOTALLINE*2;ii++){
+							for (int jj=0;jj<Matrix.TOTALROW;jj++){
+								matrix3.getMatrix()[ii][jj]=new Dot(matrix2.getMatrix()[ii][jj].getColor(),matrix2.getMatrix()[ii][jj].getBonus());
+							}
+						}
+						//尝试交换
+						Dot tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+						matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
+						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
+						if (flag){
+							int []popNum  = matrix3.getPopNum();
+							popMethod.pop(matrix3,dot1,dot2);
+							int[] popNum2 = matrix3.getPopNum();
+							for (int iii=0;iii<Matrix.NONE+1;iii++){
+								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
+							}
+							matrix3.renew();
+							//每次消除都将上部置为垃圾
+							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								}
+							}
+							while(true){
+								popNum = matrix3.getPopNum();
+								popMethod.pop(matrix3);
+								popNum2 = matrix3.getPopNum();
+								matrix3.renew();
+								//更新之后要置垃圾
+								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
+									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
+										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									}
+								}
+								int delta =0;
+								for (int iii=0;iii<Matrix.NONE+1;iii++){
+									delta+=popNum[iii]-popNum2[iii];
+								}
+								if (delta==0){
+									break;
+								}else{
+									popnum[i][j][1]+=delta;
+								}
+							}
+						}
+					}
+				}
+			}
+			//寻找最优决策
+			int max=-1,ansx=-1,ansy=-1,ansdir=-1;
+			for (int ii=0;ii<Matrix.TOTALLINE;ii++){
+				for (int jj=0;jj<Matrix.TOTALROW;jj++){
+					//east
+					if (jj+1<Matrix.TOTALROW&&popnum[ii][jj][0]>max){
+						max=popnum[ii][jj][0];
+						ansx=ii;
+						ansy=jj;
+						ansdir=0;
+					}
+					//south
+					if (ii-1>=0&&popnum[ii][jj][1]>max){
+						max=popnum[ii][jj][1];
+						ansx=ii;
+						ansy=jj;
+						ansdir=1;
+					}
+					//west
+					if (jj-1>=0&&popnum[ii][jj][2]>max){
+						max=popnum[ii][jj][2];
+						ansx=ii;
+						ansy=jj;
+						ansdir=2;
+					}
+					//north
+					if (ii+1<Matrix.TOTALLINE&&popnum[ii][jj][3]>max){
+						max=popnum[ii][jj][3];
+						ansx=ii;
+						ansy=jj;
+						ansdir=3;
+					}
+				}
+			}
+			strategy.setDot1(new DotPo(ansx,ansy));
+			if (ansdir==0){
+				//east
+				strategy.setDot2(new DotPo(ansx,ansy+1));
+			}else if (ansdir==1){
+				//south
+				strategy.setDot2(new DotPo(ansx-1,ansy));
+			}else if (ansdir ==2){
+				//west
+				strategy.setDot2(new DotPo(ansx,ansy-1));
+			}else{
+				//north
+				strategy.setDot2(new DotPo(ansx+1,ansy));
+			}
+			return strategy;
+		}
+		return null;
 	}
 	private AIStrategyPo lowIQStrategy(){
 		//如果不可以攻击，就消除

@@ -1,9 +1,9 @@
 package bllservice;
+import bll.individual.PaperPlayer;
 import po.*;
 public interface BattlePlatform {
-	public FigurePo getPlayer1();
-	public FigurePo getPlayer2();
-	public FigurePo getAI();
+	public PaperPlayer getPlayer1();
+	public PaperPlayer getPlayer2();
 	public AIStrategyPo getAIStrategy();
 	//public void pauseGame();
 	//public void continueGame();

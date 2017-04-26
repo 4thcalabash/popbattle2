@@ -7,18 +7,18 @@ public class EquipPo {
 	private int hp;
 	private int ad,ap;
 	private int MR,DR;
-	private int MT,HT;
+	private int MT,DT;
 	public int getMT() {
 		return MT;
 	}
 	public void setMT(int mT) {
 		MT = mT;
 	}
-	public int getHT() {
-		return HT;
+	public int getDT() {
+		return DT;
 	}
-	public void setHT(int hT) {
-		HT = hT;
+	public void setDT(int dT) {
+		DT = dT;
 	}
 	public int getID() {
 		return ID;

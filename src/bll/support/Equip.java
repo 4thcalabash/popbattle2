@@ -3,6 +3,7 @@ package bll.support;
 import util.*;
 
 //只需要用ID和Level就可以生成一件装备
+//本身不记录等级，只提供计算方法
 public class Equip implements Calcable{
 	public static final int ID_NULL = -1;
 	public static final int ID_GOLDWEARING = 1;
@@ -17,13 +18,13 @@ public class Equip implements Calcable{
 	public static final String[] INTRODUCTION_GOLDWINGS ={"GOLD","GOLDD","GOLDDD"};
 	
 //ID,MAXLEVEL,ADCalcMethod,APCalcMethod,DRCalcMethod,MRCalcMethod,DTCalcMethod,MTCalcMethod,levelUpCostCalcMethod,equipIntroduction,evolveEquipID
-	public static final Equip GOLDWEARING = new Equip(Equip.ID_GOLDWEARING, 3, new Calcer(0,0,0),new Calcer(0,0,0), 
+	public static final Equip GOLDWEARING = new Equip(Equip.ID_GOLDWEARING, 3, new Calcer(5,10,15),new Calcer(0,0,0),new Calcer(0,0,0), 
 			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,Equip.ID_NULL), Equip.INTRODUCTION_GOLDWEARING,Equip.ID_NULL);
-	public static final Equip GOLDHEADWEARING = new Equip(Equip.ID_GOLDHEADWEARING, 3,new Calcer(0,0,0),new Calcer(0,0,0),
+	public static final Equip GOLDHEADWEARING = new Equip(Equip.ID_GOLDHEADWEARING, 3,new Calcer(10,20,30),new Calcer(0,0,0),new Calcer(0,0,0),
 			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,Equip.ID_NULL), Equip.INTRODUCTION_GOLDHEADWEARING,Equip.ID_NULL);
-	public static final Equip GOLDSWORD = new Equip (Equip.ID_GOLDSWORD,3,new Calcer(5,10,15),new Calcer(0,0,10),
+	public static final Equip GOLDSWORD = new Equip (Equip.ID_GOLDSWORD,3,new Calcer(0,0,0),new Calcer(5,10,15),new Calcer(0,0,10),
 			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),new Calcer(1,2,Equip.ID_NULL),Equip.INTRODUCTION_GOLDSWORD,Equip.ID_NULL);
-	public static final Equip GOLDSWINGS = new Equip (Equip.ID_GOLDWINGS,3,new Calcer(3,6,9),new Calcer(3,6,9),
+	public static final Equip GOLDSWINGS = new Equip (Equip.ID_GOLDWINGS,3,new Calcer(5,15,25),new Calcer(3,6,9),new Calcer(3,6,9),
 			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(1,2,Equip.ID_NULL),Equip.INTRODUCTION_GOLDWINGS,Equip.ID_NULL);
 	
 	
@@ -63,14 +64,15 @@ public class Equip implements Calcable{
 	private String[] equipIntroduction;
 	private int level;
 	private final int MAXLEVEL;// 允许的最高等级
-	private CalcMethod ADCalcMethod, APCalcMethod, DRCalcMethod, MRCalcMethod, DTCalcMethod, MTCalcMethod,levelUpCostCalcMethod;
+	private CalcMethod HPCalcMethod,ADCalcMethod, APCalcMethod, DRCalcMethod, MRCalcMethod, DTCalcMethod, MTCalcMethod,levelUpCostCalcMethod;
 	private int evolveEquipID;
 //需要加一个costCalcer ，一个int EvoluteCost 。Equip的通货是升级石和进阶石，升级石用来升级装备，进阶石用来进阶装备。
-	public Equip(int ID, int MAXLEVEL, CalcMethod ADCalcMethod, CalcMethod APCalcMethod,
+	public Equip(int ID, int MAXLEVEL,CalcMethod HPCalcMethod, CalcMethod ADCalcMethod, CalcMethod APCalcMethod,
 			CalcMethod DRCalcMethod, CalcMethod MRCalcMethod, CalcMethod DTCalcMethod,
 			CalcMethod MTCalcMethod,CalcMethod levelUpCostCalcMethod, String[] equipIntroduction,int evolveEquipID) {
 		this.ID = ID;
 		this.MAXLEVEL = MAXLEVEL;
+		this.HPCalcMethod=HPCalcMethod;
 		this.ADCalcMethod = ADCalcMethod;
 		this.APCalcMethod = APCalcMethod;
 		this.DRCalcMethod = DRCalcMethod;
@@ -87,6 +89,9 @@ public class Equip implements Calcable{
 	}
 	public String[] getEquipIntroduction() {
 		return equipIntroduction;
+	}
+	public int getHP(){
+		return this.HPCalcMethod.calc(this);
 	}
 	public int getAD() {
 		return this.ADCalcMethod.calc(this);

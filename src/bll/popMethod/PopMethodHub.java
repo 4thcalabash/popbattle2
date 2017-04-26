@@ -29,7 +29,7 @@ public class PopMethodHub implements PopMethod{
 				matrix[i][j] = new Dot (chessboard.getMatrix()[i][j].getColor(),chessboard.getMatrix()[i][j].getBonus());
 			}
 		}
-		return new PopPo(chessboard.getIsPop(), new MatrixPo(matrix));
+		return new PopPo(chessboard.getIsPop(), new MatrixPo(matrix),chessboard.getPopNum());
 	}
 	@Override
 	public PopPo pop() {
@@ -41,7 +41,7 @@ public class PopMethodHub implements PopMethod{
 				matrix[i][j] = new Dot (chessboard.getMatrix()[i][j].getColor(),chessboard.getMatrix()[i][j].getBonus());
 			}
 		}
-		return new PopPo(chessboard.getIsPop(),new MatrixPo(matrix));
+		return new PopPo(chessboard.getIsPop(),new MatrixPo(matrix),chessboard.getPopNum());
 	}
 	@Override
 	public boolean hasLegalMove() {

@@ -304,7 +304,7 @@ public class Skill {
 	public Skill(int SKILLID, int MAXLEVEL, int targetPlayer, SkillValueCalcMethod valueCalcMethod,
 			SkillCostCalcMethod costCalcMethod,SkillLevelUpCalcMethod levelUpCostCalcMethod, String[] skillIntroduction,int skillType) {
 		this.ID = SKILLID;
-		// 查常量包设置最高等级
+
 		this.MAXLEVEL = MAXLEVEL;
 		this.targetPlayer = targetPlayer;
 		this.valueCalcMethod = valueCalcMethod;

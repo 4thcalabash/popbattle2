@@ -19,10 +19,10 @@ public class PopPo {
 	public MatrixPo getNewchessboard() {
 		return newchessboard;
 	}
-	public PopPo(int [] []popInfo,MatrixPo newchessboard){
+	public PopPo(int [] []popInfo,MatrixPo newchessboard,int [] popNum){
 		this.popInfo=popInfo;
 		this.newchessboard=newchessboard;
-		//this.popNum=popNum;
+		this.popNum=popNum;
 	}
 	public int[] getPopNum() {
 		return popNum;
