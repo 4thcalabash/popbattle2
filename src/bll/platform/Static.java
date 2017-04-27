@@ -9,7 +9,7 @@ import dal.FileHelper;
 import po.EquipPo;
 import po.FigurePo;
 
-public class Static implements BasicPlatform, Shopable, Achievementable, Equipable, Playerable, Skillable {
+public class Static implements BasicPlatform, Shopable, Achievementable, Equipable, Playerable, Skillable, Battleable{
 	private Player player;
 	private FileHelper helper;
 	public Static (int index){

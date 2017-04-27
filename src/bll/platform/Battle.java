@@ -18,7 +18,9 @@ public class Battle implements BattlePlatform{
 	private PaperPlayer paperPlayer1;
 	private PaperPlayer paperPlayer2;
 	private MissionVo missionVo;
-	
+	public static final int PVE = 1000;
+	public static final int PVP = 2000;
+	public static final int NORMAL = 3000;
 	public Battle(int missionID,PaperPlayer paperPlayer1){
 		this.paperPlayer1=paperPlayer1;
 		this.missionVo=new FileHelper().loadMission(missionID);

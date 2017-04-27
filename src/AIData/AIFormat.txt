@@ -1,0 +1,13 @@
+[level]
+[hp]
+[ad]
+[ap]
+[dr]
+[mr]
+[dt]
+[mt]
+[skilllevel]
+*
+[SkillID0]
+[SkillID1]
+[SkillID2]

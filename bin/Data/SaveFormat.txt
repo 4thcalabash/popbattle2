@@ -10,8 +10,8 @@
 [basicap]
 [basicdr]
 [basicmr]
-[skilllevel]
-*
+[skilllevel]\n*7
+[skillChoosed]\n*3
 [headWearingID]
 [level]
 [weaponID]

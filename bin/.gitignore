@@ -1,9 +1,5 @@
 /ui/
-/util/
 /bll/
-/bllservice/
-/dal/
-/datahelper/
-/po/
-/test/
 /vo/
+/dal/
+/test/

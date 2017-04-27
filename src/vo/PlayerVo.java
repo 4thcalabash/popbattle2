@@ -6,6 +6,20 @@ public class PlayerVo {
 	private int level,nowExp;
 	private int gold;
 	private int skillPointNum,upGradeStoneNum,evolveStoneNum;
+
+	private int [] skillList;
+	private int [] skillChoosed;
+	public int[] getSkillChoosed() {
+		return skillChoosed;
+	}
+	public void setSkillChoosed(int[] skillChoosed) {
+		this.skillChoosed = skillChoosed;
+	}
+	private int headWearingID,weaponID,wearingID,wingsID;
+	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
+
+	private int potentialPoint;
+	private ShopVo shopVo;
 	public int getSkillPointNum() {
 		return skillPointNum;
 	}
@@ -24,12 +38,6 @@ public class PlayerVo {
 	public void setEvolveStoneNum(int evolveStoneNum) {
 		this.evolveStoneNum = evolveStoneNum;
 	}
-	private int [] skillList;
-	private int headWearingID,weaponID,wearingID,wingsID;
-	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
-
-	private int potentialPoint;
-	private ShopVo shopVo;
 	public int getPotentialPoint() {
 		return potentialPoint;
 	}

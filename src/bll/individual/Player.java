@@ -26,24 +26,7 @@ public class Player {
 	
 	//基础属性
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
-	public void setAd(int ad) {
-		this.ad = ad;
-	}
-	public void setAp(int ap) {
-		this.ap = ap;
-	}
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-	public void setDR(int dR) {
-		DR = dR;
-	}
-	public void setMR(int mR) {
-		MR = mR;
-	}
-	public void setLevel(int level) {
-		this.level = level;
-	}
+
 	private Shop shop;
 	private int AILevel;
 
@@ -60,7 +43,7 @@ public class Player {
 	private int gold;
 
 	private int [] skillList;
-
+	private int [] skillChoosed;
 	private Equip headWearing;
 	private Equip weapon;
 	private Equip wearing;
@@ -89,6 +72,7 @@ public class Player {
 		this.upGradeStoneNum=playerVo.getUpGradeStoneNum();
 		this.evolveStoneNum=playerVo.getEvolveStoneNum();
 		this.skillList=playerVo.getSkillList();
+		this.skillChoosed=playerVo.getSkillChoosed();
 		this.headWearing=Equip.getEquipByID(playerVo.getHeadWearingID());
 		this.headWearing.setLevel(playerVo.getHeadWearingLevel());
 		this.weapon=Equip.getEquipByID(playerVo.getWeaponID());
@@ -99,6 +83,7 @@ public class Player {
 		this.wings.setLevel(playerVo.getWingsLevel());
 
 		this.potentialPoint= playerVo.getPotentialPoint();
+		this.shop = new Shop(this);
 		this.shop.setPPPrice(playerVo.getShopVo().getPPPrice());
 		this.shop.setPPNum(playerVo.getShopVo().getPPNum());
 		this.shop.setExpPrice(playerVo.getShopVo().getExpPrice());
@@ -106,6 +91,24 @@ public class Player {
 		this.shop.setSkillPointPrice(playerVo.getSkillPointNum());
 		this.shop.setUpGradeStonePrice(playerVo.getUpGradeStoneNum());
 		this.shop.setEvolveStonePrice(playerVo.getEvolveStoneNum());
+	}
+	public void setAd(int ad) {
+		this.ad = ad;
+	}
+	public void setAp(int ap) {
+		this.ap = ap;
+	}
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+	public void setDR(int dR) {
+		DR = dR;
+	}
+	public void setMR(int mR) {
+		MR = mR;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	public int getDT() {
 		return DT;
@@ -148,7 +151,6 @@ public class Player {
 	}
 	public PaperPlayer createPaper(){
 		PaperPlayer paper = new PaperPlayer (this);
-		paper.setHp(this.hp);
 		return paper;
 	}
 	public int getDR() {
@@ -159,6 +161,9 @@ public class Player {
 	}
 
 
+	public int[] getSkillChoosed() {
+		return skillChoosed;
+	}
 	public int getAd() {
 		return ad;
 	}

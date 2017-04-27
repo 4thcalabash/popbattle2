@@ -22,6 +22,9 @@ public class PaperPlayer {
 		this.hp=player.getHp();
 		this.elementPool= new int [Matrix.KIND];
 		this.allSkills= new Skill [3];
+		for (int i=0;i<3;i++){
+			this.allSkills[i] = Skill.getSkillByID(player.getSkillChoosed()[i]);
+		}
 	}
 
 	public Player getPlayer() {

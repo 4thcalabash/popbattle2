@@ -56,6 +56,11 @@ public class FileHelper implements DataOperator{
 				line = reader.readLine();
 				playerVo.getSkillList()[i]=Integer.parseInt(line);
 			}
+			playerVo.setSkillChoosed(new int [3]);
+			for (int i=0;i<3;i++){
+				line = reader.readLine();
+				playerVo.getSkillChoosed()[i]=Integer.parseInt(line);
+			}
 			line = reader.readLine();
 			playerVo.setHeadWearingID(Integer.parseInt(line));
 			line = reader.readLine();
@@ -130,6 +135,10 @@ public class FileHelper implements DataOperator{
 			writer.newLine();
 			for (int i=0;i<Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL;i++){
 				writer.write(Integer.toString(playerVo.getSkillList()[i]));
+				writer.newLine();
+			}
+			for (int i=0;i<3;i++){
+				writer.write(Integer.toString(playerVo.getSkillChoosed()[i]));
 				writer.newLine();
 			}
 			writer.write(Integer.toString(playerVo.getHeadWearingID()));

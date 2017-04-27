@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ui.Main;
 import ui.sceneInterface.BasicScene;
-import ui.supportStage.*;
+import ui.supportRoot.*;
 public class StaticStage extends Stage{
 	//需要完成用户查询各系统静态信息的功能
 	private BasicScene main;
@@ -67,7 +67,8 @@ public class StaticStage extends Stage{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				new PlayerStage((Playerable)basicPlatform).show();
+				main.setStage(new PlayerParent((Playerable)basicPlatform,main));;
+				System.out.println("change to PlayerStage");
 			}
 			
 		});
@@ -76,7 +77,7 @@ public class StaticStage extends Stage{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				new SkillStage((Skillable)basicPlatform).show();
+				main.setStage(new SkillParent((Skillable)basicPlatform,main));
 			}
 			
 		});
@@ -85,7 +86,7 @@ public class StaticStage extends Stage{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				new BagStage((Equipable)basicPlatform).show();
+				main.setStage(new BagParent((Equipable)basicPlatform,main));
 			}
 			
 		});
@@ -94,7 +95,7 @@ public class StaticStage extends Stage{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				new AchievementStage((Achievementable)basicPlatform).show();
+				main.setStage(new AchievementParent((Achievementable)basicPlatform,main));
 			}
 			
 		});
@@ -103,7 +104,7 @@ public class StaticStage extends Stage{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				new ShopStage((Shopable)basicPlatform).show();
+				main.setStage(new ShopParent((Shopable)basicPlatform,main));
 			}
 			
 		});
@@ -124,7 +125,8 @@ public class StaticStage extends Stage{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				System.out.println("Graphics/Battle Chooser");
+				main.setStage(new BattleChooser((Battleable)basicPlatform,main));
+//				System.out.println("Graphics/Battle Chooser");
 				
 			}
 			
@@ -144,5 +146,8 @@ public class StaticStage extends Stage{
     }
 	//一次battle结束之后的bonus由Main负责。
 	//在用户选定某一个模式 开始battle时，调用basicPlatform的createNewBattle(MissionPo)，需要将用户选择的模式的所有信息存储在MissionPo中加以传递。
+	public BasicPlatform getBasicPlatform() {
+		return basicPlatform;
+	}
 
 }
