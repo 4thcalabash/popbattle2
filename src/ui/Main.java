@@ -55,23 +55,16 @@ public class Main extends Application implements BasicScene,DramaticScene{
 				stage.setResizable(false);
 				stage.show();
 			});
-//			battleParent = new PVEParent(missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-//			Scene battleScene = new Scene (battleParent);
-//			battleScene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
-//			System.out.println(getClass().getResource("PVE.css"));
-//			stage.setScene(battleScene);
-//			stage.setFullScreen(true);
-//			stage.setResizable(false);
-//			stage.show();
 		}
 	}
 	
 	@Override
 	public void battleEnd() {
 		// TODO Auto-generated method stub
-		//销毁battlescene
-		//恢复显示staticscene
+		//battleScene自行销毁
+		//此方法完成从battle返回static
 		//显示关卡奖励等
+		
 	}
 	
 	public static void main(String[] args){
@@ -81,9 +74,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	public void setStage(Parent root) {
 		// TODO Auto-generated method stub
 		//此方法完成Static各个子系统界面跳转
-//		this.stage=stage;
 		Platform.runLater(()->{this.stage.getScene().setRoot(root);});
-//		this.staticParent.hide();
 	}
 	@Override
 	public void returnStatic() {
