@@ -18,7 +18,6 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	
 	private BattleParent battleParent;//每次使用时都需要重新实例化
 	private StaticParent staticParent = new StaticParent(this);//一直沿用一个staticScene，在battle时隐藏，在非battle时显示。
-//	private Parent staticRoot = staticParent.getScene().getRoot();
 	private Stage stage = new Stage();
 	private Scene staticScene = new Scene (staticParent);
 	@Override
@@ -46,16 +45,25 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		//负责解析missionPo，并生成PVE、PVP、NORMAL之一的BattleScene
 		//要将自身注册到battlescene里去，从而使得可以让battlescene调用battleEnd方法以返回staticscene
 		if (missionInfo.getModel()==Battle.PVE){
-			battleParent = new PVEParent(missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-			Scene battleScene = new Scene (battleParent);
-			battleScene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
-			System.out.println(getClass().getResource("PVE.css"));
-			stage.setScene(battleScene);
-			stage.setFullScreen(true);
-			stage.setResizable(false);
-			stage.show();
+			Platform.runLater(()->{
+				battleParent = new PVEParent(missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+				Scene battleScene = new Scene (battleParent);
+				battleScene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
+				System.out.println(getClass().getResource("PVE.css"));
+				stage.setScene(battleScene);
+				stage.setFullScreen(true);
+				stage.setResizable(false);
+				stage.show();
+			});
+//			battleParent = new PVEParent(missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+//			Scene battleScene = new Scene (battleParent);
+//			battleScene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
+//			System.out.println(getClass().getResource("PVE.css"));
+//			stage.setScene(battleScene);
+//			stage.setFullScreen(true);
+//			stage.setResizable(false);
+//			stage.show();
 		}
-		//界面跳转
 	}
 	
 	@Override

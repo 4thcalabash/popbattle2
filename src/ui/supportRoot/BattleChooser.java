@@ -30,7 +30,23 @@ public class BattleChooser extends SupportParent{
 					}
 			
 		});
+		ImageButton mission1 = new ImageButton(new Image("Graphics/Other/mission1Static.png"),new Image("Graphics/Other/mission1ENtered.png"),
+				new Image("Graphics/Other/mission1Pressed.png"),new ButtonWorker(){
+
+					@Override
+					public void work() {
+						// TODO Auto-generated method stub
+						MissionInfo missionInfo = new MissionInfo();
+						missionInfo.setModel(Battle.PVE);
+						missionInfo.setID(1);
+						main.createNewBattle(missionInfo);
+					}
+				
+		});
 		map.getChildren().add(mission0);
+		map.getChildren().add(mission1);
+		mission1.setX(200);
+		mission1.setY(250);
 		mission0.setX(10);
 		mission0.setY(20);
 		map.setMaxHeight(800);
