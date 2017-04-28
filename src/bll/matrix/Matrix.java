@@ -25,6 +25,7 @@ public class Matrix {
 	public static final int AIRELEMENT = 2;
 	public static final int EARTHELEMENT = 3;
 	public static final int SPIRITELEMENT = 4;
+	public static final int GREENELEMENT = 5;
 	//chick¿éµÄcolor
 	public static final int NONE = KIND+1;
 	//¿Õ¿é

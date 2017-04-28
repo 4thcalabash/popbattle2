@@ -28,10 +28,18 @@ public class PVEParent extends BattleParent{
 		GridPane matrix = new GridPane();
 		MatrixPo matrixPo = this.platform.getMatrix();
 		Dot[][] chessboard= matrixPo.getMatrix();
+		ImageView[][] imageMatrix = new ImageView[Matrix.TOTALLINE][Matrix.TOTALROW];
+		for (int i=0;i<Matrix.TOTALLINE;i++){
+			for (int j=0;j<Matrix.TOTALROW;j++){
+				imageMatrix[i][j] =new ImageView( new Image("Graphics/Matrix/"+chessboard[i][j].getColor()+".png"));
+				imageMatrix[i][j].setFitHeight(80);
+				imageMatrix[i][j].setFitWidth(80);
+			}
+		}
 		for (int i=0;i<Matrix.TOTALLINE;i++){
 			for (int j=0;j<Matrix.TOTALROW;j++){
 //				this.platform.getMatrix();
-				matrix.add(new Button(Integer.toString(chessboard[i][j].getColor())), i, j);
+				matrix.add(imageMatrix[i][j],j , Matrix.TOTALLINE-1-i);;
 			}
 		}
 		Image P1 = new Image("Graphics/Player/Setting.png");
@@ -45,7 +53,10 @@ public class PVEParent extends BattleParent{
 		this.setLeft(leftBox);
 		this.setRight(rightBox);
 		this.setCenter(matrix);
-		matrix.setAlignment(Pos.CENTER);
+		matrix.setMaxHeight(80*10);
+		matrix.setMaxWidth(80*8);
+		matrix.setId("Matrix");
+		matrix.setAlignment(Pos.BOTTOM_CENTER);
 		leftBox.setAlignment(Pos.CENTER);
 		rightBox.setAlignment(Pos.CENTER);
 		HBox test = new HBox ();

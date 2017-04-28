@@ -49,14 +49,6 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		//要将自身注册到battlescene里去，从而使得可以让battlescene调用battleEnd方法以返回staticscene
 		if (missionInfo.getModel()==Battle.PVE){
 			Platform.runLater(()->{
-//				battleParent = new PVEParent(missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-//				Scene battleScene = new Scene (battleParent);
-//				battleScene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
-//				System.out.println(getClass().getResource("PVE.css"));
-//				stage.setScene(battleScene);
-//				stage.setFullScreen(true);
-//				stage.setResizable(false);
-//				stage.show();
 				scene.getStylesheets().remove(0);
 				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
 				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
