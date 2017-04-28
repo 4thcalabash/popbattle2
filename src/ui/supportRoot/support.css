@@ -2,3 +2,7 @@
 	-fx-background-image:url("MissionMap.png");
 	-fx-background-size:stretch stretch 
 }
+#SettingBox{
+	-fx-background-image:url("SettingBackground.png") ;
+	-fx-background-size:stretch stretch
+}

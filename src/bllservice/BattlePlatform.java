@@ -13,7 +13,7 @@ public interface BattlePlatform {
 	public PopPo pop(int playerID);
 	public boolean skillRequest(int playerID,int skillID);
 	public ActionPo useSkill(int playerID,int skillID);
-	
+	public MatrixPo getMatrix();
 	public boolean hasLegalMove();
 	public void remake();
 	//public void AIaction(ActionPo AIActionPo);

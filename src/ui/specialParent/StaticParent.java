@@ -32,27 +32,17 @@ public class StaticParent extends BorderPane{
 		*通过basicPlatform来获取需要的信息
 		*当用户点击supportStage上的关闭按钮时，supportStage会自行销毁
 		**/
-//		BorderPane border = new BorderPane();
 		HBox hbox = addHBox();
 		VBox vbox = addVBox();
-//		border.setBottom(hbox);
 		this.setBottom(hbox);
-//		border.setCenter(vbox);
 		this.setCenter(vbox);
-	
 		vbox.setAlignment(Pos.BOTTOM_CENTER); 
 		hbox.setAlignment(Pos.TOP_CENTER);
-		
 		hbox.setMaxWidth(hbox.getPrefWidth());
 		hbox.setMaxHeight(hbox.getPrefHeight());
 //		Scene staticScene = new Scene(border);
 //		staticScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		System.out.println(getClass().getResource(""));
-//		this.setScene(staticScene);
-//		this.setTitle("消消乐");
-//		this.setFullScreen(true);
-//		this.setResizable(false);
-//		this.show();
 	}
 	private HBox addHBox() {
 		// TODO Auto-generated method stub
@@ -61,7 +51,6 @@ public class StaticParent extends BorderPane{
 		hbox.setPrefHeight(210);
 		hbox.setPadding(new Insets(45,0,0,0));
 		hbox.setSpacing(10);
-		//hbox.setMaxSize(hbox.getPrefWidth(), hbox.getPrefHeight());
 		
 		hbox.setId("ButtonBox");
 		ImageButton playerButton = new ImageButton(new Image ("Graphics/Button/playerStatic.png"),new Image("Graphics/Button/playerEntered.png"),new Image("Graphics/Button/playerPressed.png"),new ButtonWorker(){
@@ -138,7 +127,8 @@ public class StaticParent extends BorderPane{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				System.out.println("Setting Work!");
+				main.setStage(new SettingParent((Supportable)basicPlatform,main));
+//				System.out.println("Setting Work!");
 			}
 			
 		});

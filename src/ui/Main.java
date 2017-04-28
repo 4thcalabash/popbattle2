@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import bll.individual.*;
 import bll.platform.Battle;
@@ -19,7 +20,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	private BattleParent battleParent;//每次使用时都需要重新实例化
 	private StaticParent staticParent = new StaticParent(this);//一直沿用一个staticScene，在battle时隐藏，在非battle时显示。
 	private Stage stage = new Stage();
-	private Scene staticScene = new Scene (staticParent);
+	private Scene scene = new Scene (staticParent);
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
@@ -29,9 +30,11 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		 * 当battle结束，销毁battleScene，恢复staticScene显示
 		 * 并检查battlePo查看battle结果
 		 */
-		staticScene.getStylesheets().add(getClass().getResource("static.css").toExternalForm());
-		stage.setScene(staticScene);
+		scene.getStylesheets().add(getClass().getResource("static.css").toExternalForm());
+		stage.setScene(scene);
 		stage.setTitle("消消乐");
+		stage.setFullScreenExitHint("");
+		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreen(true);
 		stage.setResizable(false);
 		primaryStage = stage;
@@ -46,15 +49,20 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		//要将自身注册到battlescene里去，从而使得可以让battlescene调用battleEnd方法以返回staticscene
 		if (missionInfo.getModel()==Battle.PVE){
 			Platform.runLater(()->{
-				battleParent = new PVEParent(missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-				Scene battleScene = new Scene (battleParent);
-				battleScene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
-				System.out.println(getClass().getResource("PVE.css"));
-				stage.setScene(battleScene);
-				stage.setFullScreen(true);
-				stage.setResizable(false);
-				stage.show();
+//				battleParent = new PVEParent(missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+//				Scene battleScene = new Scene (battleParent);
+//				battleScene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
+//				System.out.println(getClass().getResource("PVE.css"));
+//				stage.setScene(battleScene);
+//				stage.setFullScreen(true);
+//				stage.setResizable(false);
+//				stage.show();
+				scene.getStylesheets().remove(0);
+				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
+				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+				this.setStage(battleParent);
 			});
+			
 		}
 	}
 	
@@ -64,7 +72,9 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		//battleScene自行销毁
 		//此方法完成从battle返回static
 		//显示关卡奖励等
-		
+		scene.getStylesheets().remove(0);
+		scene.getStylesheets().add(getClass().getResource("static.css").toExternalForm());
+		this.setStage(staticParent);
 	}
 	
 	public static void main(String[] args){
@@ -83,6 +93,12 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		Platform.runLater(()->{this.stage.getScene().setRoot(staticParent);});
 		System.out.println("return to Static");
 //		this.staticParent.show();
+	}
+	@Override
+	public void exitGame() {
+		// TODO Auto-generated method stub
+		
+		stage.close();
 	}
 
 }
