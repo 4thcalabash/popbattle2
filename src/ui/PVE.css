@@ -1,0 +1,4 @@
+.root{
+	-fx-background-image:url("specialParent/PVE.png");
+	-fx-background-size:stretch stretch; 
+}

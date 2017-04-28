@@ -1,4 +1,4 @@
-package ui.specialStage;
+package ui.specialParent;
 import bll.platform.Static;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
@@ -18,11 +18,11 @@ import javafx.stage.Stage;
 import ui.Main;
 import ui.sceneInterface.BasicScene;
 import ui.supportRoot.*;
-public class StaticStage extends Stage{
+public class StaticParent extends BorderPane{
 	//需要完成用户查询各系统静态信息的功能
 	private BasicScene main;
 	private BasicPlatform basicPlatform;//所有静态系统和信息存在于此，需要显示的信息通过它来获取
-	public StaticStage (Main main){
+	public StaticParent (Main main){
 		this.main=main;
 		basicPlatform = new Static (0);//实例化Static时，便已经完成了默认存档的加载
 		/**需要完成界面的显示
@@ -32,25 +32,27 @@ public class StaticStage extends Stage{
 		*通过basicPlatform来获取需要的信息
 		*当用户点击supportStage上的关闭按钮时，supportStage会自行销毁
 		**/
-		BorderPane border = new BorderPane();
+//		BorderPane border = new BorderPane();
 		HBox hbox = addHBox();
 		VBox vbox = addVBox();
-		border.setBottom(hbox);
-		border.setCenter(vbox);
+//		border.setBottom(hbox);
+		this.setBottom(hbox);
+//		border.setCenter(vbox);
+		this.setCenter(vbox);
 	
 		vbox.setAlignment(Pos.BOTTOM_CENTER); 
 		hbox.setAlignment(Pos.TOP_CENTER);
 		
 		hbox.setMaxWidth(hbox.getPrefWidth());
 		hbox.setMaxHeight(hbox.getPrefHeight());
-		Scene staticScene = new Scene(border);
-		staticScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+//		Scene staticScene = new Scene(border);
+//		staticScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		System.out.println(getClass().getResource(""));
-		this.setScene(staticScene);
-		this.setTitle("消消乐");
-		this.setFullScreen(true);
-		this.setResizable(false);
-		this.show();
+//		this.setScene(staticScene);
+//		this.setTitle("消消乐");
+//		this.setFullScreen(true);
+//		this.setResizable(false);
+//		this.show();
 	}
 	private HBox addHBox() {
 		// TODO Auto-generated method stub
