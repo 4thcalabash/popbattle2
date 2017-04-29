@@ -8,20 +8,14 @@ public class PopPo {
 	 * 构造函数参数1：pop信息；2：新棋盘；3：统计信息
 	 */
 	private int [] [] popInfo;
-	private MatrixPo newchessboard;//消除完成的时候的新棋盘
 	private int [] popNum;
 
 	public int [] [] getPopInfo() {
 		return popInfo;
 	}
-
-
-	public MatrixPo getNewchessboard() {
-		return newchessboard;
-	}
 	public PopPo(int [] []popInfo,MatrixPo newchessboard,int [] popNum){
 		this.popInfo=popInfo;
-		this.newchessboard=newchessboard;
+//		this.newchessboard=newchessboard;
 		this.popNum=popNum;
 	}
 	public int[] getPopNum() {
@@ -39,9 +33,6 @@ public class PopPo {
 	}
 
 
-	public void setNewchessboard(MatrixPo newchessboard) {
-		this.newchessboard = newchessboard;
-	}
 
 
 	public boolean hasAnyPop(){

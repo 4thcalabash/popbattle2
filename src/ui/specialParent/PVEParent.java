@@ -5,6 +5,7 @@ import ui.abstractStage.BattleParent;
 import ui.awt.ImageButton.Chessman;
 import ui.awt.ImageButton.ChessmanWorkers;
 import util.MissionInfo;
+import java.util.ArrayList;
 import bll.individual.PaperPlayer;
 import bll.individual.Player;
 import bll.matrix.Dot;
@@ -28,6 +29,7 @@ import javafx.util.Duration;
 import po.BattlePo;
 import po.DotPo;
 import po.MatrixPo;
+import po.PopPo;
 public class PVEParent extends BattleParent implements Runnable{
 //玩家单机闯关scene
 	public static final int LENGTH=75;
@@ -37,6 +39,7 @@ public class PVEParent extends BattleParent implements Runnable{
 	private boolean new1,new2;
 	private int round;
 	private MatrixPo matrixPo;
+	private PopPo popPo;
 //	GridPane sub = new GridPane ();
 	AnchorPane sub = new AnchorPane();
 	GridPane matrix = new GridPane();
@@ -44,6 +47,7 @@ public class PVEParent extends BattleParent implements Runnable{
 	private Chessman[][] imageMatrix = new Chessman[Matrix.TOTALLINE][Matrix.TOTALROW];
 	private Image []chessman = new Image [8];
 	private ImageView [] chessmanImageView = new ImageView [8];
+	private Thread myself;
 	public void setDot1(int x,int y){
 		dot1.setX(x);
 		dot1.setY(y);
@@ -62,7 +66,7 @@ public class PVEParent extends BattleParent implements Runnable{
 		
 		matrixPo = this.platform.getMatrix();
 		chessboard= matrixPo.getMatrix();
-		
+		myself = new Thread(this);
 		for (int i=0;i<8;i++){
 			if (i!=6){
 				chessman[i] = new Image ("Graphics/Matrix/"+i+".png");
@@ -111,11 +115,14 @@ public class PVEParent extends BattleParent implements Runnable{
 		rightBox.setAlignment(Pos.CENTER);
 		HBox test = new HBox ();
 		Button endTest = new Button("BattleEnd");
+		
 		endTest.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
+				myself.stop();
+				setVisible(false);
 				main.battleEnd();
 			}
 			
@@ -126,7 +133,8 @@ public class PVEParent extends BattleParent implements Runnable{
 		round=1;
 		new1=false;
 		new2=false;
-		new Thread(this).start();
+		myself.start();
+//		new Thread(this).start();
 	}
 	public void renewBoard(){
 
@@ -239,7 +247,22 @@ public class PVEParent extends BattleParent implements Runnable{
 					e.printStackTrace();
 				}
 				renewBoard();
-				
+//				Platform.runLater(()->{
+//					new Worker().run();
+//				});
+				popPo = platform.pop(round,dot1,dot2);
+				while (popPo.hasAnyPop()){
+					Platform.runLater(new Worker());
+					try{
+						Thread.sleep(INTERUPT);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					renewBoard();
+					popPo = this.platform.pop(round);
+					
+				}
+					
 				System.out.println(dot1.getX()+","+dot1.getY()+" "+dot2.getX()+","+dot2.getY());
 				
 
@@ -253,5 +276,57 @@ public class PVEParent extends BattleParent implements Runnable{
 		}
 		System.out.println("End");
 	}
-	
+	public class Worker implements Runnable{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			System.out.println("Working");
+			
+				sub = new AnchorPane ();
+				sub.setMaxHeight(10*PVEParent.LENGTH);
+				sub.setMaxWidth(8*PVEParent.LENGTH);
+				sub.setId("Matrix");
+//				Platform.runLater(()->{
+					ArrayList <Timeline> lineList = new ArrayList <Timeline> ();
+					for (int i=0;i<Matrix.TOTALLINE;i++){
+						for (int j=0;j<Matrix.TOTALROW;j++){
+							if (popPo.getPopInfo()[i][j]==0){
+								ImageView tt = new ImageView (new Image("Graphics/Matrix/"+chessboard[i][j].getColor()+".png"));
+								tt.setFitHeight(PVEParent.LENGTH);
+								tt.setFitWidth(PVEParent.LENGTH);
+								tt.setX(j*PVEParent.LENGTH);
+								tt.setY((Matrix.TOTALLINE-1-i)*PVEParent.LENGTH);
+								sub.getChildren().add(tt);
+							}else{
+								ImageView tt = new ImageView (new Image("Graphics/Matrix/"+chessboard[i][j].getColor()/*+"_"+popPo.getPopInfo()[i][j]+".gif"*/+".png"));
+								tt.setFitHeight(PVEParent.LENGTH);
+								tt.setFitWidth(PVEParent.LENGTH);
+								tt.setX(j*PVEParent.LENGTH);
+								tt.setY((Matrix.TOTALLINE-1-i)*PVEParent.LENGTH);
+								sub.getChildren().add(tt);
+								System.out.print(tt.scaleXProperty());
+								KeyValue kv1= new KeyValue (tt.scaleXProperty(),0);
+								KeyValue kv2 = new KeyValue (tt.scaleYProperty(),0);
+								KeyFrame kf1 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kv1);
+								KeyFrame kf2 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kv2);
+								Timeline timeline = new Timeline();
+								timeline.getKeyFrames().add(kf1);
+								timeline.getKeyFrames().add(kf2);
+								timeline.setAutoReverse(false);
+								timeline.setCycleCount(1);
+								lineList.add(timeline);
+							}
+						}
+					}
+					setCenter(null);
+					setCenter(sub);
+					for (Timeline ex:lineList){
+						ex.play();
+					}
+//				});
+			}
+		
+		
+	}
 }

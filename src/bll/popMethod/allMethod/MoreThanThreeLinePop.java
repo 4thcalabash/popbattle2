@@ -549,7 +549,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 			DotPo head = queue.get(0);
 			queue.remove(0);
 			chessboard.getMatrix()[head.getX()][head.getY()].setColor(Matrix.BLANK);
-			chessboard.getPopNum()[head.getBonus()]++;
+			chessboard.getPopNum()[head.getColor()]++;
 			if (head.getBonus()==Matrix.DOUBLECHICK){
 				chessboard.getPopNum()[Matrix.CHICKBONUS]++;
 			}
@@ -1023,7 +1023,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 			DotPo head = queue.get(0);
 			queue.remove(0);
 			chessboard.getMatrix()[head.getX()][head.getY()].setColor(Matrix.BLANK);
-			chessboard.getPopNum()[head.getBonus()]++;
+			chessboard.getPopNum()[head.getColor()]++;
 			if (head.getBonus()==Matrix.DOUBLECHICK){
 				chessboard.getPopNum()[Matrix.CHICKBONUS]++;
 			}
