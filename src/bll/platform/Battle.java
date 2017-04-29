@@ -36,7 +36,8 @@ public class Battle implements BattlePlatform{
 	@Override
 	public BattlePo check() {
 		// TODO Auto-generated method stub
-		return null;
+		BattlePo battlePo = new BattlePo ();
+		return battlePo;
 		
 	}
 	

@@ -34,9 +34,9 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		stage.setScene(scene);
 		stage.setTitle("œ˚œ˚¿÷");
 		stage.setFullScreenExitHint("");
-		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+//		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreen(true);
-		stage.setResizable(false);
+//		stage.setResizable(false);
 		primaryStage = stage;
 		primaryStage.show();
 
@@ -71,6 +71,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	
 	public static void main(String[] args){
 		launch(args);
+		
 	}
 	@Override
 	public void setStage(Parent root) {
@@ -89,7 +90,6 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	@Override
 	public void exitGame() {
 		// TODO Auto-generated method stub
-		
 		stage.close();
 	}
 
