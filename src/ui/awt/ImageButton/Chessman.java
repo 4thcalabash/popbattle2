@@ -78,6 +78,10 @@ public class Chessman extends ImageView{
 //					System.out.println("Release At "+"<"+releaseX+","+releaseY+">");
 					double deltaX=releaseX-dragX;
 					double deltaY=releaseY-dragY;
+					if (Math.sqrt(deltaY*deltaY+deltaX*deltaX)*2<PVEParent.LENGTH){
+						releaseFocus();
+						return;
+					}
 					if (deltaY<0&&Math.abs(deltaX)<Math.abs(deltaY)){
 						System.out.println("Up");
 						dx=1;

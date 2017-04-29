@@ -17,6 +17,7 @@ public class BattleChooser extends SupportParent{
 		AnchorPane map = new AnchorPane();
 		map.setId("BattleChooserMap");
 //		map.setMaxSize(maxWidth, maxHeight);
+		System.out.println(new Image("Graphics/Other/MissionGraphics/mission0Static.png").impl_getUrl());
 		ImageButton mission0 = new ImageButton(new Image("Graphics/Other/MissionGraphics/mission0Static.png"),new Image("Graphics/Other/MissionGraphics/mission0Entered.png"),
 				new Image("Graphics/Other/MissionGraphics/mission0Pressed.png"),new ButtonWorker(){
 
@@ -30,7 +31,7 @@ public class BattleChooser extends SupportParent{
 					}
 			
 		});
-		ImageButton mission1 = new ImageButton(new Image("Graphics/Other/MissionGraphics/mission1Static.png"),new Image("Graphics/Other/MissionGraphics/mission1ENtered.png"),
+		ImageButton mission1 = new ImageButton(new Image("Graphics/Other/MissionGraphics/mission1Static.png"),new Image("Graphics/Other/MissionGraphics/mission1Entered.png"),
 				new Image("Graphics/Other/MissionGraphics/mission1Pressed.png"),new ButtonWorker(){
 
 					@Override

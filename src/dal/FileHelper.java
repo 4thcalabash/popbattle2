@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import bll.individual.PaperPlayer;
@@ -21,10 +22,13 @@ public class FileHelper implements DataOperator{
 		PlayerVo playerVo = new PlayerVo();
 		playerVo.setShopVo(new ShopVo());
 		try{
-			String filePath = FileHelper.class.getClassLoader().getResource("Data/Save"+index+".data").getPath();
-			File save = new File (filePath);
-			FileReader filereader = new FileReader(save);
-			BufferedReader reader = new BufferedReader (filereader);
+//			String filePath = FileHelper.class.getClassLoader().
+//					getResource("Data/Save"+index+".data").getPath();			
+//			System.out.println(filePath);
+//			File save = new File (filePath);
+//			FileReader filereader = new FileReader(save);
+//			BufferedReader reader = new BufferedReader (filereader);
+			BufferedReader reader = new BufferedReader (new InputStreamReader(FileHelper.class.getClassLoader().getResourceAsStream("Data/Save"+index+".data")));
 			String line = null;
 			
 			line = reader.readLine();
@@ -93,7 +97,7 @@ public class FileHelper implements DataOperator{
 			playerVo.getShopVo().setEvolveStonePrice(Integer.parseInt(line));
 			//return null;
 			reader.close();
-			filereader.close();
+//			filereader.close();
 			
 		}catch(Exception e){
 			e.printStackTrace();
@@ -183,11 +187,12 @@ public class FileHelper implements DataOperator{
 	public MissionVo loadMission(int index) {
 		// TODO Auto-generated method stub
 		MissionVo missionVo = new MissionVo ();
-		String filePath = FileHelper.class.getClassLoader().getResource("MissionData/"+index+".data").getPath();
+//		String filePath = FileHelper.class.getClassLoader().getResource("MissionData/"+index+".data").getPath();
 		try{
-			File save = new File (filePath);
-			FileReader filereader = new FileReader (save);
-			BufferedReader reader = new BufferedReader (filereader);
+//			File save = new File (filePath);
+//			FileReader filereader = new FileReader (save);
+//			BufferedReader reader = new BufferedReader (filereader);
+			BufferedReader reader = new BufferedReader (new InputStreamReader (FileHelper.class.getClassLoader().getResourceAsStream("MissionData/"+index+".data")));
 			missionVo.setID(index);
 			String line = null;
 			line = reader.readLine();
@@ -201,7 +206,7 @@ public class FileHelper implements DataOperator{
 			}
 			missionVo.setAIID(AIID);
 			reader.close();
-			filereader.close();
+//			filereader.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
