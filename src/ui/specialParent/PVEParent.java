@@ -129,9 +129,7 @@ public class PVEParent extends BattleParent implements Runnable{
 		new Thread(this).start();
 	}
 	public void renewBoard(){
-//		Platform.runLater(()->{
-//			this.setCenter(null);
-//		});
+
 		matrix = new GridPane ();
 		matrix.setId("Matrix");
 		matrix.setMaxHeight(10*PVEParent.LENGTH);
@@ -139,18 +137,12 @@ public class PVEParent extends BattleParent implements Runnable{
 		chessboard= this.platform.getMatrix().getMatrix();
 		for (int i=0;i<Matrix.TOTALLINE;i++){
 			for (int j=0;j<Matrix.TOTALROW;j++){
-//				imageMatrix[i][j].setStaticImage(new Image("Graphics/Matrix/"+chessboard[i][j].getColor()+".png"));
-//				imageMatrix[i][j].setPressedImage(new Image("Graphics/Matrix/"+chessboard[i][j].getColor()+".png"));
 				imageMatrix[i][j]= new Chessman(i,j,new Image("Graphics/Matrix/"+chessboard[i][j].getColor()+".png"),new Image("Graphics/Matrix/"+chessboard[i][j].getColor()+".png"),this);
 				imageMatrix[i][j].setFitHeight(PVEParent.LENGTH);
 				imageMatrix[i][j].setFitWidth(PVEParent.LENGTH);
 			}
 		}
 		Platform.runLater(()->{
-//			matrix = new GridPane();
-//			matrix.setId("Matrix");
-//			matrix.getChildren().clear();
-//			System.out.println(matrix.getChildren().isEmpty());
 			for (int i=0;i<Matrix.TOTALLINE;i++){
 				for (int j=0;j<Matrix.TOTALROW;j++){
 					matrix.add(imageMatrix[i][j], j, Matrix.TOTALLINE-1-i);					
@@ -167,24 +159,10 @@ public class PVEParent extends BattleParent implements Runnable{
 		BattlePo result = this.platform.check();
 		System.out.println("Start");
 		while (!result.isBattleIsEnd()){
-			int a=0;
 			if (new1&&new2){
-				a++;
-				System.out.println(a);
+	
 				new1=new2=false;
-				
-//				System.out.println(imageMatrix[dot1.getX()][dot1.getY()].getStaticImage());
-				for (int i=Matrix.TOTALLINE-1;i>=0;i--){
-					for (int j=0;j<Matrix.TOTALROW;j++){
-						System.out.println(i+","+j+":"+imageMatrix[i][j].getStaticImage().impl_getUrl());
-						
-					}
-				}
-				System.out.println(matrix.hashCode());
 				boolean flag = this.platform.move(dot1, dot2);
-				
-				Dot [] [] temp1 = this.platform.getMatrix().getMatrix();
-				
 				System.out.println(flag);
 				
 				Platform.runLater(()->{
@@ -249,47 +227,22 @@ public class PVEParent extends BattleParent implements Runnable{
 						timeline2.setAutoReverse(true);
 						timeline1.setCycleCount(2);
 						timeline2.setCycleCount(2);
-						
 					}else{
-//						renewBoard();
 					}
 					timeline1.play();
 					timeline2.play();
 				});
-//				renewBoard();
+
 				try{
 					Thread.sleep(PVEParent.INTERUPT*2);
 				}catch(Exception e){
 					e.printStackTrace();
 				}
 				renewBoard();
-//				Platform.runLater(()->{
-//					renewBoard();
-//					matrix.setVisible(true);
-//					this.setCenter(matrix);
-//					matrix.setVisible(true);
-//					sub.setVisible(false);
-//				});
 				
-				
-				
-				for (int i=Matrix.TOTALLINE-1;i>=0;i--){
-					for (int j=0;j<Matrix.TOTALROW;j++){
-						System.out.println(i+","+j+":"+imageMatrix[i][j].getStaticImage().impl_getUrl());
-						
-					}
-				}
-				System.out.println(matrix.hashCode());
 				System.out.println(dot1.getX()+","+dot1.getY()+" "+dot2.getX()+","+dot2.getY());
 				
-				Dot [] [] temp2 = this.platform.getMatrix().getMatrix();
-				for (int i=0;i<Matrix.TOTALLINE;i++){
-					for (int j=0;j<Matrix.TOTALROW;j++){
-						if (temp1[i][j].getColor()!=temp2[i][j].getColor()){
-							System.out.println("Error at "+i+","+j);
-						}
-					}
-				}
+
 			}else{
 				try{
 					Thread.sleep(10);
