@@ -35,7 +35,7 @@ import po.PopPo;
 public class PVEParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 	public static final int LENGTH = 75;
-	public static final int INTERUPT = 380;
+	public static final int INTERUPT = 420;
 	public static final int DROP = 200;
 	private DotPo dot1 = new DotPo(-1, -1);
 	private DotPo dot2 = new DotPo(-1, -1);
@@ -248,11 +248,44 @@ public class PVEParent extends BattleParent implements Runnable {
 		popPo = platform.pop(round, dot1, dot2);
 		Worker worker = new Worker();
 		while (popPo.hasAnyPop()) {
+			for (int i = 0; i < Matrix.TOTALLINE; i++) {
+				for (int j = 0; j < Matrix.TOTALROW; j++) {
+					if (popPo.getPopInfo()[i][j] == Matrix.TOBOMBBONUS) {
+						chessboard[i][j].setBonus(Matrix.BOMBBONUS);
+					} else if (popPo.getPopInfo()[i][j] == Matrix.TOLINEBONUS) {
+						chessboard[i][j].setBonus(Matrix.LINEBONUS);
+					} else if (popPo.getPopInfo()[i][j] == Matrix.TOROWBONUS) {
+						chessboard[i][j].setBonus(Matrix.ROWBONUS);
+					} else if (popPo.getPopInfo()[i][j] == Matrix.TOCHICK) {
+						chessboard[i][j].setColor(Matrix.NONE);
+						chessboard[i][j].setBonus(Matrix.CHICKBONUS);
+					}
+				}
+			}
+			DotPo d1 = null, d2 = null;
+			if (chessboard[dot1.getX()][dot1.getY()].getBonus() == Matrix.CHICKBONUS) {
+				d1 = new DotPo(dot1.getX(), dot1.getY());
+				d2 = new DotPo(dot2.getX(), dot2.getY());
+			} else if (chessboard[dot2.getX()][dot2.getY()].getBonus() == Matrix.CHICKBONUS) {
+				d1 = new DotPo(dot2.getX(), dot2.getY());
+				d2 = new DotPo(dot1.getX(), dot1.getY());
+			}
+			if (d1 != null && chessboard[d2.getX()][d2.getY()].getBonus() != Matrix.CHICKBONUS) {
+				int color = chessboard[d2.getX()][d2.getY()].getColor();
+				int bonus = chessboard[d2.getX()][d2.getY()].getBonus();
+				for (int i = 0; i < Matrix.TOTALLINE; i++) {
+					for (int j = 0; j < Matrix.TOTALROW; j++) {
+						if (chessboard[i][j].getColor() == color) {
+							chessboard[i][j].setBonus(bonus);
+						}
+					}
+				}
+			}
 			// 演示一次元消除动画
 			Platform.runLater(worker);
 			// 等待动画显示完毕
 			try {
-				Thread.sleep((long) (INTERUPT * 2));
+				Thread.sleep((long) (INTERUPT * 2.1));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -302,26 +335,26 @@ public class PVEParent extends BattleParent implements Runnable {
 
 			}
 		}
-		boolean[][] drop = new boolean[2*Matrix.TOTALLINE][Matrix.TOTALROW];
+		boolean[][] drop = new boolean[2 * Matrix.TOTALLINE][Matrix.TOTALROW];
 		while (true) {
 			System.out.println("drop");
-			for (int i=Matrix.TOTALLINE-1;i>=0;i--){
-				for (int j=0;j<Matrix.TOTALROW;j++){
-					if (chessboard[i][j]==null){
+			for (int i = Matrix.TOTALLINE - 1; i >= 0; i--) {
+				for (int j = 0; j < Matrix.TOTALROW; j++) {
+					if (chessboard[i][j] == null) {
 						System.out.print(9);
-					}else{
+					} else {
 						System.out.print(chessboard[i][j].getColor());
 					}
 				}
 				System.out.println();
 			}
-			
+
 			for (int j = 0; j < Matrix.TOTALROW; j++) {
-				for (int i = 1; i < Matrix.TOTALLINE*2; i++) {
+				for (int i = 1; i < Matrix.TOTALLINE * 2; i++) {
 					if (drop[i - 1][j]) {
 						drop[i][j] = true;
 					} else {
-						if (chessboard[i-1][j]==null) {
+						if (chessboard[i - 1][j] == null) {
 							drop[i][j] = true;
 						} else {
 							drop[i][j] = false;
@@ -342,7 +375,7 @@ public class PVEParent extends BattleParent implements Runnable {
 				this.setCenter(sub);
 				for (int i = 0; i < Matrix.TOTALLINE; i++) {
 					for (int j = 0; j < Matrix.TOTALROW; j++) {
-						if (chessboard[i][j]!=null) {
+						if (chessboard[i][j] != null) {
 							ImageView tt;
 							String basicPath = createBasicPath(i, j);
 							if (chessboard[i][j].getBonus() == Matrix.NORMAL
@@ -374,24 +407,24 @@ public class PVEParent extends BattleParent implements Runnable {
 				e.printStackTrace();
 			}
 			for (int j = 0; j < Matrix.TOTALROW; j++) {
-				for (int i = 1; i < Matrix.TOTALLINE*2; i++) {
-					if (chessboard[i-1][j]==null) {
-//						chessboard[i - 1][j] = chessboard[i][j];
-						Dot temp = chessboard[i-1][j];
-						chessboard[i-1][j]=chessboard[i][j];
-						chessboard[i][j]=temp;
+				for (int i = 1; i < Matrix.TOTALLINE * 2; i++) {
+					if (chessboard[i - 1][j] == null) {
+						// chessboard[i - 1][j] = chessboard[i][j];
+						Dot temp = chessboard[i - 1][j];
+						chessboard[i - 1][j] = chessboard[i][j];
+						chessboard[i][j] = temp;
 					}
 				}
 			}
-			
+
 			boolean full = true;
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					if (chessboard[i][j] == null) {
-//						content[i][j] = false;
+						// content[i][j] = false;
 						full = false;
 					} else {
-//						content[i][j] = true;
+						// content[i][j] = true;
 					}
 				}
 			}
@@ -441,13 +474,15 @@ public class PVEParent extends BattleParent implements Runnable {
 		public void run() {
 			// TODO Auto-generated method stub
 			System.out.println("Working");
+			boolean[][] bombflag = new boolean[Matrix.TOTALLINE][Matrix.TOTALROW];
 			sub = new AnchorPane();
 			sub.setMaxHeight(10 * PVEParent.LENGTH);
 			sub.setMaxWidth(8 * PVEParent.LENGTH);
 			sub.setPrefSize(getMaxWidth(), getMaxHeight());
 			sub.setId("Matrix");
-			ArrayList<Timeline> lineList = new ArrayList<Timeline>();
-			// ArrayList<Animation> aniList = new ArrayList<Animation>();
+			Timeline timeline = new Timeline();
+			timeline.setAutoReverse(false);
+			timeline.setCycleCount(1);
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					String basicPath = createBasicPath(i, j);
@@ -468,10 +503,7 @@ public class PVEParent extends BattleParent implements Runnable {
 					} else {
 						// 有消除信息
 						ImageView tt = null;
-						Timeline timeline = new Timeline();
-						timeline.setAutoReverse(false);
-						timeline.setCycleCount(1);
-						lineList.add(timeline);
+
 						// 背景特效
 						if (popPo.getPopInfo()[i][j] == Matrix.LINEBONUSPOP
 								|| popPo.getPopInfo()[i][j] == Matrix.ROWBONUSPOP) {
@@ -496,25 +528,29 @@ public class PVEParent extends BattleParent implements Runnable {
 								for (int dj = -2; dj <= 2; dj++) {
 									if (i + di >= 0 && i + di < Matrix.TOTALLINE && j + dj >= 0
 											&& j + dj < Matrix.TOTALROW) {
-										ImageView ttt = new ImageView(
-												new Image("Graphics/Matrix/103_" + di + "_" + dj + ".gif"));
-										ttt.setFitHeight(PVEParent.LENGTH);
-										ttt.setFitWidth(PVEParent.LENGTH);
-										ttt.setX((j + dj) * PVEParent.LENGTH);
-										ttt.setY((Matrix.TOTALLINE - 1 - i - di) * PVEParent.LENGTH);
-										sub.getChildren().add(ttt);
-										// KeyValue kv = new KeyValue
-										// (ttt.visibleProperty(),true);
-										// KeyFrame
+										if (!bombflag[i + di][j + dj]) {
+											bombflag[i + di][j + dj] = true;
+											ImageView ttt = new ImageView(
+													new Image("Graphics/Matrix/103_" + di + "_" + dj + ".gif"));
+											ttt.setFitHeight(PVEParent.LENGTH);
+											ttt.setFitWidth(PVEParent.LENGTH);
+											ttt.setX((j + dj) * PVEParent.LENGTH);
+											ttt.setY((Matrix.TOTALLINE - 1 - i - di) * PVEParent.LENGTH);
+											sub.getChildren().add(ttt);
+										}
 									}
 								}
 							}
 						}
 						// 显示被消除的动画
-
-						tt = new ImageView(new Image(basicPath + ".png"));
-						if (popPo.getPopInfo()[i][j]==Matrix.CHICKITSELFPOP){
-							tt= new ImageView (new Image("Graphics/Matrix/7_-1000.gif"));
+						if (chessboard[i][j].getBonus() == Matrix.NORMAL
+								|| chessboard[i][j].getBonus() == Matrix.CHICKBONUS) {
+							tt = new ImageView(new Image(basicPath + ".png"));
+						} else {
+							tt = new ImageView(new Image(basicPath + "Static.gif"));
+						}
+						if (popPo.getPopInfo()[i][j] == Matrix.CHICKITSELFPOP) {
+							tt = new ImageView(new Image("Graphics/Matrix/7_-1000.gif"));
 						}
 						tt.setFitHeight(PVEParent.LENGTH);
 						tt.setFitWidth(PVEParent.LENGTH);
@@ -523,15 +559,15 @@ public class PVEParent extends BattleParent implements Runnable {
 						sub.getChildren().add(tt);
 
 						// 普通的消除方式
-						if (popPo.getPopInfo()[i][j] == Matrix.NORMALPOP) {
+						if (popPo.getPopInfo()[i][j] == Matrix.NORMALPOP||chessboard[i][j].getBonus()==Matrix.NORMAL) {
 							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.25);
 							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.25);
-							KeyValue kvv1 = new KeyValue (tt.scaleXProperty(),0);
-							KeyValue kvv2 = new KeyValue (tt.scaleYProperty(),0);
-							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv1);
-							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv2);
-							KeyFrame kff1 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv1);
-							KeyFrame kff2 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv2);
+							KeyValue kvv1 = new KeyValue(tt.scaleXProperty(), 0);
+							KeyValue kvv2 = new KeyValue(tt.scaleYProperty(), 0);
+							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 2), kv1);
+							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 2), kv2);
+							KeyFrame kff1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv1);
+							KeyFrame kff2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv2);
 							timeline.getKeyFrames().add(kf1);
 							timeline.getKeyFrames().add(kf2);
 							timeline.getKeyFrames().add(kff1);
@@ -540,19 +576,62 @@ public class PVEParent extends BattleParent implements Runnable {
 							// 被鸡消除
 							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.6);
 							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.6);
-							KeyValue kv3 = new KeyValue(tt.rotateProperty(),720);
-							KeyValue kvv1 = new KeyValue (tt.scaleXProperty(),0);
-							KeyValue kvv2 = new KeyValue (tt.scaleYProperty(),0);
-							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv1);
-							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv2);
+							KeyValue kv3 = new KeyValue(tt.rotateProperty(), 720);
+							KeyValue kvv1 = new KeyValue(tt.scaleXProperty(), 0);
+							KeyValue kvv2 = new KeyValue(tt.scaleYProperty(), 0);
+							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 2), kv1);
+							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 2), kv2);
 							KeyFrame kf3 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kv3);
-							KeyFrame kff1 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv1);
-							KeyFrame kff2 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv2);
+							KeyFrame kff1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv1);
+							KeyFrame kff2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv2);
 							timeline.getKeyFrames().add(kf1);
 							timeline.getKeyFrames().add(kf2);
 							timeline.getKeyFrames().add(kf3);
 							timeline.getKeyFrames().add(kff1);
 							timeline.getKeyFrames().add(kff2);
+						} else if ((popPo.getPopInfo()[i][j] == Matrix.LINEBONUSPOP
+								|| popPo.getPopInfo()[i][j] == Matrix.ROWBONUSPOP
+								|| popPo.getPopInfo()[i][j] == Matrix.BOMBBONUSPOP)
+								&& (chessboard[i][j].getBonus() == Matrix.BOMBBONUS
+										|| chessboard[i][j].getBonus() == Matrix.LINEBONUS
+										|| chessboard[i][j].getBonus() == Matrix.ROWBONUS)) {
+							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 0.5);
+							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 0.5);
+							KeyValue kv3 = new KeyValue(tt.rotateProperty(), 360);
+							KeyValue kvv1 = new KeyValue(tt.scaleXProperty(), 1.4);
+							KeyValue kvv2 = new KeyValue(tt.scaleYProperty(), 1.4);
+							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 2), kv1);
+							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 2), kv2);
+							KeyFrame kf3 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kv3);
+							KeyFrame kff1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv1);
+							KeyFrame kff2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv2);
+							timeline.getKeyFrames().add(kf1);
+							timeline.getKeyFrames().add(kf2);
+							timeline.getKeyFrames().add(kf3);
+							timeline.getKeyFrames().add(kff1);
+							timeline.getKeyFrames().add(kff2);
+						} else if (popPo.getPopInfo()[i][j] == Matrix.CHICKITSELFPOP) {
+							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.3);
+							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.3);
+							KeyValue kv3 = new KeyValue(tt.rotateProperty(), 360);
+							KeyValue kvv1 = new KeyValue(tt.scaleXProperty(), 1.4);
+							KeyValue kvv2 = new KeyValue(tt.scaleYProperty(), 1.4);
+
+							KeyValue kvx = new KeyValue(tt.scaleXProperty(), 0);
+							KeyValue kvy = new KeyValue(tt.scaleYProperty(), 0);
+							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 3), kv1);
+							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT / 3), kv2);
+							// KeyFrame kf3 = new
+							// KeyFrame(Duration.millis(PVEParent.INTERUPT),
+							// kv3);
+							KeyFrame kff1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv1);
+							KeyFrame kff2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kvv2);
+							timeline.getKeyFrames().add(kf1);
+							timeline.getKeyFrames().add(kf2);
+							// timeline.getKeyFrames().add(kf3);
+							timeline.getKeyFrames().add(kff1);
+							timeline.getKeyFrames().add(kff2);
+
 						}
 
 					}
@@ -562,9 +641,7 @@ public class PVEParent extends BattleParent implements Runnable {
 			setCenter(null);
 			setCenter(sub);
 			// 启动动画
-			for (Timeline ex : lineList) {
-				ex.play();
-			}
+			timeline.play();
 		}
 	}
 }

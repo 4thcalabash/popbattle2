@@ -138,12 +138,15 @@ public class Matrix {
 					}
 				}
 			}
+			matrix[0][3].setColor(0);
 			matrix[0][0].setColor(0);
 			matrix[0][1].setColor(0);
-			matrix[1][2].setColor(Matrix.NONE);
-			matrix[1][2].setBonus(Matrix.CHICKBONUS);
-			matrix[1][3].setBonus(Matrix.ROWBONUS);
-			matrix[1][4].setBonus(Matrix.BOMBBONUS);
+			matrix[1][2].setColor(0);
+			matrix[2][2].setColor(0);
+//			matrix[1][2].setColor(Matrix.NONE);
+//			matrix[1][2].setBonus(Matrix.CHICKBONUS);
+//			matrix[0][3].setBonus(Matrix.ROWBONUS);
+//			matrix[0][4].setBonus(Matrix.BOMBBONUS);
 		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
 		
 //		

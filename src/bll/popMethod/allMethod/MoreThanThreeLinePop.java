@@ -110,7 +110,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 				// queue.add(new DotPo
 				// (dot1.getX(),dot1.getY(),chessboard.getMatrix()[dot2.getX()][dot2.getY()].getColor()*1000+Matrix.NORMAL,Matrix.CHICKBONUS));
 				chessboard.getMatrix()[dot1.getX()][dot1.getY()].setColor(Matrix.BLANK);
-				chessboard.getIsPop()[dot1.getX()][dot1.getY()] = Matrix.CHICKPOP;
+				chessboard.getIsPop()[dot1.getX()][dot1.getY()] = Matrix.CHICKITSELFPOP;
 
 				// 特殊处理 不通过队列
 			} else {
@@ -162,6 +162,8 @@ public class MoreThanThreeLinePop extends PopMethod {
 						.getBonus();
 			} else if (chessboard.getMatrix()[dot2.getX()][dot2.getY()].getBonus() == Matrix.LINEBONUS) {
 				// dot1 炸弹 dot2行特效
+				chessboard.getMatrix()[dot1.getX()][dot1.getY()].setColor(Matrix.BLANK);
+				chessboard.getMatrix()[dot2.getX()][dot2.getY()].setColor(Matrix.BLANK);
 				for (int i = dot2.getX() - 2; i <= dot2.getX() + 2; i++) {
 					if (i >= 0 && i < Matrix.TOTALLINE) {
 						chessboard.getIsPop()[i][dot2.getY()] = Matrix.LINEBONUSPOP;
@@ -176,6 +178,8 @@ public class MoreThanThreeLinePop extends PopMethod {
 
 			} else if (chessboard.getMatrix()[dot2.getX()][dot2.getY()].getBonus() == Matrix.ROWBONUS) {
 				// dot1炸弹 dot2列特效
+				chessboard.getMatrix()[dot1.getX()][dot1.getY()].setColor(Matrix.BLANK);
+				chessboard.getMatrix()[dot2.getX()][dot2.getY()].setColor(Matrix.BLANK);
 				for (int j = dot2.getY() - 2; j <= dot2.getY() + 2; j++) {
 					if (j >= 0 && j < Matrix.TOTALROW) {
 						chessboard.getIsPop()[dot2.getX()][j] = Matrix.ROWBONUS;
@@ -188,6 +192,8 @@ public class MoreThanThreeLinePop extends PopMethod {
 				in[dot2.getX()][dot2.getY()] = 1234;
 			} else if (chessboard.getMatrix()[dot2.getX()][dot2.getY()].getBonus() == Matrix.BOMBBONUS) {
 				// dot1\2都是炸弹
+				chessboard.getMatrix()[dot1.getX()][dot1.getY()].setColor(Matrix.BLANK);
+				chessboard.getMatrix()[dot2.getX()][dot2.getY()].setColor(Matrix.BLANK);
 				if (Math.random() > 0.5) {
 					DotPo temp = dot1;
 					dot1 = dot2;
@@ -687,6 +693,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 				if (head.getColor()==Matrix.NONE){
 					head.setColor((int)(Math.random()*Matrix.KIND));
 				}
+				chessboard.getIsPop()[head.getX()][head.getY()]=Matrix.CHICKITSELFPOP;
 				for (int i = 0; i < Matrix.TOTALLINE; i++) {
 					for (int j = 0; j < Matrix.TOTALROW; j++) {
 						if (chessboard.getMatrix()[i][j].getColor() == head.getColor()) {
