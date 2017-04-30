@@ -138,18 +138,10 @@ public class Matrix {
 					}
 				}
 			}
-			matrix[0][0].setColor(Matrix.NONE);
-			matrix[0][1].setColor(Matrix.NONE);
-			matrix[0][0].setBonus(Matrix.CHICKBONUS);
-			matrix[0][1].setBonus(Matrix.CHICKBONUS);
-//			matrix[0][0].setColor(0);
-//			matrix[0][1].setColor(0);
-//			matrix[1][2].setColor(0);
-//			matrix[4][1].setColor(0);
-//			matrix[4][2].setColor(0);
-//			matrix[3][3].setColor(0);
-//			matrix[3][4].setColor(0);
-//			matrix[1][2].setBonus(BOMBBONUS);
+			matrix[0][0].setColor(0);
+			matrix[0][1].setColor(0);
+			matrix[1][2].setColor(0);
+			matrix[1][2].setBonus(Matrix.BOMBBONUS);
 		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
 		
 //		

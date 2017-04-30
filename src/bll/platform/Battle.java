@@ -151,7 +151,7 @@ public class Battle implements BattlePlatform{
 	public MatrixPo getMatrix() {
 		// TODO Auto-generated method stub
 		MatrixPo matrixPo = new MatrixPo();
-		for (int i=0;i<Matrix.TOTALLINE;i++){
+		for (int i=0;i<Matrix.TOTALLINE*2;i++){
 			for (int j=0;j<Matrix.TOTALROW;j++){
 				matrixPo.getMatrix()[i][j] = new Dot(chessboard.getMatrix()[i][j].getColor(), chessboard.getMatrix()[i][j].getBonus());
 			}
