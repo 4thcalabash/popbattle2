@@ -684,6 +684,9 @@ public class MoreThanThreeLinePop extends PopMethod {
 					}
 				}
 			} else if (head.getBonus() == Matrix.CHICKBONUS) {
+				if (head.getColor()==Matrix.NONE){
+					head.setColor((int)(Math.random()*Matrix.KIND));
+				}
 				for (int i = 0; i < Matrix.TOTALLINE; i++) {
 					for (int j = 0; j < Matrix.TOTALROW; j++) {
 						if (chessboard.getMatrix()[i][j].getColor() == head.getColor()) {

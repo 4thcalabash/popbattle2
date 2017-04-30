@@ -35,8 +35,8 @@ import po.PopPo;
 public class PVEParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 	public static final int LENGTH = 75;
-	public static final int INTERUPT = 300;
-	public static final int DROP = 150;
+	public static final int INTERUPT = 380;
+	public static final int DROP = 200;
 	private DotPo dot1 = new DotPo(-1, -1);
 	private DotPo dot2 = new DotPo(-1, -1);
 	private boolean new1, new2;
@@ -513,6 +513,9 @@ public class PVEParent extends BattleParent implements Runnable {
 						// 显示被消除的动画
 
 						tt = new ImageView(new Image(basicPath + ".png"));
+						if (popPo.getPopInfo()[i][j]==Matrix.CHICKITSELFPOP){
+							tt= new ImageView (new Image("Graphics/Matrix/7_-1000.gif"));
+						}
 						tt.setFitHeight(PVEParent.LENGTH);
 						tt.setFitWidth(PVEParent.LENGTH);
 						tt.setX(j * PVEParent.LENGTH);
@@ -521,23 +524,35 @@ public class PVEParent extends BattleParent implements Runnable {
 
 						// 普通的消除方式
 						if (popPo.getPopInfo()[i][j] == Matrix.NORMALPOP) {
-							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 0);
-							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 0);
-							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kv1);
-							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kv2);
+							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.25);
+							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.25);
+							KeyValue kvv1 = new KeyValue (tt.scaleXProperty(),0);
+							KeyValue kvv2 = new KeyValue (tt.scaleYProperty(),0);
+							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv1);
+							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv2);
+							KeyFrame kff1 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv1);
+							KeyFrame kff2 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv2);
 							timeline.getKeyFrames().add(kf1);
 							timeline.getKeyFrames().add(kf2);
+							timeline.getKeyFrames().add(kff1);
+							timeline.getKeyFrames().add(kff2);
 						} else if (popPo.getPopInfo()[i][j] == Matrix.CHICKPOP) {
 							// 被鸡消除
-							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 0);
-							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 0);
-							KeyValue kv3 = new KeyValue(tt.rotateProperty(), 360);
-							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kv1);
-							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kv2);
+							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.6);
+							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.6);
+							KeyValue kv3 = new KeyValue(tt.rotateProperty(),720);
+							KeyValue kvv1 = new KeyValue (tt.scaleXProperty(),0);
+							KeyValue kvv2 = new KeyValue (tt.scaleYProperty(),0);
+							KeyFrame kf1 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv1);
+							KeyFrame kf2 = new KeyFrame(Duration.millis(PVEParent.INTERUPT/2), kv2);
 							KeyFrame kf3 = new KeyFrame(Duration.millis(PVEParent.INTERUPT), kv3);
+							KeyFrame kff1 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv1);
+							KeyFrame kff2 = new KeyFrame (Duration.millis(PVEParent.INTERUPT),kvv2);
 							timeline.getKeyFrames().add(kf1);
 							timeline.getKeyFrames().add(kf2);
 							timeline.getKeyFrames().add(kf3);
+							timeline.getKeyFrames().add(kff1);
+							timeline.getKeyFrames().add(kff2);
 						}
 
 					}
