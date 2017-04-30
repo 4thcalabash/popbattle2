@@ -128,26 +128,6 @@ public class Matrix {
 		/***************
 		 *Debug专用棋盘 *
 		 ***************/
-//		do{
-//			for (int i = 0; i < TOTALLINE * 2; i++) {
-//				for (int j = 0; j < TOTALROW; j++) {
-//					matrix[i][j].setColor((int) (Math.random() * (KIND )));
-//					matrix[i][j].setBonus(Matrix.getrandombonus());
-//					if (matrix[i][j].getBonus()==Matrix.CHICKBONUS){
-//						matrix[i][j].setColor(Matrix.NONE);
-//					}
-//				}
-//			}
-//			matrix[0][0].setColor(0);
-//			matrix[0][1].setColor(0);
-//			matrix[1][2].setColor(0);
-//			matrix[4][1].setColor(0);
-//			matrix[4][2].setColor(0);
-//			matrix[3][3].setColor(0);
-//			matrix[3][4].setColor(0);
-//		}while(!succ()&&new MoreThanThreeLinePop().hasLegalMove(this));//需修改。判断可移动
-		
-		
 		do{
 			for (int i = 0; i < TOTALLINE * 2; i++) {
 				for (int j = 0; j < TOTALROW; j++) {
@@ -158,7 +138,33 @@ public class Matrix {
 					}
 				}
 			}
-		}while(!succ()&&new MoreThanThreeLinePop().hasLegalMove(this));
+			matrix[0][0].setColor(Matrix.NONE);
+			matrix[0][1].setColor(Matrix.NONE);
+			matrix[0][0].setBonus(Matrix.CHICKBONUS);
+			matrix[0][1].setBonus(Matrix.CHICKBONUS);
+//			matrix[0][0].setColor(0);
+//			matrix[0][1].setColor(0);
+//			matrix[1][2].setColor(0);
+//			matrix[4][1].setColor(0);
+//			matrix[4][2].setColor(0);
+//			matrix[3][3].setColor(0);
+//			matrix[3][4].setColor(0);
+//			matrix[1][2].setBonus(BOMBBONUS);
+		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
+		
+//		
+//		do{
+//			for (int i = 0; i < TOTALLINE * 2; i++) {
+//				for (int j = 0; j < TOTALROW; j++) {
+//					matrix[i][j].setColor((int) (Math.random() * (KIND )));
+//					matrix[i][j].setBonus(Matrix.getrandombonus());
+//					if (matrix[i][j].getBonus()==Matrix.CHICKBONUS){
+//						matrix[i][j].setColor(Matrix.NONE);
+//					}
+//				}
+//			}
+//		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this));
+		
 	}
 	
 	private boolean succ(){
@@ -214,6 +220,9 @@ public class Matrix {
 				if (this.matrix[i][j].getColor()==Matrix.BLANK){
 					this.matrix[i][j].setColor((int)(Math.random()*(KIND)));
 					this.matrix[i][j].setBonus(Matrix.getrandombonus());
+					if (matrix[i][j].getBonus()==Matrix.CHICKBONUS){
+						matrix[i][j].setColor(Matrix.NONE);
+					}
 					flag=true;
 				}
 			}

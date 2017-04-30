@@ -19,6 +19,7 @@ public class Chessman extends ImageView{
 	private int dx,dy;
 	private int myX,myY;
 	private PVEParent pve;
+	private Chessman mySelf = this;
 	public int getDx() {
 		return dx;
 	}
@@ -78,7 +79,7 @@ public class Chessman extends ImageView{
 //					System.out.println("Release At "+"<"+releaseX+","+releaseY+">");
 					double deltaX=releaseX-dragX;
 					double deltaY=releaseY-dragY;
-					if (Math.sqrt(deltaY*deltaY+deltaX*deltaX)*2<PVEParent.LENGTH){
+					if (Math.sqrt(deltaY*deltaY+deltaX*deltaX)*1.8<PVEParent.LENGTH){
 						releaseFocus();
 						return;
 					}
@@ -110,6 +111,10 @@ public class Chessman extends ImageView{
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
+				if (pve.getSelected()!=null){
+					pve.getSelected().releaseFocus();
+				}
+				pve.setSelected(mySelf);
 				setImage(pressedImage);
 				isPressed=true;
 			}

@@ -39,12 +39,12 @@ public class PopPo {
 		for (int i=0;i<Matrix.TOTALLINE;i++){
 			for (int j=0;j<Matrix.TOTALROW;j++){
 				if (popInfo[i][j]!=0){
-//					for (int ii=0;ii<Matrix.TOTALLINE;ii++){
-//						for (int jj=0;jj<Matrix.TOTALROW;jj++){
-//							System.out.print(popInfo[ii][jj]+" ");
-//						}
-//						System.out.println();
-//					}
+					for (int ii=0;ii<Matrix.TOTALLINE;ii++){
+						for (int jj=0;jj<Matrix.TOTALROW;jj++){
+							System.out.print(popInfo[ii][jj]+" ");
+						}
+						System.out.println();
+					}
 					return true;
 				}
 			}

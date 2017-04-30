@@ -34,7 +34,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		stage.setScene(scene);
 		stage.setTitle("ÏûÏûÀÖ");
 		stage.setFullScreenExitHint("");
-//		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreen(true);
 //		stage.setResizable(false);
 		primaryStage = stage;
