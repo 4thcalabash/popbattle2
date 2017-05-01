@@ -38,7 +38,7 @@ import po.PopPo;
 public class PVEParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 	public static final int LENGTH = 75;
-	public static final int INTERUPT = 400;
+	public static final int INTERUPT = 350;
 	public static final int SHOWTIME = 100;
 	public static final int DROP = 130;
 	public static final int TOPIMAGEHEIGHT = 170;
@@ -406,6 +406,11 @@ public class PVEParent extends BattleParent implements Runnable {
 			cc.await();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try{
+			//Thread.sleep(SHOWTIME);
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		c.countDown();
