@@ -38,10 +38,10 @@ import po.PopPo;
 public class PVEParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 	public static final int LENGTH = 75;
-	public static final int INTERUPT = 350;
-	public static final int SHOWTIME = 100;
-	public static final int DROP = 130;
-	public static final int TOPIMAGEHEIGHT = 170;
+	public static final int INTERUPT = 325;
+	public static final int SHOWTIME = 250;
+	public static final int DROP = 140;
+	public static final int TOPIMAGEHEIGHT = 166;
 	public static final int TOPIMAGEWIDTH = 12*PVEParent.LENGTH-5;
 	public static final int DELTALENGTH=23;
 	private DotPo dot1 = new DotPo(-1, -1);
