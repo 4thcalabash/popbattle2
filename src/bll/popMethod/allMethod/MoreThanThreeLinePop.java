@@ -164,7 +164,9 @@ public class MoreThanThreeLinePop extends PopMethod {
 				// dot1 炸弹 dot2行特效
 				chessboard.getMatrix()[dot1.getX()][dot1.getY()].setColor(Matrix.BLANK);
 				chessboard.getMatrix()[dot2.getX()][dot2.getY()].setColor(Matrix.BLANK);
-				for (int i = dot2.getX() - 2; i <= dot2.getX() + 2; i++) {
+				int imin = dot1.getX()<dot2.getX()?dot1.getX():dot2.getX();
+				int imax = dot1.getX()>dot2.getX()?dot1.getX():dot2.getX();
+				for (int i = imin-1; i <= imax+1; i++) {
 					if (i >= 0 && i < Matrix.TOTALLINE) {
 						chessboard.getIsPop()[i][dot2.getY()] = Matrix.LINEBONUSPOP;
 						for (int j = 0; j < Matrix.TOTALROW; j++) {
@@ -180,7 +182,9 @@ public class MoreThanThreeLinePop extends PopMethod {
 				// dot1炸弹 dot2列特效
 				chessboard.getMatrix()[dot1.getX()][dot1.getY()].setColor(Matrix.BLANK);
 				chessboard.getMatrix()[dot2.getX()][dot2.getY()].setColor(Matrix.BLANK);
-				for (int j = dot2.getY() - 2; j <= dot2.getY() + 2; j++) {
+				int jmin = dot1.getY()<dot2.getY()?dot1.getY():dot2.getY();
+				int jmax = dot1.getY()>dot2.getY()?dot1.getY():dot2.getY();
+				for (int j = jmin-1; j <= jmax+1; j++) {
 					if (j >= 0 && j < Matrix.TOTALROW) {
 						chessboard.getIsPop()[dot2.getX()][j] = Matrix.ROWBONUS;
 						for (int i = 0; i < Matrix.TOTALLINE; i++) {
@@ -602,7 +606,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 							// 废什么话，直接打上死亡flag
 							for (int ii = i; ii <= tempx; ii++) {
 								for (int jj = j; jj <= tempy; jj++) {
-									rowcheck[ii][jj] = 1;
+									linecheck[ii][jj] = 1;
 									dead[ii][jj] = true;
 								}
 							}
@@ -1152,7 +1156,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 						// 废什么话，直接打上死亡flag
 						for (int ii = i; ii <= tempx; ii++) {
 							for (int jj = j; jj <= tempy; jj++) {
-								rowcheck[ii][jj] = 1;
+								linecheck[ii][jj] = 1;
 								dead[ii][jj] = true;
 							}
 						}

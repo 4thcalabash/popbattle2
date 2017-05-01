@@ -143,6 +143,10 @@ public class Matrix {
 			matrix[0][1].setColor(0);
 			matrix[1][2].setColor(0);
 			matrix[2][2].setColor(0);
+			matrix[0][3].setBonus(BOMBBONUS);
+			matrix[0][2].setBonus(ROWBONUS);
+			matrix[1][3].setColor(Matrix.NONE);
+			matrix[1][3].setBonus(Matrix.CHICKBONUS);
 //			matrix[1][2].setColor(Matrix.NONE);
 //			matrix[1][2].setBonus(Matrix.CHICKBONUS);
 //			matrix[0][3].setBonus(Matrix.ROWBONUS);
