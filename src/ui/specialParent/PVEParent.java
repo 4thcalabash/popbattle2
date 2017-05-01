@@ -6,6 +6,9 @@ import ui.awt.ImageButton.Chessman;
 import ui.awt.ImageButton.ChessmanWorkers;
 import util.MissionInfo;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.concurrent.CountDownLatch;
+
 import bll.individual.PaperPlayer;
 import bll.individual.Player;
 import bll.matrix.Dot;
@@ -35,8 +38,12 @@ import po.PopPo;
 public class PVEParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 	public static final int LENGTH = 75;
-	public static final int INTERUPT = 500;
-	public static final int DROP = 220;
+	public static final int INTERUPT = 400;
+	public static final int SHOWTIME = 100;
+	public static final int DROP = 130;
+	public static final int TOPIMAGEHEIGHT = 170;
+	public static final int TOPIMAGEWIDTH = 12*PVEParent.LENGTH-5;
+	public static final int DELTALENGTH=23;
 	private DotPo dot1 = new DotPo(-1, -1);
 	private DotPo dot2 = new DotPo(-1, -1);
 	private boolean new1, new2;
@@ -46,11 +53,12 @@ public class PVEParent extends BattleParent implements Runnable {
 	AnchorPane sub = new AnchorPane();
 	GridPane matrix;
 	private Dot[][] chessboard;
-	private VBox center;
+	private AnchorPane center;
 	private Chessman[][] imageMatrix = new Chessman[Matrix.TOTALLINE][Matrix.TOTALROW];
 	private Thread myself;
 	private Chessman selected;
-
+	private PVEParent mySelf = this;
+	private CountDownLatch count ;
 	public void setDot1(int x, int y) {
 		dot1.setX(x);
 		dot1.setY(y);
@@ -85,7 +93,6 @@ public class PVEParent extends BattleParent implements Runnable {
 		rightBox.setAlignment(Pos.CENTER);
 		HBox test = new HBox();
 		Button endTest = new Button("BattleEnd");
-
 		endTest.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -123,32 +130,38 @@ public class PVEParent extends BattleParent implements Runnable {
 	private String createBasicPath(int i, int j) {
 		return "Graphics/Matrix/" + chessboard[i][j].getColor() + "_" + chessboard[i][j].getBonus();
 	}
-
+	private String createBasicPath (int i,int j,Dot[][]chessboard){
+		return "Graphics/Matrix/" + chessboard[i][j].getColor() + "_" + chessboard[i][j].getBonus();
+	}
 	public void renewBoard() {
-		center = new VBox();
-		center.setMaxHeight(10*PVEParent.LENGTH+20);
-		center.setMaxWidth(8*PVEParent.LENGTH);
-		center.setMinHeight(10*PVEParent.LENGTH+20);
+		center = new AnchorPane();
+		center.setMaxHeight(TOPIMAGEHEIGHT+10*PVEParent.LENGTH);
+		center.setMaxWidth(TOPIMAGEWIDTH);
+		center.setMinHeight(getMaxHeight());
 		center.setMinWidth(getMaxWidth());
 		ImageView top = new ImageView (new Image ("Graphics/Matrix/topImage.png"));
-		top.setFitHeight(PVEParent.LENGTH+20);
-		top.setFitWidth(PVEParent.LENGTH*8);
-		center.getChildren().add(top);
-//		center.getChildren().add()
+		top.setFitHeight(PVEParent.TOPIMAGEHEIGHT);
+		top.setFitWidth(PVEParent.TOPIMAGEWIDTH);
+		top.setX(0);
+		top.setY(0);
+		
 		matrix = new GridPane();
 		matrix.setId("Matrix");
-		
+		matrix.setLayoutX((TOPIMAGEWIDTH-8*PVEParent.LENGTH)/2);
+		matrix.setLayoutY(TOPIMAGEHEIGHT-DELTALENGTH);
 		center.getChildren().add(matrix);
-		
-		matrix.setAlignment(Pos.BOTTOM_CENTER);
+		center.getChildren().add(top);
 		matrix.setMaxHeight(PVEParent.LENGTH * 10);
 		matrix.setMaxWidth(PVEParent.LENGTH * 8);
 		matrixPo = this.platform.getMatrix();
 		chessboard = matrixPo.getMatrix();
 
 		Platform.runLater(() -> {
+
+			
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
+				//	System.out.println("!!!!!"+i+","+"!!!!!");
 					int bonusID = chessboard[i][j].getBonus();
 					String basicPath = createBasicPath(i, j);
 					if (bonusID == Matrix.NORMAL || bonusID == Matrix.CHICKBONUS) {
@@ -170,14 +183,14 @@ public class PVEParent extends BattleParent implements Runnable {
 					matrix.add(imageMatrix[i][j], j, Matrix.TOTALLINE - 1 - i);
 				}
 			}
-//			this.setCenter(matrix);
 			this.setCenter(center);
 			matrix.setVisible(true);
 			;
 		});
 	}
-
+	CountDownLatch ace;
 	private void moveFlash() {
+		ace = new CountDownLatch(1);
 		boolean flag = this.platform.move(dot1, dot2);
 		System.out.println(flag);
 		Platform.runLater(() -> {
@@ -187,19 +200,21 @@ public class PVEParent extends BattleParent implements Runnable {
 			sub.setMaxWidth(8 * PVEParent.LENGTH);
 			sub.setMinHeight(getMaxHeight());
 			sub.setMinWidth(getMaxWidth());
-			
+			sub.setLayoutX((TOPIMAGEWIDTH-8*PVEParent.LENGTH)/2);
+			sub.setLayoutY(TOPIMAGEHEIGHT-DELTALENGTH);
 			ImageView top = new ImageView (new Image ("Graphics/Matrix/topImage.png"));
-			top.setFitHeight(PVEParent.LENGTH+20);
-			top.setFitWidth(8*PVEParent.LENGTH);
-			
-			center = new VBox ();
-			center.setMaxHeight(10*PVEParent.LENGTH+20);
-			center.setMaxWidth(8*PVEParent.LENGTH);
-			center.setMinHeight(10*PVEParent.LENGTH+20);
+			top.setFitHeight(PVEParent.TOPIMAGEHEIGHT);
+			top.setFitWidth(PVEParent.TOPIMAGEWIDTH);
+			top.setX(0);
+			top.setY(0);
+			center = new AnchorPane ();
+			center.setMaxHeight(TOPIMAGEHEIGHT+10*PVEParent.LENGTH);
+			center.setMaxWidth(TOPIMAGEWIDTH);
+			center.setMinHeight(getMaxHeight());
 			center.setMinWidth(getMaxWidth());
-			center.getChildren().add(top);
+			
 			center.getChildren().add(sub);
-//			center.
+			center.getChildren().add(top);
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					if (i == dot1.getX() && j == dot1.getY() || i == dot2.getX() && j == dot2.getY()) {
@@ -225,7 +240,6 @@ public class PVEParent extends BattleParent implements Runnable {
 			}
 			this.setCenter(null);
 			matrix.setVisible(false);
-//			this.setCenter(sub);
 			this.setCenter(center);
 
 			String basicPath1 = createBasicPath(dot1);
@@ -271,12 +285,19 @@ public class PVEParent extends BattleParent implements Runnable {
 			}
 			timeline1.play();
 			timeline2.play();
+			ace.countDown();
 		});
+		try {
+			ace.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		chessboard=this.platform.getMatrix().getMatrix();
 	}
-
+	CountDownLatch p ;
 	private void popFlash() {
 		popPo = platform.pop(round, dot1, dot2);
-		Worker worker = new Worker();
 		while (popPo.hasAnyPop()) {
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
@@ -311,49 +332,86 @@ public class PVEParent extends BattleParent implements Runnable {
 					}
 				}
 			}
+			System.out.println("OK AT HERE2");
+			p = new CountDownLatch(1);
 			// 演示一次元消除动画
-			Platform.runLater(worker);
+			Dot[][] cloneBoard = new Dot[Matrix.TOTALLINE][Matrix.TOTALROW];
+			for (int i=0;i<Matrix.TOTALLINE;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					cloneBoard[i][j] = new Dot (chessboard[i][j].getColor(),chessboard[i][j].getBonus());
+				}
+			}
+			System.out.println("OK AT HERE3");
+			Platform.runLater(new Worker(cloneBoard));
+			long deltatime = System.currentTimeMillis();
+			System.out.println("Time before calc:"+deltatime);
+			
+			//并行计算
+			newdropFlashCalc();
+			deltatime = System.currentTimeMillis()-deltatime;
 			// 等待动画显示完毕
 			try {
-				Thread.sleep((long) (INTERUPT * 2.1));
-			} catch (Exception e) {
+				p.await();
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println("Time after calc:"+System.currentTimeMillis());
+			System.out.println("You have wait for "+deltatime+"millis");
+			long delta ;
+			if (INTERUPT>deltatime){
+				delta=SHOWTIME;
+			}else if (deltatime-INTERUPT<SHOWTIME){
+				delta = SHOWTIME-(deltatime-INTERUPT);
+			}else{
+				delta=0;
+			}
+			try{
+				Thread.sleep(delta);
+			}catch(Exception e){
 				e.printStackTrace();
 			}
 			// 演示元下落动画
-			newdropFlash();
-			// 消除后棋盘展示
-			renewBoard();
+			CountDownLatch c = new CountDownLatch(1);
+			dropFlash(c);
+			try {
+				c.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			chessboard=this.platform.getMatrix().getMatrix();
 			popPo = this.platform.pop(round);
 		}
+		abcd.countDown();
 	}
-
-	private void newdropFlash() {
-		int time = 0;
-		int[][] delta = new int[Matrix.TOTALLINE][Matrix.TOTALROW];
-		for (int j = 0; j < Matrix.TOTALROW; j++) {
-			for (int i = 0; i < Matrix.TOTALLINE; i++) {
-				int flag = popPo.getPopInfo()[i][j];
-				if (i == 0) {
-					if (flag == Matrix.NORMALPOP || flag == Matrix.CHICKITSELFPOP || flag == Matrix.CHICKPOP
-							|| flag == Matrix.BOMBBONUSPOP || flag == Matrix.DOUBLECHICKITSELFPOP
-							|| flag == Matrix.LINEBONUSPOP || flag == Matrix.ROWBONUSPOP) {
-						delta[i][j] = 1;
-					} else {
-						delta[i][j] = 0;
-					}
-				} else {
-					delta[i][j] = delta[i - 1][j];
-					if (flag == Matrix.NORMALPOP || flag == Matrix.CHICKITSELFPOP || flag == Matrix.CHICKPOP
-							|| flag == Matrix.BOMBBONUSPOP || flag == Matrix.DOUBLECHICKITSELFPOP
-							|| flag == Matrix.LINEBONUSPOP || flag == Matrix.ROWBONUSPOP) {
-						delta[i][j]++;
-					}
-				}
-				if (delta[i][j] > time) {
-					time = delta[i][j];
-				}
+	CountDownLatch cc;
+	ArrayList <AnchorPane> subList = new ArrayList <AnchorPane> ();
+	ArrayList <Timeline> lineList = new ArrayList <Timeline>();
+	private void dropFlash(CountDownLatch c){
+		cc = new CountDownLatch(0);
+		for (int i=0;i<subList.size();i++){
+			//等待
+			try {
+				cc.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+			cc = new CountDownLatch(1);
+			//显示
+			Platform.runLater(new NewDropWorker(subList.get(i),lineList.get(i)));
 		}
+		try {
+			cc.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		c.countDown();
+	}
+	private void newdropFlashCalc(){
+		
 		for (int i = 0; i < Matrix.TOTALLINE; i++) {
 			for (int j = 0; j < Matrix.TOTALROW; j++) {
 				int flag = popPo.getPopInfo()[i][j];
@@ -362,23 +420,43 @@ public class PVEParent extends BattleParent implements Runnable {
 						|| flag == Matrix.LINEBONUSPOP || flag == Matrix.ROWBONUSPOP) {
 					chessboard[i][j] = null;
 				}
-
 			}
 		}
-		boolean[][] drop = new boolean[2 * Matrix.TOTALLINE][Matrix.TOTALROW];
-		while (true) {
-			System.out.println("drop");
-			for (int i = Matrix.TOTALLINE - 1; i >= 0; i--) {
+		boolean [][]drop = new boolean[Matrix.TOTALLINE*2][Matrix.TOTALROW];
+		
+		int poptime=0;
+		subList = new ArrayList <AnchorPane> ();
+		lineList = new ArrayList <Timeline>();
+		while (true){
+			//计算
+			poptime++;
+			System.out.println(poptime);
+			if (poptime==1){
+				//初次消除 不需要更新chessboard
+			}else{
+				boolean flag = false;
+				
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
-					if (chessboard[i][j] == null) {
-						System.out.print(9);
-					} else {
-						System.out.print(chessboard[i][j].getColor());
+					for (int i = 1; i < Matrix.TOTALLINE * 2; i++) {
+						if (chessboard[i - 1][j] == null) {
+							Dot temp = chessboard[i - 1][j];
+							chessboard[i - 1][j] = chessboard[i][j];
+							chessboard[i][j] = temp;
+						}
 					}
 				}
-				System.out.println();
+				for (int i=0;i<Matrix.TOTALLINE;i++){
+					for (int j=0;j<Matrix.TOTALROW;j++){
+						if (chessboard[i][j]==null){
+							flag=true;
+							break;
+						}
+					}
+				}
+				if (!flag){
+					break;
+				}
 			}
-
 			for (int j = 0; j < Matrix.TOTALROW; j++) {
 				for (int i = 1; i < Matrix.TOTALLINE * 2; i++) {
 					if (drop[i - 1][j]) {
@@ -392,32 +470,137 @@ public class PVEParent extends BattleParent implements Runnable {
 					}
 				}
 			}
-			Platform.runLater(() -> {
+			AnchorPane s = new AnchorPane ();
+			s.setMaxHeight(10*PVEParent.LENGTH);
+			s.setMaxWidth(8*PVEParent.LENGTH);
+			s.setId("Matrix");
+			s.setLayoutX((TOPIMAGEWIDTH-8*PVEParent.LENGTH)/2);
+			s.setLayoutY(TOPIMAGEHEIGHT-DELTALENGTH);
+			AnchorPane ce = new AnchorPane ();
+			ce.setMaxHeight(TOPIMAGEHEIGHT+10*PVEParent.LENGTH);
+			ce.setMaxWidth(TOPIMAGEWIDTH);
+			ce.setMinHeight(getMaxHeight());
+			ce.setMinWidth(getMaxWidth());
+			ImageView top = new ImageView (new Image ("Graphics/Matrix/topImage.png"));
+			top.setFitHeight(PVEParent.TOPIMAGEHEIGHT);
+			top.setFitWidth(PVEParent.TOPIMAGEWIDTH);
+			top.setX(0);
+			top.setY(0);
+			ce.getChildren().addAll(s,top);
+			Timeline line = new Timeline();
+			line.setAutoReverse(false);
+			line.setCycleCount(1);
+			line.setOnFinished(new EventHandler<ActionEvent>(){
+
+				@Override
+				public void handle(ActionEvent event) {
+					// TODO Auto-generated method stub
+					cc.countDown();
+				}
+				
+			});
+			for (int i=0;i<Matrix.TOTALLINE+1;i++){
+				for (int j=0;j<Matrix.TOTALROW;j++){
+					if (chessboard[i][j]==null){
+//						ImageView blank = new ImageView ("Graphics/Matrix/BLANK.png");
+						ImageView blank = new ImageView ();
+						blank.setFitHeight(PVEParent.LENGTH);
+						blank.setFitWidth(PVEParent.LENGTH);
+						blank.setX(j*PVEParent.LENGTH);
+						blank.setY((Matrix.TOTALLINE-1-i)*PVEParent.LENGTH);
+						s.getChildren().add(blank);
+					}
+				}
+			}
+			for (int i = 0; i < Matrix.TOTALLINE+1; i++) {
+				for (int j = 0; j < Matrix.TOTALROW; j++) {
+					if (chessboard[i][j] != null) {
+						ImageView tt;
+						String basicPath = createBasicPath(i, j);
+						if (chessboard[i][j].getBonus() == Matrix.NORMAL
+								|| chessboard[i][j].getBonus() == Matrix.CHICKBONUS) {
+							tt = new ImageView(new Image(basicPath + ".png"));
+						} else {
+							tt = new ImageView(new Image(basicPath + "Static.gif"));
+						}
+						tt.setFitHeight(PVEParent.LENGTH);
+						tt.setFitWidth(PVEParent.LENGTH);
+						tt.setX(j * PVEParent.LENGTH);
+						tt.setY((Matrix.TOTALLINE - 1 - i) * PVEParent.LENGTH);
+						s.getChildren().add(tt);
+						if (drop[i][j]) {
+
+							double a = tt.getY() + PVEParent.LENGTH;
+							KeyValue kv = new KeyValue(tt.yProperty(), a);
+							KeyFrame kf = new KeyFrame(Duration.millis(PVEParent.DROP), kv);
+							line.getKeyFrames().add(kf);
+						}
+					}
+				}
+			}
+			subList.add(ce);
+			lineList.add(line);
+		}
+
+		System.out.println("");
+	}
+	
+	public class NewDropWorker implements Runnable{
+		private AnchorPane center;
+		private Timeline line;
+		public NewDropWorker(AnchorPane center,Timeline line){
+			this.center=center;
+			this.line=line;
+		}
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			setCenter(center);
+			line.play();
+		}
+		
+	}
+	public class dropWorker implements Runnable{
+		private boolean[][]drop;
+		private CountDownLatch ct = new CountDownLatch(1);
+		private Dot[][]chessboard;
+		public dropWorker(boolean [][]drop,Dot[][]chessboard){
+			this.drop=drop;
+			this.chessboard=chessboard;
+		}
+		@Override
+		public void run() {
+			dropWorker me = this;
+			// TODO Auto-generated method stub
 				Timeline line = new Timeline();
 				line.setAutoReverse(false);
 				line.setCycleCount(1);
-				this.setCenter(null);
 				
-				center = new VBox();
-				
-				center.setMaxHeight(10*PVEParent.LENGTH+20);
-				center.setMaxWidth(8*PVEParent.LENGTH);
-				center.setMinHeight(10*PVEParent.LENGTH+20);
+				setCenter(null);
+				center = new AnchorPane ();
+				center.setMaxHeight(TOPIMAGEHEIGHT+10*PVEParent.LENGTH);
+				center.setMaxWidth(TOPIMAGEWIDTH);
+				center.setMinHeight(getMaxHeight());
 				center.setMinWidth(getMaxWidth());
 				ImageView top = new ImageView (new Image ("Graphics/Matrix/topImage.png"));
-				top.setFitHeight(PVEParent.LENGTH+20);
-				top.setFitWidth(8*PVEParent.LENGTH);
-				center.getChildren().add(top);
+				top.setFitHeight(PVEParent.TOPIMAGEHEIGHT);
+				top.setFitWidth(PVEParent.TOPIMAGEWIDTH);
+				top.setX(0);
+				top.setY(0);
+				
 				sub = new AnchorPane();
 				sub.setMaxHeight(10 * PVEParent.LENGTH);
 				sub.setMaxWidth(8 * PVEParent.LENGTH);
 				sub.setMinHeight(getMaxHeight());
 				sub.setMinWidth(getMaxWidth());
 				sub.setId("Matrix");
+		
+				sub.setLayoutX((TOPIMAGEWIDTH-8*PVEParent.LENGTH)/2);
+				sub.setLayoutY(TOPIMAGEHEIGHT-DELTALENGTH);
 				center.getChildren().add(sub);
-//				this.setCenter(sub);
-				this.setCenter(center);
-				for (int i=0;i<Matrix.TOTALLINE;i++){
+				center.getChildren().add(top);
+				setCenter(center);
+				for (int i=0;i<Matrix.TOTALLINE+1;i++){
 					for (int j=0;j<Matrix.TOTALROW;j++){
 						if (chessboard[i][j]==null){
 //							ImageView blank = new ImageView ("Graphics/Matrix/BLANK.png");
@@ -430,7 +613,7 @@ public class PVEParent extends BattleParent implements Runnable {
 						}
 					}
 				}
-				for (int i = 0; i < Matrix.TOTALLINE; i++) {
+				for (int i = 0; i < Matrix.TOTALLINE+1; i++) {
 					for (int j = 0; j < Matrix.TOTALROW; j++) {
 						if (chessboard[i][j] != null) {
 							ImageView tt;
@@ -456,43 +639,26 @@ public class PVEParent extends BattleParent implements Runnable {
 						}
 					}
 				}
-				
+				line.setOnFinished(new EventHandler <ActionEvent>(){
+
+					@Override
+					public void handle(ActionEvent event) {
+						// TODO Auto-generated method stub
+						System.out.println("Drop Finished");
+						setCenter(null);
+						count.countDown();
+						
+
+
+					}
+					
+				});
 				line.play();
-			});
-			try {
-				Thread.sleep(DROP +1);
-			} catch (Exception e) {
-				e.printStackTrace();
+				
 			}
-			for (int j = 0; j < Matrix.TOTALROW; j++) {
-				for (int i = 1; i < Matrix.TOTALLINE * 2; i++) {
-					if (chessboard[i - 1][j] == null) {
-						// chessboard[i - 1][j] = chessboard[i][j];
-						Dot temp = chessboard[i - 1][j];
-						chessboard[i - 1][j] = chessboard[i][j];
-						chessboard[i][j] = temp;
-					}
-				}
-			}
-
-			boolean full = true;
-			for (int i = 0; i < Matrix.TOTALLINE; i++) {
-				for (int j = 0; j < Matrix.TOTALROW; j++) {
-					if (chessboard[i][j] == null) {
-						// content[i][j] = false;
-						full = false;
-					} else {
-						// content[i][j] = true;
-					}
-				}
-			}
-			if (full) {
-				break;
-			}
-		}
-
+		
 	}
-
+	CountDownLatch abcd;
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -508,12 +674,20 @@ public class PVEParent extends BattleParent implements Runnable {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				// 移动结果棋盘展示
-				renewBoard();
+				System.out.println("OK AT HERE");
 				// 连续消除动画演示
+				abcd = new CountDownLatch(1);
 				popFlash();
+				try {
+					abcd.await();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				renewBoard();
 				// 输出着玩
 				System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
+				
 			} else {
 				// 每10ms做一次用户操作检测
 				try {
@@ -527,7 +701,10 @@ public class PVEParent extends BattleParent implements Runnable {
 	}
 
 	public class Worker implements Runnable {
-
+		private Dot[][]chessboard;
+		public Worker(Dot[][]chessboard){
+			this.chessboard=chessboard;
+		}
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
@@ -539,13 +716,24 @@ public class PVEParent extends BattleParent implements Runnable {
 			sub.setMinHeight(getMaxHeight());
 			sub.setMinWidth(getMaxWidth());
 			sub.setPrefSize(getMaxWidth(), getMaxHeight());
+			sub.setLayoutX((TOPIMAGEWIDTH-8*PVEParent.LENGTH)/2);
+			sub.setLayoutY(TOPIMAGEHEIGHT-DELTALENGTH);
 			sub.setId("Matrix");
 			Timeline timeline = new Timeline();
 			timeline.setAutoReverse(false);
 			timeline.setCycleCount(1);
+			timeline.setOnFinished(new EventHandler<ActionEvent>(){
+
+				@Override
+				public void handle(ActionEvent event) {
+					// TODO Auto-generated method stub
+					p.countDown();
+				}
+				
+			});
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
-					String basicPath = createBasicPath(i, j);
+					String basicPath = createBasicPath(i, j,chessboard);
 					if (popPo.getPopInfo()[i][j] == 0) {
 						// 无消除信息
 						ImageView tt;
@@ -701,19 +889,23 @@ public class PVEParent extends BattleParent implements Runnable {
 			// 画布制作完成 展示画布
 			setCenter(null);
 			ImageView top = new ImageView (new Image("Graphics/Matrix/topImage.png"));
-			top.setFitHeight(PVEParent.LENGTH+20);
-			top.setFitWidth(8*PVEParent.LENGTH);
-			center = new VBox ();
-			center.setMaxHeight(10*PVEParent.LENGTH+20);
-			center.setMaxWidth(8*PVEParent.LENGTH);
-			center.setMinHeight(10*PVEParent.LENGTH+20);
+			top.setFitHeight(PVEParent.TOPIMAGEHEIGHT);
+			top.setFitWidth(PVEParent.TOPIMAGEWIDTH);
+			top.setX(0);
+			top.setY(0);
+			center = new AnchorPane ();
+			center.setMaxHeight(TOPIMAGEHEIGHT+10*PVEParent.LENGTH);
+			center.setMaxWidth(TOPIMAGEWIDTH);
+			center.setMinHeight(TOPIMAGEHEIGHT);
 			center.setMinWidth(getMaxWidth());
-			center.getChildren().add(top);
+			
 			center.getChildren().add(sub);
+			center.getChildren().add(top);
 			setCenter(center);
-//			setCenter(sub);
 			// 启动动画
 			timeline.play();
+			
 		}
 	}
+
 }

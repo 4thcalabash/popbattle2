@@ -51,6 +51,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 			Platform.runLater(()->{
 				scene.getStylesheets().remove(0);
 				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
+				
 				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
 				this.setStage(battleParent);
 			});
@@ -64,10 +65,12 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		//battleScene自行销毁
 		//此方法完成从battle返回static
 		//显示关卡奖励等
+		
 		scene.getStylesheets().remove(0);
 		scene.getStylesheets().add(getClass().getResource("static.css").toExternalForm());
 		this.setStage(staticParent);
 	}
+	
 	
 	public static void main(String[] args){
 		launch(args);
@@ -92,5 +95,5 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		// TODO Auto-generated method stub
 		stage.close();
 	}
-
+	
 }
