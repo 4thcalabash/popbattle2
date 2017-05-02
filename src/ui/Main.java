@@ -7,6 +7,7 @@ import ui.specialParent.StaticParent;
 import bllservice.*;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,8 +22,11 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	private StaticParent staticParent = new StaticParent(this);//一直沿用一个staticScene，在battle时隐藏，在非battle时显示。
 	private Stage stage = new Stage();
 	private Scene scene = new Scene (staticParent);
+	public final static int SCREENWIDTH =(int)Screen.getPrimary().getVisualBounds().getWidth();
+	public final static int SCREENHEIGHT = (int)Screen.getPrimary().getVisualBounds().getHeight();
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
 		// TODO Auto-generated method stub
 		/**
 		 * 展示staticScene
@@ -36,10 +40,14 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		stage.setFullScreenExitHint("");
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreen(true);
+		Screen screen = Screen.getPrimary();
+		System.out.println("Height:"+SCREENHEIGHT);
+		System.out.println("Width:"+SCREENWIDTH);
 //		stage.setResizable(false);
 		primaryStage = stage;
-		primaryStage.show();
+		primaryStage.show(); 
 
+		
 	}
 	@Override
 	

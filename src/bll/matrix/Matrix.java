@@ -66,6 +66,12 @@ public class Matrix {
 	public static final int TOROWBONUS = ROWBONUS*10;
 	//变成了一只BOMBBONUS
 	public static final int TOBOMBBONUS = BOMBBONUS*10;
+	//被chick+line作用
+	public static final int CHICKPULSLINEPOP = LINEBONUS*100;
+	//被chick+row作用
+	public static final int CHICKPLUSROWPOP = ROWBONUS*100;
+	//被chick+bomb作用
+	public static final int CHICKPLUSBOMBPOP = BOMBBONUS*100;
 	private Dot[][] matrix;
 	private int [] [] isPop;
 	public Matrix() {
@@ -138,22 +144,14 @@ public class Matrix {
 					}
 				}
 			}
-			matrix[0][3].setColor(0);
-			matrix[0][0].setColor(0);
-			matrix[0][1].setColor(0);
-			matrix[1][2].setColor(0);
-			matrix[2][2].setColor(0);
-			matrix[0][3].setBonus(BOMBBONUS);
-			matrix[0][2].setBonus(ROWBONUS);
 			matrix[1][3].setColor(Matrix.NONE);
 			matrix[1][3].setBonus(Matrix.CHICKBONUS);
-//			matrix[1][2].setColor(Matrix.NONE);
-//			matrix[1][2].setBonus(Matrix.CHICKBONUS);
-//			matrix[0][3].setBonus(Matrix.ROWBONUS);
-//			matrix[0][4].setBonus(Matrix.BOMBBONUS);
+			matrix[1][2].setBonus(Matrix.LINEBONUS);
+			matrix[1][2].setColor(0);
+
 		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
 		
-//		
+		
 //		do{
 //			for (int i = 0; i < TOTALLINE * 2; i++) {
 //				for (int j = 0; j < TOTALROW; j++) {
@@ -164,7 +162,7 @@ public class Matrix {
 //					}
 //				}
 //			}
-//		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this));
+//		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
 		
 	}
 	

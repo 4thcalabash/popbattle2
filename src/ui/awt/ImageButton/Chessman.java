@@ -107,6 +107,7 @@ public class Chessman extends ImageView {
 					}
 					worker.work();
 					releaseFocus();
+					pve.setSelected(null);
 				}
 			}
 
