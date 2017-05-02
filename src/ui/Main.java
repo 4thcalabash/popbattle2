@@ -42,6 +42,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 
 	}
 	@Override
+	
 	public void createNewBattle(MissionInfo missionInfo) {
 		// TODO Auto-generated method stub
 		//隐藏staticscene，切记不要销毁。
