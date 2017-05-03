@@ -1,10 +1,11 @@
 package bll.support;
 
+
 import util.*;
 
 //只需要用ID和Level就可以生成一件装备
 //本身不记录等级，只提供计算方法
-public class Equip implements Calcable{
+public class Equip{
 	public static final int ID_NULL = -1;
 	public static final int ID_GOLDWEARING = 1;
 	public static final int ID_GOLDHEADWEARING =2;
@@ -62,7 +63,6 @@ public class Equip implements Calcable{
 
 	private int ID;
 	private String[] equipIntroduction;
-	private int level;
 	private final int MAXLEVEL;// 允许的最高等级
 	private CalcMethod HPCalcMethod,ADCalcMethod, APCalcMethod, DRCalcMethod, MRCalcMethod, DTCalcMethod, MTCalcMethod,levelUpCostCalcMethod;
 	private int evolveEquipID;
@@ -90,46 +90,38 @@ public class Equip implements Calcable{
 	public String[] getEquipIntroduction() {
 		return equipIntroduction;
 	}
-	public int getHP(){
-		return this.HPCalcMethod.calc(this);
+	public int getHP(int level){
+		return this.HPCalcMethod.calc(level);
 	}
-	public int getAD() {
-		return this.ADCalcMethod.calc(this);
-	}
-
-	public int getAP() {
-		return this.APCalcMethod.calc(this);
+	public int getAD(int level) {
+		return this.ADCalcMethod.calc(level);
 	}
 
-	public int getDR() {
-		return this.DRCalcMethod.calc(this);
+	public int getAP(int level) {
+		return this.APCalcMethod.calc(level);
 	}
 
-	public int getMR() {
-		return this.MRCalcMethod.calc(this);
+	public int getDR(int level) {
+		return this.DRCalcMethod.calc(level);
 	}
 
-	public int getMT() {
-		return this.MTCalcMethod.calc(this);
+	public int getMR(int level) {
+		return this.MRCalcMethod.calc(level);
 	}
 
-	public int getDT() {
-		return this.DTCalcMethod.calc(this);
+	public int getMT(int level) {
+		return this.MTCalcMethod.calc(level);
+	}
+
+	public int getDT(int level) {
+		return this.DTCalcMethod.calc(level);
 	}
 	
-	public int getLevelUpCost(){
-		return this.levelUpCostCalcMethod.calc(this);
+	public int getLevelUpCost(int level){
+		return this.levelUpCostCalcMethod.calc(level);
 	}
 	public int getID() {
 		return ID;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
 	}
 
 }

@@ -9,7 +9,7 @@ import dal.FileHelper;
 import po.EquipPo;
 import po.FigurePo;
 
-public class Static implements BasicPlatform, Shopable, Achievementable, Equipable, Playerable, Skillable, Battleable{
+public class Static implements BasicPlatform, Shopable, Achievementable, Equipable, Playerable, Skillable, Chooseable{
 	private Player player;
 	private FileHelper helper;
 	public Static (int index){
@@ -33,6 +33,26 @@ public class Static implements BasicPlatform, Shopable, Achievementable, Equipab
 		
 		
 		return (BattlePlatform)battle;
+	}
+	@Override
+	public int totalNormalNum() {
+		// TODO Auto-generated method stub
+		return 10;
+	}
+	@Override
+	public int nowNormalNum() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int totalPVENum() {
+		// TODO Auto-generated method stub
+		return 10;
+	}
+	@Override
+	public int nowPVENum() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

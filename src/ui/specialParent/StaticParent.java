@@ -22,7 +22,7 @@ public class StaticParent extends BorderPane{
 	//需要完成用户查询各系统静态信息的功能
 	private BasicScene main;
 	private BasicPlatform basicPlatform;//所有静态系统和信息存在于此，需要显示的信息通过它来获取
-	public StaticParent (Main main){
+	public StaticParent (BasicScene main){
 		this.main=main;
 		basicPlatform = new Static (0);//实例化Static时，便已经完成了默认存档的加载
 		/**需要完成界面的显示
@@ -116,7 +116,7 @@ public class StaticParent extends BorderPane{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				main.setStage(new BattleChooser((Battleable)basicPlatform,main));
+				main.setStage(new GameChooser((Chooseable)basicPlatform,main));
 //				System.out.println("Graphics/Battle Chooser");
 				
 			}

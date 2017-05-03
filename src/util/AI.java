@@ -25,10 +25,13 @@ public class AI {
 	public AIStrategyPo getAIStrategy(){
 		int level = AI.getPlayer().getAILevel();
 		if (level==0){
+			System.out.println("来自弱智AI的嘲讽");
 			return lowIQStrategy();
 		}else if (level==1){
+			System.out.println("来自智能AI的嘲讽");
 			return normalIQStrategy();
 		}else{
+			System.out.println("来自最强大脑AI的嘲讽");
 			return highIQStrategy();
 		}
 	}
@@ -108,6 +111,7 @@ public class AI {
 		}else{
 			//带点脑子的消除
 			//拷贝棋盘
+			strategy.setMoveStrategy(true);
 			Matrix matrix2 = new Matrix ();
 			MatrixPo matrixPo = matrix.getboard();
 			for (int i=0;i<Matrix.TOTALLINE;i++){
@@ -124,6 +128,7 @@ public class AI {
 			int [] [] []popnum = new int[Matrix.TOTALLINE][Matrix.TOTALROW][4];
 			for (int i=0;i<Matrix.TOTALLINE;i++){
 				for (int j=0;j<Matrix.TOTALROW;j++){
+					System.out.println(i+","+j);
 					//east
 					DotPo dot1 = new DotPo (i,j);
 					if (j+1<Matrix.TOTALROW){
@@ -143,11 +148,13 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][0]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][0]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][0]+=popNum2[iii];
 							}
-							matrix3.renew();
+//							matrix3.renew();
 							//每次消除都将上部置为垃圾
 							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
 								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
@@ -155,8 +162,11 @@ public class AI {
 								}
 							}
 							while(true){
+//								System.out.println("test");
+
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -167,7 +177,8 @@ public class AI {
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+//									delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -175,6 +186,10 @@ public class AI {
 									popnum[i][j][0]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 					//west
@@ -195,9 +210,11 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][2]+=popNum2[iii];
 							}
 							matrix3.renew();
 							//每次消除都将上部置为垃圾
@@ -207,8 +224,11 @@ public class AI {
 								}
 							}
 							while(true){
+//								System.out.println("test");
+//								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -219,7 +239,8 @@ public class AI {
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+//									delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -227,6 +248,10 @@ public class AI {
 									popnum[i][j][2]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 					//north
@@ -247,9 +272,11 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][3]+=popNum2[iii];
 							}
 							matrix3.renew();
 							//每次消除都将上部置为垃圾
@@ -259,19 +286,22 @@ public class AI {
 								}
 							}
 							while(true){
+//								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
 								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
 									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
-										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
 									}
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+//									delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -279,6 +309,10 @@ public class AI {
 									popnum[i][j][3]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 					//south
@@ -299,9 +333,11 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][1]+=popNum2[iii];
 							}
 							matrix3.renew();
 							//每次消除都将上部置为垃圾
@@ -311,10 +347,13 @@ public class AI {
 								}
 							}
 							while(true){
-								popNum = matrix3.getPopNum();
+//								System.out.println("test");
+							
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
-								matrix3.renew();
+//								matrix3.renew();
 								//更新之后要置垃圾
 								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
 									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
@@ -323,7 +362,8 @@ public class AI {
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+									//delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -331,15 +371,44 @@ public class AI {
 									popnum[i][j][1]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 				}
 			}
+//			for (int i=0;i<Matrix.TOTALLINE;i++){
+//				for (int j=0;j<Matrix.TOTALROW;j++){
+//					System.out.print(popnum[i][j][0]+" ");
+//				}
+//				System.out.println();
+//			}
+//			for (int i=0;i<Matrix.TOTALLINE;i++){
+//				for (int j=0;j<Matrix.TOTALROW;j++){
+//					System.out.print(popnum[i][j][1]+" ");
+//				}
+//				System.out.println();
+//			}
+//			for (int i=0;i<Matrix.TOTALLINE;i++){
+//				for (int j=0;j<Matrix.TOTALROW;j++){
+//					System.out.print(popnum[i][j][2]+" ");
+//				}
+//				System.out.println();
+//			}
+//			for (int i=0;i<Matrix.TOTALLINE;i++){
+//				for (int j=0;j<Matrix.TOTALROW;j++){
+//					System.out.print(popnum[i][j][3]+" ");
+//				}
+//				System.out.println();
+//			}
 			//寻找最优决策
 			int max=-1,ansx=-1,ansy=-1,ansdir=-1;
 			for (int ii=0;ii<Matrix.TOTALLINE;ii++){
 				for (int jj=0;jj<Matrix.TOTALROW;jj++){
 					//east
+					System.out.println(ii+"!"+jj);
 					if (jj+1<Matrix.TOTALROW&&popnum[ii][jj][0]>max){
 						max=popnum[ii][jj][0];
 						ansx=ii;
@@ -383,6 +452,7 @@ public class AI {
 				//north
 				strategy.setDot2(new DotPo(ansx+1,ansy));
 			}
+			System.out.println("Finished");
 			return strategy;
 		}
 		return null;
@@ -478,6 +548,7 @@ public class AI {
 		}else{
 			//带点脑子的消除
 			//拷贝棋盘
+			strategy.setMoveStrategy(true);
 			Matrix matrix2 = new Matrix ();
 			MatrixPo matrixPo = matrix.getboard();
 			for (int i=0;i<Matrix.TOTALLINE;i++){
@@ -511,11 +582,15 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
+							
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
+							
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][0]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][0]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][0]+=popNum2[iii];
 							}
 							matrix3.renew();
 							//每次消除都将上部置为垃圾
@@ -525,19 +600,22 @@ public class AI {
 								}
 							}
 							while(true){
+//								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
 								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
 									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
-										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
 									}
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+//									delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -545,6 +623,10 @@ public class AI {
 									popnum[i][j][0]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 					//west
@@ -565,9 +647,11 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][2]+=popNum2[iii];
 							}
 							matrix3.renew();
 							//每次消除都将上部置为垃圾
@@ -577,19 +661,22 @@ public class AI {
 								}
 							}
 							while(true){
+//								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
 								for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
 									for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
-										matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
 									}
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+//									delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -597,6 +684,10 @@ public class AI {
 									popnum[i][j][2]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 					//north
@@ -617,20 +708,24 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][3]+=popNum2[iii];
 							}
 							matrix3.renew();
 							//每次消除都将上部置为垃圾
 							for (int iii=Matrix.TOTALLINE;iii<Matrix.TOTALLINE*2;iii++){
 								for (int jjj=0;jjj<Matrix.TOTALROW;jjj++){
-									matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
+								matrix3.getMatrix()[iii][jjj]= new Dot (a++,Matrix.NORMAL);
 								}
 							}
 							while(true){
+//								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -641,7 +736,8 @@ public class AI {
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+//									delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -649,6 +745,10 @@ public class AI {
 									popnum[i][j][3]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 					//south
@@ -669,9 +769,11 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
+							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
-								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
+//								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
+								popnum[i][j][1]+=popNum2[iii];
 							}
 							matrix3.renew();
 							//每次消除都将上部置为垃圾
@@ -681,8 +783,10 @@ public class AI {
 								}
 							}
 							while(true){
+//								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
+								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -693,7 +797,8 @@ public class AI {
 								}
 								int delta =0;
 								for (int iii=0;iii<Matrix.NONE+1;iii++){
-									delta+=popNum[iii]-popNum2[iii];
+//									delta+=popNum[iii]-popNum2[iii];
+									delta+=popNum2[iii];
 								}
 								if (delta==0){
 									break;
@@ -701,6 +806,10 @@ public class AI {
 									popnum[i][j][1]+=delta;
 								}
 							}
+						}else{
+							tt = matrix3.getMatrix()[dot1.getX()][dot1.getY()];
+							matrix3.getMatrix()[dot1.getX()][dot1.getY()]=matrix3.getMatrix()[dot2.getX()][dot2.getY()];
+							matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						}
 					}
 				}
@@ -835,7 +944,7 @@ public class AI {
 					DotPo dot2 = new DotPo (tempx,tempy-1);
 					//尝试交换
 					Dot tt = matrix2.getMatrix()[dot1.getX()][dot1.getY()];
-					matrix2.getMatrix()[dot1.getY()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
+					matrix2.getMatrix()[dot1.getX()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
 					matrix2.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 					if(popMethod.popChcek(matrix2, dot1, dot2)){
 						//合法交换
@@ -845,14 +954,14 @@ public class AI {
 //						flag = true;
 					}else{
 						//非法交换
-						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getY()][dot1.getY()];
+						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getX()][dot1.getY()];
 						matrix2.getMatrix()[dot1.getX()][dot1.getY()]=tt;
 					}
 				}else if (tempy+1<Matrix.TOTALROW){
 					DotPo dot2 = new DotPo (tempx,tempy+1);
 					//尝试交换
 					Dot tt = matrix2.getMatrix()[dot1.getX()][dot1.getY()];
-					matrix2.getMatrix()[dot1.getY()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
+					matrix2.getMatrix()[dot1.getX()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
 					matrix2.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 					if(popMethod.popChcek(matrix2, dot1, dot2)){
 						//合法交换
@@ -862,14 +971,14 @@ public class AI {
 //						flag = true;
 					}else{
 						//非法交换
-						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getY()][dot1.getY()];
+						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getX()][dot1.getY()];
 						matrix2.getMatrix()[dot1.getX()][dot1.getY()]=tt;
 					}
 				}else if (tempx>=1){
 					DotPo dot2 = new DotPo (tempx-1,tempy);
 					//尝试交换
 					Dot tt = matrix2.getMatrix()[dot1.getX()][dot1.getY()];
-					matrix2.getMatrix()[dot1.getY()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
+					matrix2.getMatrix()[dot1.getX()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
 					matrix2.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 					if(popMethod.popChcek(matrix2, dot1, dot2)){
 						//合法交换
@@ -879,14 +988,14 @@ public class AI {
 //						flag = true;
 					}else{
 						//非法交换
-						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getY()][dot1.getY()];
+						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getX()][dot1.getY()];
 						matrix2.getMatrix()[dot1.getX()][dot1.getY()]=tt;
 					}
 				}else if (tempx+1<Matrix.TOTALLINE){
 					DotPo dot2 = new DotPo (tempx+1,tempy);
 					//尝试交换
 					Dot tt = matrix2.getMatrix()[dot1.getX()][dot1.getY()];
-					matrix2.getMatrix()[dot1.getY()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
+					matrix2.getMatrix()[dot1.getX()][dot1.getY()]=matrix2.getMatrix()[dot2.getX()][dot2.getY()];
 					matrix2.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 					if(popMethod.popChcek(matrix2, dot1, dot2)){
 						//合法交换
@@ -896,7 +1005,7 @@ public class AI {
 //						flag = true;
 					}else{
 						//非法交换
-						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getY()][dot1.getY()];
+						matrix2.getMatrix()[dot2.getX()][dot2.getY()]=matrix2.getMatrix()[dot1.getX()][dot1.getY()];
 						matrix2.getMatrix()[dot1.getX()][dot1.getY()]=tt;
 					}
 				}

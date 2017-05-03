@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import bll.individual.PaperPlayer;
 import bll.individual.Player;
+import bll.matrix.Matrix;
 import bll.support.Equip;
 import bll.support.Skill;
 import datahelper.*;
@@ -182,17 +183,34 @@ public class FileHelper implements DataOperator{
 		}
 		
 	}
-
+	public MissionVo loadNormal(int index){
+		MissionVo missionVo = new MissionVo ();
+		try{
+			BufferedReader reader = new BufferedReader (new InputStreamReader (FileHelper.class.getClassLoader().getResourceAsStream("MissionData/Normal/"+index+".data")));
+			missionVo.setID(index);
+			String line = null;
+			line = reader.readLine();
+			missionVo.setAvailTime(Integer.parseInt(line));
+			line = reader.readLine();
+			missionVo.setAvailOperateTimes(Integer.parseInt(line));
+			int [] targetElementNum = new int [Matrix.KIND] ;
+			
+			for (int i=0;i<Matrix.KIND;i++){
+				line = reader.readLine();
+				targetElementNum[i]=Integer.parseInt(line);
+			}
+			missionVo.setTargetElementNum(targetElementNum);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return missionVo;
+	}
 	@Override
 	public MissionVo loadMission(int index) {
 		// TODO Auto-generated method stub
 		MissionVo missionVo = new MissionVo ();
-//		String filePath = FileHelper.class.getClassLoader().getResource("MissionData/"+index+".data").getPath();
 		try{
-//			File save = new File (filePath);
-//			FileReader filereader = new FileReader (save);
-//			BufferedReader reader = new BufferedReader (filereader);
-			BufferedReader reader = new BufferedReader (new InputStreamReader (FileHelper.class.getClassLoader().getResourceAsStream("MissionData/"+index+".data")));
+			BufferedReader reader = new BufferedReader (new InputStreamReader (FileHelper.class.getClassLoader().getResourceAsStream("MissionData/Mission/"+index+".data")));
 			missionVo.setID(index);
 			String line = null;
 			line = reader.readLine();
@@ -245,6 +263,7 @@ public class FileHelper implements DataOperator{
 				line = reader.readLine();
 				AIBasic.getSkillList()[i]=Integer.parseInt(line);
 			}
+
 			AI = AIBasic.createPaper();
 			line = reader.readLine();
 			AI.getAllSkills()[0]=Skill.getSkillByID(Integer.parseInt(line));
@@ -252,9 +271,12 @@ public class FileHelper implements DataOperator{
 			AI.getAllSkills()[1]=Skill.getSkillByID(Integer.parseInt(line));
 			line = reader.readLine();
 			AI.getAllSkills()[2]=Skill.getSkillByID(Integer.parseInt(line));
+			line = reader.readLine();
+			AIBasic.setAILevel(Integer.parseInt(line));
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		System.out.println("AI Level ="+AI.getPlayer().getLevel());
 		return AI;
 	}
 	

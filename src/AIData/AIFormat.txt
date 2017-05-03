@@ -11,3 +11,4 @@
 [SkillID0]
 [SkillID1]
 [SkillID2]
+[AILevel]

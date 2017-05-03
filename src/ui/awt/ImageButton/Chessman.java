@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import po.DotPo;
-import ui.specialParent.PVEParent;
+import ui.specialParent.GenerateParent;
 
 public class Chessman extends ImageView {
 	private Image staticImage;
@@ -18,7 +18,7 @@ public class Chessman extends ImageView {
 	private double releaseX, releaseY;
 	private int dx, dy;
 	private int myX, myY;
-	private PVEParent pve;
+	private GenerateParent pve;
 	private Chessman mySelf = this;
 
 	public int getDx() {
@@ -29,7 +29,7 @@ public class Chessman extends ImageView {
 		return dy;
 	}
 
-	public Chessman(int i, int j, Image staticImage, Image pressedImage, PVEParent pve) {
+	public Chessman(int i, int j, Image staticImage, Image pressedImage, GenerateParent pve) {
 		this.myX = i;
 		this.myY = j;
 		this.staticImage = staticImage;
@@ -84,7 +84,7 @@ public class Chessman extends ImageView {
 					// "+"<"+releaseX+","+releaseY+">");
 					double deltaX = releaseX - dragX;
 					double deltaY = releaseY - dragY;
-					if (Math.sqrt(deltaY * deltaY + deltaX * deltaX) * 1.8 < PVEParent.LENGTH) {
+					if (Math.sqrt(deltaY * deltaY + deltaX * deltaX) * 1.8 < GenerateParent.LENGTH) {
 						releaseFocus();
 						return;
 					}

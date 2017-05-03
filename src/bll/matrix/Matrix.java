@@ -74,6 +74,7 @@ public class Matrix {
 	public static final int CHICKPLUSBOMBPOP = BOMBBONUS*100;
 	private Dot[][] matrix;
 	private int [] [] isPop;
+	private int [] popNum= new int [1051];
 	public Matrix() {
 		// this.TOTALLINE=TOTALLINE;
 		// this.TOTALROW=TOTALROW;
@@ -87,9 +88,19 @@ public class Matrix {
 
 		this.remake();
 	}
+	public int [] getPopNum(){
+//		for  (int i=0;i<Matrix.NONE+1;i++){
+//			System.out.print(popNum[i]+"!");
+//		}
+//		System.out.println();
+		return popNum;
+	}
 	
-	public int[] getPopNum() {
-		int [] popNum = new int [Matrix.NONE+1];
+	public void setPopNum(int[] popNum) {
+		this.popNum = popNum;
+	}
+	public int[] getNum() {
+		int [] popNum = new int [Matrix.NONE+1000];
 		for (int i=0;i<Matrix.TOTALLINE;i++){
 			for (int j=0;j<Matrix.TOTALROW;j++){
 				if (this.getMatrix()[i][j].getColor()>Matrix.NONE+1){
@@ -98,6 +109,10 @@ public class Matrix {
 				popNum[this.getMatrix()[i][j].getColor()]++;
 			}
 		}
+//		System.out.println("Num:");
+//		for (int i=0;i<Matrix.NONE+1;i++){
+//			System.out.print(popNum[i]+",");
+//		}
 		return popNum;
 	}
 
@@ -190,8 +205,8 @@ public class Matrix {
 	}
 	public MatrixPo getboard() {
 		MatrixPo matrixPo = new MatrixPo();
-		for (int i = 0; i <= 2 * TOTALLINE; i++) {
-			for (int j = 0; j <= TOTALROW; j++) {
+		for (int i = 0; i < 2 * TOTALLINE; i++) {
+			for (int j = 0; j <TOTALROW; j++) {
 				matrixPo.getMatrix()[i][j] = new Dot(matrix[i][j].getColor(),matrix[i][j].getBonus());
 			}
 		}

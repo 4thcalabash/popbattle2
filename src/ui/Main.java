@@ -1,10 +1,10 @@
 package ui;
-import po.*;
 import ui.abstractStage.*;
 import ui.sceneInterface.*;
+import ui.specialParent.EVEParent;
+import ui.specialParent.NormalParent;
 import ui.specialParent.PVEParent;
 import ui.specialParent.StaticParent;
-import bllservice.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Screen;
@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.BorderPane;
-import bll.individual.*;
 import bll.platform.Battle;
 import util.*;
 public class Main extends Application implements BasicScene,DramaticScene{
@@ -40,10 +38,10 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		stage.setFullScreenExitHint("");
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreen(true);
-		Screen screen = Screen.getPrimary();
-		System.out.println("Height:"+SCREENHEIGHT);
-		System.out.println("Width:"+SCREENWIDTH);
-//		stage.setResizable(false);
+//		Screen screen = Screen.getPrimary();
+//		System.out.println("Height:"+SCREENHEIGHT);
+//		System.out.println("Width:"+SCREENWIDTH);
+		stage.setResizable(false);
 		primaryStage = stage;
 		primaryStage.show(); 
 
@@ -61,10 +59,19 @@ public class Main extends Application implements BasicScene,DramaticScene{
 				scene.getStylesheets().remove(0);
 				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
 				
-				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-				this.setStage(battleParent);
+//				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+				battleParent = new EVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+				stage.getScene().setRoot(battleParent);
 			});
-			
+			 
+		}else if (missionInfo.getModel()==Battle.NORMAL){
+			Platform.runLater(()->{
+				scene.getStylesheets().remove(0);
+				scene.getStylesheets().add(getClass().getResource("Normal.css").toExternalForm());
+				
+				battleParent = new NormalParent (missionInfo.getID(),this);
+				stage.getScene().setRoot(battleParent);
+			});
 		}
 	}
 	

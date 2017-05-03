@@ -24,5 +24,10 @@ public class Calcer implements CalcMethod{
 		int level = calced.getLevel();
 		return ansList.get(level-1);
 	}
+	@Override
+	public int calc(int level) {
+		// TODO Auto-generated method stub
+		return ansList.get(level-1);
+	}
 	
 }

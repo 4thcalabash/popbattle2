@@ -1,0 +1,8 @@
+.root{
+	-fx-background-image:url("specialParent/PVE.png");
+	-fx-background-size:stretch stretch; 
+}
+#Matrix{
+	-fx-background-image:url("../Graphics/Matrix/board.png");
+	-fx-background-size:stretch stretch 
+}

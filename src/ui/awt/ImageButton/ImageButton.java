@@ -89,5 +89,4 @@ public class ImageButton extends ImageView{
 	public void setPressedGraphics(Image pressedGraphics) {
 		this.pressedGraphics = pressedGraphics;
 	}
-	
 }

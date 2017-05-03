@@ -59,7 +59,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 				chessboard.getIsPop()[i][j] = 0;
 			}
 		}
-		int[] popNum1 = chessboard.getPopNum();
+		int[] popNum1 = chessboard.getNum();
 		// 输出检测
 		System.out.println("Matrix For Pop:");
 		for (int i = 0; i < Matrix.TOTALLINE; i++) {
@@ -114,7 +114,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 
 				// 特殊处理 不通过队列
 			} else {
-				System.out.println("Chick+Bonus Start");
+		//		System.out.println("Chick+Bonus Start");
 				// dot1 Chick dot2 LineBonus | RowBonus | BombBonus
 				int bonus = chessboard.getMatrix()[dot2.getX()][dot2.getY()].getBonus();
 				for (int i = 0; i < Matrix.TOTALLINE; i++) {
@@ -123,8 +123,8 @@ public class MoreThanThreeLinePop extends PopMethod {
 								.getColor()) {
 							chessboard.getMatrix()[i][j].setBonus((bonus == Matrix.BOMBBONUS) ? Matrix.BOMBBONUS
 									: (Math.random() > 0.5 ? Matrix.LINEBONUS : Matrix.ROWBONUS));
-							System.out.println("(" + i + "," + j + ")->"
-									+ chessboard.getMatrix()[dot2.getX()][dot2.getY()].getBonus());
+			//				System.out.println("(" + i + "," + j + ")->"
+					//				+ chessboard.getMatrix()[dot2.getX()][dot2.getY()].getBonus());
 							dead[i][j] = true;
 						}
 					}
@@ -578,7 +578,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 						}
 						// System.out.println("End At"+"("+tempx+","+tempy+")");
 						if (tempx + tempy - i - j == 2) {
-							System.out.println("Three Row Succ At" + "(" + i + "," + j + ")");
+					//		System.out.println("Three Row Succ At" + "(" + i + "," + j + ")");
 							// 废什么话，直接打上死亡flag
 							for (int ii = i; ii <= tempx; ii++) {
 								for (int jj = j; jj <= tempy; jj++) {
@@ -602,7 +602,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 						}
 						// System.out.println("End At"+"("+tempx+","+tempy+")");
 						if (tempx + tempy - i - j == 2) {
-							System.out.println("Three Line Succ At" + "(" + i + "," + j + ")");
+					//		System.out.println("Three Line Succ At" + "(" + i + "," + j + ")");
 							// 废什么话，直接打上死亡flag
 							for (int ii = i; ii <= tempx; ii++) {
 								for (int jj = j; jj <= tempy; jj++) {
@@ -640,7 +640,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 		}
 		//
 		for (DotPo temp : queue) {
-			System.out.println("(" + temp.getX() + "," + temp.getY() + "):" + temp.getColor() + "|" + temp.getBonus());
+	//		System.out.println("(" + temp.getX() + "," + temp.getY() + "):" + temp.getColor() + "|" + temp.getBonus());
 		}
 
 		while (queue.size() > 0) {
@@ -702,7 +702,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 					for (int j = 0; j < Matrix.TOTALROW; j++) {
 						if (chessboard.getMatrix()[i][j].getColor() == head.getColor()) {
 							chessboard.getIsPop()[i][j] = Matrix.CHICKPOP;
-							System.out.println("<" + i + "," + j + ">");
+						//	System.out.println("<" + i + "," + j + ">");
 							if (!dead[i][j]) {
 								dead[i][j] = true;
 								queue.add(new DotPo(i, j, chessboard.getMatrix()[i][j].getColor(),
@@ -736,24 +736,27 @@ public class MoreThanThreeLinePop extends PopMethod {
 				}
 			}
 		}
-		int[] popNum2 = chessboard.getPopNum();
+		int[] popNum2 = chessboard.getNum();
+		int [] ans = new int [Matrix.NONE+1];
 		for (int i = 0; i < Matrix.NONE + 1; i++) {
-			chessboard.getPopNum()[i] = popNum1[i] - popNum2[i];
+			ans[i] = popNum1[i] - popNum2[i];
 		}
+		chessboard.setPopNum(ans);
+		chessboard.getPopNum();
 		chessboard.renew();
 
 	}
 
 	public void pop(Matrix chessboard) {
 		// 输出检测
-		System.out.println("Matrix For Pop:");
-		for (int i = 0; i < Matrix.TOTALLINE; i++) {
-			for (int j = 0; j < Matrix.TOTALROW; j++) {
-				System.out.print(chessboard.getMatrix()[i][j].getColor() + " ");
-			}
-			System.out.println();
-		}
-		int[] popNum1 = chessboard.getPopNum();
+//		System.out.println("Matrix For Pop:");
+//		for (int i = 0; i < Matrix.TOTALLINE; i++) {
+//			for (int j = 0; j < Matrix.TOTALROW; j++) {
+//				System.out.print(chessboard.getMatrix()[i][j].getColor() + " ");
+//			}
+//			System.out.println();
+//		}
+		int[] popNum1 = chessboard.getNum();
 		ArrayList<DotPo> queue = new ArrayList<DotPo>();
 		int[][] in = new int[Matrix.TOTALLINE + 1][Matrix.TOTALROW];
 		int[][] linecheck = new int[Matrix.TOTALLINE + 1][Matrix.TOTALROW];
@@ -1129,7 +1132,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 					}
 					// System.out.println("End At"+"("+tempx+","+tempy+")");
 					if (tempx + tempy - i - j == 2) {
-						System.out.println("Three Row Succ At" + "(" + i + "," + j + ")");
+				//		System.out.println("Three Row Succ At" + "(" + i + "," + j + ")");
 						// 废什么话，直接打上死亡flag
 						for (int ii = i; ii <= tempx; ii++) {
 							for (int jj = j; jj <= tempy; jj++) {
@@ -1152,7 +1155,7 @@ public class MoreThanThreeLinePop extends PopMethod {
 					}
 					// System.out.println("End At"+"("+tempx+","+tempy+")");
 					if (tempx + tempy - i - j == 2) {
-						System.out.println("Three Line Succ At" + "(" + i + "," + j + ")");
+			//			System.out.println("Three Line Succ At" + "(" + i + "," + j + ")");
 						// 废什么话，直接打上死亡flag
 						for (int ii = i; ii <= tempx; ii++) {
 							for (int jj = j; jj <= tempy; jj++) {
@@ -1190,14 +1193,14 @@ public class MoreThanThreeLinePop extends PopMethod {
 		}
 		//
 		for (DotPo temp : queue) {
-			System.out.println("(" + temp.getX() + "," + temp.getY() + "):" + temp.getColor() + "|" + temp.getBonus());
+	//		System.out.println("(" + temp.getX() + "," + temp.getY() + "):" + temp.getColor() + "|" + temp.getBonus());
 		}
 
 		while (queue.size() > 0) {
 			DotPo head = queue.get(0);
 			queue.remove(0);
 			chessboard.getMatrix()[head.getX()][head.getY()].setColor(Matrix.BLANK);
-			chessboard.getPopNum()[head.getColor()]++;
+//			chessboard.getPopNum()[head.getColor()]++;
 			if (head.getBonus() == Matrix.DOUBLECHICK) {
 				chessboard.getPopNum()[Matrix.CHICKBONUS]++;
 			}
@@ -1281,10 +1284,13 @@ public class MoreThanThreeLinePop extends PopMethod {
 				}
 			}
 		}
-		int[] popNum2 = chessboard.getPopNum();
+		int[] popNum2 = chessboard.getNum();
+		int [] ans = new int [Matrix.NONE+1];
 		for (int i = 0; i < Matrix.NONE + 1; i++) {
-			chessboard.getPopNum()[i] = popNum1[i] - popNum2[i];
+			ans[i] = popNum1[i] - popNum2[i];
 		}
+		chessboard.setPopNum(ans);
+		chessboard.getPopNum();
 		chessboard.renew();
 	}
 

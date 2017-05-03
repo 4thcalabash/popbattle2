@@ -5,7 +5,8 @@ import bll.support.*;
 import vo.*;
 import bll.platform.*;
 import po.*;
-public class Player {
+import util.Calcable;
+public class Player implements Calcable{
 	/**********
 	 *人物属性分为基础属性和当前属性
 	 *基础属性是裸的人物属性
@@ -44,11 +45,11 @@ public class Player {
 
 	private int [] skillList;
 	private int [] skillChoosed;
-	private Equip headWearing;
-	private Equip weapon;
-	private Equip wearing;
-	private Equip wings;
-
+	private int headWearingID;
+	private int weaponID;
+	private int wearingID;
+	private int wingsID;
+	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
 	public static final int BASICAD=2;
 	public static final int BASICAP=2;
 	public static final int BASICHP = 10;
@@ -73,14 +74,14 @@ public class Player {
 		this.evolveStoneNum=playerVo.getEvolveStoneNum();
 		this.skillList=playerVo.getSkillList();
 		this.skillChoosed=playerVo.getSkillChoosed();
-		this.headWearing=Equip.getEquipByID(playerVo.getHeadWearingID());
-		this.headWearing.setLevel(playerVo.getHeadWearingLevel());
-		this.weapon=Equip.getEquipByID(playerVo.getWeaponID());
-		this.weapon.setLevel(playerVo.getWeaponLevel());
-		this.wearing=Equip.getEquipByID(playerVo.getWearingID());
-		this.wearing.setLevel(playerVo.getWearingLevel());
-		this.wings=Equip.getEquipByID(playerVo.getWingsID());
-		this.wings.setLevel(playerVo.getWingsLevel());
+		this.headWearingID=playerVo.getHeadWearingID();
+		this.weaponID=playerVo.getWeaponID();
+		this.wearingID=playerVo.getWearingID();
+		this.wingsID=playerVo.getWingsID();
+		this.headWearingLevel=playerVo.getHeadWearingLevel();
+		this.weaponLevel=playerVo.getWeaponLevel();
+		this.wearingLevel=playerVo.getWearingLevel();
+		this.wingsLevel=playerVo.getWingsLevel();
 
 		this.potentialPoint= playerVo.getPotentialPoint();
 		this.shop = new Shop(this);
@@ -91,6 +92,27 @@ public class Player {
 		this.shop.setSkillPointPrice(playerVo.getSkillPointNum());
 		this.shop.setUpGradeStonePrice(playerVo.getUpGradeStoneNum());
 		this.shop.setEvolveStonePrice(playerVo.getEvolveStoneNum());
+		this.hp=basichp+Equip.getEquipByID(headWearingID).getHP(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getHP(this.weaponLevel)+Equip.getEquipByID(wearingID).getHP(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getHP(this.wingsLevel);
+		this.ad=basicad+Equip.getEquipByID(headWearingID).getAD(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getAD(this.weaponLevel)+Equip.getEquipByID(wearingID).getAD(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getAD(this.wingsLevel);
+		this.ap=basicap+Equip.getEquipByID(headWearingID).getAP(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getAP(this.weaponLevel)+Equip.getEquipByID(wearingID).getAP(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getAP(this.wingsLevel);
+		this.MR=basicMR+Equip.getEquipByID(headWearingID).getMR(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getMR(this.weaponLevel)+Equip.getEquipByID(wearingID).getMR(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getMR(this.wingsLevel);
+		this.DR=basicDR+Equip.getEquipByID(headWearingID).getDR(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getDR(this.weaponLevel)+Equip.getEquipByID(wearingID).getDR(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getDR(this.wingsLevel);
+		this.DT=basicap+Equip.getEquipByID(headWearingID).getDT(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getDT(this.weaponLevel)+Equip.getEquipByID(wearingID).getDT(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getDT(this.wingsLevel);
+		this.MT=basicap+Equip.getEquipByID(headWearingID).getMT(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getMT(this.weaponLevel)+Equip.getEquipByID(wearingID).getMT(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getMT(this.wingsLevel);
 	}
 	public void setAd(int ad) {
 		this.ad = ad;
@@ -151,6 +173,8 @@ public class Player {
 	}
 	public PaperPlayer createPaper(){
 		PaperPlayer paper = new PaperPlayer (this);
+		System.out.println("myHp="+hp);
+		paper.setHp(this.hp);
 		return paper;
 	}
 	public int getDR() {
@@ -185,18 +209,18 @@ public class Player {
 	public Shop getShop() {
 		return shop;
 	}
-	public Equip getHeadWearing() {
-		return headWearing;
-	}
-	public Equip getWeapon() {
-		return weapon;
-	}
-	public Equip getWearing() {
-		return wearing;
-	}
-	public Equip getWings() {
-		return wings;
-	}
+//	public Equip getHeadWearing() {
+//		return headWearing;
+//	}
+//	public Equip getWeapon() {
+//		return weapon;
+//	}
+//	public Equip getWearing() {
+//		return wearing;
+//	}
+//	public Equip getWings() {
+//		return wings;
+//	}
 	public int getGold() {
 		return gold;
 	}

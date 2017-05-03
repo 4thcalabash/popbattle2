@@ -18,13 +18,27 @@ public class Battle implements BattlePlatform{
 	private PaperPlayer paperPlayer1;
 	private PaperPlayer paperPlayer2;
 	private MissionVo missionVo;
+	private int nowAIindex;
+	private FileHelper helper = new FileHelper();
 	public static final int PVE = 1000;
 	public static final int PVP = 2000;
 	public static final int NORMAL = 3000;
+	//PVE 模式
 	public Battle(int missionID,PaperPlayer paperPlayer1){
 		this.paperPlayer1=paperPlayer1;
 		this.missionVo=new FileHelper().loadMission(missionID);
-		this.paperPlayer2=new FileHelper().loadAI(missionVo.getAIID().get(0));
+		nowAIindex=0;
+		this.paperPlayer2=helper.loadAI(missionVo.getAIID().get(nowAIindex));
+		chessboard = new Matrix ();
+		chessboard.remake();
+		ArrayList <Popable> popList = new ArrayList<Popable>();
+		popList.add(new MoreThanThreeLinePop());
+		popHub = new PopMethodHub (popList,chessboard);
+	}
+	//NORMAL模式
+	public Battle (int missionID){
+		this.missionVo=new FileHelper().loadNormal(missionID);
+		
 		chessboard = new Matrix ();
 		chessboard.remake();
 		ArrayList <Popable> popList = new ArrayList<Popable>();
@@ -32,16 +46,43 @@ public class Battle implements BattlePlatform{
 		popHub = new PopMethodHub (popList,chessboard);
 	}
 	
-	
 	@Override
 	public BattlePo check() {
 		// TODO Auto-generated method stub
-		BattlePo battlePo = new BattlePo ();
-		return battlePo;
+		if (missionVo.getTargetElementNum()==null){
+			return PVECheck();
+		}else{
+			return normalCheck();
+		}
 		
 	}
-	
-	
+	private BattlePo PVECheck(){
+		BattlePo battlePo = new BattlePo ();
+		if (paperPlayer1.getHp()<=0){
+			System.out.println("P1Die");
+			battlePo.setBattleIsEnd(true);
+			battlePo.setFinalWinnerID(2);
+			
+		}else{
+			if (paperPlayer2.getHp()<=0){
+				battlePo.setThisAIDie(true);
+				if (++nowAIindex==missionVo.getAIID().size()){
+					System.out.println("AI ALL DIE ");
+					battlePo.setBattleIsEnd(true);
+					battlePo.setFinalWinnerID(1);
+				}else{
+					battlePo.setBattleIsEnd(false);
+					paperPlayer2 = helper.loadAI(missionVo.getAIID().get(nowAIindex));
+				}
+			}
+		}
+		return battlePo;
+	}
+	private BattlePo normalCheck(){
+		BattlePo battlePo = new BattlePo ();
+		//缓一手
+		return battlePo;
+	}
 	@Override
 	public PaperPlayer getPlayer1() {
 		// TODO Auto-generated method stub
