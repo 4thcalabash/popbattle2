@@ -1,14 +1,34 @@
 package ui.specialParent;
+
 import bll.individual.Player;
+import bll.matrix.Matrix;
 import bll.platform.Battle;
 import bll.support.Skill;
+import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import po.AIStrategyPo;
 import ui.Main;
+import ui.awt.ImageButton.NumberImage;
 
-public class PVEParent extends GenerateParent implements Runnable{
+public class PVEParent extends GenerateParent {
+//	private AnchorPane pool1 = new AnchorPane();
+//	private AnchorPane pool2 = new AnchorPane();
+
+	// private NumberImage[] pool1Number = new NumberImage[Matrix.KIND];
+	// private NumberImage[] pool2Number = new NumberImage[Matrix.KIND];
 	public PVEParent(int missionID, Player player1, Main main) {
 		super(main, new Battle(missionID, player1.createPaper()));
-		new Thread(this).start();
+		// new Thread(this).start();
+		int i = 1;
+//		pool1Number = new NumberImage[Matrix.KIND + 1];
+//		pool2Number = new NumberImage[Matrix.KIND + 1];
+//		elementPool1 = new int[Matrix.KIND + 1];
+//		elementPool2 = new int[Matrix.KIND + 1];
+		addPool();
+		myself.start();
 	}
 
 	public void run() {
@@ -21,47 +41,33 @@ public class PVEParent extends GenerateParent implements Runnable{
 			round = 1;
 		}
 		boolean skillRequest = false;
-		int skillID=-1;
+		int skillID = -1;
 		System.out.println("aha");
 		while (!result.isBattleIsEnd()) {
+			// System.out.print("Continue");
 			System.out.println(round);
 			if (round == 1) {
+
 				// 玩家回合 检测移动
 				while (true) {
 					if (new1 && new2) {
 						new1 = new2 = false;
 						action();
-						// 移动动画演示
-//						moveFlash();
-//						System.out.println("OK AT HERE");
-//						// 连续消除动画演示
-//						abcd = new CountDownLatch(1);
-//						popFlash();
-//						try {
-//							abcd.await();
-//						} catch (InterruptedException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//						renewBoard();
-//						// 输出着玩
-//						System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
-						// 交换回合
 						round = 2;
 						break;
 					} else if (skillRequest) {
-						//技能请求
+						// 技能请求
 						skillRequest = false;
 						boolean flag = Skill.getSkillByID(skillID).canAction(this.platform.getPlayer1());
-						if (!flag){
-							//提示用户技能使用失败，继续用户回合
-						}else{
-							//释放技能动画，并通知后端更新数据等等。
-							//回合交换
-							round=2;
+						if (!flag) {
+							// 提示用户技能使用失败，继续用户回合
+						} else {
+							// 释放技能动画，并通知后端更新数据等等。
+							// 回合交换
+							round = 2;
 							break;
 						}
-						
+
 					} else {
 
 						// 每10ms做一次用户操作检测
@@ -74,23 +80,66 @@ public class PVEParent extends GenerateParent implements Runnable{
 				}
 			} else {
 				// AI回合
-				//放置透明布挡住棋盘禁止移动。
-				AIStrategyPo strategy =this.platform.getAIStrategy();
-				if (strategy.isMoveStrategy()){
-					//AI要进行移动
-					System.out.println("<"+strategy.getDot1().getX()+","+strategy.getDot1().getY()+">");
-					System.out.println("<"+strategy.getDot2().getX()+","+strategy.getDot2().getY()+">");
+				// 放置透明布挡住棋盘禁止移动。
+				AIStrategyPo strategy = this.platform.getAIStrategy();
+				if (strategy.isMoveStrategy()) {
+					// AI要进行移动
+					System.out.println("<" + strategy.getDot1().getX() + "," + strategy.getDot1().getY() + ">");
+					System.out.println("<" + strategy.getDot2().getX() + "," + strategy.getDot2().getY() + ">");
 					this.setDot1(strategy.getDot1().getX(), strategy.getDot1().getY());
 					this.setDot2(strategy.getDot2().getX(), strategy.getDot2().getY());
-					new1=new2=false;
+					new1 = new2 = false;
 					action();
-				}else{
-					//AI要进行技能释放
-					
+				} else {
+					// AI要进行技能释放
+
 				}
-				round=1;
+				round = 1;
 			}
 		}
 		System.out.println("End");
 	}
+
+//	public void add() {
+//
+//		pool1.setId("pool");
+//		pool2.setId("pool");
+//		pool1.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+//		pool2.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+//		pool1.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+//		pool2.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+//		for (int i = 0; i < Matrix.KIND; i++) {
+//			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
+//			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
+//			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
+//			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+//			element.setY(GenerateParent.POOLHEIGHTGAP);
+//			pool1.getChildren().add(element);
+//			pool1Number[i] = new NumberImage(0);
+//			pool1Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+//			pool1Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
+//			pool1.getChildren().add(pool1Number[i]);
+//		}
+//		// pool1.getChildren()
+//		// .addAll(pool1Number);
+//		for (int i = 0; i < Matrix.KIND; i++) {
+//			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
+//			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
+//			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
+//			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+//			element.setY(GenerateParent.POOLHEIGHTGAP);
+//			pool2.getChildren().add(element);
+//			pool2Number[i] = new NumberImage(0);
+//			pool2Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+//			pool2Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
+//			pool2.getChildren().add(pool2Number[i]);
+//		}
+//		// pool2.getChildren().addAll(pool2Number);
+//		this.setLeft(pool1);
+//		// pool1.setLayoutX((Main.SCREENWIDTH-pool1.getMaxWidth())/2);
+//		// pool1.setLayoutY(0);
+//		this.setRight(pool2);
+//		BorderPane.setAlignment(getLeft(), Pos.BOTTOM_RIGHT);
+//		BorderPane.setAlignment(getRight(), Pos.BOTTOM_LEFT);
+//	}
 }

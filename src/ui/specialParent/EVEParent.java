@@ -8,7 +8,9 @@ import ui.Main;
 public class EVEParent extends GenerateParent implements Runnable{
 	public EVEParent(int missionID, Player player1, Main main) {
 		super(main, new Battle(missionID, player1.createPaper()));
-		new Thread(this).start();
+//		super(missionID,player1,main);
+		addPool();
+		myself.start();
 	}
 
 	public void run() {
@@ -26,7 +28,7 @@ public class EVEParent extends GenerateParent implements Runnable{
 		while (!result.isBattleIsEnd()) {
 			System.out.println(round);
 			if (round == 1) {
-				// 玩家回合 检测移动
+				// AI1的回合
 				AIStrategyPo strategy =this.platform.getAIStrategy();
 				if (strategy.isMoveStrategy()){
 					//AI要进行移动
@@ -40,7 +42,7 @@ public class EVEParent extends GenerateParent implements Runnable{
 				}
 				round=2;
 			} else {
-				// AI回合
+				// AI2的回合
 				//放置透明布挡住棋盘禁止移动。
 				AIStrategyPo strategy =this.platform.getAIStrategy();
 				if (strategy.isMoveStrategy()){

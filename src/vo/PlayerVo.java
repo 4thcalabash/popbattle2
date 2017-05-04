@@ -2,6 +2,13 @@ package vo;
 import bll.individual.*;
 import bll.support.Equip;
 public class PlayerVo {
+	private int pro;
+	public int getPro() {
+		return pro;
+	}
+	public void setPro(int pro) {
+		this.pro = pro;
+	}
 	private int basicad,basicap,basichp,basicDR,basicMR;
 	private int level,nowExp;
 	private int gold;

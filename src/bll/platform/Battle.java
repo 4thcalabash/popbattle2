@@ -20,6 +20,9 @@ public class Battle implements BattlePlatform{
 	private MissionVo missionVo;
 	private int nowAIindex;
 	private FileHelper helper = new FileHelper();
+	private int [] pool1 = new int [Matrix.KIND+1];
+	private int [] pool2 = new int [Matrix.KIND+1];
+	private int [] deltaPool = new int [Matrix.KIND+1];
 	public static final int PVE = 1000;
 	public static final int PVP = 2000;
 	public static final int NORMAL = 3000;
@@ -113,12 +116,42 @@ public class Battle implements BattlePlatform{
 	@Override
 	public PopPo pop(int playerID,DotPo dot1,DotPo dot2) {
 		// TODO Auto-generated method stub
-		return popHub.pop(dot1, dot2);
+		PopPo temp=popHub.pop(dot1, dot2);
+		deltaPool=chessboard.getPopNum();
+		for (int i=0;i<Matrix.KIND+1;i++){
+			if (playerID==1){
+				pool1[i]+=deltaPool[i];
+				if(pool1[i]>99){
+					pool1[i]=99;
+				}
+			}else{
+				pool2[i]+=deltaPool[i];
+				if (pool2[i]>99){
+					pool2[i]=99;
+				}
+			}
+		}
+		return temp;
 	}
 	@Override
 	public PopPo pop(int playerID) {
 		// TODO Auto-generated method stub
-		return popHub.pop();
+		PopPo temp = popHub.pop();
+		deltaPool = chessboard.getPopNum();
+		for (int i=0;i<Matrix.KIND+1;i++){
+			if (playerID==1){
+				pool1[i]+=deltaPool[i];
+				if (pool1[i]>99){
+					pool1[i]=99;
+				}
+			}else{
+				pool2[i]+=deltaPool[i];
+				if (pool2[i]>99){
+					pool2[i]=99;
+				}
+			}
+		}
+		return temp;
 	}
 	
 
@@ -198,6 +231,16 @@ public class Battle implements BattlePlatform{
 			}
 		}
 		return matrixPo;
+	}
+	@Override
+	public int[] getPool1() {
+		// TODO Auto-generated method stub
+		return pool1.clone();
+	}
+	@Override
+	public int[] getPool2() {
+		// TODO Auto-generated method stub
+		return pool2.clone();
 	}
 
 

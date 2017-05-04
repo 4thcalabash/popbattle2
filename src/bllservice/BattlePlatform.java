@@ -15,7 +15,8 @@ public interface BattlePlatform {
 	public boolean hasLegalMove();
 	public void remake();
 	public BattlePo check();//记录了比赛结束信息。如果结束，将会记录比赛奖励等信息
-	
+	public int [] getPool1();
+	public int [] getPool2();
 	
 	
 	public void adfasdasdassdfasdf();

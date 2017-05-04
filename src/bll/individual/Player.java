@@ -20,12 +20,15 @@ public class Player implements Calcable{
 	//设定AI永远为Player2
 	public static final int INITSAVEPRO_1=100;
 	public static final int INITSAVEPRO_2=200;
+	public static final int PRO_1=100;
+	public static final int PRO_2=200;
 	//指定了两个职业的初始档案编号，以及SpecialSkill的偏移量
 	//职业的SpecialSkill的SkillID分别为
 	//104、105、106
 	//204、205、206
 	
 	//基础属性
+	private int pro;
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
 
 	private Shop shop;
@@ -61,6 +64,7 @@ public class Player implements Calcable{
 	public static final int MYSELF = 233;
 	public static final int ENEMY = 666;
 	public Player (PlayerVo playerVo){
+		this.pro=playerVo.getPro();
 		this.basicad=playerVo.getBasicad();
 		this.basicap=playerVo.getBasicap();
 		this.basichp=playerVo.getBasichp();

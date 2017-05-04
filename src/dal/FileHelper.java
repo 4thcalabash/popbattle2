@@ -29,9 +29,11 @@ public class FileHelper implements DataOperator{
 //			File save = new File (filePath);
 //			FileReader filereader = new FileReader(save);
 //			BufferedReader reader = new BufferedReader (filereader);
-			BufferedReader reader = new BufferedReader (new InputStreamReader(FileHelper.class.getClassLoader().getResourceAsStream("Data/Save"+index+".data")));
+			BufferedReader reader = new BufferedReader (new InputStreamReader(
+					FileHelper.class.getClassLoader().getResourceAsStream("Data/Save"+index+".data")));
 			String line = null;
-			
+			line = reader.readLine();
+			playerVo.setPro(Integer.parseInt(line));
 			line = reader.readLine();
 			playerVo.setLevel(Integer.parseInt(line));
 			line = reader.readLine();

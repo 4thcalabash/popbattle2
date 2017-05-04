@@ -3,6 +3,8 @@ package ui.specialParent;
 import ui.Main;
 import ui.abstractStage.BattleParent;
 import ui.awt.ImageButton.Chessman;
+import ui.awt.ImageButton.NumberImage;
+
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import bll.individual.Player;
@@ -21,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -32,6 +35,12 @@ import po.PopPo;
 
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
+	public static final int ELEMENTLENGTH=(int)(Main.SCREENHEIGHT*45/1030.0);
+	public static final int POOLWIDTHGAP = 5;
+	public static final int POOLHEIGHTGAP = 15;
+	public static final int POOLHEIGHT = (int)(Main.SCREENHEIGHT*(ELEMENTLENGTH+NumberImage.HEIGHT+2*POOLHEIGHTGAP)/1030.0);
+	public static final int POOLWIDTH=(int)(Main.SCREENHEIGHT*(12*NumberImage.WIDTH+7*POOLWIDTHGAP)/1030.0);
+
 	public static final int LENGTH = (int)(Main.SCREENHEIGHT*75/1030.0);//75;
 	// public static final int INTERUPT = 300;
 	public static final int MOVETIME = 300;
@@ -54,13 +63,66 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	private Dot[][] chessboard;
 	private AnchorPane center;
 	private Chessman[][] imageMatrix = new Chessman[Matrix.TOTALLINE][Matrix.TOTALROW];
-	private Thread myself;
+	protected Thread myself,check;
 	private Chessman selected;
 	// private PVEParent mySelf = this;
 	private CountDownLatch count;
 	private boolean hasAChick=false;
 	private int luckyColor = -1;
 	BattlePo result ;
+	
+	protected NumberImage[] pool1Number=null;
+	protected NumberImage[] pool2Number=null;
+	protected int [] elementPool1=null;
+	protected int [] elementPool2 =null;
+	
+	protected AnchorPane pool1 = new AnchorPane();
+	protected AnchorPane pool2 = new AnchorPane();
+	protected void addPool() {
+		pool1Number = new NumberImage[Matrix.KIND + 1];
+		pool2Number = new NumberImage[Matrix.KIND + 1];
+		elementPool1 = new int[Matrix.KIND + 1];
+		elementPool2 = new int[Matrix.KIND + 1];
+		pool1.setId("pool");
+		pool2.setId("pool");
+		pool1.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+		pool2.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+		pool1.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+		pool2.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
+		for (int i = 0; i < Matrix.KIND; i++) {
+			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
+			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
+			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
+			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+			element.setY(GenerateParent.POOLHEIGHTGAP);
+			pool1.getChildren().add(element);
+			pool1Number[i] = new NumberImage(0);
+			pool1Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+			pool1Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
+			pool1.getChildren().add(pool1Number[i]);
+		}
+		// pool1.getChildren()
+		// .addAll(pool1Number);
+		for (int i = 0; i < Matrix.KIND; i++) {
+			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
+			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
+			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
+			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+			element.setY(GenerateParent.POOLHEIGHTGAP);
+			pool2.getChildren().add(element);
+			pool2Number[i] = new NumberImage(0);
+			pool2Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
+			pool2Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
+			pool2.getChildren().add(pool2Number[i]);
+		}
+		// pool2.getChildren().addAll(pool2Number);
+		this.setLeft(pool1);
+		// pool1.setLayoutX((Main.SCREENWIDTH-pool1.getMaxWidth())/2);
+		// pool1.setLayoutY(0);
+		this.setRight(pool2);
+		BorderPane.setAlignment(getLeft(), Pos.BOTTOM_RIGHT);
+		BorderPane.setAlignment(getRight(), Pos.BOTTOM_LEFT);
+	} 
 	public void setDot1(int x, int y) {
 		dot1.setX(x);
 		dot1.setY(y);
@@ -103,7 +165,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		rightBox.getChildren().add(P2View);
 //		this.setLeft(leftBox);
 //		this.setRight(rightBox);
+
 		renewBoard();
+		
 		leftBox.setAlignment(Pos.CENTER);
 		rightBox.setAlignment(Pos.CENTER);
 		HBox test = new HBox();
@@ -115,6 +179,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				myself.stop();
+				check.stop();
 				setVisible(false);
 				main.battleEnd();
 			}
@@ -129,7 +194,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		result = platform.check();
 		
 
-		new Thread (new Runnable(){
+		check =new Thread (new Runnable(){
 
 			@Override
 			public void run() {
@@ -141,7 +206,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				}
 			}
 			
-		}).start();
+		});
+		check.start();
 //		myself.start();
 	}
 	public void action(){
@@ -231,6 +297,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				}
 			}
 			this.setCenter(center);
+//			BorderPane.setAlignment(getCenter(), Pos.TOP_CENTER);
 			matrix.setVisible(true);
 			;
 		});
@@ -431,6 +498,18 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			if (round==1&&pool1Number!=null){
+				 elementPool1 = this.platform.getPool1();
+				for (int i=0;i<Matrix.KIND;i++){
+					pool1Number[i]
+							.refresh(elementPool1[i]);
+				}
+			}else if (round==2&&pool2Number!=null){
+				elementPool2 = this.platform.getPool2();
+				for (int i=0;i<Matrix.KIND;i++){
+					pool2Number[i].refresh(elementPool2[i]);
+				}
+			}
 			chessboard = this.platform.getMatrix().getMatrix();
 			popPo = this.platform.pop(round);
 		}
@@ -483,7 +562,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					int flag = popPo.getPopInfo()[i][j];
 					if (flag == Matrix.NORMALPOP || flag == Matrix.CHICKITSELFPOP || flag == Matrix.CHICKPOP
 							|| flag == Matrix.BOMBBONUSPOP || flag == Matrix.DOUBLECHICKITSELFPOP
-							|| flag == Matrix.LINEBONUSPOP || flag == Matrix.ROWBONUSPOP) {
+							|| flag == Matrix.LINEBONUSPOP || flag == Matrix.ROWBONUSPOP||flag==Matrix.BIGBANG) {
 						chessboard[i][j] = null;
 					}
 				}

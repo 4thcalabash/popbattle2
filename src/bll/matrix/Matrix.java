@@ -74,6 +74,7 @@ public class Matrix {
 	public static final int CHICKPLUSBOMBPOP = BOMBBONUS*100;
 	private Dot[][] matrix;
 	private int [] [] isPop;
+	//本次消除得到的个数统计
 	private int [] popNum= new int [1051];
 	public Matrix() {
 		// this.TOTALLINE=TOTALLINE;
@@ -103,7 +104,7 @@ public class Matrix {
 		int [] popNum = new int [Matrix.NONE+1000];
 		for (int i=0;i<Matrix.TOTALLINE;i++){
 			for (int j=0;j<Matrix.TOTALROW;j++){
-				if (this.getMatrix()[i][j].getColor()>Matrix.NONE+1){
+				if (this.getMatrix()[i][j].getColor()>Matrix.KIND){
 					continue;
 				}
 				popNum[this.getMatrix()[i][j].getColor()]++;
@@ -159,10 +160,11 @@ public class Matrix {
 					}
 				}
 			}
-			matrix[1][3].setColor(Matrix.NONE);
-			matrix[1][3].setBonus(Matrix.CHICKBONUS);
-			matrix[1][2].setBonus(Matrix.LINEBONUS);
-			matrix[1][2].setColor(0);
+//			matrix[1][3].setColor(Matrix.NONE);
+//			matrix[1][3].setBonus(Matrix.CHICKBONUS);
+			matrix[5][6].setBonus(Matrix.BOMBBONUS);
+			matrix[5][5].setBonus(Matrix.BOMBBONUS);
+//			matrix[1][2].setColor(0);
 
 		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
 		
