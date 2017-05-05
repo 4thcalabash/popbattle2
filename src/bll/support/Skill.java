@@ -64,8 +64,11 @@ public class Skill {
 						}
 					}
 
-					int ans = (int) (Math.random() * num);
-					cost[ans] = 1;
+					int ans = (int) (Math.random() * (num-1));
+					cost[temp[ans]] = 1;
+//					for (int i=0;i<Matrix.KIND;i++){
+//						System.out.println();
+//					}
 					return cost;
 
 				}
@@ -110,7 +113,7 @@ public class Skill {
 				@Override
 				public int[] calc(PaperPlayer paperPlayer) {
 					// TODO Auto-generated method stub
-					int[] cost = new int[5];
+					int[] cost = new int[Matrix.KIND];
 					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS];
 					if (skillLevel == 0) {
 						cost[Matrix.FIREELEMENT] = 3;
@@ -331,6 +334,14 @@ public class Skill {
 	public boolean canAction(PaperPlayer paperplayer){
 		boolean ans =true;
 		int [] cost = this.calcCost(paperplayer);
+		System.out.println("Cost:");
+		for (int i=0;i<Matrix.KIND;i++){
+			System.out.print(cost[i]+" ");
+		}
+		System.out.println("Has:");
+		for (int i=0;i<Matrix.KIND;i++){
+			System.out.print(paperplayer.getElementPool()[i]+" ");
+		}
 		for (int i=0;i<Matrix.KIND;i++){
 			if (cost[i]>paperplayer.getElementPool()[i]){
 				ans=false;

@@ -4,6 +4,7 @@ import ui.Main;
 import ui.abstractStage.BattleParent;
 import ui.awt.ImageButton.Chessman;
 import ui.awt.ImageButton.NumberImage;
+import ui.awt.ImageButton.Pool;
 
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -35,23 +36,31 @@ import po.PopPo;
 
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
-	public static final int ELEMENTLENGTH=(int)(Main.SCREENHEIGHT*45/1030.0);
-	public static final int POOLWIDTHGAP = 5;
-	public static final int POOLHEIGHTGAP = 15;
-	public static final int POOLHEIGHT = (int)(Main.SCREENHEIGHT*(ELEMENTLENGTH+NumberImage.HEIGHT+2*POOLHEIGHTGAP)/1030.0);
-	public static final int POOLWIDTH=(int)(Main.SCREENHEIGHT*(12*NumberImage.WIDTH+7*POOLWIDTHGAP)/1030.0);
 
-	public static final int LENGTH = (int)(Main.SCREENHEIGHT*75/1030.0);//75;
+	public static final int LENGTH = (int) (Main.SCREENHEIGHT * 70 / 1030.0);// 75;
 	// public static final int INTERUPT = 300;
 	public static final int MOVETIME = 300;
 	public static final int POPTIME = 420;
 	public static final int SHOWTIME = 200;
 	public static final int CHICKDELAY = 40;
-	public static final int CHICKPOPDELTA = POPTIME-CHICKDELAY;
+	public static final int CHICKPOPDELTA = POPTIME - CHICKDELAY;
 	public static final int DROP = 150;
-	public static final int TOPIMAGEHEIGHT = (int)(Main.SCREENHEIGHT*166/1030.0);//166;
-	public static final int TOPIMAGEWIDTH = 12 * GenerateParent.LENGTH - (int)(Main.SCREENHEIGHT*5/1030.0);//5;
-	public static final int DELTALENGTH = (int)(Main.SCREENHEIGHT*23/1030.0);//23;
+	public static final int TOPIMAGEHEIGHT = (int) (Main.SCREENHEIGHT * 166 / 1030.0);// 166;
+	public static final int TOPIMAGEWIDTH = 12 * GenerateParent.LENGTH - (int) (Main.SCREENHEIGHT * 5 / 1030.0);// 5;
+	public static final int DELTALENGTH = (int) (Main.SCREENHEIGHT * 23 / 1030.0);// 23;
+
+	public static final int POOLHEIGHT = (int) (Main.SCREENHEIGHT - TOPIMAGEHEIGHT - 9 * GenerateParent.LENGTH);
+	public static final int POOLTOPGAP = (int) (POOLHEIGHT * 0.2);
+	public static final int POOLWIDTHTEMP = (int) ((Main.SCREENWIDTH - TOPIMAGEWIDTH) / 2);
+	public static final int POOLITEMHEIGHT = POOLHEIGHT / 4;
+	public static final int POOLITEMWIDTH = POOLWIDTHTEMP * 3 / 10;
+	public static final int POOLLEFTGAP = (int) (POOLWIDTHTEMP * 0.02);
+	public static final int POOLWIDTHGAP = POOLITEMWIDTH / 15 - 5;
+	public static final int POOLHEIGHTGAP = POOLITEMHEIGHT / 4 - 15;
+	public static final int POOLMIDGAP = (int) (POOLWIDTHTEMP * 0.05);
+	public static final int ELEMENTLENGTH = (int) (POOLITEMHEIGHT * 0.8);
+	public static final int POOLRIGHTGAP = (int) (POOLWIDTHTEMP * 0.1);
+	public static final int POOLWIDTH = POOLWIDTHTEMP + POOLRIGHTGAP;
 	protected DotPo dot1 = new DotPo(-1, -1);
 	protected DotPo dot2 = new DotPo(-1, -1);
 	protected boolean new1, new2;
@@ -63,66 +72,48 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	private Dot[][] chessboard;
 	private AnchorPane center;
 	private Chessman[][] imageMatrix = new Chessman[Matrix.TOTALLINE][Matrix.TOTALROW];
-	protected Thread myself,check;
+	protected Thread myself, check;
 	private Chessman selected;
 	// private PVEParent mySelf = this;
 	private CountDownLatch count;
-	private boolean hasAChick=false;
+	private boolean hasAChick = false;
 	private int luckyColor = -1;
-	BattlePo result ;
-	
-	protected NumberImage[] pool1Number=null;
-	protected NumberImage[] pool2Number=null;
-	protected int [] elementPool1=null;
-	protected int [] elementPool2 =null;
-	
-	protected AnchorPane pool1 = new AnchorPane();
-	protected AnchorPane pool2 = new AnchorPane();
-	protected void addPool() {
-		pool1Number = new NumberImage[Matrix.KIND + 1];
-		pool2Number = new NumberImage[Matrix.KIND + 1];
-		elementPool1 = new int[Matrix.KIND + 1];
-		elementPool2 = new int[Matrix.KIND + 1];
-		pool1.setId("pool");
-		pool2.setId("pool");
-		pool1.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-		pool2.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-		pool1.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-		pool2.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-		for (int i = 0; i < Matrix.KIND; i++) {
-			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
-			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
-			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
-			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-			element.setY(GenerateParent.POOLHEIGHTGAP);
-			pool1.getChildren().add(element);
-			pool1Number[i] = new NumberImage(0);
-			pool1Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-			pool1Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
-			pool1.getChildren().add(pool1Number[i]);
+	protected Pool pool1 = null, pool2 = null;
+	protected boolean skillRequest = false;
+	protected int skillID;
+	BattlePo result;
+	BorderPane pools = new BorderPane();
+
+	public void addPool() {
+		System.out.println("两个Width");
+		System.out.println(GenerateParent.POOLWIDTH);
+		System.out.println(GenerateParent.POOLITEMWIDTH);
+		int[] skillList1 = new int[3];
+		for (int i = 0; i < 3; i++) {
+			if (this.platform.getPlayer1().getAllSkills()[i] != null) {
+				skillList1[i] = this.platform.getPlayer1().getAllSkills()[i].getID();
+			} else {
+				skillList1[i] = -10000;
+			}
 		}
-		// pool1.getChildren()
-		// .addAll(pool1Number);
-		for (int i = 0; i < Matrix.KIND; i++) {
-			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
-			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
-			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
-			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-			element.setY(GenerateParent.POOLHEIGHTGAP);
-			pool2.getChildren().add(element);
-			pool2Number[i] = new NumberImage(0);
-			pool2Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-			pool2Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
-			pool2.getChildren().add(pool2Number[i]);
+		pool1 = new Pool(skillList1, new int[6],this);
+		int[] skillList2 = new int[3];
+		for (int i = 0; i < 3; i++) {
+			if (this.platform.getPlayer2().getAllSkills()[i] != null) {
+				skillList2[i] = this.platform.getPlayer2().getAllSkills()[i].getID();
+			} else {
+				skillList2[i] = -10000;
+			}
 		}
-		// pool2.getChildren().addAll(pool2Number);
-		this.setLeft(pool1);
-		// pool1.setLayoutX((Main.SCREENWIDTH-pool1.getMaxWidth())/2);
-		// pool1.setLayoutY(0);
-		this.setRight(pool2);
-		BorderPane.setAlignment(getLeft(), Pos.BOTTOM_RIGHT);
-		BorderPane.setAlignment(getRight(), Pos.BOTTOM_LEFT);
-	} 
+		pool2 = new Pool(skillList2, new int[6],this);
+		pools.setLeft(pool1);
+		pools.setRight(pool2);
+		BorderPane.setAlignment(pools.getLeft(), Pos.BOTTOM_LEFT);
+		BorderPane.setAlignment(pools.getRight(), Pos.BOTTOM_RIGHT);
+		this.setBottom(pools);
+		
+	}
+
 	public void setDot1(int x, int y) {
 		dot1.setX(x);
 		dot1.setY(y);
@@ -133,28 +124,32 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		dot2.setX(x);
 		dot2.setY(y);
 		new2 = true;
-		
-	}
 
-//	public GenerateParent(int missionID, Player player1, Main main) {
-//		
-//		// 用missionPo来生成相应的platform
-//		super(main);
-//		super.platform = new Battle(missionID, player1.createPaper());
-//		init();
-//		// 展示界面+监听
-//		
-//		// new Thread(this).start();
-//	}
-//	
-	public GenerateParent (Main main,BattlePlatform platform){
+	}
+	public void setSkill(int i){
+		this.skillID=i;
+		this.skillRequest=true;
+	}
+	// public GenerateParent(int missionID, Player player1, Main main) {
+	//
+	// // 用missionPo来生成相应的platform
+	// super(main);
+	// super.platform = new Battle(missionID, player1.createPaper());
+	// init();
+	// // 展示界面+监听
+	//
+	// // new Thread(this).start();
+	// }
+	//
+	public GenerateParent(Main main, BattlePlatform platform) {
 		super(main);
-		super.platform=platform;
+		super.platform = platform;
 		init();
 	}
-	public void init (){
+
+	public void init() {
 		myself = new Thread(this);
-//		this.platform.adfasdasdassdfasdf();
+		// this.platform.adfasdasdassdfasdf();
 		Image P1 = new Image("Graphics/Player/Setting.png");
 		Image P2 = new Image("Graphics/Player/Player0.gif");
 		ImageView P1View = new ImageView(P1);
@@ -163,11 +158,11 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		leftBox.getChildren().add(P1View);
 		VBox rightBox = new VBox();
 		rightBox.getChildren().add(P2View);
-//		this.setLeft(leftBox);
-//		this.setRight(rightBox);
+		// this.setLeft(leftBox);
+		// this.setRight(rightBox);
 
 		renewBoard();
-		
+
 		leftBox.setAlignment(Pos.CENTER);
 		rightBox.setAlignment(Pos.CENTER);
 		HBox test = new HBox();
@@ -179,7 +174,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				myself.stop();
-				check.stop();
+//				check.stop();
 				setVisible(false);
 				main.battleEnd();
 			}
@@ -187,30 +182,31 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		});
 		test.getChildren().add(endTest);
 		test.setAlignment(Pos.BOTTOM_CENTER);
-		this.setBottom(test);
+		// this.setTop(test);
+		this.setRight(test);
 		round = 1;
 		new1 = false;
 		new2 = false;
 		result = platform.check();
-		
 
-		check =new Thread (new Runnable(){
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				
-				while (!result.isBattleIsEnd()){
-//					System.out.println("Checking");
-					result = platform.check();
-				}
-			}
-			
-		});
-		check.start();
-//		myself.start();
+//		check = new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//
+//				while (!result.isBattleIsEnd()) {
+//					// System.out.println("Checking");
+//					result = platform.check();
+//				}
+//			}
+//
+//		});
+//		check.start();
+		// myself.start();
 	}
-	public void action(){
+
+	public void action() {
 		moveFlash();
 		System.out.println("OK AT HERE");
 		// 连续消除动画演示
@@ -226,6 +222,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		// 输出着玩
 		System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
 	}
+
 	public Chessman getSelected() {
 		return selected;
 	}
@@ -297,7 +294,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				}
 			}
 			this.setCenter(center);
-//			BorderPane.setAlignment(getCenter(), Pos.TOP_CENTER);
+			// BorderPane.setAlignment(getCenter(), Pos.TOP_CENTER);
 			matrix.setVisible(true);
 			;
 		});
@@ -306,13 +303,13 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	CountDownLatch ace;
 
 	protected void moveFlash() {
-		hasAChick=false;
-		if (chessboard[dot1.getX()][dot1.getY()].getBonus()==Matrix.CHICKBONUS||
-				chessboard[dot2.getX()][dot2.getY()].getBonus()==Matrix.CHICKBONUS){
-			hasAChick=true;
-			if (chessboard[dot1.getX()][dot1.getY()].getBonus()==Matrix.CHICKBONUS){
+		hasAChick = false;
+		if (chessboard[dot1.getX()][dot1.getY()].getBonus() == Matrix.CHICKBONUS
+				|| chessboard[dot2.getX()][dot2.getY()].getBonus() == Matrix.CHICKBONUS) {
+			hasAChick = true;
+			if (chessboard[dot1.getX()][dot1.getY()].getBonus() == Matrix.CHICKBONUS) {
 				luckyColor = chessboard[dot2.getX()][dot2.getY()].getColor();
-			}else{
+			} else {
 				luckyColor = chessboard[dot1.getX()][dot1.getY()].getColor();
 			}
 		}
@@ -321,7 +318,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		System.out.println(flag);
 		Platform.runLater(() -> {
 			sub.getChildren().clear();
-			 sub.setId("Matrix");
+			sub.setId("Matrix");
 			sub.setMaxHeight(10 * GenerateParent.LENGTH);
 			sub.setMaxWidth(8 * GenerateParent.LENGTH);
 			sub.setMinHeight(getMaxHeight());
@@ -480,7 +477,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			}
 			System.out.println("OK AT HERE3");
 			Platform.runLater(new Worker(cloneBoard));
-			//等待完成
+			// 等待完成
 			try {
 				p.await();
 			} catch (InterruptedException e1) {
@@ -491,24 +488,22 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			// 演示元下落动画
 			count = new CountDownLatch(1);
 			Platform.runLater(new dropWorker(chessboard.clone()));
-			//等待完成
+			// 等待完成
 			try {
 				count.await();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (round==1&&pool1Number!=null){
-				 elementPool1 = this.platform.getPool1();
-				for (int i=0;i<Matrix.KIND;i++){
-					pool1Number[i]
-							.refresh(elementPool1[i]);
-				}
-			}else if (round==2&&pool2Number!=null){
-				elementPool2 = this.platform.getPool2();
-				for (int i=0;i<Matrix.KIND;i++){
-					pool2Number[i].refresh(elementPool2[i]);
-				}
+			if (round == 1 && pool1 != null) {
+//				int[] elementPool1 = this.platform.getPool1();
+//				this.platform.
+//				pool1.refreshElementNum(elementPool1);
+				this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
+			} else if (round == 2 && pool2 != null) {
+//				int[] elementPool2 = this.platform.getPool2();
+//				pool2.refreshElementNum(elementPool2);
+				this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
 			}
 			chessboard = this.platform.getMatrix().getMatrix();
 			popPo = this.platform.pop(round);
@@ -562,13 +557,13 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					int flag = popPo.getPopInfo()[i][j];
 					if (flag == Matrix.NORMALPOP || flag == Matrix.CHICKITSELFPOP || flag == Matrix.CHICKPOP
 							|| flag == Matrix.BOMBBONUSPOP || flag == Matrix.DOUBLECHICKITSELFPOP
-							|| flag == Matrix.LINEBONUSPOP || flag == Matrix.ROWBONUSPOP||flag==Matrix.BIGBANG) {
+							|| flag == Matrix.LINEBONUSPOP || flag == Matrix.ROWBONUSPOP || flag == Matrix.BIGBANG) {
 						chessboard[i][j] = null;
 					}
 				}
 			}
 			int[][] delta = new int[Matrix.TOTALLINE * 2][Matrix.TOTALROW];
-			for (int i = 0; i < Matrix.TOTALLINE *2; i++) {
+			for (int i = 0; i < Matrix.TOTALLINE * 2; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					if (i == 0) {
 						if (chessboard[i][j] == null) {
@@ -604,8 +599,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 							temp = new ImageView(new Image(createBasicPath(i, j, chessboard) + "Static.gif"));
 						}
 					}
-					
-					if (i - Matrix.TOTALLINE +1 > delta[Matrix.TOTALLINE - 1][j]) {
+
+					if (i - Matrix.TOTALLINE + 1 > delta[Matrix.TOTALLINE - 1][j]) {
 						continue;
 					}
 					temp.setFitHeight(GenerateParent.LENGTH);
@@ -623,11 +618,11 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					} else {
 
 						temp.setVisible(false);
-						if (i==Matrix.TOTALLINE){
+						if (i == Matrix.TOTALLINE) {
 							temp.setVisible(true);
 						}
 						KeyValue kv2 = new KeyValue(temp.visibleProperty(), true);
-						KeyFrame kf2 = new KeyFrame(Duration.millis((i - Matrix.TOTALLINE ) * DROP), kv2);
+						KeyFrame kf2 = new KeyFrame(Duration.millis((i - Matrix.TOTALLINE) * DROP), kv2);
 						line.getKeyFrames().add(kf2);
 					}
 				}
@@ -647,55 +642,56 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		}
 	}
 
-	
 	CountDownLatch abcd;
 
-//	@Override
-//	public void run() {
-//		// TODO Auto-generated method stub
-//		BattlePo result = this.platform.check();
-//		System.out.println("Start");
-//		while (!result.isBattleIsEnd()) {
-//			if (new1 && new2) {
-//				new1 = new2 = false;
-//				// 移动动画演示
-//				moveFlash();
-//				System.out.println("OK AT HERE");
-//				// 连续消除动画演示
-//				abcd = new CountDownLatch(1);
-//				popFlash();
-//				try {
-//					abcd.await();
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				renewBoard();
-//				// 输出着玩
-//				System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
-//
-//			} else {
-//				// 每10ms做一次用户操作检测
-//				try {
-//					Thread.sleep(10);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		System.out.println("End");
-//	}
+	// @Override
+	// public void run() {
+	// // TODO Auto-generated method stub
+	// BattlePo result = this.platform.check();
+	// System.out.println("Start");
+	// while (!result.isBattleIsEnd()) {
+	// if (new1 && new2) {
+	// new1 = new2 = false;
+	// // 移动动画演示
+	// moveFlash();
+	// System.out.println("OK AT HERE");
+	// // 连续消除动画演示
+	// abcd = new CountDownLatch(1);
+	// popFlash();
+	// try {
+	// abcd.await();
+	// } catch (InterruptedException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// renewBoard();
+	// // 输出着玩
+	// System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() +
+	// "," + dot2.getY());
+	//
+	// } else {
+	// // 每10ms做一次用户操作检测
+	// try {
+	// Thread.sleep(10);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// System.out.println("End");
+	// }
 
 	public class Worker implements Runnable {
 		private Dot[][] chessboard;
-		boolean increaseflag =false;
+		boolean increaseflag = false;
+
 		public Worker(Dot[][] chessboard) {
 			this.chessboard = chessboard;
 		}
 
 		@Override
 		public void run() {
-			
+
 			// TODO Auto-generated method stub
 			System.out.println("Working");
 			boolean[][] bombflag = new boolean[Matrix.TOTALLINE][Matrix.TOTALROW];
@@ -707,7 +703,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			sub.setPrefSize(getMaxWidth(), getMaxHeight());
 			sub.setLayoutX((TOPIMAGEWIDTH - 8 * GenerateParent.LENGTH) / 2);
 			sub.setLayoutY(TOPIMAGEHEIGHT - DELTALENGTH);
-			 sub.setId("Matrix");
+			sub.setId("Matrix");
 			Timeline timeline = new Timeline();
 			timeline.setAutoReverse(false);
 			timeline.setCycleCount(1);
@@ -721,9 +717,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 						@Override
 						public void run() {
 							// TODO Auto-generated method stub
-							int delta=SHOWTIME;
-							if (increaseflag){
-								delta*=1.2;
+							int delta = SHOWTIME;
+							if (increaseflag) {
+								delta *= 1.2;
 							}
 							try {
 								// 显示延时
@@ -797,14 +793,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 									}
 								}
 							}
-						}else if (popPo.getPopInfo()[i][j]==Matrix.CHICKITSELFPOP){
-							ImageView ttt = new ImageView (new Image ("Graphics/Matrix/104.gif"));
-							ttt.setFitHeight(8*GenerateParent.LENGTH);
-							ttt.setFitWidth(8*GenerateParent.LENGTH);
+						} else if (popPo.getPopInfo()[i][j] == Matrix.CHICKITSELFPOP) {
+							ImageView ttt = new ImageView(new Image("Graphics/Matrix/104.gif"));
+							ttt.setFitHeight(8 * GenerateParent.LENGTH);
+							ttt.setFitWidth(8 * GenerateParent.LENGTH);
 							ttt.setX(0);
 							ttt.setY(GenerateParent.LENGTH);
 							sub.getChildren().add(ttt);
-							increaseflag=true;
+							increaseflag = true;
 						}
 						// 显示被消除的动画
 						if (chessboard[i][j].getBonus() == Matrix.NORMAL
@@ -847,34 +843,36 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.6);
 							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.6);
 							KeyValue kv3 = new KeyValue(tt.rotateProperty(), 720);
-							
-							KeyValue move1 = new KeyValue (tt.xProperty(),3.5*GenerateParent.LENGTH);
-							KeyValue move2 = new KeyValue (tt.yProperty(),4.5*GenerateParent.LENGTH);
-							KeyValue move01 = new KeyValue (tt.xProperty(),tt.getX());
-							KeyValue move02 = new KeyValue (tt.yProperty(),tt.getY());
+
+							KeyValue move1 = new KeyValue(tt.xProperty(), 3.5 * GenerateParent.LENGTH);
+							KeyValue move2 = new KeyValue(tt.yProperty(), 4.5 * GenerateParent.LENGTH);
+							KeyValue move01 = new KeyValue(tt.xProperty(), tt.getX());
+							KeyValue move02 = new KeyValue(tt.yProperty(), tt.getY());
 							KeyValue kvv1 = new KeyValue(tt.scaleXProperty(), 0);
 							KeyValue kvv2 = new KeyValue(tt.scaleYProperty(), 0);
 							KeyFrame kf01 = new KeyFrame(Duration.millis(GenerateParent.CHICKPOPDELTA), kv01);
 							KeyFrame kf02 = new KeyFrame(Duration.millis(GenerateParent.CHICKPOPDELTA), kv02);
 							KeyFrame kf03 = new KeyFrame(Duration.millis(GenerateParent.CHICKPOPDELTA), kv03);
-							KeyFrame m01 = new KeyFrame (Duration.millis(GenerateParent.CHICKPOPDELTA),move01);
-							KeyFrame m02 = new KeyFrame (Duration.millis(GenerateParent.CHICKPOPDELTA),move02);
+							KeyFrame m01 = new KeyFrame(Duration.millis(GenerateParent.CHICKPOPDELTA), move01);
+							KeyFrame m02 = new KeyFrame(Duration.millis(GenerateParent.CHICKPOPDELTA), move02);
 							KeyFrame kf1 = new KeyFrame(
 									Duration.millis((GenerateParent.POPTIME) / 2 + GenerateParent.CHICKPOPDELTA), kv1);
 							KeyFrame kf2 = new KeyFrame(
 									Duration.millis((GenerateParent.POPTIME) / 2 + GenerateParent.CHICKPOPDELTA), kv2);
-							KeyFrame kf3 = new KeyFrame(Duration.millis((GenerateParent.POPTIME + GenerateParent.CHICKPOPDELTA)),
-									kv3);
-							KeyFrame kff1 = new KeyFrame(Duration.millis((GenerateParent.POPTIME + GenerateParent.CHICKPOPDELTA)),
-									kvv1);
-							KeyFrame kff2 = new KeyFrame(Duration.millis((GenerateParent.POPTIME + GenerateParent.CHICKPOPDELTA)),
-									kvv2);
-							KeyFrame m1 = new KeyFrame (Duration.millis(GenerateParent.CHICKPOPDELTA+GenerateParent.POPTIME),move1);
-							KeyFrame m2 = new KeyFrame (Duration.millis(GenerateParent.CHICKPOPDELTA+GenerateParent.POPTIME),move2);
+							KeyFrame kf3 = new KeyFrame(
+									Duration.millis((GenerateParent.POPTIME + GenerateParent.CHICKPOPDELTA)), kv3);
+							KeyFrame kff1 = new KeyFrame(
+									Duration.millis((GenerateParent.POPTIME + GenerateParent.CHICKPOPDELTA)), kvv1);
+							KeyFrame kff2 = new KeyFrame(
+									Duration.millis((GenerateParent.POPTIME + GenerateParent.CHICKPOPDELTA)), kvv2);
+							KeyFrame m1 = new KeyFrame(
+									Duration.millis(GenerateParent.CHICKPOPDELTA + GenerateParent.POPTIME), move1);
+							KeyFrame m2 = new KeyFrame(
+									Duration.millis(GenerateParent.CHICKPOPDELTA + GenerateParent.POPTIME), move2);
 							timeline.getKeyFrames().add(kf1);
 							timeline.getKeyFrames().add(kf2);
 							timeline.getKeyFrames().add(kf3);
-							timeline.getKeyFrames().addAll(kf01, kf02, kf03,m01,m02);
+							timeline.getKeyFrames().addAll(kf01, kf02, kf03, m01, m02);
 							timeline.getKeyFrames().add(kff1);
 							timeline.getKeyFrames().add(kff2);
 							timeline.getKeyFrames().add(m1);
@@ -900,30 +898,33 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 							timeline.getKeyFrames().add(kf3);
 							timeline.getKeyFrames().add(kff1);
 							timeline.getKeyFrames().add(kff2);
-							if (hasAChick&&chessboard[i][j].getColor()==luckyColor){
-								KeyValue v1 = new KeyValue (tt.xProperty(),tt.getX());
-								KeyValue v2 = new KeyValue (tt.yProperty(),tt.getY());
-								KeyFrame f1 = new KeyFrame (Duration.millis(CHICKPOPDELTA+SHOWTIME/2),v1);
-								KeyFrame f2 = new KeyFrame (Duration.millis(CHICKPOPDELTA+SHOWTIME/2),v2);
-								KeyValue v11 = new KeyValue (tt.xProperty(),3.5*PVEParent.LENGTH);
-								KeyValue v22 = new KeyValue (tt.yProperty(),4.5*PVEParent.LENGTH);
-								KeyFrame f11 = new KeyFrame (Duration.millis(CHICKPOPDELTA+POPTIME-0),v11);
-								KeyFrame f22 = new KeyFrame (Duration.millis(CHICKPOPDELTA+POPTIME-0),v22);
-								KeyValue v111 =new KeyValue (tt.scaleXProperty(),0);
-								KeyValue v222 = new KeyValue (tt.scaleYProperty(),0);
-								KeyFrame f111 = new KeyFrame (Duration.millis(CHICKPOPDELTA+POPTIME-0),v111);
-								KeyFrame f222 = new KeyFrame (Duration.millis(CHICKPOPDELTA+POPTIME-0),v222);
-								timeline.getKeyFrames().addAll(f1,f2,f11,f22,f111,f222);
+							if (hasAChick && chessboard[i][j].getColor() == luckyColor) {
+								KeyValue v1 = new KeyValue(tt.xProperty(), tt.getX());
+								KeyValue v2 = new KeyValue(tt.yProperty(), tt.getY());
+								KeyFrame f1 = new KeyFrame(Duration.millis(CHICKPOPDELTA + SHOWTIME / 2), v1);
+								KeyFrame f2 = new KeyFrame(Duration.millis(CHICKPOPDELTA + SHOWTIME / 2), v2);
+								KeyValue v11 = new KeyValue(tt.xProperty(), 3.5 * PVEParent.LENGTH);
+								KeyValue v22 = new KeyValue(tt.yProperty(), 4.5 * PVEParent.LENGTH);
+								KeyFrame f11 = new KeyFrame(Duration.millis(CHICKPOPDELTA + POPTIME - 0), v11);
+								KeyFrame f22 = new KeyFrame(Duration.millis(CHICKPOPDELTA + POPTIME - 0), v22);
+								KeyValue v111 = new KeyValue(tt.scaleXProperty(), 0);
+								KeyValue v222 = new KeyValue(tt.scaleYProperty(), 0);
+								KeyFrame f111 = new KeyFrame(Duration.millis(CHICKPOPDELTA + POPTIME - 0), v111);
+								KeyFrame f222 = new KeyFrame(Duration.millis(CHICKPOPDELTA + POPTIME - 0), v222);
+								timeline.getKeyFrames().addAll(f1, f2, f11, f22, f111, f222);
 							}
 						} else if (popPo.getPopInfo()[i][j] == Matrix.CHICKITSELFPOP) {
 							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.3);
 							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.3);
-//							KeyValue kv3 = new KeyValue(tt.rotateProperty(), 360);
+							// KeyValue kv3 = new KeyValue(tt.rotateProperty(),
+							// 360);
 							KeyValue kvv1 = new KeyValue(tt.scaleXProperty(), 1.4);
 							KeyValue kvv2 = new KeyValue(tt.scaleYProperty(), 1.4);
 
-//							KeyValue kvx = new KeyValue(tt.scaleXProperty(), 0);
-//							KeyValue kvy = new KeyValue(tt.scaleYProperty(), 0);
+							// KeyValue kvx = new KeyValue(tt.scaleXProperty(),
+							// 0);
+							// KeyValue kvy = new KeyValue(tt.scaleYProperty(),
+							// 0);
 							KeyFrame kf1 = new KeyFrame(Duration.millis((GenerateParent.POPTIME) / 3), kv1);
 							KeyFrame kf2 = new KeyFrame(Duration.millis((GenerateParent.POPTIME) / 3), kv2);
 							// KeyFrame kf3 = new
@@ -959,19 +960,23 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			center.getChildren().add(top);
 			setCenter(center);
 			// 启动动画
-			if (hasAChick){
+			if (hasAChick) {
 				new Thread(new myRunnable(timeline)).start();
-			}else{
-			timeline.play();
+			} else {
+				timeline.play();
 			}
-//			System.out.println("PopFlash Start At " + System.currentTimeMillis() + "millis");
+			// System.out.println("PopFlash Start At " +
+			// System.currentTimeMillis() + "millis");
 		}
 	}
-	public class myRunnable implements Runnable{
-		private Timeline  timeline;
-		public myRunnable(Timeline timeline){
-			this.timeline=timeline;
+
+	public class myRunnable implements Runnable {
+		private Timeline timeline;
+
+		public myRunnable(Timeline timeline) {
+			this.timeline = timeline;
 		}
+
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
@@ -983,6 +988,6 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			}
 			timeline.play();
 		}
-		
+
 	}
 }

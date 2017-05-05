@@ -20,15 +20,19 @@ public class PaperPlayer {
 	public PaperPlayer (Player player){
 		this.player = player;
 		this.hp=player.getHp();
-		this.elementPool= new int [Matrix.KIND];
+		this.elementPool= new int [Matrix.KIND+1];
 		this.allSkills= new Skill [3];
 		for (int i=0;i<3;i++){
+			System.out.println("Choosed"+player.getSkillChoosed()[i]);
 			this.allSkills[i] = Skill.getSkillByID(player.getSkillChoosed()[i]);
 		}
 	}
 
 	public Player getPlayer() {
 		return player;
+	}
+	public void increaseHp(int delta){
+		this.hp+=delta;
 	}
 
 	public Skill[] getAllSkills() {

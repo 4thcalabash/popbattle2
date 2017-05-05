@@ -46,6 +46,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		primaryStage.show(); 
 
 		
+		
 	}
 	@Override
 	
@@ -57,11 +58,13 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		if (missionInfo.getModel()==Battle.PVE){
 			Platform.runLater(()->{
 				scene.getStylesheets().remove(0);
+
 				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
-				
-//				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-				battleParent = new EVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+//				scene.getStylesheets().add(getClass().getResource("PVE."))
+				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+//				battleParent = new EVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
 				stage.getScene().setRoot(battleParent);
+				scene.getRoot().setId("scene110"+(int)(8*Math.random()+1));
 			});
 			 
 		}else if (missionInfo.getModel()==Battle.NORMAL){

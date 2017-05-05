@@ -1,16 +1,44 @@
-.root{
+/* .root{
 	-fx-background-image:url("specialParent/PVE.png");
 	-fx-background-size:stretch stretch; 
-}
+}*/
 #Matrix{
 	-fx-background-image:url("../Graphics/Matrix/board.png");
 	-fx-background-size:stretch stretch 
 }
-#pool{
-	-fx-background-image:url("../Graphics/Other/Pool/poolBackground.png");
+#scene1101{
+	-fx-background-image:url("../Graphics/Scene/1101_scene_bg.png");
 	-fx-background-size:stretch stretch
 }
-#number{
-	-fx-background-image:url("../Graphics/Other/Pool/numberBackground.png");
+#scene1102{
+	-fx-background-image:url("../Graphics/Scene/1102_scene_bg.png");
+	-fx-background-size:stretch stretch
+}
+#scene1103{
+	-fx-background-image:url("../Graphics/Scene/1103_scene_bg.png");
+	-fx-background-size:stretch stretch
+}
+#scene1104{
+	-fx-background-image:url("../Graphics/Scene/1104_scene_bg.png");
+	-fx-background-size:stretch stretch
+}
+#scene1105{
+	-fx-background-image:url("../Graphics/Scene/1105_scene_bg.png");
+	-fx-background-size:stretch stretch
+}
+#scene1106{
+	-fx-background-image:url("../Graphics/Scene/1106_scene_bg.png");
+	-fx-background-size:stretch stretch
+}
+#scene1107{
+	-fx-background-image:url("../Graphics/Scene/1107_scene_bg.png");
+	-fx-background-size:stretch stretch
+}
+#scene1108{
+	-fx-background-image:url("../Graphics/Scene/1108_scene_bg.png");
+	-fx-background-size:stretch stretch
+}
+#scene1109{
+	-fx-background-image:url("../Graphics/Scene/1109_scene_bg.png");
 	-fx-background-size:stretch stretch
 }

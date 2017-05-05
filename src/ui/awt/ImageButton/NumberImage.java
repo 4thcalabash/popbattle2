@@ -14,12 +14,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
+import ui.specialParent.GenerateParent;
 
 public class NumberImage extends AnchorPane{
 	private int ten=-1,one=-1;
 	private ImageView tenImage,oneImage;
-	public static final int WIDTH = 40;
-	public static final int HEIGHT = 50;
+
+	public static final int HEIGHT = GenerateParent.ELEMENTLENGTH;
+	public static final int WIDTH = (int)(HEIGHT*0.8);
 	public static final int TIME = 400;
 	public NumberImage (int number){
 		tenImage = new ImageView ();

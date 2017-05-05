@@ -14,19 +14,9 @@ import ui.Main;
 import ui.awt.ImageButton.NumberImage;
 
 public class PVEParent extends GenerateParent {
-//	private AnchorPane pool1 = new AnchorPane();
-//	private AnchorPane pool2 = new AnchorPane();
-
-	// private NumberImage[] pool1Number = new NumberImage[Matrix.KIND];
-	// private NumberImage[] pool2Number = new NumberImage[Matrix.KIND];
 	public PVEParent(int missionID, Player player1, Main main) {
 		super(main, new Battle(missionID, player1.createPaper()));
-		// new Thread(this).start();
 		int i = 1;
-//		pool1Number = new NumberImage[Matrix.KIND + 1];
-//		pool2Number = new NumberImage[Matrix.KIND + 1];
-//		elementPool1 = new int[Matrix.KIND + 1];
-//		elementPool2 = new int[Matrix.KIND + 1];
 		addPool();
 		myself.start();
 	}
@@ -40,14 +30,12 @@ public class PVEParent extends GenerateParent {
 		} else {
 			round = 1;
 		}
-		boolean skillRequest = false;
-		int skillID = -1;
-		System.out.println("aha");
-		while (!result.isBattleIsEnd()) {
-			// System.out.print("Continue");
-			System.out.println(round);
-			if (round == 1) {
 
+		while (!(result=this.platform.check()).isBattleIsEnd()) {
+			System.out.println("P1Hp:"+this.platform.getPlayer1().getHp());
+			System.out.println("P2Hp:"+this.platform.getPlayer2().getHp());
+//			System.out.println(round);
+			if (round == 1) {
 				// 玩家回合 检测移动
 				while (true) {
 					if (new1 && new2) {
@@ -61,9 +49,12 @@ public class PVEParent extends GenerateParent {
 						boolean flag = Skill.getSkillByID(skillID).canAction(this.platform.getPlayer1());
 						if (!flag) {
 							// 提示用户技能使用失败，继续用户回合
+							System.out.println("failed");
 						} else {
 							// 释放技能动画，并通知后端更新数据等等。
 							// 回合交换
+							this.platform.useSkill(1, this.skillID);
+							this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
 							round = 2;
 							break;
 						}
@@ -90,9 +81,12 @@ public class PVEParent extends GenerateParent {
 					this.setDot2(strategy.getDot2().getX(), strategy.getDot2().getY());
 					new1 = new2 = false;
 					action();
+					
 				} else {
 					// AI要进行技能释放
-
+					this.platform.useSkill(2, strategy.getSkillID());
+					this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
+					System.out.println("Attack");
 				}
 				round = 1;
 			}

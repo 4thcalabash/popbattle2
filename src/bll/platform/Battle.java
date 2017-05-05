@@ -20,8 +20,8 @@ public class Battle implements BattlePlatform{
 	private MissionVo missionVo;
 	private int nowAIindex;
 	private FileHelper helper = new FileHelper();
-	private int [] pool1 = new int [Matrix.KIND+1];
-	private int [] pool2 = new int [Matrix.KIND+1];
+//	private int [] pool1 = new int [Matrix.KIND+1];
+//	private int [] pool2 = new int [Matrix.KIND+1];
 	private int [] deltaPool = new int [Matrix.KIND+1];
 	public static final int PVE = 1000;
 	public static final int PVP = 2000;
@@ -118,19 +118,34 @@ public class Battle implements BattlePlatform{
 		// TODO Auto-generated method stub
 		PopPo temp=popHub.pop(dot1, dot2);
 		deltaPool=chessboard.getPopNum();
-		for (int i=0;i<Matrix.KIND+1;i++){
-			if (playerID==1){
-				pool1[i]+=deltaPool[i];
-				if(pool1[i]>99){
-					pool1[i]=99;
+		if (playerID==1){
+			for (int i=0;i<Matrix.KIND+1;i++){
+				this.getPlayer1().getElementPool()[i]+=deltaPool[i];
+				if (this.getPlayer1().getElementPool()[i]>99){
+					this.getPlayer1().getElementPool()[i]=99;
 				}
-			}else{
-				pool2[i]+=deltaPool[i];
-				if (pool2[i]>99){
-					pool2[i]=99;
+			}
+		}else{
+			for (int i=0;i<Matrix.KIND+1;i++){
+				this.getPlayer2().getElementPool()[i]+=deltaPool[i];
+				if (this.getPlayer2().getElementPool()[i]>99){
+					this.getPlayer2().getElementPool()[i]=99;
 				}
 			}
 		}
+//		for (int i=0;i<Matrix.KIND+1;i++){
+//			if (playerID==1){
+//				pool1[i]+=deltaPool[i];
+//				if(pool1[i]>99){
+//					pool1[i]=99;
+//				}
+//			}else{
+//				pool2[i]+=deltaPool[i];
+//				if (pool2[i]>99){
+//					pool2[i]=99;
+//				}
+//			}
+//		}
 		return temp;
 	}
 	@Override
@@ -138,19 +153,35 @@ public class Battle implements BattlePlatform{
 		// TODO Auto-generated method stub
 		PopPo temp = popHub.pop();
 		deltaPool = chessboard.getPopNum();
-		for (int i=0;i<Matrix.KIND+1;i++){
-			if (playerID==1){
-				pool1[i]+=deltaPool[i];
-				if (pool1[i]>99){
-					pool1[i]=99;
+		if (playerID==1){
+			for (int i=0;i<Matrix.KIND+1;i++){
+				this.getPlayer1().getElementPool()[i]+=deltaPool[i];
+				if (this.getPlayer1().getElementPool()[i]>99){
+					this.getPlayer1().getElementPool()[i]=99;
 				}
-			}else{
-				pool2[i]+=deltaPool[i];
-				if (pool2[i]>99){
-					pool2[i]=99;
+			}
+		}else{
+			for (int i=0;i<Matrix.KIND+1;i++){
+				this.getPlayer2().getElementPool()[i]+=deltaPool[i];
+				if (this.getPlayer2().getElementPool()[i]>99){
+					this.getPlayer2().getElementPool()[i]=99;
 				}
 			}
 		}
+//		for (int i=0;i<Matrix.KIND+1;i++){
+//			if (playerID==1){
+//				pool1[i]+=deltaPool[i];
+//				if (pool1[i]>99){
+//					pool1[i]=99;
+//				}
+//			}else{
+//				pool2[i]+=deltaPool[i];
+//				if (pool2[i]>99){
+//					pool2[i]=99;
+//				}
+//			}
+//		}
+		
 		return temp;
 	}
 	
@@ -203,15 +234,30 @@ public class Battle implements BattlePlatform{
 	@Override
 	public ActionPo useSkill(int playerID, int skillID) {
 		// TODO Auto-generated method stub
+		int [] delta;
+		if (playerID==1){
+			delta = Skill.getSkillByID(skillID).calcCost(paperPlayer1);
+			for(int i=0;i<Matrix.KIND;i++){
+				this.getPlayer1().getElementPool()[i]-=delta[i];
+			}
+		}else{
+			delta = Skill.getSkillByID(skillID).calcCost(paperPlayer2);
+			for(int i=0;i<Matrix.KIND;i++){
+				this.getPlayer2().getElementPool()[i]-=delta[i];
+			}
+		}
 		ActionPo ans =  new ActionPo();
 		ans.setActionPlayerID(playerID);
 		ans.setSkillID(skillID);
 		ans.setTargetPlayerID(playerID==1?2:1);
 		if (playerID==1){
 			ans.setEffectValue(DamageCalcer.calc(paperPlayer1, Skill.getSkillByID(skillID), paperPlayer2));
+			paperPlayer2.increaseHp(-ans.getEffectValue());
 		}else{
 			ans.setEffectValue(DamageCalcer.calc(paperPlayer2, Skill.getSkillByID(skillID), paperPlayer1));
+			paperPlayer1.increaseHp(-ans.getEffectValue());
 		}
+		
 		return ans;
 	}
 	@Override
@@ -232,16 +278,16 @@ public class Battle implements BattlePlatform{
 		}
 		return matrixPo;
 	}
-	@Override
-	public int[] getPool1() {
-		// TODO Auto-generated method stub
-		return pool1.clone();
-	}
-	@Override
-	public int[] getPool2() {
-		// TODO Auto-generated method stub
-		return pool2.clone();
-	}
+//	@Override
+//	public int[] getPool1() {
+//		// TODO Auto-generated method stub
+//		return pool1.clone();
+//	}
+//	@Override
+//	public int[] getPool2() {
+//		// TODO Auto-generated method stub
+//		return pool2.clone();
+//	}
 
 
 	

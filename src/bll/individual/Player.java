@@ -47,7 +47,7 @@ public class Player implements Calcable{
 	private int gold;
 
 	private int [] skillList;
-	private int [] skillChoosed;
+	private int [] skillChoosed = new int [3];
 	private int headWearingID;
 	private int weaponID;
 	private int wearingID;
@@ -178,7 +178,7 @@ public class Player implements Calcable{
 	public PaperPlayer createPaper(){
 		PaperPlayer paper = new PaperPlayer (this);
 		System.out.println("myHp="+hp);
-		paper.setHp(this.hp);
+//		paper.setHp(this.hp);
 		return paper;
 	}
 	public int getDR() {
