@@ -71,6 +71,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 			Platform.runLater(()->{
 				scene.getStylesheets().remove(0);
 				scene.getStylesheets().add(getClass().getResource("Normal.css").toExternalForm());
+		
 				
 				battleParent = new NormalParent (missionInfo.getID(),this);
 				stage.getScene().setRoot(battleParent);

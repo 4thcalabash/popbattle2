@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import po.AIStrategyPo;
+import po.ActionPo;
 import ui.Main;
 import ui.awt.ImageButton.NumberImage;
 
@@ -43,7 +44,7 @@ public class PVEParent extends GenerateParent {
 					if (new1 && new2) {
 						new1 = new2 = false;
 						action();
-						round = 2;
+						changeRound();
 						break;
 					} else if (skillRequest) {
 						// 技能请求
@@ -56,10 +57,18 @@ public class PVEParent extends GenerateParent {
 							// 释放技能动画，并通知后端更新数据等等。
 							// 回合交换
 							skillaction();
-							this.playerBoard.refreshData();
+//							ActionPo actionPo = new ActionPo();
+//							actionPo.setActionPlayerID(1);
+//							actionPo.setTargetPlayerID(2);
+//							actionPo.setSkillID(skillID);
+//							actionPo.setEffectValue(Skill.getSkillByID(skillID).calcVaue(this.platform.getPlayer1()));
+//							skillAction(actionPo);
+//							this.playerBoard.refreshData();
+							
 //							this.platform.useSkill(1, this.skillID);
 //							this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
-							round = 2;
+							changeRound();
+							
 							break;
 						}
 
@@ -88,12 +97,19 @@ public class PVEParent extends GenerateParent {
 					
 				} else {
 					// AI要进行技能释放
-					this.platform.useSkill(2, strategy.getSkillID());
-					this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
-					this.playerBoard.refreshData();
+//					ActionPo actionPo=this.platform.useSkill(2, strategy.getSkillID());
+					skillID=strategy.getSkillID();
+					skillaction();
+//					skillAction(actionPo);
+					
+					
+//					this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
+					
+					
+//					this.playerBoard.refreshData();
 					System.out.println("Attack");
 				}
-				round = 1;
+				changeRound();
 				new1=new2=skillRequest=false;
 			}
 		}
