@@ -189,6 +189,9 @@ public class Player implements Calcable{
 	}
 
 
+	public int getPro() {
+		return pro;
+	}
 	public int[] getSkillChoosed() {
 		return skillChoosed;
 	}

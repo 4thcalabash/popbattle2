@@ -17,7 +17,9 @@ public class PVEParent extends GenerateParent {
 	public PVEParent(int missionID, Player player1, Main main) {
 		super(main, new Battle(missionID, player1.createPaper()));
 		int i = 1;
-		addPool();
+		addPool(true);
+		addPlayer1();
+		addPlayer2();
 		myself.start();
 	}
 
@@ -53,8 +55,10 @@ public class PVEParent extends GenerateParent {
 						} else {
 							// 释放技能动画，并通知后端更新数据等等。
 							// 回合交换
-							this.platform.useSkill(1, this.skillID);
-							this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
+							skillaction();
+							this.playerBoard.refreshData();
+//							this.platform.useSkill(1, this.skillID);
+//							this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
 							round = 2;
 							break;
 						}
@@ -86,9 +90,11 @@ public class PVEParent extends GenerateParent {
 					// AI要进行技能释放
 					this.platform.useSkill(2, strategy.getSkillID());
 					this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
+					this.playerBoard.refreshData();
 					System.out.println("Attack");
 				}
 				round = 1;
+				new1=new2=skillRequest=false;
 			}
 		}
 		System.out.println("End");

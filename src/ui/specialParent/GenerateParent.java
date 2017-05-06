@@ -4,6 +4,7 @@ import ui.Main;
 import ui.abstractStage.BattleParent;
 import ui.awt.ImageButton.Chessman;
 import ui.awt.ImageButton.NumberImage;
+import ui.awt.ImageButton.PlayerBoard;
 import ui.awt.ImageButton.Pool;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import po.ActionPo;
 import po.BattlePo;
 import po.DotPo;
 import po.MatrixPo;
@@ -79,12 +81,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	private boolean hasAChick = false;
 	private int luckyColor = -1;
 	protected Pool pool1 = null, pool2 = null;
+	protected PlayerBoard playerBoard = null;
+	protected PlayerBoard p1=null,p2 = null;
 	protected boolean skillRequest = false;
 	protected int skillID;
 	BattlePo result;
 	BorderPane pools = new BorderPane();
 
-	public void addPool() {
+	public void addPool(boolean playerBoardFlag) {
 		System.out.println("两个Width");
 		System.out.println(GenerateParent.POOLWIDTH);
 		System.out.println(GenerateParent.POOLITEMWIDTH);
@@ -106,6 +110,11 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			}
 		}
 		pool2 = new Pool(skillList2, new int[6],this);
+		if (playerBoardFlag){
+			playerBoard = new PlayerBoard (this.platform);
+			pools.setCenter(playerBoard);
+			BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
+		}
 		pools.setLeft(pool1);
 		pools.setRight(pool2);
 		BorderPane.setAlignment(pools.getLeft(), Pos.BOTTOM_LEFT);
@@ -114,33 +123,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		
 	}
 
-	public void setDot1(int x, int y) {
-		dot1.setX(x);
-		dot1.setY(y);
-		new1 = true;
-	}
 
-	public void setDot2(int x, int y) {
-		dot2.setX(x);
-		dot2.setY(y);
-		new2 = true;
-
-	}
-	public void setSkill(int i){
-		this.skillID=i;
-		this.skillRequest=true;
-	}
-	// public GenerateParent(int missionID, Player player1, Main main) {
-	//
-	// // 用missionPo来生成相应的platform
-	// super(main);
-	// super.platform = new Battle(missionID, player1.createPaper());
-	// init();
-	// // 展示界面+监听
-	//
-	// // new Thread(this).start();
-	// }
-	//
 	public GenerateParent(Main main, BattlePlatform platform) {
 		super(main);
 		super.platform = platform;
@@ -151,7 +134,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		myself = new Thread(this);
 		// this.platform.adfasdasdassdfasdf();
 		Image P1 = new Image("Graphics/Player/Setting.png");
-		Image P2 = new Image("Graphics/Player/Player0.gif");
+		Image P2 = new Image("Graphics/Player/Player100.gif");
 		ImageView P1View = new ImageView(P1);
 		ImageView P2View = new ImageView(P2);
 		VBox leftBox = new VBox();
@@ -183,27 +166,12 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		test.getChildren().add(endTest);
 		test.setAlignment(Pos.BOTTOM_CENTER);
 		// this.setTop(test);
-		this.setRight(test);
+//		this.setRight(test);
 		round = 1;
 		new1 = false;
 		new2 = false;
 		result = platform.check();
 
-//		check = new Thread(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				// TODO Auto-generated method stub
-//
-//				while (!result.isBattleIsEnd()) {
-//					// System.out.println("Checking");
-//					result = platform.check();
-//				}
-//			}
-//
-//		});
-//		check.start();
-		// myself.start();
 	}
 
 	public void action() {
@@ -221,6 +189,37 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		renewBoard();
 		// 输出着玩
 		System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
+	}
+	public void skillaction(){
+		//更新后端数据
+		ActionPo actionPo = this.platform.useSkill(round, skillID);
+		//刷新技能栏
+		this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
+		//技能动画
+		
+		//人物面板数值调整
+	}
+	public void addPlayer1(){
+		
+	}
+	public void addPlayer2(){
+		
+	}
+	public void setDot1(int x, int y) {
+		dot1.setX(x);
+		dot1.setY(y);
+		new1 = true;
+	}
+
+	public void setDot2(int x, int y) {
+		dot2.setX(x);
+		dot2.setY(y);
+		new2 = true;
+
+	}
+	public void setSkill(int i){
+		this.skillID=i;
+		this.skillRequest=true;
 	}
 
 	public Chessman getSelected() {
@@ -500,6 +499,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 //				this.platform.
 //				pool1.refreshElementNum(elementPool1);
 				this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
+//				this.playerBoard.refreshData();
 			} else if (round == 2 && pool2 != null) {
 //				int[] elementPool2 = this.platform.getPool2();
 //				pool2.refreshElementNum(elementPool2);

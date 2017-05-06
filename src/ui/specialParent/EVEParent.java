@@ -9,7 +9,7 @@ public class EVEParent extends GenerateParent implements Runnable{
 	public EVEParent(int missionID, Player player1, Main main) {
 		super(main, new Battle(missionID, player1.createPaper()));
 //		super(missionID,player1,main);
-		addPool();
+		addPool(true);
 		myself.start();
 	}
 

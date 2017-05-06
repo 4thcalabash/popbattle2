@@ -33,6 +33,9 @@ public class PaperPlayer {
 	}
 	public void increaseHp(int delta){
 		this.hp+=delta;
+		if (hp<0){
+			hp=0;
+		}
 	}
 
 	public Skill[] getAllSkills() {
