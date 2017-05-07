@@ -39,6 +39,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		stage.setFullScreen(true);
 //		Screen screen = Screen.getPrimary();
+		
 //		System.out.println("Height:"+SCREENHEIGHT);
 //		System.out.println("Width:"+SCREENWIDTH);
 		stage.setResizable(false);
@@ -80,7 +81,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	}
 	
 	@Override
-	public void battleEnd() {
+	public void battleEnd(boolean result) {
 		// TODO Auto-generated method stub
 		//battleScene自行销毁
 		//此方法完成从battle返回static
@@ -90,6 +91,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		scene.getStylesheets().add(getClass().getResource("static.css").toExternalForm());
 		this.setStage(staticParent);
 	}
+	
 	
 	
 	public static void main(String[] args){

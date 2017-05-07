@@ -4,16 +4,12 @@ import ui.Main;
 import ui.abstractStage.BattleParent;
 import ui.awt.ImageButton.Chessman;
 import ui.awt.ImageButton.ImageButton;
-import ui.awt.ImageButton.NumberImage;
 import ui.awt.ImageButton.PlayerBoard;
 import ui.awt.ImageButton.Pool;
-
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
-import bll.individual.Player;
 import bll.matrix.Dot;
 import bll.matrix.Matrix;
-import bll.platform.*;
 import bllservice.BattlePlatform;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -22,14 +18,11 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import po.ActionPo;
 import po.BattlePo;
@@ -37,6 +30,7 @@ import po.DotPo;
 import po.MatrixPo;
 import po.PopPo;
 import ui.awt.ImageButton.*;
+
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 
@@ -76,10 +70,10 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int AI_DIE = 996;
 	public static final int PLAYER_DIE = 995;
 	public static final int NEXT_AI = 994;
-	
-	
-	public static final int BATTLEENDHEIGHT=(int)(Main.SCREENHEIGHT*0.1);
-	public static final int BATTLEENDWIDTH=BATTLEENDHEIGHT*3;
+	public static final int ATTACK=993;
+
+	public static final int BATTLEENDHEIGHT = (int) (Main.SCREENHEIGHT * 0.1);
+	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 3;
 	private BorderPane border = new BorderPane();
 	protected DotPo dot1 = new DotPo(-1, -1);
 	protected DotPo dot2 = new DotPo(-1, -1);
@@ -104,15 +98,22 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	protected AnchorPane player1 = null, player2 = null;
 	protected boolean skillRequest = false;
 	protected int skillID;
+	public static final int PLAYERWIDTH = (int)(((Main.SCREENWIDTH-TOPIMAGEWIDTH)/2-PLAYERIMAGEGAP));
+	public static final int PLAYERHEIGHT = (int)(PLAYERWIDTH*1.18);
+	public static final int SKILLPLAYERWIDTH = (int)(PLAYERWIDTH*0.7);
+	public static final int SKILLPLAYERHEIGHT = (int)(SKILLPLAYERWIDTH*1.15);
+	public static final int SKILLMOVEDELTA = 500;
+	public static final int SKILLATTACKDELTA = 1000;
 	BattlePo result;
 	BorderPane pools = new BorderPane();
 	ImageButton battleEnd;
+
 	public void addPlayer1() {
 		player1 = new AnchorPane();
 		ImageView p1Image = new ImageView(
 				new Image("Graphics/Player/Player" + this.platform.getPlayer1().getPlayer().getPro() + ".gif"));
-		p1Image.setFitWidth((Main.SCREENWIDTH - TOPIMAGEWIDTH - PLAYERIMAGEGAP) / 2);
-		p1Image.setFitHeight(p1Image.getFitWidth() * 1.2);
+		p1Image.setFitWidth(PLAYERWIDTH);
+		p1Image.setFitHeight(PLAYERHEIGHT);
 		p1Image.setX(0);
 		p1Image.setY(0);
 		border.setLeft(p1Image);
@@ -123,8 +124,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		player2 = new AnchorPane();
 		ImageView p2Image = new ImageView(
 				new Image("Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + ".gif"));
-		p2Image.setFitWidth((Main.SCREENWIDTH - TOPIMAGEWIDTH - PLAYERIMAGEGAP) / 2);
-		p2Image.setFitHeight(p2Image.getFitWidth() * 1.2);
+		p2Image.setFitWidth(PLAYERWIDTH);
+		p2Image.setFitHeight(PLAYERHEIGHT);
 		p2Image.setX(0);
 		p2Image.setY(0);
 		border.setRight(p2Image);
@@ -175,59 +176,24 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 
 	public void init() {
 		myself = new Thread(this);
-		// this.platform.adfasdasdassdfasdf();
-		Image P1 = new Image("Graphics/Player/Setting.png");
-		Image P2 = new Image("Graphics/Player/Player100.gif");
-		ImageView P1View = new ImageView(P1);
-		ImageView P2View = new ImageView(P2);
-		VBox leftBox = new VBox();
-		leftBox.getChildren().add(P1View);
-		VBox rightBox = new VBox();
-		rightBox.getChildren().add(P2View);
-		// this.setLeft(leftBox);
-		// this.setRight(rightBox);
-
 		renewBoard();
-
-		leftBox.setAlignment(Pos.CENTER);
-		rightBox.setAlignment(Pos.CENTER);
-		HBox test = new HBox();
-		Button endTest = new Button("BattleEnd");
-		endTest.setOnAction(new EventHandler<ActionEvent>() {
-
-			@SuppressWarnings("deprecation")
-			@Override
-			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				myself.stop();
-				// check.stop();
-				setVisible(false);
-				main.battleEnd();
-			}
-
-		});
-		test.getChildren().add(endTest);
-		test.setAlignment(Pos.BOTTOM_CENTER);
-		// this.setTop(test);
-		// this.setRight(test);
 		round = 1;
 		new1 = false;
 		new2 = false;
 		result = platform.check();
-
 	}
 
 	public void showFlash(int flag, CountDownLatch c) {
 		if (flag == BATTLE_LOSE || flag == BATTLE_WIN || flag == BATTLE_START
 				|| flag == GenerateParent.CHANGE_ROUND_FROM_1TO2 || flag == GenerateParent.CHANGE_ROUND_FROM_2TO1) {
 			AnchorPane temp = new AnchorPane();
-			// temp.setId("showFlash");
-			ImageView flashBackground = new ImageView(new Image("Graphics/Battle/background.png"));
-			flashBackground.setFitHeight(Main.SCREENHEIGHT);
-			flashBackground.setFitWidth(Main.SCREENWIDTH);
-			flashBackground.setX(0);
-			flashBackground.setY(0);
-			temp.getChildren().add(flashBackground);
+			 temp.setId("showFlash");
+//			ImageView flashBackground = new ImageView(new Image("Graphics/Battle/background.png"));
+//			flashBackground.setFitHeight(Main.SCREENHEIGHT);
+//			flashBackground.setFitWidth(Main.SCREENWIDTH);
+//			flashBackground.setX(0);
+//			flashBackground.setY(0);
+//			temp.getChildren().add(flashBackground);
 			if (flag == GenerateParent.CHANGE_ROUND_FROM_1TO2 || flag == GenerateParent.CHANGE_ROUND_FROM_2TO1) {
 
 				ImageView tempImage;
@@ -280,34 +246,38 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					line.play();
 				});
 			} else if (flag == GenerateParent.BATTLE_START) {
-				ImageView tempImage = new ImageView (new Image("Graphics/Battle/start.png"));
-				tempImage.setX(Main.SCREENWIDTH/2);
-				tempImage.setY(Main.SCREENHEIGHT/2);
+				ImageView tempImage = new ImageView(new Image("Graphics/Battle/start.png"));
+				tempImage.setX(Main.SCREENWIDTH / 2);
+				tempImage.setY(Main.SCREENHEIGHT / 2);
 				tempImage.setFitHeight(1);
 				tempImage.setFitWidth(1);
 				temp.getChildren().add(tempImage);
 				Timeline line = new Timeline();
-				KeyValue kv1 = new KeyValue (tempImage.fitHeightProperty(),GenerateParent.CHANGEROUNDIMAGEHEIGHT);
-				KeyValue kv2 = new KeyValue (tempImage.fitWidthProperty(),GenerateParent.CHANGEROUNDIMAGEWIDTH);
-				KeyValue kv3 = new KeyValue (tempImage.xProperty(),(Main.SCREENWIDTH-GenerateParent.CHANGEROUNDIMAGEWIDTH)/2);
-				KeyValue kv4 = new KeyValue (tempImage.yProperty(),(Main.SCREENHEIGHT-GenerateParent.CHANGEROUNDIMAGEHEIGHT)/2);
-				line.getKeyFrames().addAll(new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv1),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv2),
-						new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv3),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv4));
-				line.setOnFinished(a->{
-					
-					new Thread (new Runnable(){
-						public void run(){
+				KeyValue kv1 = new KeyValue(tempImage.fitHeightProperty(), GenerateParent.CHANGEROUNDIMAGEHEIGHT);
+				KeyValue kv2 = new KeyValue(tempImage.fitWidthProperty(), GenerateParent.CHANGEROUNDIMAGEWIDTH);
+				KeyValue kv3 = new KeyValue(tempImage.xProperty(),
+						(Main.SCREENWIDTH - GenerateParent.CHANGEROUNDIMAGEWIDTH) / 2);
+				KeyValue kv4 = new KeyValue(tempImage.yProperty(),
+						(Main.SCREENHEIGHT - GenerateParent.CHANGEROUNDIMAGEHEIGHT) / 2);
+				line.getKeyFrames().addAll(new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA / 2), kv1),
+						new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA / 2), kv2),
+						new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA / 2), kv3),
+						new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA / 2), kv4));
+				line.setOnFinished(a -> {
+
+					new Thread(new Runnable() {
+						public void run() {
 							try {
-								Thread.sleep(ROUNDCHANGEDELTA/2);
+								Thread.sleep(ROUNDCHANGEDELTA / 2);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							Platform.runLater(()->{
+							Platform.runLater(() -> {
 								getChildren().remove(1);
 							});
 							try {
-								Thread.sleep(ROUNDCHANGEDELTA/3);
+								Thread.sleep(ROUNDCHANGEDELTA / 3);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -316,63 +286,73 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 						}
 					}).start();
 				});
-				Platform.runLater(()->{
+				Platform.runLater(() -> {
 					this.getChildren().add(temp);
 					line.play();
 				});
 			} else if (flag == GenerateParent.BATTLE_LOSE || flag == GenerateParent.BATTLE_WIN) {
 				ImageView tempImage;
-				if (flag==GenerateParent.BATTLE_LOSE){
-					tempImage = new ImageView (new Image("Graphics/Battle/lose.png"));
-				}else{
-					tempImage = new ImageView (new Image("Graphics/Battle/win.png"));
+				if (flag == GenerateParent.BATTLE_LOSE) {
+					tempImage = new ImageView(new Image("Graphics/Battle/lose.png"));
+				} else {
+					tempImage = new ImageView(new Image("Graphics/Battle/win.png"));
 				}
-				tempImage.setX(Main.SCREENWIDTH/2);
-				tempImage.setY(Main.SCREENHEIGHT/2);
+				tempImage.setX(Main.SCREENWIDTH / 2);
+				tempImage.setY(Main.SCREENHEIGHT / 2);
 				tempImage.setFitHeight(1);
 				tempImage.setFitWidth(1);
 				temp.getChildren().add(tempImage);
 				Timeline line = new Timeline();
-				KeyValue kv1 = new KeyValue (tempImage.fitHeightProperty(),GenerateParent.CHANGEROUNDIMAGEHEIGHT);
-				KeyValue kv2 = new KeyValue (tempImage.fitWidthProperty(),GenerateParent.CHANGEROUNDIMAGEWIDTH);
-				KeyValue kv3 = new KeyValue (tempImage.xProperty(),(Main.SCREENWIDTH-GenerateParent.CHANGEROUNDIMAGEWIDTH)/2);
-				KeyValue kv4 = new KeyValue (tempImage.yProperty(),(Main.SCREENHEIGHT-GenerateParent.CHANGEROUNDIMAGEHEIGHT)/2);
-				line.getKeyFrames().addAll(new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv1),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv2),
-						new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv3),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv4));
-				battleEnd = new ImageButton (new Image("Graphics/Battle/battleEndStatic.png"),new Image("Graphics/Battle/battleEndEntered.png"),
-						new Image("Graphics/Battle/battleEndPressed.png"),new ButtonWorker(){
+				KeyValue kv1 = new KeyValue(tempImage.fitHeightProperty(), GenerateParent.CHANGEROUNDIMAGEHEIGHT);
+				KeyValue kv2 = new KeyValue(tempImage.fitWidthProperty(), GenerateParent.CHANGEROUNDIMAGEWIDTH);
+				KeyValue kv3 = new KeyValue(tempImage.xProperty(),
+						(Main.SCREENWIDTH - GenerateParent.CHANGEROUNDIMAGEWIDTH) / 2);
+				KeyValue kv4 = new KeyValue(tempImage.yProperty(),
+						(Main.SCREENHEIGHT - GenerateParent.CHANGEROUNDIMAGEHEIGHT) / 2);
+				line.getKeyFrames().addAll(new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA), kv1),
+						new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA), kv2),
+						new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA), kv3),
+						new KeyFrame(Duration.millis(GenerateParent.ROUNDCHANGEDELTA), kv4));
+				battleEnd = new ImageButton(new Image("Graphics/Battle/battleEndStatic.png"),
+						new Image("Graphics/Battle/battleEndEntered.png"),
+						new Image("Graphics/Battle/battleEndPressed.png"), new ButtonWorker() {
 
+							@SuppressWarnings("deprecation")
 							@Override
 							public void work() {
 								// TODO Auto-generated method stub
 								myself.stop();
-								main.battleEnd();
-								
+								if (flag == GenerateParent.BATTLE_WIN) {
+									main.battleEnd(true);
+								} else {
+									main.battleEnd(false);
+								}
+
 							}
-					
-				});
+
+						});
 				battleEnd.setFitHeight(GenerateParent.BATTLEENDHEIGHT);
 				battleEnd.setFitWidth(GenerateParent.BATTLEENDWIDTH);
-				battleEnd.setX((Main.SCREENWIDTH-battleEnd.getFitWidth())/2);
-				battleEnd.setY(Main.SCREENHEIGHT*2/3);
-				line.setOnFinished(a->{
-//					getChildren().remove(1);
-					Platform.runLater(()->{
+				battleEnd.setX((Main.SCREENWIDTH - battleEnd.getFitWidth()) / 2);
+				battleEnd.setY(Main.SCREENHEIGHT * 2 / 3);
+				line.setOnFinished(a -> {
+					// getChildren().remove(1);
+					Platform.runLater(() -> {
 						temp.getChildren().add(battleEnd);
 					});
 					c.countDown();
 				});
-				Platform.runLater(()->{
+				Platform.runLater(() -> {
 					this.getChildren().add(temp);
 					line.play();
 				});
 			}
-		}else{
-			if (flag==GenerateParent.AI_DIE){
+		} else {
+			if (flag == GenerateParent.AI_DIE) {
 				c.countDown();
-			}else if (flag==GenerateParent.PLAYER_DIE){
+			} else if (flag == GenerateParent.PLAYER_DIE) {
 				c.countDown();
-			}else if (flag==GenerateParent.NEXT_AI){
+			} else if (flag == GenerateParent.NEXT_AI) {
 				c.countDown();
 			}
 		}
@@ -486,7 +466,71 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		}
 
 	}
+	Image actionPlayer=null;
+	Image targetPlayer=null;
+	ImageView pp1 = null;//new ImageView (p1Static);
+	ImageView pp2 = null;
+	public void showSkillFlash(ActionPo actionPo,CountDownLatch c){
+		AnchorPane temp = new AnchorPane ();
+		temp.setBackground(this.getBackground());
+		Image p1Static = new Image("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+".gif");
+		Image p2Static = new Image("Graphics/Player/Player"+this.platform.getPlayer2().getPlayer().getPro()+".gif");
 
+		pp1 = new ImageView (p1Static);
+		pp2 = new ImageView (p2Static);
+		pp1.setFitHeight(SKILLPLAYERHEIGHT);
+		pp1.setFitWidth(SKILLPLAYERHEIGHT);
+		pp1.setX(border.getLeft().getLayoutX());
+		pp1.setY(Main.SCREENHEIGHT/2-SKILLPLAYERHEIGHT/2);
+		temp.getChildren().add(pp1);
+		pp2.setFitHeight(SKILLPLAYERHEIGHT);
+		pp2.setFitWidth(SKILLPLAYERWIDTH);
+		pp2.setX(border.getRight().getLayoutX());
+		pp2.setY(Main.SCREENHEIGHT/2-SKILLPLAYERHEIGHT/2);
+		temp.getChildren().add(pp2);
+		Timeline line = new Timeline ();
+		line.setOnFinished(e->{
+//			pp1.setImage(new Image ("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif"));
+			if (actionPo.getActionPlayerID()==1){
+				pp1.setImage(actionPlayer);
+			}else{
+				pp2.setImage(actionPlayer);
+			}
+			new Thread (new Runnable(){
+				
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					try {
+						Thread.sleep(SKILLATTACKDELTA);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					Platform.runLater(()->{
+						getChildren().remove(1);
+						c.countDown();
+					});
+				}
+				
+			}).start();
+			
+		});
+		if (actionPo.getActionPlayerID()==1){
+			actionPlayer = new Image("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif");
+			KeyFrame kf1 = new KeyFrame (Duration.millis(SKILLMOVEDELTA),new KeyValue (pp1.xProperty(),pp2.getX()-SKILLPLAYERWIDTH/3));
+			line.getKeyFrames().addAll(kf1);
+		}else{
+			actionPlayer = new Image ("Graphics/Player/Player"+this.platform.getPlayer2().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif");
+			KeyFrame kf1 = new KeyFrame (Duration.millis(SKILLMOVEDELTA),new KeyValue (pp2.xProperty(),pp1.getX()+SKILLPLAYERWIDTH/3));
+			
+			line.getKeyFrames().addAll(kf1);
+		}
+		Platform.runLater(()->{
+			this.getChildren().add(temp);
+			line.play();
+		});
+	}
 	public void skillaction() {
 		// 更新后端数据
 		ActionPo actionPo = this.platform.useSkill(round, skillID);
@@ -496,10 +540,26 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		} else {
 			this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
 		}
+		
+		// 技能动画：阻塞式
+		CountDownLatch c = new CountDownLatch(1);
+		showSkillFlash(actionPo,c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// 刷新属性值栏
-		playerBoard.refreshData();
-		// 技能动画：阻塞式 用showFlash方法
-		if (!this.platform.check().isBattleIsEnd()||!this.platform.check().isThisAIDie()){
+		CountDownLatch ccc = new CountDownLatch(1);
+		playerBoard.refreshData(ccc);
+		try {
+			ccc.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (!this.platform.check().isBattleIsEnd() || !this.platform.check().isThisAIDie()) {
 			changeRound();
 		}
 	}

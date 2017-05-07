@@ -7,6 +7,9 @@ import bll.platform.*;
 import po.*;
 import util.Calcable;
 public class Player implements Calcable{
+	public void setPro(int pro) {
+		this.pro = pro;
+	}
 	/**********
 	 *人物属性分为基础属性和当前属性
 	 *基础属性是裸的人物属性

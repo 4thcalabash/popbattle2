@@ -1,5 +1,7 @@
 package ui.awt.ImageButton;
 
+import java.util.concurrent.CountDownLatch;
+
 import bll.individual.PaperPlayer;
 import bllservice.BattlePlatform;
 import javafx.scene.image.Image;
@@ -76,5 +78,9 @@ public class PlayerBoard extends AnchorPane {
 	public void refreshData(){
 		P1HP.refresh(this.platform.getPlayer1().getHp());
 		P2HP.refresh(this.platform.getPlayer2().getHp());
+	}
+	public void refreshData(CountDownLatch c){
+		P1HP.refresh(this.platform.getPlayer1().getHp(),c);
+		P2HP.refresh(this.platform.getPlayer2().getHp(),c);
 	}
 }

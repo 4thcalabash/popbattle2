@@ -248,6 +248,8 @@ public class FileHelper implements DataOperator{
 			BufferedReader reader = new BufferedReader (filereader);
 			String line = null;
 			line = reader.readLine();
+			AIBasic.setPro(Integer.parseInt(line));
+			line = reader.readLine();
 			AIBasic.setLevel(Integer.parseInt(line));
 			line = reader.readLine();
 			AIBasic.setHp(Integer.parseInt(line));

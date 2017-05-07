@@ -1,5 +1,7 @@
 package ui.awt.ImageButton;
 
+import java.util.concurrent.CountDownLatch;
+
 import bllservice.BattlePlatform;
 import javafx.animation.*;
 import javafx.application.Platform;
@@ -47,6 +49,48 @@ public class PropertyLine extends AnchorPane{
 			System.out.println("Property Change From"+now+"to"+newnow);
 			now=newnow;
 			Timeline line = new Timeline();
+			if (this.dir==TOWARDS_RIGHT){
+
+				if (newnow==0){
+					newnow=MIN;
+				}
+				KeyValue kv= new KeyValue (this.picture.fitWidthProperty(),MAXLENGTH*newnow/max);
+				KeyFrame kf = new KeyFrame (Duration.millis(DELTATIME),kv);
+				line.getKeyFrames().add(kf);
+				KeyValue kvv1 = new KeyValue (this.blank.fitWidthProperty(),MAXLENGTH-MAXLENGTH*newnow/max);
+				KeyValue kvv2 = new KeyValue (this.blank.xProperty(),MAXLENGTH*newnow/max);
+				KeyFrame kff1 = new KeyFrame (Duration.millis(DELTATIME),kvv1);
+				KeyFrame kff2 = new KeyFrame (Duration.millis(DELTATIME),kvv2);
+				line.getKeyFrames().add(kff1);
+				line.getKeyFrames().add(kff2);
+			}else{
+				if (newnow==0){
+					newnow=MIN;
+				}
+				KeyValue kv1 = new KeyValue (this.picture.fitWidthProperty(),MAXLENGTH*newnow/max);
+				KeyValue kv2 = new KeyValue (this.picture.xProperty(),MAXLENGTH-MAXLENGTH*newnow/max);
+				KeyFrame kf1 = new KeyFrame (Duration.millis(DELTATIME),kv1);
+				KeyFrame kf2 = new KeyFrame (Duration.millis(DELTATIME),kv2);
+				line.getKeyFrames().add(kf1);
+				line.getKeyFrames().add(kf2);
+				KeyValue kvv = new KeyValue (this.blank.fitWidthProperty(),MAXLENGTH-MAXLENGTH*newnow/max);
+				KeyFrame kff = new KeyFrame (Duration.millis(DELTATIME),kvv);
+				line.getKeyFrames().add(kff);
+			}
+			Platform.runLater(()->{
+				line.play();
+			});
+		}
+	}
+	public void refresh(int newnow,CountDownLatch c){
+		if (newnow!=now){
+			System.out.println("Property Change From"+now+"to"+newnow);
+			now=newnow;
+			Timeline line = new Timeline();
+			line.setOnFinished(e->{
+				System.out.println("CountDown");
+				c.countDown();
+			});
 			if (this.dir==TOWARDS_RIGHT){
 
 				if (newnow==0){

@@ -16,7 +16,7 @@ public abstract class BattleParent extends StackPane{
 	public BattleParent(Main main){
 		this.main=main;
 	}
-	public void returnStatic(){
-		main.battleEnd();
+	public void returnStatic(boolean flag){
+		main.battleEnd(flag);
 	}
 }

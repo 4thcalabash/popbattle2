@@ -1,5 +1,5 @@
 package ui.sceneInterface;
 
 public interface DramaticScene {
-	public void battleEnd();
+	public void battleEnd(boolean flag);
 }
