@@ -55,20 +55,29 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int[] cost = new int[Matrix.KIND];
 					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK];
-					int temp[] = new int[Matrix.KIND];
-					int num = 0;
-					for (int i = 0; i < Matrix.KIND; i++) {
-						if (paperPlayer.getElementPool()[i] != 0) {
-							temp[num] = i;
-							num++;
+					int num;
+					if (skillLevel==1){
+						num=3;
+					}else if (skillLevel==2){
+						num=4;
+					}else {
+						num=5;
+					}
+					int sum = 0;
+					for (int i=0;i<Matrix.KIND;i++){
+						sum+=paperPlayer.getElementPool()[i];
+					}
+					if (num>sum){
+						cost[0]=num;
+					}else{
+						while (num>0){
+							int temp = (int)(Math.random()*Matrix.KIND);
+							if (paperPlayer.getElementPool()[temp]>cost[temp]){
+								cost[temp]++;
+								num--;
+							}
 						}
 					}
-
-					int ans = (int) (Math.random() * (num-1));
-					cost[temp[ans]] = 1;
-//					for (int i=0;i<Matrix.KIND;i++){
-//						System.out.println();
-//					}
 					return cost;
 
 				}

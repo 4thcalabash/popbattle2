@@ -69,7 +69,7 @@ public class Battle implements BattlePlatform{
 		}else{
 			if (paperPlayer2.getHp()<=0){
 				battlePo.setThisAIDie(true);
-				if (++nowAIindex==missionVo.getAIID().size()){
+				if (++nowAIindex>=missionVo.getAIID().size()){
 					System.out.println("AI ALL DIE ");
 					battlePo.setBattleIsEnd(true);
 					battlePo.setFinalWinnerID(1);

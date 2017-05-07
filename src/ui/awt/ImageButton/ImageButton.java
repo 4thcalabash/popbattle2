@@ -17,11 +17,11 @@ public class ImageButton extends ImageView{
 	private Image enteredGraphics;
 	private boolean entered=false;
 	private boolean pressed=false;
-	public ImageButton(Image staticGraphics,Image enteredGraphics,Image pressedGraphics,ButtonWorker myWorker){
+	public ImageButton(Image staticGraphics,Image enteredGraphics,Image pressedGraphics,ButtonWorker buttonWorker){
 		this.staticGraphics=staticGraphics;
 		this.pressedGraphics=pressedGraphics;
 		this.enteredGraphics=enteredGraphics;
-		this.myWorker=myWorker;
+		this.myWorker=buttonWorker;
 		this.setImage(staticGraphics);
 		this.setOnMouseEntered(new EventHandler <MouseEvent>(){
 
@@ -65,7 +65,7 @@ public class ImageButton extends ImageView{
 				pressed=false;
 				setImage(staticGraphics);
 				if (entered==true){
-					myWorker.work();
+					buttonWorker.work();
 				}
 			}
 			

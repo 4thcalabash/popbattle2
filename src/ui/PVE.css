@@ -42,3 +42,7 @@
 	-fx-background-image:url("../Graphics/Scene/1109_scene_bg.png");
 	-fx-background-size:stretch stretch
 }
+#showFlash{
+	-fx-background-image:url("../Graphics/Battle/background.png");
+	-fx-background-size:stretch stretch
+}

@@ -33,6 +33,7 @@ public class FileHelper implements DataOperator{
 					FileHelper.class.getClassLoader().getResourceAsStream("Data/Save"+index+".data")));
 			String line = null;
 			line = reader.readLine();
+			System.out.println(line);
 			playerVo.setPro(Integer.parseInt(line));
 			line = reader.readLine();
 			playerVo.setLevel(Integer.parseInt(line));
@@ -95,6 +96,7 @@ public class FileHelper implements DataOperator{
 			line = reader.readLine();
 			playerVo.getShopVo().setSkillPointPrice(Integer.parseInt(line));
 			line = reader.readLine();
+			
 			playerVo.getShopVo().setUpGradeStonePrice(Integer.parseInt(line));
 			line = reader.readLine();
 			playerVo.getShopVo().setEvolveStonePrice(Integer.parseInt(line));

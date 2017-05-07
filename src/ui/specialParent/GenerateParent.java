@@ -3,6 +3,7 @@ package ui.specialParent;
 import ui.Main;
 import ui.abstractStage.BattleParent;
 import ui.awt.ImageButton.Chessman;
+import ui.awt.ImageButton.ImageButton;
 import ui.awt.ImageButton.NumberImage;
 import ui.awt.ImageButton.PlayerBoard;
 import ui.awt.ImageButton.Pool;
@@ -35,7 +36,7 @@ import po.BattlePo;
 import po.DotPo;
 import po.MatrixPo;
 import po.PopPo;
-
+import ui.awt.ImageButton.*;
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 
@@ -63,15 +64,22 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int ELEMENTLENGTH = (int) (POOLITEMHEIGHT * 0.8);
 	public static final int POOLRIGHTGAP = (int) (POOLWIDTHTEMP * 0.1);
 	public static final int POOLWIDTH = POOLWIDTHTEMP + POOLRIGHTGAP;
-	
-	
+	public static final int PLAYERIMAGEGAP = (int) (Main.SCREENWIDTH * 0.04);
+	public static final int CHANGEROUNDIMAGEHEIGHT = (int) (Main.SCREENHEIGHT * 0.3);
+	public static final int CHANGEROUNDIMAGEWIDTH = (int) (CHANGEROUNDIMAGEHEIGHT * 3);
 	public static final int CHANGE_ROUND_FROM_1TO2 = 1000;
 	public static final int CHANGE_ROUND_FROM_2TO1 = 1001;
-	public static final int ROUNDCHANGEDELTA=800;
+	public static final int ROUNDCHANGEDELTA = 600;
 	public static final int BATTLE_START = 999;
-	public static final int BATTLE_WIN=998;
-	public static final int BATTLE_LOSE=997;
+	public static final int BATTLE_WIN = 998;
+	public static final int BATTLE_LOSE = 997;
 	public static final int AI_DIE = 996;
+	public static final int PLAYER_DIE = 995;
+	public static final int NEXT_AI = 994;
+	
+	
+	public static final int BATTLEENDHEIGHT=(int)(Main.SCREENHEIGHT*0.1);
+	public static final int BATTLEENDWIDTH=BATTLEENDHEIGHT*3;
 	private BorderPane border = new BorderPane();
 	protected DotPo dot1 = new DotPo(-1, -1);
 	protected DotPo dot2 = new DotPo(-1, -1);
@@ -92,11 +100,36 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	private int luckyColor = -1;
 	protected Pool pool1 = null, pool2 = null;
 	protected PlayerBoard playerBoard = null;
-	protected PlayerBoard p1=null,p2 = null;
+	protected PlayerBoard p1 = null, p2 = null;
+	protected AnchorPane player1 = null, player2 = null;
 	protected boolean skillRequest = false;
 	protected int skillID;
 	BattlePo result;
 	BorderPane pools = new BorderPane();
+	ImageButton battleEnd;
+	public void addPlayer1() {
+		player1 = new AnchorPane();
+		ImageView p1Image = new ImageView(
+				new Image("Graphics/Player/Player" + this.platform.getPlayer1().getPlayer().getPro() + ".gif"));
+		p1Image.setFitWidth((Main.SCREENWIDTH - TOPIMAGEWIDTH - PLAYERIMAGEGAP) / 2);
+		p1Image.setFitHeight(p1Image.getFitWidth() * 1.2);
+		p1Image.setX(0);
+		p1Image.setY(0);
+		border.setLeft(p1Image);
+		BorderPane.setAlignment(border.getLeft(), Pos.CENTER_RIGHT);
+	}
+
+	public void addPlayer2() {
+		player2 = new AnchorPane();
+		ImageView p2Image = new ImageView(
+				new Image("Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + ".gif"));
+		p2Image.setFitWidth((Main.SCREENWIDTH - TOPIMAGEWIDTH - PLAYERIMAGEGAP) / 2);
+		p2Image.setFitHeight(p2Image.getFitWidth() * 1.2);
+		p2Image.setX(0);
+		p2Image.setY(0);
+		border.setRight(p2Image);
+		BorderPane.setAlignment(border.getRight(), Pos.CENTER_LEFT);
+	}
 
 	public void addPool(boolean playerBoardFlag) {
 		System.out.println("两个Width");
@@ -110,7 +143,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				skillList1[i] = -10000;
 			}
 		}
-		pool1 = new Pool(skillList1, new int[6],this);
+		pool1 = new Pool(skillList1, new int[6], this);
 		int[] skillList2 = new int[3];
 		for (int i = 0; i < 3; i++) {
 			if (this.platform.getPlayer2().getAllSkills()[i] != null) {
@@ -119,9 +152,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				skillList2[i] = -10000;
 			}
 		}
-		pool2 = new Pool(skillList2, new int[6],this);
-		if (playerBoardFlag){
-			playerBoard = new PlayerBoard (this.platform);
+		pool2 = new Pool(skillList2, new int[6], this);
+		if (playerBoardFlag) {
+			playerBoard = new PlayerBoard(this.platform);
 			pools.setCenter(playerBoard);
 			BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
 		}
@@ -130,9 +163,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		BorderPane.setAlignment(pools.getLeft(), Pos.BOTTOM_LEFT);
 		BorderPane.setAlignment(pools.getRight(), Pos.BOTTOM_RIGHT);
 		border.setBottom(pools);
-		
-	}
 
+	}
 
 	public GenerateParent(Main main, BattlePlatform platform) {
 		super(main);
@@ -168,7 +200,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				myself.stop();
-//				check.stop();
+				// check.stop();
 				setVisible(false);
 				main.battleEnd();
 			}
@@ -177,65 +209,189 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		test.getChildren().add(endTest);
 		test.setAlignment(Pos.BOTTOM_CENTER);
 		// this.setTop(test);
-//		this.setRight(test);
+		// this.setRight(test);
 		round = 1;
 		new1 = false;
 		new2 = false;
 		result = platform.check();
 
 	}
-	public void showFlash(int flag,CountDownLatch c){
-		if (flag==GenerateParent.CHANGE_ROUND_FROM_1TO2||
-				flag==GenerateParent.CHANGE_ROUND_FROM_2TO1){
-			BorderPane temp = new BorderPane();
-			ImageView tempImage;
-			if (flag==GenerateParent.CHANGE_ROUND_FROM_1TO2){
-				tempImage = new ImageView (new Image("Graphics/Battle/Enemy'sRound.png"));
-			}else{
-				tempImage = new ImageView (new Image("Graphics/Battle/YourRound.png"));
-			}
-			tempImage.setFitHeight(Main.SCREENHEIGHT);
-			tempImage.setFitWidth(Main.SCREENWIDTH);
-			tempImage.setScaleX(0);
-			tempImage.setScaleY(0);
-			temp.getChildren().add(tempImage);
-			Timeline line = new Timeline();
-			KeyValue kv1 = new KeyValue (tempImage.scaleXProperty(),1);
-			KeyValue kv2 = new KeyValue (tempImage.scaleYProperty(),1);
-			KeyFrame kf1 = new KeyFrame (Duration.millis(ROUNDCHANGEDELTA),kv1);
-			KeyFrame kf2 = new KeyFrame (Duration.millis(ROUNDCHANGEDELTA),kv2);
-			line.getKeyFrames().add(kf1);
-			line.getKeyFrames().add(kf2);
-			line.setOnFinished(new EventHandler<ActionEvent>(){
 
-				@Override
-				public void handle(ActionEvent event) {
-					// TODO Auto-generated method stub
-					getChildren().remove(1);
-					c.countDown();
+	public void showFlash(int flag, CountDownLatch c) {
+		if (flag == BATTLE_LOSE || flag == BATTLE_WIN || flag == BATTLE_START
+				|| flag == GenerateParent.CHANGE_ROUND_FROM_1TO2 || flag == GenerateParent.CHANGE_ROUND_FROM_2TO1) {
+			AnchorPane temp = new AnchorPane();
+			// temp.setId("showFlash");
+			ImageView flashBackground = new ImageView(new Image("Graphics/Battle/background.png"));
+			flashBackground.setFitHeight(Main.SCREENHEIGHT);
+			flashBackground.setFitWidth(Main.SCREENWIDTH);
+			flashBackground.setX(0);
+			flashBackground.setY(0);
+			temp.getChildren().add(flashBackground);
+			if (flag == GenerateParent.CHANGE_ROUND_FROM_1TO2 || flag == GenerateParent.CHANGE_ROUND_FROM_2TO1) {
+
+				ImageView tempImage;
+				if (flag == GenerateParent.CHANGE_ROUND_FROM_1TO2) {
+					tempImage = new ImageView(new Image("Graphics/Battle/Enemy'sRound.png"));
+				} else {
+					tempImage = new ImageView(new Image("Graphics/Battle/YourRound.png"));
 				}
-				
-			});
-			Platform.runLater(()->{
-				this.getChildren().add(temp);
-				line.play();
-			});
-		}
-	}
-	public void changeRound(){
-		round=3-round;
-		if (round==1){
-			CountDownLatch c = new CountDownLatch(1);
-			showFlash(GenerateParent.CHANGE_ROUND_FROM_2TO1,c);
-			try {
-				c.await();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				tempImage.setFitHeight(1);
+				tempImage.setFitWidth(1);
+				tempImage.setX(0);
+				tempImage.setY((Main.SCREENHEIGHT) / 2);
+				temp.getChildren().add(tempImage);
+				Timeline line = new Timeline();
+				KeyValue kv1 = new KeyValue(tempImage.fitHeightProperty(), GenerateParent.CHANGEROUNDIMAGEHEIGHT);
+				KeyValue kv2 = new KeyValue(tempImage.fitWidthProperty(), GenerateParent.CHANGEROUNDIMAGEWIDTH);
+				KeyValue kv3 = new KeyValue(tempImage.xProperty(),
+						(Main.SCREENWIDTH - GenerateParent.CHANGEROUNDIMAGEWIDTH) / 2);
+				KeyFrame kf1 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA / 2), kv1);
+				KeyFrame kf2 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA / 2), kv2);
+				KeyFrame kf3 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA / 2), kv3);
+				KeyFrame kf4 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 4 / 2), kv1);
+				KeyFrame kf5 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 4 / 2), kv2);
+				KeyFrame kf6 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 4 / 2), kv3);
+				KeyFrame kf7 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 5 / 2),
+						new KeyValue(tempImage.fitWidthProperty(), 1));
+				KeyFrame kf8 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 5 / 2),
+						new KeyValue(tempImage.fitHeightProperty(), 1));
+				KeyFrame kf9 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 5 / 2),
+						new KeyValue(tempImage.xProperty(), Main.SCREENWIDTH));
+				KeyFrame kf10 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA / 2), new KeyValue(tempImage.yProperty(),
+						(Main.SCREENHEIGHT - GenerateParent.CHANGEROUNDIMAGEHEIGHT) / 2));
+				KeyFrame kf11 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 4 / 2), new KeyValue(
+						tempImage.yProperty(), (Main.SCREENHEIGHT - GenerateParent.CHANGEROUNDIMAGEHEIGHT) / 2));
+				KeyFrame kf12 = new KeyFrame(Duration.millis(ROUNDCHANGEDELTA * 5 / 2),
+						new KeyValue(tempImage.yProperty(), (Main.SCREENHEIGHT) / 2));
+				line.getKeyFrames().addAll(kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9, kf10, kf11, kf12);
+				line.setOnFinished(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent event) {
+						// TODO Auto-generated method stub
+						getChildren().remove(1);
+						c.countDown();
+					}
+
+				});
+				Platform.runLater(() -> {
+					this.getChildren().add(temp);
+					line.play();
+				});
+			} else if (flag == GenerateParent.BATTLE_START) {
+				ImageView tempImage = new ImageView (new Image("Graphics/Battle/start.png"));
+				tempImage.setX(Main.SCREENWIDTH/2);
+				tempImage.setY(Main.SCREENHEIGHT/2);
+				tempImage.setFitHeight(1);
+				tempImage.setFitWidth(1);
+				temp.getChildren().add(tempImage);
+				Timeline line = new Timeline();
+				KeyValue kv1 = new KeyValue (tempImage.fitHeightProperty(),GenerateParent.CHANGEROUNDIMAGEHEIGHT);
+				KeyValue kv2 = new KeyValue (tempImage.fitWidthProperty(),GenerateParent.CHANGEROUNDIMAGEWIDTH);
+				KeyValue kv3 = new KeyValue (tempImage.xProperty(),(Main.SCREENWIDTH-GenerateParent.CHANGEROUNDIMAGEWIDTH)/2);
+				KeyValue kv4 = new KeyValue (tempImage.yProperty(),(Main.SCREENHEIGHT-GenerateParent.CHANGEROUNDIMAGEHEIGHT)/2);
+				line.getKeyFrames().addAll(new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv1),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv2),
+						new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv3),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA/2),kv4));
+				line.setOnFinished(a->{
+					
+					new Thread (new Runnable(){
+						public void run(){
+							try {
+								Thread.sleep(ROUNDCHANGEDELTA/2);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							Platform.runLater(()->{
+								getChildren().remove(1);
+							});
+							try {
+								Thread.sleep(ROUNDCHANGEDELTA/3);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							c.countDown();
+						}
+					}).start();
+				});
+				Platform.runLater(()->{
+					this.getChildren().add(temp);
+					line.play();
+				});
+			} else if (flag == GenerateParent.BATTLE_LOSE || flag == GenerateParent.BATTLE_WIN) {
+				ImageView tempImage;
+				if (flag==GenerateParent.BATTLE_LOSE){
+					tempImage = new ImageView (new Image("Graphics/Battle/lose.png"));
+				}else{
+					tempImage = new ImageView (new Image("Graphics/Battle/win.png"));
+				}
+				tempImage.setX(Main.SCREENWIDTH/2);
+				tempImage.setY(Main.SCREENHEIGHT/2);
+				tempImage.setFitHeight(1);
+				tempImage.setFitWidth(1);
+				temp.getChildren().add(tempImage);
+				Timeline line = new Timeline();
+				KeyValue kv1 = new KeyValue (tempImage.fitHeightProperty(),GenerateParent.CHANGEROUNDIMAGEHEIGHT);
+				KeyValue kv2 = new KeyValue (tempImage.fitWidthProperty(),GenerateParent.CHANGEROUNDIMAGEWIDTH);
+				KeyValue kv3 = new KeyValue (tempImage.xProperty(),(Main.SCREENWIDTH-GenerateParent.CHANGEROUNDIMAGEWIDTH)/2);
+				KeyValue kv4 = new KeyValue (tempImage.yProperty(),(Main.SCREENHEIGHT-GenerateParent.CHANGEROUNDIMAGEHEIGHT)/2);
+				line.getKeyFrames().addAll(new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv1),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv2),
+						new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv3),new KeyFrame (Duration.millis(GenerateParent.ROUNDCHANGEDELTA),kv4));
+				battleEnd = new ImageButton (new Image("Graphics/Battle/battleEndStatic.png"),new Image("Graphics/Battle/battleEndEntered.png"),
+						new Image("Graphics/Battle/battleEndPressed.png"),new ButtonWorker(){
+
+							@Override
+							public void work() {
+								// TODO Auto-generated method stub
+								myself.stop();
+								main.battleEnd();
+								
+							}
+					
+				});
+				battleEnd.setFitHeight(GenerateParent.BATTLEENDHEIGHT);
+				battleEnd.setFitWidth(GenerateParent.BATTLEENDWIDTH);
+				battleEnd.setX((Main.SCREENWIDTH-battleEnd.getFitWidth())/2);
+				battleEnd.setY(Main.SCREENHEIGHT*2/3);
+				line.setOnFinished(a->{
+//					getChildren().remove(1);
+					Platform.runLater(()->{
+						temp.getChildren().add(battleEnd);
+					});
+					c.countDown();
+				});
+				Platform.runLater(()->{
+					this.getChildren().add(temp);
+					line.play();
+				});
 			}
 		}else{
+			if (flag==GenerateParent.AI_DIE){
+				c.countDown();
+			}else if (flag==GenerateParent.PLAYER_DIE){
+				c.countDown();
+			}else if (flag==GenerateParent.NEXT_AI){
+				c.countDown();
+			}
+		}
+	}
+
+	public void changeRound() {
+		round = 3 - round;
+		if (round == 1) {
 			CountDownLatch c = new CountDownLatch(1);
-			showFlash(GenerateParent.CHANGE_ROUND_FROM_1TO2,c);
+			showFlash(GenerateParent.CHANGE_ROUND_FROM_2TO1, c);
+			try {
+				c.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			CountDownLatch c = new CountDownLatch(1);
+			showFlash(GenerateParent.CHANGE_ROUND_FROM_1TO2, c);
 			try {
 				c.await();
 			} catch (InterruptedException e) {
@@ -244,57 +400,110 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			}
 		}
 	}
-	public void action() {
-		moveFlash();
-		System.out.println("OK AT HERE");
-		// 连续消除动画演示
-		abcd = new CountDownLatch(1);
-		popFlash();
-		try {
-			abcd.await();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+	public boolean action() {
+		boolean flag = false;
+		if (moveFlash()) {
+			System.out.println("OK AT HERE");
+			// 连续消除动画演示
+			abcd = new CountDownLatch(1);
+			popFlash();
+			try {
+				abcd.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			flag = true;
+			changeRound();
 		}
 		renewBoard();
 		// 输出着玩
 		System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
+		return flag;
 	}
-	public void showWinFlash(){
-		//AI死掉的动画
-		
-		//胜利动画 阻塞式 用showFlash方法
+
+	public void showWinFlash() {
+		// AI死掉的动画
+		CountDownLatch cc = new CountDownLatch(1);
+		showFlash(GenerateParent.AI_DIE, cc);
+		try {
+			cc.await();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		CountDownLatch c = new CountDownLatch(1);
+		showFlash(GenerateParent.BATTLE_WIN, c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 胜利动画 阻塞式 用showFlash方法
 	}
-	public void showLoseFlash(){
-		//玩家死掉的动画
-		
-		//失败动画 阻塞式，用showFlash方法
+
+	public void showLoseFlash() {
+		// 玩家死掉的动画
+		CountDownLatch c = new CountDownLatch(1);
+		showFlash(GenerateParent.PLAYER_DIE, c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		c = new CountDownLatch(1);
+		showFlash(GenerateParent.BATTLE_LOSE, c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 失败动画 阻塞式，用showFlash方法
 	}
-	public void showNextAI(){
-		//这个AI死掉的动画
-		
-		//下一个AI进场的动画
+
+	public void showNextAIFlash() {
+		// 这个AI死掉的动画
+		CountDownLatch c = new CountDownLatch(1);
+		showFlash(GenerateParent.AI_DIE, c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 下一个AI进场的动画
+		c = new CountDownLatch(1);
+		showFlash(GenerateParent.NEXT_AI, c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
-	public void skillaction(){
-		//更新后端数据
+
+	public void skillaction() {
+		// 更新后端数据
 		ActionPo actionPo = this.platform.useSkill(round, skillID);
-		//刷新技能栏
-		if (round==1){
+		// 刷新技能栏
+		if (round == 1) {
 			this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
-		}else{
+		} else {
 			this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
 		}
-		//刷新属性值栏
+		// 刷新属性值栏
 		playerBoard.refreshData();
-		//技能动画：阻塞式 用showFlash方法
-		
+		// 技能动画：阻塞式 用showFlash方法
+		if (!this.platform.check().isBattleIsEnd()||!this.platform.check().isThisAIDie()){
+			changeRound();
+		}
 	}
-	public void addPlayer1(){
-		
-	}
-	public void addPlayer2(){
-		
-	}
+
 	public void setDot1(int x, int y) {
 		dot1.setX(x);
 		dot1.setY(y);
@@ -307,9 +516,10 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		new2 = true;
 
 	}
-	public void setSkill(int i){
-		this.skillID=i;
-		this.skillRequest=true;
+
+	public void setSkill(int i) {
+		this.skillID = i;
+		this.skillRequest = true;
 	}
 
 	public Chessman getSelected() {
@@ -391,7 +601,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 
 	CountDownLatch ace;
 
-	protected void moveFlash() {
+	protected boolean moveFlash() {
 		hasAChick = false;
 		if (chessboard[dot1.getX()][dot1.getY()].getBonus() == Matrix.CHICKBONUS
 				|| chessboard[dot2.getX()][dot2.getY()].getBonus() == Matrix.CHICKBONUS) {
@@ -515,6 +725,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			e.printStackTrace();
 		}
 		chessboard = this.platform.getMatrix().getMatrix();
+		return flag;
 	}
 
 	CountDownLatch p;
@@ -585,14 +796,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				e.printStackTrace();
 			}
 			if (round == 1 && pool1 != null) {
-//				int[] elementPool1 = this.platform.getPool1();
-//				this.platform.
-//				pool1.refreshElementNum(elementPool1);
+				// int[] elementPool1 = this.platform.getPool1();
+				// this.platform.
+				// pool1.refreshElementNum(elementPool1);
 				this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
-//				this.playerBoard.refreshData();
+				// this.playerBoard.refreshData();
 			} else if (round == 2 && pool2 != null) {
-//				int[] elementPool2 = this.platform.getPool2();
-//				pool2.refreshElementNum(elementPool2);
+				// int[] elementPool2 = this.platform.getPool2();
+				// pool2.refreshElementNum(elementPool2);
 				this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
 			}
 			chessboard = this.platform.getMatrix().getMatrix();
