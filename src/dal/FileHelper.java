@@ -243,9 +243,10 @@ public class FileHelper implements DataOperator{
 		PaperPlayer AI = null;
 		try{
 			String filePath = FileHelper.class.getClassLoader().getResource("AIData/AI"+ID+".data").getPath();
-			File save = new File (filePath);
-			FileReader filereader = new FileReader(save);
-			BufferedReader reader = new BufferedReader (filereader);
+//			File save = new File (filePath);
+//			FileReader filereader = new FileReader(save);
+//			BufferedReader reader = new BufferedReader (filereader);
+			BufferedReader reader = new BufferedReader(new InputStreamReader(FileHelper.class.getClassLoader().getResourceAsStream("AIData/AI"+ID+".data")));
 			String line = null;
 			line = reader.readLine();
 			AIBasic.setPro(Integer.parseInt(line));

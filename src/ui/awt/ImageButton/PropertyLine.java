@@ -20,7 +20,7 @@ public class PropertyLine extends AnchorPane{
 	public static final int DELTATIME = 500;
 	public static final int MIN=1;
 	private ImageView picture;
-	private ImageView blank = new ImageView (new Image("Graphics/PlayerBoard/Blank.png"));
+	private ImageView blank = new ImageView (new Image("Graphics/PlayerBoard/blank.png"));
 	public PropertyLine (Image picture,int max,int dir){
 		this.dir=dir;
 		this.max=max;

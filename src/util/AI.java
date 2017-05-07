@@ -59,21 +59,46 @@ public class AI {
 				order[i]=i;
 				if (AI.getAllSkills()[i]!=null){
 					value[i]=AI.getAllSkills()[i].calcVaue(AI);
+					System.out.println("Skill"+i+" Value is "+value[i]);
 				}else{
 					value[i]=-1;
 				}
 			}
+//			for (int i=0;i<3;i++){
+//				System.out.println(order[i]+" "+value[i]);
+//			}
 			if (value[1]<value[2]){
-				value[1]^=value[2]^=value[1]^=value[2];
-				order[1]^=order[2]^=order[1]^=order[2];
+//				value[1]^=value[2]^=value[1]^=value[2];
+//				order[1]^=order[2]^=order[1]^=order[2];
+				value[1]^=value[2];
+				value[2]^=value[1];
+				value[1]^=value[2];
+				order[1]^=order[2];
+				order[2]^=order[1];
+				order[1]^=order[2];
 			}
 			if (value[0]<value[1]){
-				value[0]^=value[1]^=value[0]^=value[1];
-				order[0]^=order[1]^=order[0]^=order[1];
+//				value[0]^=value[1]^=value[0]^=value[1];
+//				order[0]^=order[1]^=order[0]^=order[1];
+				value[1]^=value[0];
+				value[0]^=value[1];
+				value[1]^=value[0];
+				order[1]^=order[0];
+				order[0]^=order[1];
+				order[1]^=order[0];
 			}
 			if (value[1]<value[2]){
-				value[1]^=value[2]^=value[1]^=value[2];
-				order[1]^=order[2]^=order[1]^=order[2];
+//				value[1]^=value[2]^=value[1]^=value[2];
+//				order[1]^=order[2]^=order[1]^=order[2];
+				value[1]^=value[2];
+				value[2]^=value[1];
+				value[1]^=value[2];
+				order[1]^=order[2];
+				order[2]^=order[1];
+				order[1]^=order[2];
+			}
+			for (int i=0;i<3;i++){
+				System.out.println(order[i]+" "+value[i]);
 			}
 			//如果最强大的技能可以释放，直接释放
 			if (AI.getAllSkills()[order[0]].canAction(AI)){
@@ -473,26 +498,46 @@ public class AI {
 			}
 		}
 		if (canAttack){
+			System.out.println("I can attack");
 			//计算三个技能的效果值，并按照效果值排优先级
 			for (int i=0;i<3;i++){
 				order[i]=i;
 				if (AI.getAllSkills()[i]!=null){
 					value[i]=AI.getAllSkills()[i].calcVaue(AI);
+					System.out.println("Skill "+i+" Value is "+value[i]);
 				}else{
 					value[i]=-1;
 				}
 			}
 			if (value[1]<value[2]){
-				value[1]^=value[2]^=value[1]^=value[2];
-				order[1]^=order[2]^=order[1]^=order[2];
+//				value[1]^=value[2]^=value[1]^=value[2];
+//				order[1]^=order[2]^=order[1]^=order[2];
+				value[1]^=value[2];
+				value[2]^=value[1];
+				value[1]^=value[2];
+				order[1]^=order[2];
+				order[2]^=order[1];
+				order[1]^=order[2];
 			}
 			if (value[0]<value[1]){
-				value[0]^=value[1]^=value[0]^=value[1];
-				order[0]^=order[1]^=order[0]^=order[1];
+//				value[0]^=value[1]^=value[0]^=value[1];
+//				order[0]^=order[1]^=order[0]^=order[1];
+				value[1]^=value[0];
+				value[0]^=value[1];
+				value[1]^=value[0];
+				order[1]^=order[0];
+				order[0]^=order[1];
+				order[1]^=order[0];
 			}
 			if (value[1]<value[2]){
-				value[1]^=value[2]^=value[1]^=value[2];
-				order[1]^=order[2]^=order[1]^=order[2];
+//				value[1]^=value[2]^=value[1]^=value[2];
+//				order[1]^=order[2]^=order[1]^=order[2];
+				value[1]^=value[2];
+				value[2]^=value[1];
+				value[1]^=value[2];
+				order[1]^=order[2];
+				order[2]^=order[1];
+				order[1]^=order[2];
 			}
 			//如果最强大的技能可以释放，直接释放
 			if (AI.getAllSkills()[order[0]].canAction(AI)){
