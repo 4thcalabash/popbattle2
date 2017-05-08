@@ -80,6 +80,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		}
 	}
 	
+	
 	@Override
 	public void battleEnd(boolean result) {
 		// TODO Auto-generated method stub

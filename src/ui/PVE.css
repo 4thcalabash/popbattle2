@@ -46,3 +46,15 @@
 	-fx-background-image:url("../Graphics/Battle/background.png");
 	-fx-background-size:stretch stretch
 }
+Text{
+	-fx-font-size:14px;
+	-fx-font-family: "Arial Black";
+	-fx-fill: #818181;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,7),6,0.0,0,2); 
+}
+#damage{
+	-fx-font-size:48px;
+	-fx-font-family: "Arial Black";
+	-fx-fill: #ff3000;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,7),6,0.0,0,2); 
+}

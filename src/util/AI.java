@@ -132,6 +132,7 @@ public class AI {
 				//如果第二优先级技能也不能释放，而canAttack==true 则第三优先级技能必存在且可以释放
 				strategy.setSkillID(AI.getAllSkills()[order[2]].getID());
 				strategy.setSkillValue(value[2]);
+				return strategy;
 			}
 		}else{
 			//带点脑子的消除
@@ -480,7 +481,6 @@ public class AI {
 			System.out.println("Finished");
 			return strategy;
 		}
-		return null;
 	}
 
 	private AIStrategyPo highIQStrategy(){
@@ -589,6 +589,7 @@ public class AI {
 				//如果第二优先级技能也不能释放，而canAttack==true 则第三优先级技能必存在且可以释放
 				strategy.setSkillID(AI.getAllSkills()[order[2]].getID());
 				strategy.setSkillValue(value[2]);
+				return strategy;
 			}
 		}else{
 			//带点脑子的消除
@@ -909,7 +910,6 @@ public class AI {
 			}
 			return strategy;
 		}
-		return null;
 	}
 	private AIStrategyPo lowIQStrategy(){
 		//如果不可以攻击，就消除

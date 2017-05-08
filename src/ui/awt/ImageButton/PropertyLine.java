@@ -21,6 +21,19 @@ public class PropertyLine extends AnchorPane{
 	public static final int MIN=1;
 	private ImageView picture;
 	private ImageView blank = new ImageView (new Image("Graphics/PlayerBoard/blank.png"));
+	
+	public int getMax() {
+		return max;
+	}
+	public void setMax(int max) {
+		this.max = max;
+	}
+	public int getNow() {
+		return now;
+	}
+	public void setNow(int now) {
+		this.now = now;
+	}
 	public PropertyLine (Image picture,int max,int dir){
 		this.dir=dir;
 		this.max=max;
@@ -51,29 +64,43 @@ public class PropertyLine extends AnchorPane{
 			Timeline line = new Timeline();
 			if (this.dir==TOWARDS_RIGHT){
 
-				if (newnow==0){
-					newnow=MIN;
-				}
+//				if (newnow==0){
+//					newnow=MIN;
+//				}
 				KeyValue kv= new KeyValue (this.picture.fitWidthProperty(),MAXLENGTH*newnow/max);
+				if (newnow==0){
+					kv = new KeyValue (this.picture.fitWidthProperty(),MIN);
+				}
 				KeyFrame kf = new KeyFrame (Duration.millis(DELTATIME),kv);
 				line.getKeyFrames().add(kf);
 				KeyValue kvv1 = new KeyValue (this.blank.fitWidthProperty(),MAXLENGTH-MAXLENGTH*newnow/max);
 				KeyValue kvv2 = new KeyValue (this.blank.xProperty(),MAXLENGTH*newnow/max);
+				if (newnow==0){
+					kvv1 = new KeyValue (this.blank.fitWidthProperty(),MAXLENGTH-MIN);
+					kvv2 = new KeyValue (this.blank.xProperty(),MIN);
+				}
 				KeyFrame kff1 = new KeyFrame (Duration.millis(DELTATIME),kvv1);
 				KeyFrame kff2 = new KeyFrame (Duration.millis(DELTATIME),kvv2);
 				line.getKeyFrames().add(kff1);
 				line.getKeyFrames().add(kff2);
 			}else{
-				if (newnow==0){
-					newnow=MIN;
-				}
+//				if (newnow==0){
+//					newnow=MIN;
+//				}
 				KeyValue kv1 = new KeyValue (this.picture.fitWidthProperty(),MAXLENGTH*newnow/max);
 				KeyValue kv2 = new KeyValue (this.picture.xProperty(),MAXLENGTH-MAXLENGTH*newnow/max);
+				if (newnow==0){
+					kv1 = new KeyValue (this.picture.fitWidthProperty(),MIN);
+					kv2 = new KeyValue (this.picture.xProperty(),MAXLENGTH-MIN);
+				}
 				KeyFrame kf1 = new KeyFrame (Duration.millis(DELTATIME),kv1);
 				KeyFrame kf2 = new KeyFrame (Duration.millis(DELTATIME),kv2);
 				line.getKeyFrames().add(kf1);
 				line.getKeyFrames().add(kf2);
 				KeyValue kvv = new KeyValue (this.blank.fitWidthProperty(),MAXLENGTH-MAXLENGTH*newnow/max);
+				if (newnow==0){
+					kvv = new KeyValue (this.blank.fitWidthProperty(),MAXLENGTH-MIN);
+				}
 				KeyFrame kff = new KeyFrame (Duration.millis(DELTATIME),kvv);
 				line.getKeyFrames().add(kff);
 			}

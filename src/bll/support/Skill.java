@@ -331,7 +331,8 @@ public class Skill {
 	}
 
 	public int calcVaue(PaperPlayer paperplayer) {
-		return this.valueCalcMethod.calc(paperplayer);
+		
+		return (int)((0.8+Math.random()*0.4)*this.valueCalcMethod.calc(paperplayer));
 	}
 
 	public int[] calcCost(PaperPlayer paperplayer) {

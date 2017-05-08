@@ -73,6 +73,7 @@ public class Player implements Calcable{
 		this.basichp=playerVo.getBasichp();
 		this.basicDR=playerVo.getBasicDR();
 		this.basicMR=playerVo.getBasicMR();
+		System.out.println(basicad+" "+basicap+" "+basichp+" "+basicDR+" "+basicMR);
 		this.level=playerVo.getLevel();
 		this.nowExp=playerVo.getNowExp();
 		this.gold=playerVo.getGold();
@@ -114,12 +115,13 @@ public class Player implements Calcable{
 		this.DR=basicDR+Equip.getEquipByID(headWearingID).getDR(this.headWearingLevel)+
 				Equip.getEquipByID(weaponID).getDR(this.weaponLevel)+Equip.getEquipByID(wearingID).getDR(this.wearingLevel)+
 				Equip.getEquipByID(wingsID).getDR(this.wingsLevel);
-		this.DT=basicap+Equip.getEquipByID(headWearingID).getDT(this.headWearingLevel)+
+		this.DT=Equip.getEquipByID(headWearingID).getDT(this.headWearingLevel)+
 				Equip.getEquipByID(weaponID).getDT(this.weaponLevel)+Equip.getEquipByID(wearingID).getDT(this.wearingLevel)+
 				Equip.getEquipByID(wingsID).getDT(this.wingsLevel);
-		this.MT=basicap+Equip.getEquipByID(headWearingID).getMT(this.headWearingLevel)+
+		this.MT=Equip.getEquipByID(headWearingID).getMT(this.headWearingLevel)+
 				Equip.getEquipByID(weaponID).getMT(this.weaponLevel)+Equip.getEquipByID(wearingID).getMT(this.wearingLevel)+
 				Equip.getEquipByID(wingsID).getMT(this.wingsLevel);
+		System.out.println(ad+" "+ap+" "+hp+" "+DR+" "+MR);
 	}
 	public void setAd(int ad) {
 		this.ad = ad;

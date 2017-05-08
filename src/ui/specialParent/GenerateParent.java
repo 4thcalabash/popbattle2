@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import po.ActionPo;
 import po.BattlePo;
@@ -34,7 +35,7 @@ import ui.awt.ImageButton.*;
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 
-	public static final int LENGTH = (int) (Main.SCREENHEIGHT * 70 / 1030.0);// 75;
+	public static final int LENGTH = (int) (Main.SCREENHEIGHT * 68 / 1030.0);// 68;
 	// public static final int INTERUPT = 300;
 	public static final int MOVETIME = 300;
 	public static final int POPTIME = 420;
@@ -63,7 +64,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int CHANGEROUNDIMAGEWIDTH = (int) (CHANGEROUNDIMAGEHEIGHT * 3);
 	public static final int CHANGE_ROUND_FROM_1TO2 = 1000;
 	public static final int CHANGE_ROUND_FROM_2TO1 = 1001;
-	public static final int ROUNDCHANGEDELTA = 600;
+	public static final int ROUNDCHANGEDELTA = 500;
 	public static final int BATTLE_START = 999;
 	public static final int BATTLE_WIN = 998;
 	public static final int BATTLE_LOSE = 997;
@@ -493,9 +494,26 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 //			pp1.setImage(new Image ("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif"));
 			if (actionPo.getActionPlayerID()==1){
 				pp1.setImage(actionPlayer);
+				Text damage = new Text("-"+actionPo.getEffectValue());
+				damage.setId("damage");
+				damage.setX(pp2.getX()+pp2.getFitWidth()/2);
+				damage.setY(pp2.getY());
+				temp.getChildren().add(damage);
+				Timeline line2 = new Timeline();
+				line2.getKeyFrames().add(new KeyFrame (Duration.millis(1000),new KeyValue (damage.yProperty(),damage.getY()-200)));
+				line2.play();
 			}else{
 				pp2.setImage(actionPlayer);
+				Text damage = new Text("-"+actionPo.getEffectValue());
+				damage.setId("damage");
+				damage.setX(pp1.getX()+pp1.getFitWidth()/2);
+				damage.setY(pp1.getY());
+				temp.getChildren().add(damage);
+				Timeline line2 = new Timeline();
+				line2.getKeyFrames().add(new KeyFrame (Duration.millis(1000),new KeyValue (damage.yProperty(),damage.getY()-200)));
+				line2.play();
 			}
+
 			new Thread (new Runnable(){
 				
 				@Override
@@ -559,7 +577,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (!this.platform.check().isBattleIsEnd() || !this.platform.check().isThisAIDie()) {
+		if ((!this.platform.check().isBattleIsEnd())&&(!this.platform.check().isThisAIDie())) {
 			changeRound();
 		}
 	}
