@@ -125,11 +125,11 @@ public class Skill {
 					int[] cost = new int[Matrix.KIND];
 					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS];
 					if (skillLevel == 0) {
-						cost[Matrix.FIREELEMENT] = 3;
+						cost[Matrix.FIREELEMENT] = 6;
 					} else if (skillLevel == 1) {
-						cost[Matrix.FIREELEMENT] = 4;
+						cost[Matrix.FIREELEMENT] = 8;
 					} else {
-						cost[Matrix.FIREELEMENT] = 5;
+						cost[Matrix.FIREELEMENT] = 10;
 					}
 					return cost;
 				}
@@ -176,11 +176,11 @@ public class Skill {
 			int[] cost = new int[Matrix.KIND];
 			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_WATERFLOW];
 			if (skillLevel == 1) {
-				cost[Matrix.WATERELEMENT] = 3;
-			} else if (skillLevel == 2) {
 				cost[Matrix.WATERELEMENT] = 5;
-			} else {
+			} else if (skillLevel == 2) {
 				cost[Matrix.WATERELEMENT] = 7;
+			} else {
+				cost[Matrix.WATERELEMENT] = 9;
 			}
 			return cost;
 		}
@@ -230,11 +230,11 @@ public class Skill {
 			int[] cost = new int[Matrix.KIND];
 			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_HURRICANE];
 			if (skillLevel == 1) {
-				cost[Matrix.AIRELEMENT] = 4;
-			} else if (skillLevel == 2) {
 				cost[Matrix.AIRELEMENT] = 6;
-			} else {
+			} else if (skillLevel == 2) {
 				cost[Matrix.AIRELEMENT] = 8;
+			} else {
+				cost[Matrix.AIRELEMENT] = 10;
 			}
 			return cost;
 		}

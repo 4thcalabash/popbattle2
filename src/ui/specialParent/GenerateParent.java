@@ -35,7 +35,7 @@ import ui.awt.ImageButton.*;
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 
-	public static final int LENGTH = (int) (Main.SCREENHEIGHT * 68 / 1030.0);// 68;
+	public static final int LENGTH = (int) (Main.SCREENHEIGHT * 72 / 1030.0);// 68;
 	// public static final int INTERUPT = 300;
 	public static final int MOVETIME = 300;
 	public static final int POPTIME = 420;
@@ -43,7 +43,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int CHICKDELAY = 40;
 	public static final int CHICKPOPDELTA = POPTIME - CHICKDELAY;
 	public static final int DROP = 150;
-	public static final int TOPIMAGEHEIGHT = (int) (Main.SCREENHEIGHT * 166 / 1030.0);// 166;
+	public static final int TOPIMAGEHEIGHT = (int) (Main.SCREENHEIGHT * 155 / 1030.0);// 166;
 	public static final int TOPIMAGEWIDTH = 12 * GenerateParent.LENGTH - (int) (Main.SCREENHEIGHT * 5 / 1030.0);// 5;
 	public static final int DELTALENGTH = (int) (Main.SCREENHEIGHT * 23 / 1030.0);// 23;
 

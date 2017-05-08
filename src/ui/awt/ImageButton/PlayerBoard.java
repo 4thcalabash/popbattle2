@@ -67,22 +67,43 @@ public class PlayerBoard extends AnchorPane {
 		AD.setX(HP.getX());
 		AD.setY(HP.getY()+ICONLENGTH+BOARDMIDGAP);
 		this.getChildren().add(AD);
-		int maxAD = this.platform.getPlayer1().getPlayer().getAd();
-		if (this.platform.getPlayer2().getPlayer().getAd()>maxAD){
-			maxAD = this.platform.getPlayer2().getPlayer().getAd();
+		int max=-1;
+		if (this.platform.getPlayer1().getPlayer().getAd()>max){
+			max=this.platform.getPlayer1().getPlayer().getAd();
 		}
-		if (maxAD<10){
-			maxAD=10;
-		}else if (maxAD<100){
-			maxAD=(maxAD/10+1)*10;
+		if (this.platform.getPlayer1().getPlayer().getAp()>max){
+			max=this.platform.getPlayer1().getPlayer().getAp();
+		}
+		if (this.platform.getPlayer1().getPlayer().getDR()>max){
+			max=this.platform.getPlayer1().getPlayer().getDR();
+		}
+		if (this.platform.getPlayer1().getPlayer().getMR()>max){
+			max=this.platform.getPlayer1().getPlayer().getMR();
+		}
+		if (this.platform.getPlayer2().getPlayer().getAd()>max){
+			max=this.platform.getPlayer2().getPlayer().getAd();
+		}
+		if (this.platform.getPlayer2().getPlayer().getAp()>max){
+			max=this.platform.getPlayer2().getPlayer().getAp();
+		}
+		if (this.platform.getPlayer2().getPlayer().getDR()>max){
+			max=this.platform.getPlayer2().getPlayer().getDR();
+		}
+		if (this.platform.getPlayer2().getPlayer().getMR()>max){
+			max=this.platform.getPlayer2().getPlayer().getMR();
+		}
+		if (max<10){
+			max=10;
+		}else if (max<100){
+			max=(int)((max/10+0.5)*10);
 		}else{
-			maxAD = (maxAD/100+1)*100;
+			max=(int)((max/100+0.5)*100);
 		}
-		P1AD = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxAD,PropertyLine.TOWARDS_LEFT);
+		P1AD = new PropertyLine (new Image("Graphics/PlayerBoard/ADLine.png"),max,PropertyLine.TOWARDS_LEFT);
 		P1AD.setLayoutX((PlayerBoard.BOARDWIDTH-PlayerBoard.ICONLENGTH-2*PropertyLine.MAXLENGTH)/2);
 		P1AD.setLayoutY(AD.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P1AD);
-		P2AD = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxAD,PropertyLine.TOWARDS_RIGHT);
+		P2AD = new PropertyLine (new Image("Graphics/PlayerBoard/ADLine.png"),max,PropertyLine.TOWARDS_RIGHT);
 		P2AD.setLayoutX(AD.getX()+ICONLENGTH);
 		P2AD.setLayoutY(AD.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P2AD);
@@ -104,22 +125,12 @@ public class PlayerBoard extends AnchorPane {
 		AP.setX(HP.getX());
 		AP.setY(AD.getY()+ICONLENGTH+BOARDMIDGAP);
 		this.getChildren().add(AP);
-		int maxAP = this.platform.getPlayer1().getPlayer().getAp();
-		if (this.platform.getPlayer2().getPlayer().getAp()>maxAP){
-			maxAP = this.platform.getPlayer2().getPlayer().getAp();
-		}
-		if (maxAP<10){
-			maxAP=10;
-		}else if (maxAP<100){
-			maxAP=(maxAP/10+1)*10;
-		}else{
-			maxAP = (maxAP/100+1)*100;
-		}
-		P1AP = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxAP,PropertyLine.TOWARDS_LEFT);
+		
+		P1AP = new PropertyLine (new Image("Graphics/PlayerBoard/APLine.png"),max,PropertyLine.TOWARDS_LEFT);
 		P1AP.setLayoutX((PlayerBoard.BOARDWIDTH-PlayerBoard.ICONLENGTH-2*PropertyLine.MAXLENGTH)/2);
 		P1AP.setLayoutY(AP.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P1AP);
-		P2AP = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxAP,PropertyLine.TOWARDS_RIGHT);
+		P2AP = new PropertyLine (new Image("Graphics/PlayerBoard/APLine.png"),max,PropertyLine.TOWARDS_RIGHT);
 		P2AP.setLayoutX(AP.getX()+ICONLENGTH);
 		P2AP.setLayoutY(AP.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P2AP);
@@ -141,22 +152,12 @@ public class PlayerBoard extends AnchorPane {
 		DR.setX(HP.getX());
 		DR.setY(AP.getY()+ICONLENGTH+BOARDMIDGAP);
 		this.getChildren().add(DR);
-		int maxDR = this.platform.getPlayer1().getPlayer().getDR();
-		if (this.platform.getPlayer2().getPlayer().getDR()>maxDR){
-			maxDR = this.platform.getPlayer2().getPlayer().getDR();
-		}
-		if (maxDR<10){
-			maxDR=10;
-		}else if (maxDR<100){
-			maxDR=(maxDR/10+1)*10;
-		}else{
-			maxDR = (maxDR/100+1)*100;
-		}
-		P1DR = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxDR,PropertyLine.TOWARDS_LEFT);
+
+		P1DR = new PropertyLine (new Image("Graphics/PlayerBoard/DRLine.png"),max,PropertyLine.TOWARDS_LEFT);
 		P1DR.setLayoutX((PlayerBoard.BOARDWIDTH-PlayerBoard.ICONLENGTH-2*PropertyLine.MAXLENGTH)/2);
 		P1DR.setLayoutY(DR.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P1DR);
-		P2DR = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxDR,PropertyLine.TOWARDS_RIGHT);
+		P2DR = new PropertyLine (new Image("Graphics/PlayerBoard/DRLine.png"),max,PropertyLine.TOWARDS_RIGHT);
 		P2DR.setLayoutX(DR.getX()+ICONLENGTH);
 		P2DR.setLayoutY(DR.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P2DR);
@@ -178,22 +179,12 @@ public class PlayerBoard extends AnchorPane {
 		MR.setX(HP.getX());
 		MR.setY(DR.getY()+ICONLENGTH+BOARDMIDGAP);
 		this.getChildren().add(MR);
-		int maxMR = this.platform.getPlayer1().getPlayer().getMR();
-		if (this.platform.getPlayer2().getPlayer().getMR()>maxMR){
-			maxMR = this.platform.getPlayer2().getPlayer().getMR();
-		}
-		if (maxMR<10){
-			maxMR=10;
-		}else if (maxMR<100){
-			maxMR=(maxMR/10+1)*10;
-		}else{
-			maxMR = (maxMR/100+1)*100;
-		}
-		P1MR = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxMR,PropertyLine.TOWARDS_LEFT);
+		
+		P1MR = new PropertyLine (new Image("Graphics/PlayerBoard/MRLine.png"),max,PropertyLine.TOWARDS_LEFT);
 		P1MR.setLayoutX((PlayerBoard.BOARDWIDTH-PlayerBoard.ICONLENGTH-2*PropertyLine.MAXLENGTH)/2);
 		P1MR.setLayoutY(MR.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P1MR);
-		P2MR = new PropertyLine (new Image("Graphics/PlayerBoard/HPLine.png"),maxMR,PropertyLine.TOWARDS_RIGHT);
+		P2MR = new PropertyLine (new Image("Graphics/PlayerBoard/MRLine.png"),max,PropertyLine.TOWARDS_RIGHT);
 		P2MR.setLayoutX(MR.getX()+ICONLENGTH);
 		P2MR.setLayoutY(MR.getY()+(ICONLENGTH-LINEHEIGHT)/3);
 		this.getChildren().add(P2MR);

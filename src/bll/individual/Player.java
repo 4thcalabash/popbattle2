@@ -17,6 +17,8 @@ public class Player implements Calcable{
 	 *
 	 * 人物
 	 */
+	public static final String INTRODUCTION100 = "你是一个剑客，特别特别的贱你是一个剑客，特别特别的贱你是一个剑客，特别特别的贱你是一个剑客，特别特别的贱你是一个剑客，特别特别的贱你是一个剑客，特别特别的贱";
+	public static final String INTRODUCTION200 = "你是一个女忍者，特别特别能忍";
 	public static final int USER_PLAYERID=1;
 	//设定用户永远为Player1
 	public static final int AI_PLAYERID=2;
@@ -35,6 +37,78 @@ public class Player implements Calcable{
 	private int ad,ap,hp,DR,MR,DT,MT;//DR物理抗性 MR魔法抗性
 
 	private Shop shop;
+	public int getSkillPointNum() {
+		return skillPointNum;
+	}
+	public void setSkillPointNum(int skillPointNum) {
+		this.skillPointNum = skillPointNum;
+	}
+	public int getUpGradeStoneNum() {
+		return upGradeStoneNum;
+	}
+	public void setUpGradeStoneNum(int upGradeStoneNum) {
+		this.upGradeStoneNum = upGradeStoneNum;
+	}
+	public int getEvolveStoneNum() {
+		return evolveStoneNum;
+	}
+	public void setEvolveStoneNum(int evolveStoneNum) {
+		this.evolveStoneNum = evolveStoneNum;
+	}
+	public int getHeadWearingID() {
+		return headWearingID;
+	}
+	public void setHeadWearingID(int headWearingID) {
+		this.headWearingID = headWearingID;
+	}
+	public int getWeaponID() {
+		return weaponID;
+	}
+	public void setWeaponID(int weaponID) {
+		this.weaponID = weaponID;
+	}
+	public int getWearingID() {
+		return wearingID;
+	}
+	public void setWearingID(int wearingID) {
+		this.wearingID = wearingID;
+	}
+	public int getWingsID() {
+		return wingsID;
+	}
+	public void setWingsID(int wingsID) {
+		this.wingsID = wingsID;
+	}
+	public int getHeadWearingLevel() {
+		return headWearingLevel;
+	}
+	public void setHeadWearingLevel(int headWearingLevel) {
+		this.headWearingLevel = headWearingLevel;
+	}
+	public int getWeaponLevel() {
+		return weaponLevel;
+	}
+	public void setWeaponLevel(int weaponLevel) {
+		this.weaponLevel = weaponLevel;
+	}
+	public int getWearingLevel() {
+		return wearingLevel;
+	}
+	public void setWearingLevel(int wearingLevel) {
+		this.wearingLevel = wearingLevel;
+	}
+	public int getWingsLevel() {
+		return wingsLevel;
+	}
+	public void setWingsLevel(int wingsLevel) {
+		this.wingsLevel = wingsLevel;
+	}
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+	public void setSkillChoosed(int[] skillChoosed) {
+		this.skillChoosed = skillChoosed;
+	}
 	private int AILevel;
 
 	private int skillPointNum,upGradeStoneNum,evolveStoneNum;

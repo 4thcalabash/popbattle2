@@ -9,3 +9,9 @@
 	-fx-background-position:top  ;
 	-fx-background-size:stretch stretch;
 }
+Text{
+	-fx-font-size:32px;
+	-fx-font-family: "Arial Black";
+	-fx-fill: #001eff;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
+}

@@ -1,5 +1,6 @@
 package ui.abstractStage;
 
+import bll.support.Equip;
 import bllservice.Playerable;
 import bllservice.Supportable;
 import javafx.scene.image.Image;
@@ -11,11 +12,12 @@ import ui.awt.ImageButton.ImageButton;
 import ui.sceneInterface.BasicScene;
 
 public abstract class SupportParent extends AnchorPane {
-	private Supportable supportPlatform;
+	protected Supportable platform;
 	protected BasicScene main;
 	public static final int BACKLENGTH = 100;
+	protected int max=-1;
 	public SupportParent(Supportable supportPlatform, BasicScene main) {
-		this.supportPlatform = supportPlatform;
+		this.platform = supportPlatform;
 		this.main = main;
 		ImageButton backButton = new ImageButton(new Image("Graphics/Button/returnStatic.png"),
 				new Image("Graphics/Button/returnEntered.png"), new Image("Graphics/Button/returnPressed.png"),
@@ -35,7 +37,68 @@ public abstract class SupportParent extends AnchorPane {
 		backButton.setY(Main.SCREENHEIGHT-BACKLENGTH);
 		this.getChildren().add(backButton);
 	}
-
+	protected void renewEquipMax(int equipID,int level){
+		max=-1;
+		Equip temp =Equip.getEquipByID(equipID);
+		if (temp.getHP(level)>max){
+			max=temp.getHP(level);
+		}
+		if (temp.getAD(level)>max){
+			max=temp.getAD(level);
+		}
+		if (temp.getAP(level)>max){
+			max=temp.getAP(level);
+		}
+		if (temp.getDR(level)>max){
+			max=temp.getDR(level);
+		}
+		if (temp.getMR(level)>max){
+			max=temp.getMR(level);
+		}
+		if (temp.getDT(level)>max){
+			max=temp.getDR(level);
+		}
+		if (temp.getMT(level)>max){
+			max=temp.getMT(level);
+		}
+		if (max<10){
+			max=10;
+		}else if (max<100){
+			max=(max/10+1)*10;
+		}else{
+			max=(max/100+1)*100;
+		}
+	}
+	protected void renewMax(){
+		if (this.platform.getPlayer1().getHp()>max){
+			max=this.platform.getPlayer1().getHp();
+		}
+		if (this.platform.getPlayer1().getAd()>max){
+			max=this.platform.getPlayer1().getAd();
+		}
+		if (this.platform.getPlayer1().getAp()>max){
+			max=this.platform.getPlayer1().getAp();
+		}
+		if (this.platform.getPlayer1().getDR()>max){
+			max = this.platform.getPlayer1().getDR();
+		}
+		if (this.platform.getPlayer1().getMR()>max){
+			max = this.platform.getPlayer1().getMR();
+		}
+		if (this.platform.getPlayer1().getDT()>max){
+			max = this.platform.getPlayer1().getDT();
+		}
+		if (this.platform.getPlayer1().getMT()>max){
+			max = this.platform.getPlayer1().getMT();
+		}
+		if (max<10){
+			max=10;
+		}else if (max<100){
+			max=(max/10+1)*10;
+		}else if (max<1000){
+			max=(max/100+1)*100;
+		}
+	}
 	public void returnStatic() {
 		this.main.returnStatic();
 	}
