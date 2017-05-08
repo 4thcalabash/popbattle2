@@ -3,7 +3,9 @@ package ui.supportRoot;
 import bll.platform.Battle;
 import bllservice.Chooseable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import ui.Main;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
 import util.MissionInfo;
@@ -12,10 +14,19 @@ public class NormalChooser extends AnchorPane{
 	public static final int LENGTH = 100;
 	public static final int ROW = 5;
 	public static final int LINE = 5;
+	public static final int BOARDWIDTH= ROW*LENGTH;
+	public static final int BOARDHEIGHT  = LINE*LENGTH;
 	public NormalChooser (Chooseable basicPlatform,GameChooser gameChooser){
-		this.setId("NormalChooser");
-		this.setMaxSize(LENGTH*ROW, LENGTH*LINE);
-		this.setMinSize(getMaxWidth(), getMaxHeight());
+		AnchorPane board = new AnchorPane ();
+		ImageView background = new ImageView (new Image ("Graphics/Static/NormalChooser/background.png"));
+		background.setFitWidth(BOARDWIDTH);
+		background.setFitHeight(BOARDHEIGHT);
+		background.setX(0);
+		background.setY(0);
+		board.getChildren().add(background);
+		board.setLayoutX(Main.SCREENWIDTH/2-BOARDWIDTH/2);
+		board.setLayoutY(Main.SCREENHEIGHT/2-BOARDHEIGHT/2);
+		this.getChildren().add(board);
 		final String basicPath = "Graphics/Other/MissionGraphics/Normal/";
 		int total = basicPlatform.totalNormalNum();
 		int now = basicPlatform.nowNormalNum();
@@ -52,7 +63,7 @@ public class NormalChooser extends AnchorPane{
 				a.setFitWidth(LENGTH);
 				a.setX(j*LENGTH);
 				a.setY(i*LENGTH);
-				this.getChildren().add(a);
+				board.getChildren().add(a);
 			}
 		}
 	}

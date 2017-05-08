@@ -14,6 +14,6 @@ public class PlayerParent extends SupportParent{
 
 	public PlayerParent(Playerable playerPlatform,BasicScene main){
 		super(playerPlatform,main);
-
+//		ImageView 
 	}
 }

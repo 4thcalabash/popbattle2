@@ -28,6 +28,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		// TODO Auto-generated method stub
 		/**
 		 * 展示staticScene
+		 * 
 		 * 当玩家想要进入battle时，隐藏staticScene（但不销毁），显示battleScene，
 		 * 当battle结束，销毁battleScene，恢复staticScene显示
 		 * 并检查battlePo查看battle结果

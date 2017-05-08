@@ -3,8 +3,10 @@ package ui.supportRoot;
 import bll.platform.Battle;
 import bllservice.Chooseable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import ui.Main;
 import ui.abstractStage.SupportParent;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
@@ -12,16 +14,21 @@ import ui.sceneInterface.BasicScene;
 import util.MissionInfo;
 
 public class BattleChooser extends AnchorPane{
-	public static final int WIDTH = 400;
-	public static final int HEIGHT = 400;
-	public static final int LENGTH = 50;
+	public static final int WIDTH = 600;
+	public static final int HEIGHT = 600;
+	public static final int LENGTH = 80;
 	public BattleChooser(Chooseable basicPlatform,GameChooser gameChooser){
-//		AnchorPane this = new AnchorPane();
-		this.setId("BattleChooser");
-		this.setMaxSize(WIDTH,HEIGHT);
-		this.setMinSize(getMaxWidth(), getMaxHeight());
+		ImageView background = new ImageView (new Image("Graphics/Static/BattleChooser/background.png"));
+		background.setFitHeight(HEIGHT);
+		background.setFitWidth(WIDTH);
+		background.setX(0);
+		background.setY(0);
+		this.getChildren().add(background);
+//		this.setMaxSize(WIDTH,HEIGHT);
+//		this.setMinSize(getMaxWidth(), getMaxHeight());
+		this.setLayoutX(Main.SCREENWIDTH/2-WIDTH/2);
+		this.setLayoutY(Main.SCREENHEIGHT/2-HEIGHT/2);
 		final String basicPath = "Graphics/Other/MissionGraphics/Battle/";
-		System.out.println(new Image(basicPath+"mission0Static.png").impl_getUrl());
 		ImageButton mission0 = new ImageButton(new Image(basicPath+"mission0Static.png"),new Image(basicPath+"mission0Entered.png"),
 				new Image(basicPath+"mission0Pressed.png"),new ButtonWorker(){
 
