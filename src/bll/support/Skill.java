@@ -21,23 +21,132 @@ public class Skill {
 	public static final int NULLSKILL = -10000;
 	
 	
-	public static final int TOTALNUMOFGENERATESKILL = 4;
+	public static final int TOTALNUMOFGENERATESKILL = 3;
 	public static final int TOTALNUMOFSPECIALSKILL = 3;
-	public static final int ID_NORMALATTACK = 0;
-	public static final int ID_FIREONGRASS = 1;
-	public static final int ID_WATERFLOW = 2;
-	public static final int ID_HURRICANE = 3;
-	public static final String[] INTRODUCTION_NORMAL = { "a", "b", "c" };
-	public static final String[] INTRODUCTION_FIREONGRASS = { "aa", "bb", "cc" };
-	public static final String[] INTRODUCTION_WATERFLOW = { "aaa", "bbb", "ccc" };
-	public static final String[] INTRODUCTION_HURRICANE = { "aaaa", "bbbb", "cccc" };
+	public static final int ID_NORMALATTACK = 100;
+	public static final int ID_FIREONGRASS = 101;
+	public static final int ID_WATERFLOW = 102;
+	public static final int ID_HURRICANE = 103;
+	public static final int ID_PRO100_1 = 104;
+	public static final int ID_PRO100_2 = 105;
+	public static final String[] INTRODUCTION_NORMAL = { "a", "b", "c","d" };
+	public static final String[] INTRODUCTION_FIREONGRASS = { "aa", "bb", "cc","dd" };
+	public static final String[] INTRODUCTION_WATERFLOW = { "aaa", "bbb", "ccc","ddd" };
+	public static final String[] INTRODUCTION_HURRICANE = { "aaaa", "bbbb", "cccc","dddd" };
+	public static final String[] INTRODUCTION_PRO100_1 ={"aaaaa","bbbbb","ccccc","ddddd"};
+	public static final String[] INTRODUCTION_PRO100_2 = {"aaaaaa","bbbbbb","cccccc","dddddd"};
+	public static final Skill PRO100_2 = new Skill(Skill.ID_PRO100_1,3,Player.ENEMY,
+			new SkillValueCalcMethod(){
+
+				@Override
+				public int calc(PaperPlayer paperplayer) {
+					// TODO Auto-generated method stub
+					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
+					if (skillLevel == 1) {
+						return (int) (40 + (double) paperplayer.getPlayer().getAd() * 0.3);
+					} else if (skillLevel == 2) {
+						return (int) (60 + (double) paperplayer.getPlayer().getAd() * 0.4);
+					} else {
+						return (int) (80 + (double) paperplayer.getPlayer().getAd() * 0.5
+								+ (double) paperplayer.getPlayer().getAp() * 0.2);
+					}
+				}
+		
+	},new SkillCostCalcMethod(){
+
+		@Override
+		public int[] calc(PaperPlayer paperPlayer) {
+			// TODO Auto-generated method stub
+			int[] cost = new int[Matrix.KIND];
+			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
+			if (skillLevel == 0) {
+				cost[Matrix.FIREELEMENT] = 5;
+				cost[Matrix.WATERELEMENT]=5;
+				cost[Matrix.SPIRITELEMENT]=10;
+			} else if (skillLevel == 1) {
+				cost[Matrix.FIREELEMENT] = 7;
+				cost[Matrix.WATERELEMENT]=7;
+				cost[Matrix.SPIRITELEMENT]=12;
+			} else {
+				cost[Matrix.FIREELEMENT] = 9;
+				cost[Matrix.WATERELEMENT]=9;
+				cost[Matrix.SPIRITELEMENT]=14;
+			}
+			return cost;
+		}
+		
+	},new SkillLevelUpCalcMethod(){
+
+		@Override
+		public int getCost(Player player) {
+			// TODO Auto-generated method stub
+			int level = player.getSkillList()[Skill.ID_NORMALATTACK%100];
+			if (level ==1){
+				return 10;
+			}else {
+				return 20;
+			}
+		}
+		
+	},Skill.INTRODUCTION_PRO100_2,Skill.DAMAGETYPE);
+	public static final Skill PRO100_1 = new Skill(Skill.ID_PRO100_1,3,Player.ENEMY,
+			new SkillValueCalcMethod(){
+
+				@Override
+				public int calc(PaperPlayer paperplayer) {
+					// TODO Auto-generated method stub
+					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
+					if (skillLevel == 1) {
+						return (int) (20 + (double) paperplayer.getPlayer().getAd() * 0.3);
+					} else if (skillLevel == 2) {
+						return (int) (30 + (double) paperplayer.getPlayer().getAd() * 0.45);
+					} else {
+						return (int) (45 + (double) paperplayer.getPlayer().getAd() * 0.5
+								+ (double) paperplayer.getPlayer().getAp() * 0.15);
+					}
+				}
+		
+	},new SkillCostCalcMethod(){
+
+		@Override
+		public int[] calc(PaperPlayer paperPlayer) {
+			// TODO Auto-generated method stub
+			int[] cost = new int[Matrix.KIND];
+			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
+			if (skillLevel == 0) {
+				cost[Matrix.FIREELEMENT] = 8;
+				cost[Matrix.WATERELEMENT]=3;
+			} else if (skillLevel == 1) {
+				cost[Matrix.FIREELEMENT] = 12;
+				cost[Matrix.WATERELEMENT]=4;
+			} else {
+				cost[Matrix.FIREELEMENT] = 15;
+				cost[Matrix.WATERELEMENT]=5;
+			}
+			return cost;
+		}
+		
+	},new SkillLevelUpCalcMethod(){
+
+		@Override
+		public int getCost(Player player) {
+			// TODO Auto-generated method stub
+			int level = player.getSkillList()[Skill.ID_NORMALATTACK%100];
+			if (level ==1){
+				return 5;
+			}else {
+				return 8;
+			}
+		}
+		
+	},Skill.INTRODUCTION_PRO100_1,Skill.DAMAGETYPE);
 	public static final Skill NORMALATTACK = new Skill(Skill.ID_NORMALATTACK, 3, Player.ENEMY,
 			new SkillValueCalcMethod() {
 
 				@Override
 				public int calc(PaperPlayer paperplayer) {
 					// TODO Auto-generated method stub
-					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK];
+					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (skillLevel == 1) {
 						return (int) (5 + (double) paperplayer.getPlayer().getAd() * 0.2);
 					} else if (skillLevel == 2) {
@@ -54,7 +163,7 @@ public class Skill {
 				public int[] calc(PaperPlayer paperPlayer) {
 					// TODO Auto-generated method stub
 					int[] cost = new int[Matrix.KIND];
-					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK];
+					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
 					int num;
 					if (skillLevel==1){
 						num=3;
@@ -87,7 +196,7 @@ public class Skill {
 				@Override
 				public int getCost(Player player) {
 					// TODO Auto-generated method stub
-					int level = player.getSkillList()[Skill.ID_NORMALATTACK];
+					int level = player.getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (level ==1){
 						return 1;
 					}else {
@@ -102,7 +211,7 @@ public class Skill {
 				@Override
 				public int calc(PaperPlayer paperplayer) {
 					// TODO Auto-generated method stub
-					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS];
+					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
 					if (skillLevel == 0) {
 						return -1;
 					} else if (skillLevel == 1) {
@@ -123,7 +232,7 @@ public class Skill {
 				public int[] calc(PaperPlayer paperPlayer) {
 					// TODO Auto-generated method stub
 					int[] cost = new int[Matrix.KIND];
-					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS];
+					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
 					if (skillLevel == 0) {
 						cost[Matrix.FIREELEMENT] = 6;
 					} else if (skillLevel == 1) {
@@ -139,7 +248,7 @@ public class Skill {
 				@Override
 				public int getCost(Player player) {
 					// TODO Auto-generated method stub
-					int level = player.getSkillList()[Skill.ID_FIREONGRASS];
+					int level = player.getSkillList()[Skill.ID_FIREONGRASS%100];
 					if (level ==0){
 						return 3;
 					}else if (level == 1){
@@ -155,7 +264,7 @@ public class Skill {
 		@Override
 		public int calc(PaperPlayer paperplayer) {
 			// TODO Auto-generated method stub
-			int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_WATERFLOW];
+			int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_WATERFLOW%100];
 			if (skillLevel == 1) {
 				return (int) (15 + (double) paperplayer.getPlayer().getAd() * 0.45
 						+ (double) paperplayer.getPlayer().getAp() * 0.3);
@@ -174,7 +283,7 @@ public class Skill {
 		public int[] calc(PaperPlayer paperPlayer) {
 			// TODO Auto-generated method stub
 			int[] cost = new int[Matrix.KIND];
-			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_WATERFLOW];
+			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_WATERFLOW%100];
 			if (skillLevel == 1) {
 				cost[Matrix.WATERELEMENT] = 5;
 			} else if (skillLevel == 2) {
@@ -190,7 +299,7 @@ public class Skill {
 		@Override
 		public int getCost(Player player) {
 			// TODO Auto-generated method stub
-			int level = player.getSkillList()[Skill.ID_WATERFLOW];
+			int level = player.getSkillList()[Skill.ID_WATERFLOW%100];
 			if (level ==0){
 				return 3;
 			}else if (level ==1){
@@ -206,7 +315,7 @@ public class Skill {
 		@Override
 		public int calc(PaperPlayer paperplayer) {
 			// TODO Auto-generated method stub
-			int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_HURRICANE];
+			int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_HURRICANE%100];
 			if (skillLevel == 1) {
 				return (int) (0 + (double) paperplayer.getPlayer().getAd() * 0.4
 						+ (double) paperplayer.getPlayer().getAp() * 0.5
@@ -228,7 +337,7 @@ public class Skill {
 		public int[] calc(PaperPlayer paperPlayer) {
 			// TODO Auto-generated method stub
 			int[] cost = new int[Matrix.KIND];
-			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_HURRICANE];
+			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_HURRICANE%100];
 			if (skillLevel == 1) {
 				cost[Matrix.AIRELEMENT] = 6;
 			} else if (skillLevel == 2) {
@@ -244,7 +353,7 @@ public class Skill {
 		@Override
 		public int getCost(Player player) {
 			// TODO Auto-generated method stub
-			int level = player.getSkillList()[Skill.ID_HURRICANE];
+			int level = player.getSkillList()[Skill.ID_HURRICANE%100];
 			if (level ==0){
 				return 4;
 			}else if (level ==1){
@@ -266,6 +375,10 @@ public class Skill {
 			return Skill.WATERFLOW;
 		case Skill.ID_HURRICANE:
 			return Skill.HURRICANE;
+		case Skill.ID_PRO100_1:
+			return Skill.PRO100_1;
+		case Skill.ID_PRO100_2:
+			return Skill.PRO100_2;
 		default:
 			return null;
 		}
@@ -281,6 +394,10 @@ public class Skill {
 			return "水漫金山";
 		case Skill.ID_HURRICANE:
 			return "飓风之舞";
+		case Skill.ID_PRO100_1:
+			return "神秘力量1";
+		case Skill.ID_PRO100_2:
+			return "神秘力量2";
 		default:
 			return null;
 		}
@@ -297,7 +414,9 @@ public class Skill {
 	public int getID() {
 		return ID;
 	}
-
+	public String[] getSkillIntroduction() {
+		return skillIntroduction;
+	}
 	private String[] skillIntroduction;
 	// public int getLevel() {
 	// return level;
@@ -311,6 +430,10 @@ public class Skill {
 	//技能施放消耗的元素
 	
 	private SkillCostCalcMethod costCalcMethod;
+	public int getMAXLEVEL() {
+		return MAXLEVEL;
+	}
+
 	//升级花费
 	private SkillLevelUpCalcMethod levelUpCostCalcMethod;
 	public Skill(int SKILLID, int MAXLEVEL, int targetPlayer, SkillValueCalcMethod valueCalcMethod,

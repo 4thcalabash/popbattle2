@@ -141,6 +141,11 @@ public class Player implements Calcable{
 	public static final int MYSELF = 233;
 	public static final int ENEMY = 666;
 	public Player (PlayerVo playerVo){
+
+		
+		
+		
+		System.out.println("pro:"+playerVo.getPro());
 		this.pro=playerVo.getPro();
 		this.basicad=playerVo.getBasicad();
 		this.basicap=playerVo.getBasicap();
@@ -196,6 +201,15 @@ public class Player implements Calcable{
 				Equip.getEquipByID(weaponID).getMT(this.weaponLevel)+Equip.getEquipByID(wearingID).getMT(this.wearingLevel)+
 				Equip.getEquipByID(wingsID).getMT(this.wingsLevel);
 		System.out.println(ad+" "+ap+" "+hp+" "+DR+" "+MR);
+		
+		
+		
+		/*************
+		 * For Debug *
+		 *************/
+		this.skillChoosed[0]=pro+0;
+		this.skillChoosed[1]=pro+1;
+		this.skillChoosed[2]=pro+2;
 	}
 	public void setAd(int ad) {
 		this.ad = ad;

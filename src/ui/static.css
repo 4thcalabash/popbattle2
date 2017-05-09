@@ -15,3 +15,10 @@ Text{
 	-fx-fill: #001eff;
 	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
 }
+Label{
+	-fx-font-size:32px;
+	-fx-font-family: "Arial Black";
+	-fx-text-fill:darkblue ;
+	-fx-font-weight:bold;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
+}

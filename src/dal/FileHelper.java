@@ -266,18 +266,27 @@ public class FileHelper implements DataOperator{
 			AIBasic.setDT(Integer.parseInt(line));
 			line = reader.readLine();
 			AIBasic.setMT(Integer.parseInt(line));
-			for (int i=0;i<Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL;i++){
+			int [] temp = new int [3]; 
+			for (int i=0;i<3;i++){
 				line = reader.readLine();
-				AIBasic.getSkillList()[i]=Integer.parseInt(line);
+				temp[i]=Integer.parseInt(line);
+//				AIBasic.getSkillList()[i]=Integer.parseInt(line);
 			}
 
 			AI = AIBasic.createPaper();
 			line = reader.readLine();
+			System.out.println("Skill1"+Integer.parseInt(line));
 			AI.getAllSkills()[0]=Skill.getSkillByID(Integer.parseInt(line));
+			AI.getPlayer().getSkillList()[Integer.parseInt(line)%100]=temp[0];
 			line = reader.readLine();
+			System.out.println("Skill1"+Integer.parseInt(line));
 			AI.getAllSkills()[1]=Skill.getSkillByID(Integer.parseInt(line));
+			AI.getPlayer().getSkillList()[Integer.parseInt(line)%100]=temp[1];
 			line = reader.readLine();
+			System.out.println("Skill1"+Integer.parseInt(line));
 			AI.getAllSkills()[2]=Skill.getSkillByID(Integer.parseInt(line));
+
+			AI.getPlayer().getSkillList()[Integer.parseInt(line)%100]=temp[2];
 			line = reader.readLine();
 			AIBasic.setAILevel(Integer.parseInt(line));
 		}catch(Exception e){

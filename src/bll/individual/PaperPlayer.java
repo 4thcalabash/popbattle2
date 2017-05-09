@@ -24,7 +24,7 @@ public class PaperPlayer {
 		this.allSkills= new Skill [3];
 		for (int i=0;i<3;i++){
 			System.out.println("Choosed"+player.getSkillChoosed()[i]);
-			this.allSkills[i] = Skill.getSkillByID(player.getSkillChoosed()[i]);
+				this.allSkills[i] = Skill.getSkillByID(player.getSkillChoosed()[i]);
 		}
 	}
 
