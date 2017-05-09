@@ -42,6 +42,7 @@ public class PlayerParent extends SupportParent {
 	public static final int DELTALENGTH = ICONLENGTH * 2;
 	public static final int DATAMAXLENGTH = DATAWIDTH - ICONLENGTH - DELTALENGTH * 2;
 	public static final int DATALINEHEIGHT = ICONLENGTH*8/10;
+	public static final int PHOTOGAP = 10;
 	private AnchorPane board = new AnchorPane();
 	private AnchorPane data = new AnchorPane();
 	private Playerable platform;
@@ -59,12 +60,18 @@ public class PlayerParent extends SupportParent {
 		this.getChildren().add(board);
 		board.setLayoutX(Main.SCREENWIDTH / 2 - BOARDWIDTH / 2);
 		board.setLayoutY(Main.SCREENHEIGHT / 2 - BOARDHEIGHT / 2);
+		ImageView photoBackground = new ImageView (new Image("Graphics/Static/Player/photoBackground.png"));
+		photoBackground.setFitHeight(PHOTOHEIGHT);
+		photoBackground.setFitWidth(PHOTOWIDTH);
+		photoBackground.setX(LEFTGAP);
+		photoBackground.setY(TOPGAP);
+		board.getChildren().add(photoBackground);
 		ImageView photo = new ImageView(
 				new Image("Graphics/Player/Photo" + playerPlatform.getPlayer1().getPro() + ".png"));
-		photo.setFitHeight(PHOTOHEIGHT);
-		photo.setFitWidth(PHOTOWIDTH);
-		photo.setX(LEFTGAP);
-		photo.setY(TOPGAP);
+		photo.setFitHeight(PHOTOHEIGHT-PHOTOGAP);
+		photo.setFitWidth(PHOTOWIDTH-PHOTOGAP);
+		photo.setX(LEFTGAP+PHOTOGAP/2);
+		photo.setY(TOPGAP+PHOTOGAP/2);
 		board.getChildren().add(photo);
 		ImageView introduction = new ImageView(
 				new Image("Graphics/Static/Player/Introduction" + playerPlatform.getPlayer1().getPro() + ".png"));

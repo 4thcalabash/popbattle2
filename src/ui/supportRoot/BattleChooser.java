@@ -14,11 +14,11 @@ import ui.sceneInterface.BasicScene;
 import util.MissionInfo;
 
 public class BattleChooser extends AnchorPane{
-	public static final int WIDTH = 600;
-	public static final int HEIGHT = 600;
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 650;
 	public static final int LENGTH = 80;
 	public BattleChooser(Chooseable basicPlatform,GameChooser gameChooser){
-		ImageView background = new ImageView (new Image("Graphics/Static/BattleChooser/background.png"));
+		ImageView background = new ImageView (new Image("Graphics/Static/BattleChooser/background.jpg"));
 		background.setFitHeight(HEIGHT);
 		background.setFitWidth(WIDTH);
 		background.setX(0);
