@@ -22,3 +22,10 @@ Label{
 	-fx-font-weight:bold;
 	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
 }
+#Price{
+	-fx-font-size:26px;
+	-fx-font-family: "Arial Black";
+	-fx-text-fill:red  ;
+	-fx-font-weight:bold;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
+}

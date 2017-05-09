@@ -11,14 +11,14 @@ public class Shop {
 	//买潜力点数，买卖经验值
 	private int PPPrice;
 	//正常的价格区间90-110G/Point
-	public static final int PPNORMALCHEAPEST = 80;
-	public static final int PPNORMALMOSTEXPENSIVE = 100;
+	public static final int PPNORMALCHEAPEST = 120;
+	public static final int PPNORMALMOSTEXPENSIVE = 140;
 	//高物价时，130-150G/Point
-	public static final int PPHIGHCHEAPEST = 120;
-	public static final int PPHIGHMOSTEXPENSIVE = 140;
+	public static final int PPHIGHCHEAPEST = 160;
+	public static final int PPHIGHMOSTEXPENSIVE = 180;
 	//低物价时，60-80G/Point
-	public static final int PPLOWCHEAPEST = 50;
-	public static final int PPLOWMOSTEXPENSIVE = 70;
+	public static final int PPLOWCHEAPEST = 90;
+	public static final int PPLOWMOSTEXPENSIVE = 110;
 	private int ExpPrice;
 	public static final int EXPNORMALCHEAPEST = 50;
 	public static final int EXPNORMALMOSTEXPENSIVE = 60;
