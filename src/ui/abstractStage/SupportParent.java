@@ -70,9 +70,7 @@ public abstract class SupportParent extends AnchorPane {
 		}
 	}
 	protected void renewMax(){
-		if (this.platform.getPlayer1().getHp()>max){
-			max=this.platform.getPlayer1().getHp();
-		}
+		max=-1;
 		if (this.platform.getPlayer1().getAd()>max){
 			max=this.platform.getPlayer1().getAd();
 		}
@@ -98,6 +96,7 @@ public abstract class SupportParent extends AnchorPane {
 		}else if (max<1000){
 			max=(max/100+1)*100;
 		}
+		System.out.println("The Max IS"+max);
 	}
 	public void returnStatic() {
 		this.main.returnStatic();

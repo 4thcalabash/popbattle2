@@ -332,22 +332,27 @@ public class Player implements Calcable{
 	}
 	public void increaseAd(int delta){
 		this.basicad+=delta*Player.BASICAD;
+		this.ad+=delta*Player.BASICAD;
 		this.potentialPoint-=delta;
 	}
 	public void increaseAp(int delta){
 		this.basicap+=delta*Player.BASICAP;
+		this.ap+=delta*Player.BASICAP;
 		this.potentialPoint-=delta;
 	}
 	public void increaseHp(int delta){
 		this.basichp+=delta*Player.BASICHP;
+		this.hp+=delta*Player.BASICHP;
 		this.potentialPoint-=delta;
 	}
 	public void increaseDR(int delta){
 		this.basicDR+=delta*Player.BASICDR;
+		this.DR+=delta*Player.BASICDR;
 		this.potentialPoint-=delta;
 	}
 	public void increaseMR(int delta){
 		this.basicMR+=delta*Player.BASICMR;
+		this.MR+=delta*Player.BASICMR;
 		this.potentialPoint-=delta;
 	}
 	public void increaseExp(int delta){

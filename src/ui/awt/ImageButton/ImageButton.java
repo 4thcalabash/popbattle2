@@ -1,5 +1,6 @@
 package ui.awt.ImageButton;
 
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ public class ImageButton extends ImageView{
 	private Image enteredGraphics;
 	private boolean entered=false;
 	private boolean pressed=false;
+	private ImageButton myself = this;
 	public ImageButton(Image staticGraphics,Image enteredGraphics,Image pressedGraphics,ButtonWorker buttonWorker){
 		this.staticGraphics=staticGraphics;
 		this.pressedGraphics=pressedGraphics;
@@ -30,7 +32,7 @@ public class ImageButton extends ImageView{
 				// TODO Auto-generated method stub
 				entered=true;
 				if (pressed==false){
-					setImage(enteredGraphics);
+					setImage(myself.enteredGraphics);
 				}
 //				entered=true;
 			}
@@ -42,7 +44,7 @@ public class ImageButton extends ImageView{
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
 				pressed=true;
-				setImage(pressedGraphics);
+				setImage(myself.pressedGraphics);
 			}
 			
 		});
@@ -53,7 +55,7 @@ public class ImageButton extends ImageView{
 				// TODO Auto-generated method stub
 				entered=false;
 				if (pressed==false){
-					setImage(staticGraphics);
+					setImage(myself.staticGraphics);
 				}
 			}
 		});
@@ -63,9 +65,9 @@ public class ImageButton extends ImageView{
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
 				pressed=false;
-				setImage(staticGraphics);
+				setImage(myself.staticGraphics);
 				if (entered==true){
-					buttonWorker.work();
+					myself.myWorker.work();
 				}
 			}
 			
@@ -75,18 +77,37 @@ public class ImageButton extends ImageView{
 		return myWorker;
 	}
 	public void setMyWorker(ButtonWorker myWorker) {
-		this.myWorker = myWorker;
+		Platform.runLater(()->{
+			this.myWorker = myWorker;
+		});
+
 	}
 	public Image getStaticGraphics() {
 		return staticGraphics;
+
 	}
 	public void setStaticGraphics(Image staticGraphics) {
-		this.staticGraphics = staticGraphics;
+		Platform.runLater(()->{
+			System.out.println("Make Static Illegal");
+			this.staticGraphics = staticGraphics;
+			this.setImage(staticGraphics);
+		});
 	}
 	public Image getPressedGraphics() {
 		return pressedGraphics;
 	}
 	public void setPressedGraphics(Image pressedGraphics) {
-		this.pressedGraphics = pressedGraphics;
+		Platform.runLater(()->{
+			this.pressedGraphics = pressedGraphics;
+		});
 	}
+	public Image getEnteredGraphics() {
+		return enteredGraphics;
+	}
+	public void setEnteredGraphics(Image enteredGraphics) {
+		Platform.runLater(()->{
+			this.enteredGraphics = enteredGraphics;
+		});
+	}
+	
 }

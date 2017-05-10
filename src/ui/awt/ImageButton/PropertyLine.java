@@ -5,6 +5,8 @@ import java.util.concurrent.CountDownLatch;
 import bllservice.BattlePlatform;
 import javafx.animation.*;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -146,9 +148,18 @@ public class PropertyLine extends AnchorPane{
 				KeyFrame kff = new KeyFrame (Duration.millis(DELTATIME),kvv);
 				line.getKeyFrames().add(kff);
 			}
-			Platform.runLater(()->{
-				line.play();
+			line.setOnFinished(new EventHandler<ActionEvent>(){
+
+				@Override
+				public void handle(ActionEvent event) {
+					// TODO Auto-generated method stub
+					System.out.println("Have Renewed The Line");
+				}
+				
 			});
+//			Platform.runLater(()->{
+				line.play();
+//			});
 		}
 	}
 	public void refresh(int newnow,CountDownLatch c){
