@@ -11,6 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextAlignment;
 import ui.Main;
 import ui.abstractStage.SupportParent;
+import ui.awt.ImageButton.ButtonWorker;
+import ui.awt.ImageButton.ImageButton;
+import ui.awt.ImageButton.NumberImage;
 import ui.sceneInterface.BasicScene;
 public class SkillParent extends SupportParent{
 	public final static int BOARDHEIGHT = 1000;
@@ -30,12 +33,17 @@ public class SkillParent extends SupportParent{
 	public final static int CARDHEIGHT=NORMALHEIGHT-2;
 	public final static int CARDWIDTH = NORMALWIDTH-10;
 	public final static int WORDWIDTH = PROFESSIONWIDTH-2*INNERGAP-DELTALENGTH-ICONLENGTH-4;
+	public final static int BUTTONHEIGHT=ICONLENGTH*8/10;
+	public final static int BUTTONWIDTH = BUTTONHEIGHT*5/3;
+	public final static int LEVELHEIGHT = ICONLENGTH*6/10;
+	public final static int LEVELWIDTH = LEVELHEIGHT*2/3;
 	private final String nnn="\n\n\n\n\n\n\n\n\n\n\n\n";
 	AnchorPane board = new AnchorPane ();
 	AnchorPane normal= new AnchorPane ();
 	AnchorPane generate = new AnchorPane ();
 	AnchorPane profession = new AnchorPane ();
 	SkillCard skill0,skill1,skill2,skill3,skill4,skill5;
+	private NumberImage skillPoint;
 	public SkillParent(Skillable skillPlatform,BasicScene main){
 		super(skillPlatform,main);
 		init();
@@ -47,6 +55,8 @@ public class SkillParent extends SupportParent{
 		private ImageView labelBackground;
 		private Label words;
 		private Skill mySkill;
+		private ImageButton button;
+		private NumberImage level;
 		public SkillCard (Image cardBackground,Image labelBackground,int skillID,int nowlevel){
 			background = new ImageView (cardBackground);
 			background.setFitHeight(CARDHEIGHT);
@@ -77,12 +87,74 @@ public class SkillParent extends SupportParent{
 			words.setMinSize(WORDWIDTH, WORDHEIGHT);
 			words.setLayoutX(INNERGAP+ICONLENGTH+DELTALENGTH);
 			words.setLayoutY(INNERGAP);
-//			words.setGraphic(this.labelBackground);
 			words.setText(introduction[nowlevel]);
 			this.getChildren().add(words);
+			button = new ImageButton (null,null,null,illegalWorker);
+			button.setFitHeight(BUTTONHEIGHT);
+			button.setFitWidth(BUTTONWIDTH);
+			button.setX(INNERGAP);
+			button.setY(CARDHEIGHT-INNERGAP-BUTTONHEIGHT);
+			this.getChildren().add(button);
+			level = new NumberImage(nowlevel);
+			level.setSize(LEVELHEIGHT,LEVELWIDTH);
+			level.setLayoutX(INNERGAP+LEVELWIDTH*3);
+			level.setLayoutY(INNERGAP+ICONLENGTH+ICONLENGTH);
+			ImageView L = new ImageView (new Image("Graphics/Static/Icon/L.png"));
+			L.setFitHeight(LEVELHEIGHT);
+			L.setFitWidth(LEVELWIDTH);
+			L.setX(INNERGAP);
+			L.setY(level.getLayoutY());
+			this.getChildren().add(L);
+			ImageView V = new ImageView (new Image("Graphics/Static/Icon/V.png"));
+			V.setFitHeight(LEVELHEIGHT);
+			V.setFitWidth(LEVELWIDTH);
+			V.setX(INNERGAP+LEVELWIDTH);
+			V.setY(level.getLayoutY());
+			this.getChildren().add(V);
+			ImageView Point = new ImageView (new Image("Graphics/Static/Icon/Point.png"));
+			Point.setFitHeight(LEVELHEIGHT);
+			Point.setFitWidth(LEVELWIDTH);
+			Point.setX(INNERGAP+LEVELWIDTH*2);
+			Point.setY(level.getLayoutY());
+			this.getChildren().add(Point);
+			this.getChildren().add(level);
 			this.setMaxSize(CARDWIDTH, CARDHEIGHT);
 			this.setMinSize(CARDWIDTH, CARDHEIGHT);
-			
+			checkButton();
+		}
+		private void checkOther(){
+			level.refresh(nowlevel);
+			words.setText(mySkill.getSkillIntroduction()[nowlevel]);
+		}
+		private void checkButton(){
+				if (nowlevel==maxlevel||(mySkill.getLevelUpCost(platform.getPlayer1())>=platform.getPlayer1().getSkillPointNum())){
+				button.setStaticGraphics(levelupIllegal);
+				button.setEnteredGraphics(levelupIllegal);
+				button.setPressedGraphics(levelupIllegal);
+				button.setMyWorker(illegalWorker);
+			}else{
+				button.setStaticGraphics(levelupStatic);
+				button.setEnteredGraphics(levelupEntered);
+				button.setPressedGraphics(levelupPressed);
+				button.setMyWorker(new ButtonWorker(){
+
+					@Override
+					public void work() {
+						// TODO Auto-generated method stub
+						nowlevel++;
+						platform.getPlayer1().skillLevelup(mySkill.getID());
+						skill0.checkButton();
+						skill1.checkButton();
+						skill2.checkButton();
+						skill3.checkButton();
+						skill4.checkButton();
+						skill5.checkButton();
+						skillPoint.refresh(platform.getPlayer1().getSkillPointNum());
+					}
+					
+				});
+			}
+			checkOther();
 		}
 	}
 	private void init(){
@@ -98,7 +170,29 @@ public class SkillParent extends SupportParent{
 		addNormal();
 		addGenerate();
 		addProfession();
+		addSkillPoint();
 	}
+	private void addSkillPoint(){
+		skillPoint = new NumberImage(platform.getPlayer1().getSkillPointNum());
+		skillPoint.setSize(LEVELHEIGHT, LEVELWIDTH);
+		skillPoint.setLayoutX(board.getLayoutX()+BOARDWIDTH);
+		skillPoint.setLayoutY(board.getLayoutY()+BOARDHEIGHT);
+		this.getChildren().add(skillPoint);
+	}
+	private final Image levelupStatic = new Image ("Graphics/Static/Skill/levelupStatic.png");
+	private final Image levelupEntered = new Image ("Graphics/Static/Skill/levelupEntered.png");
+	private final Image levelupPressed = new Image ("Graphics/Static/Skill/levelupPressed.png");
+	private final Image levelupIllegal = new Image ("Graphics/Static/Skill/levelupIllegal.png");
+
+	private final ButtonWorker illegalWorker = new ButtonWorker(){
+
+		@Override
+		public void work() {
+			// TODO Auto-generated method stub
+			System.out.println("Illegal Opt");
+		}
+		
+	};
 	private void addProfession(){
 		ImageView background = new ImageView (new Image("Graphics/Static/Skill/professionBackground.png"));
 		background.setFitWidth(PROFESSIONWIDTH);

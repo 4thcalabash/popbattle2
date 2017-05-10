@@ -385,4 +385,10 @@ public class Player implements Calcable{
 		this.level++;
 		this.potentialPoint+=Player.BASICPOTENTIALPOINT;
 	}
+	public void skillLevelup(int skillID){
+		int index = skillID%100;
+		this.skillPointNum-=Skill.getSkillByID(skillID).getLevelUpCost(this);
+		this.skillList[index]++;
+		System.out.println("Still Have "+skillPointNum+" Skill Point After Level UP");
+	}
 }

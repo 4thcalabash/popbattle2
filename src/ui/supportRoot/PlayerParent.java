@@ -53,6 +53,10 @@ public class PlayerParent extends SupportParent {
 	public static final int FUNCBUTTONHEIGHT = ICONLENGTH*9/10;
 	public static final int FUNCBUTTONWIDTH = FUNCBUTTONHEIGHT*5/3;
 	public static final int FUNCBUTTONGAP = ICONLENGTH/3;
+	public static final int LEVELHEIGHT = ICONLENGTH*9/10;
+	public static final int LEVELWIDTH = LEVELHEIGHT*2/3;
+	public static final int INTRODUCTIONLEFTGAP = ICONLENGTH*2;
+	public static final int INTRODUCTIONTOPGAP = ICONLENGTH/10;
 	private int restPP = -1;
 	private int hp = -1, ad = -1, ap = -1, dr = -1, mr = -1, dt = -1, mt = -1, exp = -1;
 	private AnchorPane board = new AnchorPane();
@@ -63,8 +67,9 @@ public class PlayerParent extends SupportParent {
 	private int tempHPP=0,tempADP=0,tempAPP=0,tempDRP=0,tempMRP=0;
 	private PropertyLine HPLine, ADLine, APLine, DRLine, MRLine, DTLine, MTLine, EXPLine;
 	private final Label HPL, ADL, APL, DRL, MRL, DTL, MTL, EXPL, PPL;
-	private ImageButton HPPlus, ADPlus, APPlus, DRPlus, MRPlus, DTPlus, MTPlus;
+	private ImageButton HPPlus, ADPlus, APPlus, DRPlus, MRPlus;
 	private ImageButton confirm,reset,levelup;
+	private NumberImage level;
 	public PlayerParent(Playerable playerPlatform, BasicScene main) {
 		super(playerPlatform, main);
 		this.platform = playerPlatform;
@@ -121,6 +126,29 @@ public class PlayerParent extends SupportParent {
 		addData();
 		addPlusButton();
 		addFunctionButton();
+		addLevel();
+	}
+	private void addLevel(){
+		ImageView L = new ImageView (new Image("Graphics/Static/Icon/L.png"));
+		L.setFitHeight(LEVELHEIGHT);
+		L.setFitWidth(LEVELWIDTH);
+		L.setX(INTRODUCTIONLEFTGAP);
+		L.setY(TOPGAP+PHOTOHEIGHT+INTRODUCTIONTOPGAP);
+		ImageView V = new ImageView (new Image("Graphics/Static/Icon/V.png"));
+		V.setFitHeight(LEVELHEIGHT);
+		V.setFitWidth(LEVELWIDTH);
+		V.setX(L.getX()+LEVELWIDTH);
+		V.setY(L.getY());
+		ImageView Point = new ImageView (new Image("Graphics/Static/Icon/Point.png"));
+		Point.setFitHeight(LEVELHEIGHT);
+		Point.setFitWidth(LEVELWIDTH);
+		Point.setX(V.getX()+LEVELWIDTH);
+		Point.setY(L.getY());
+		level = new NumberImage(platform.getPlayer1().getLevel());
+		level.setSize(LEVELHEIGHT, LEVELWIDTH);
+		level.setLayoutX(Point.getX()+LEVELWIDTH);
+		level.setLayoutY(L.getY());
+		board.getChildren().addAll(L,V,Point,level);
 	}
 	private final ButtonWorker illegalFuncWorker = new ButtonWorker(){
 
