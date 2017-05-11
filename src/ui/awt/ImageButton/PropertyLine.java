@@ -91,13 +91,15 @@ public class PropertyLine extends AnchorPane{
 //		}
 		this.refresh(now);
 	}
+	
 	public void refresh(int newnow){
 		if (newnow!=now){
 			System.out.println("Property Change From"+now+"to"+newnow);
 			now=newnow;
 			Timeline line = new Timeline();
-			if (newnow>max){
+			if (now>max){
 				now=max;
+				newnow=max;
 			}
 			if (this.dir==TOWARDS_RIGHT){
 

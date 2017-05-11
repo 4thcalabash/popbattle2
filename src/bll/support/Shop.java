@@ -61,71 +61,76 @@ public class Shop {
 		this.PPNum-=num;
 		player.increaseGold(-num*this.PPPrice);
 		player.increasePotentialPoint(num);
+		renewPPPrice(player.getLevel());
 	}
 	public void buyExp(int num){
 		this.ExpNum-=num;
 		player.increaseGold(-num*this.ExpPrice);
 		player.increaseExp(num*100);
+		renewExpPrice(player.getLevel());
 	}
-	public void soldExp(int num){
-		player.increaseExp(-num*100);
-		player.increaseGold(num*this.ExpPrice);
-	}
+//	public void soldExp(int num){
+//		player.increaseExp(-num*100);
+//		player.increaseGold(num*this.ExpPrice);
+//	}
 	public void buySkillPoint(int num){
 		player.increaseSkillPoint(num);
 		player.increaseGold(-num*this.skillPointPrice);
+		renewSkillPointPrice(player.getLevel());
 	}
 	public void buyUpGradeStone(int num){
 		player.increaseUpGradeStoneNum(num);
 		player.increaseGold(-num*this.upGradeStonePrice);
+		renewUpGradeStonePrice(player.getLevel());
 	}
 	public void buyEvolveStone(int num){
 		player.increaseEvolveStoneNum(num);
 		player.increaseGold(-num*this.evolveStonePrice);
+		renewEvolveStonePrice(player.getLevel());
 	}
-	public void renewNum(){
-		//仅当升级时调用
-		int level = player.getLevel();
-		renewPPNum(level);
-		renewExpNum(level);
-		renewPrice();
-	}
-	private void renewPPNum(int level){
-		int num =0;
-		if (level<5){
-			num=1;
-		}else if (level<10){
-			num=2;
-		}else if (level<15){
-			num=3;
-		}else{
-			num=4;
-		}
-		double temp = Math.random();
-		if (temp<0.03){
-			num++;
-		}
-		this.PPNum=num;
-	}
-	private void renewExpNum(int level){
-		int num=0;
-		if (level<3){
-			num=0;
-		}else if (level<5){
-			num=1;
-		}else if (level<10){
-			num=2;
-		}else if (level<14){
-			num=3;
-		}else if (level<20){
-			num=4;
-		}
-		double temp = Math.random();
-		if (temp<0.05){
-			num++;
-		}
-		this.ExpNum=num;
-	}
+//	public void renewNum(){
+//		//仅当升级时调用
+//		int level = player.getLevel();
+//		renewPPNum(level);
+//		renewExpNum(level);
+//		renewPrice();
+//	}
+//	private void renewPPNum(int level){
+//		int num =0;
+//		if (level<5){
+//			num=1;
+//		}else if (level<10){
+//			num=2;
+//		}else if (level<15){
+//			num=3;
+//		}else{
+//			num=4;
+//		}
+//		double temp = Math.random();
+//		if (temp<0.03){
+//			num++;
+//		}
+//		this.PPNum=num;
+//	}
+//	private void renewExpNum(int level){
+//		int num=0;
+//		if (level<3){
+//			num=0;
+//		}else if (level<5){
+//			num=1;
+//		}else if (level<10){
+//			num=2;
+//		}else if (level<14){
+//			num=3;
+//		}else if (level<20){
+//			num=4;
+//		}
+//		double temp = Math.random();
+//		if (temp<0.05){
+//			num++;
+//		}
+//		this.ExpNum=num;
+//	}
 	public void renewPrice (){
 		int level = player.getLevel();
 		renewPPPrice(level);
@@ -210,10 +215,10 @@ public class Shop {
 	private void renewExpPrice(int level){
 		double temp = Math.random();
 		int price =0;
-		if (temp<0.2){
+		if (temp<0.15){
 			//低物价
 			price = (int)(Math.random()*(Shop.EXPLOWMOSTEXPENSIVE-Shop.EXPLOWCHEAPEST)+Shop.EXPLOWCHEAPEST);
-		}else if (temp<0.4){
+		}else if (temp<0.3){
 			//高物价
 			price = (int)(Math.random()*(Shop.EXPHIGHMOSTEXPENSIVE-Shop.EXPHIGHCHEAPEST)+Shop.EXPHIGHCHEAPEST);
 		}else{

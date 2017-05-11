@@ -21,10 +21,13 @@ public class BagParent extends SupportParent {
 	public static final int BOARDWIDTH = 950;
 	public static final int CENTERLENGTH = 230;
 	public static final int PAUSETIME = 1000;
+	public static final int NUMBERHEIGHT = 80;
+	public static final int NUMBERWIDTH=NUMBERHEIGHT*2/3;
 	private HBoard wearing, head;
 	private VBoard wings, weapon;
 	private AnchorPane board = new AnchorPane();
-
+	private NumberImage US;
+	private NumberImage ES;
 	public BagParent(Equipable equipPlatform, BasicScene main) {
 		super(equipPlatform, main);
 		ImageView background = new ImageView(new Image("Graphics/Static/Equip/background.png"));
@@ -58,9 +61,20 @@ public class BagParent extends SupportParent {
 		center.setFitWidth(CENTERLENGTH);
 		center.setX(BOARDWIDTH / 2 - CENTERLENGTH / 2);
 		center.setY(BOARDHEIGHT / 2 - CENTERLENGTH / 2);
+		addNum();
 		board.getChildren().add(center);
+		
 	}
-
+	private void addNum(){
+		US = new NumberImage(platform.getPlayer1().getUpGradeStoneNum(),NUMBERHEIGHT,NUMBERWIDTH);
+		US.setLayoutX(board.getLayoutX()+BOARDWIDTH);
+		US.setLayoutY(board.getLayoutY()+BOARDHEIGHT-NUMBERHEIGHT);
+		this.getChildren().add(US);
+		ES = new NumberImage(platform.getPlayer1().getEvolveStoneNum(),NUMBERHEIGHT,NUMBERWIDTH);
+		ES.setLayoutX(US.getLayoutX());
+		ES.setLayoutY(US.getLayoutY()+NUMBERHEIGHT);
+		this.getChildren().add(ES);
+	}
 	public class VBoard extends AnchorPane {
 		public static final int VLEFTGAP = 10;
 		public static final int VRIGHTGAP = VLEFTGAP;
@@ -147,8 +161,7 @@ public class BagParent extends SupportParent {
 
 		public void resetWorker() {
 			Platform.runLater(()->{
-				levelup.setMyWorker(levelupWorker);
-				evolve.setMyWorker(evolveWorker);
+				checkButton();
 			});
 
 		}
@@ -217,6 +230,8 @@ public class BagParent extends SupportParent {
 			dt.refresh(myEquip.getDT(level));
 			mt.refresh(myEquip.getMT(level));
 			Level.refresh(level);
+			US.refresh(platform.getPlayer1().getUpGradeStoneNum());
+			ES.refresh(platform.getPlayer1().getEvolveStoneNum());
 			// USnum.refresh(myEquip.getLevelUpCost(level));
 			// ESnum.refresh(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()));
 		}
@@ -447,13 +462,13 @@ public class BagParent extends SupportParent {
 		public static final int PHOTOHEIGHT = ICONLENGTH * 3;
 		public static final int PHOTOWIDTH = PHOTOHEIGHT;
 		public static final int HDELTALENGTH = ICONLENGTH * 2;
-		public static final int BUTTONHEIGHT = ICONLENGTH * 3 / 2;
+		public static final int BUTTONHEIGHT = ICONLENGTH * 13 / 10;
 		public static final int BUTTONWIDTH = BUTTONHEIGHT * 2;
 		public static final int MAXLENGTH = 7 * ICONLENGTH;
 		public static final int LINEHEIGHT = ICONLENGTH;
 		public static final int NUMBERHEIGHT = ICONLENGTH * 2 / 3;
 		public static final int NUMBERWIDTH = NUMBERHEIGHT * 2 / 3;
-		public static final int LEVELHEIGHT = ICONLENGTH * 2 / 3;
+		public static final int LEVELHEIGHT = ICONLENGTH * 8 / 9;
 		public static final int LEVELWIDTH = LEVELHEIGHT * 2 / 3;
 		private PropertyLine HPLine, ADLine, APLine, MRLine, DRLine, MTLine, DTLine;
 		private ImageView Photo;
@@ -495,8 +510,7 @@ public class BagParent extends SupportParent {
 
 		public void resetWorker() {
 			Platform.runLater(()->{
-				levelup.setMyWorker(levelupWorker);
-				evolve.setMyWorker(evolveWorker);
+				checkButton();
 			});
 		}
 

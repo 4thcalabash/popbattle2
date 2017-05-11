@@ -2,7 +2,6 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 @font-face{
-	font-family:aaa;
 	src:url('字体管家青葱体.ttf');
 }
 .root{
@@ -25,7 +24,15 @@ Text{
 	font-family:MyFont;
 	src: url('MyFont.ttf');
 }
+Label{
+	-fx-font-family:"字体管家青葱";
 
+ 	-fx-text-fill:darkblue ;
+  	-fx-font-size:32px;
+	-fx-font-weight:bold;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
+
+}
 
 
 #Price{

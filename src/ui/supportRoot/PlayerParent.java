@@ -52,7 +52,7 @@ public class PlayerParent extends SupportParent {
 	public static final int DELTALENGTH = ICONLENGTH * 2;
 	public static final int DATAMAXLENGTH = DATAWIDTH - ICONLENGTH - DELTALENGTH * 2;
 	public static final int DATALINEHEIGHT = ICONLENGTH * 5 / 10;
-	public static final int PHOTOGAP = 30;
+	public static final int PHOTOGAP = 60;
 	public static final int NUMBERHEIGHT = ICONLENGTH / 2;
 	public static final int NUMBERWIDTH = NUMBERHEIGHT * 7 / 10;
 	public static final int FUNCBUTTONHEIGHT = ICONLENGTH*9/10;
@@ -243,6 +243,8 @@ public class PlayerParent extends SupportParent {
 			exp=platform.getPlayer1().getNowExp();
 //			restPP = platform.getPlayer1().getPotentialPoint();
 			restPP+=Player.BASICPOTENTIALPOINT;
+			EXPLine.setMax(Player.getExpNumberToLevelUp(platform.getPlayer1().getLevel()));
+			EXPLine.setNow(-1);
 			EXPLine.refresh(exp);
 			EXPnow.refresh(exp);
 			EXPfull.refresh(Player.getExpNumberToLevelUp(platform.getPlayer1().getLevel()));
@@ -652,7 +654,8 @@ public class PlayerParent extends SupportParent {
 		MTLine.setLayoutX(DELTALENGTH / 2 + ICONLENGTH + DATAFOURGAP);
 		MTLine.setLayoutY(DATAFOURGAP + 6 * ICONLENGTH + 6 * DATAMIDGAP + (ICONLENGTH - DATALINEHEIGHT) / 2);
 		data.getChildren().add(MTLine);
-		EXPLine = new PropertyLine(new Image("Graphics/Static/Player/EXPLine.png"), DATALINEHEIGHT, DATAMAXLENGTH, max,
+		platform.getPlayer1();
+		EXPLine = new PropertyLine(new Image("Graphics/Static/Player/EXPLine.png"), DATALINEHEIGHT, DATAMAXLENGTH, Player.getExpNumberToLevelUp(platform.getPlayer1().getLevel()),
 				this.platform.getPlayer1().getNowExp());
 		EXPLine.setLayoutX(DELTALENGTH / 2 + ICONLENGTH + DATAFOURGAP);
 		EXPLine.setLayoutY(DATAFOURGAP + 7 * ICONLENGTH + 7 * DATAMIDGAP + (ICONLENGTH - DATALINEHEIGHT) / 2);
