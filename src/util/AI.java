@@ -59,7 +59,7 @@ public class AI {
 				order[i]=i;
 				if (AI.getAllSkills()[i]!=null){
 					value[i]=AI.getAllSkills()[i].calcVaue(AI);
-					System.out.println("Skill"+i+" Value is "+value[i]);
+//					System.out.println("Skill"+i+" Value is "+value[i]);
 				}else{
 					value[i]=-1;
 				}
@@ -98,7 +98,7 @@ public class AI {
 				order[1]^=order[2];
 			}
 			for (int i=0;i<3;i++){
-				System.out.println(order[i]+" "+value[i]);
+//				System.out.println(order[i]+" "+value[i]);
 			}
 			//如果最强大的技能可以释放，直接释放
 			if (AI.getAllSkills()[order[0]].canAction(AI)){
@@ -154,7 +154,7 @@ public class AI {
 			int [] [] []popnum = new int[Matrix.TOTALLINE][Matrix.TOTALROW][4];
 			for (int i=0;i<Matrix.TOTALLINE;i++){
 				for (int j=0;j<Matrix.TOTALROW;j++){
-					System.out.println(i+","+j);
+//					System.out.println(i+","+j);
 					//east
 					DotPo dot1 = new DotPo (i,j);
 					if (j+1<Matrix.TOTALROW){
@@ -174,7 +174,7 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
 //								popnum[i][j][0]+=popNum[iii]-popNum2[iii];
@@ -192,7 +192,7 @@ public class AI {
 
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -236,7 +236,7 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
 //								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
@@ -254,7 +254,7 @@ public class AI {
 //								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -298,7 +298,7 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
 //								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
@@ -315,7 +315,7 @@ public class AI {
 //								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -359,7 +359,7 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
 //								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
@@ -377,7 +377,7 @@ public class AI {
 							
 //								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 //								matrix3.renew();
 								//更新之后要置垃圾
@@ -434,7 +434,7 @@ public class AI {
 			for (int ii=0;ii<Matrix.TOTALLINE;ii++){
 				for (int jj=0;jj<Matrix.TOTALROW;jj++){
 					//east
-					System.out.println(ii+"!"+jj);
+//					System.out.println(ii+"!"+jj);
 					if (jj+1<Matrix.TOTALROW&&popnum[ii][jj][0]>max){
 						max=popnum[ii][jj][0];
 						ansx=ii;
@@ -478,7 +478,7 @@ public class AI {
 				//north
 				strategy.setDot2(new DotPo(ansx+1,ansy));
 			}
-			System.out.println("Finished");
+//			System.out.println("Finished");
 			return strategy;
 		}
 	}
@@ -498,13 +498,13 @@ public class AI {
 			}
 		}
 		if (canAttack){
-			System.out.println("I can attack");
+//			System.out.println("I can attack");
 			//计算三个技能的效果值，并按照效果值排优先级
 			for (int i=0;i<3;i++){
 				order[i]=i;
 				if (AI.getAllSkills()[i]!=null){
 					value[i]=AI.getAllSkills()[i].calcVaue(AI);
-					System.out.println("Skill "+i+" Value is "+value[i]);
+//					System.out.println("Skill "+i+" Value is "+value[i]);
 				}else{
 					value[i]=-1;
 				}
@@ -631,7 +631,7 @@ public class AI {
 							
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
@@ -649,7 +649,7 @@ public class AI {
 //								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -693,7 +693,7 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
 //								popnum[i][j][2]+=popNum[iii]-popNum2[iii];
@@ -710,7 +710,7 @@ public class AI {
 //								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -754,7 +754,7 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
 //								popnum[i][j][3]+=popNum[iii]-popNum2[iii];
@@ -771,7 +771,7 @@ public class AI {
 //								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾
@@ -815,7 +815,7 @@ public class AI {
 						if (flag){
 							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
-							System.out.println("end");
+//							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
 							for (int iii=0;iii<Matrix.NONE+1;iii++){
 //								popnum[i][j][1]+=popNum[iii]-popNum2[iii];
@@ -832,7 +832,7 @@ public class AI {
 //								System.out.println("test");
 								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
-								System.out.println("end");
+//								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
 								matrix3.renew();
 								//更新之后要置垃圾

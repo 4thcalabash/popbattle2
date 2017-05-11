@@ -72,7 +72,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int PLAYER_DIE = 995;
 	public static final int NEXT_AI = 994;
 	public static final int ATTACK=993;
-
+	public static final int DIEMOVEDELTA = 400;
 	public static final int BATTLEENDHEIGHT = (int) (Main.SCREENHEIGHT * 0.1);
 	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 3;
 	private BorderPane border = new BorderPane();
@@ -108,10 +108,10 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	BattlePo result;
 	BorderPane pools = new BorderPane();
 	ImageButton battleEnd;
-
+	private ImageView p2Image,p1Image;
 	public void addPlayer1() {
 		player1 = new AnchorPane();
-		ImageView p1Image = new ImageView(
+		p1Image = new ImageView(
 				new Image("Graphics/Player/Player" + this.platform.getPlayer1().getPlayer().getPro() + ".gif"));
 		p1Image.setFitWidth(PLAYERWIDTH);
 		p1Image.setFitHeight(PLAYERHEIGHT);
@@ -123,7 +123,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 
 	public void addPlayer2() {
 		player2 = new AnchorPane();
-		ImageView p2Image = new ImageView(
+		p2Image = new ImageView(
 				new Image("Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + ".gif"));
 		p2Image.setFitWidth(PLAYERWIDTH);
 		p2Image.setFitHeight(PLAYERHEIGHT);
@@ -350,11 +350,104 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			}
 		} else {
 			if (flag == GenerateParent.AI_DIE) {
-				c.countDown();
+				AnchorPane ss = new AnchorPane ();
+				ImageView sss = new ImageView ();
+				sss.setFitHeight(Main.SCREENHEIGHT);
+				sss.setFitWidth(Main.SCREENWIDTH);
+				sss.setX(0);
+				sss.setY(0);
+				ss.getChildren().add(sss);
+		
+				System.out.println("AI DIE!!!!!!!!!!");
+				Timeline line = new Timeline ();
+				ImageView player2 = new ImageView (this.p2Image.getImage());
+				player2.setFitHeight(p2Image.getFitHeight());
+				player2.setFitWidth(p2Image.getFitWidth());
+				player2.setX(p2Image.getX()+border.getRight().getLayoutX());
+				player2.setY(p2Image.getY()+border.getRight().getLayoutY());
+				ss.getChildren().add(player2);
+				KeyValue kv1 = new KeyValue (player2.xProperty(),0);
+				KeyValue kv2 = new KeyValue (player2.yProperty(),0);
+				KeyValue kv3 = new KeyValue (player2.xProperty(),0);
+				KeyValue kv4 = new KeyValue (player2.yProperty(),Main.SCREENHEIGHT-player2.getFitHeight());
+				KeyValue kv5 = new KeyValue (player2.xProperty(),Main.SCREENWIDTH-player2.getFitHeight());
+				KeyValue kv6 = new KeyValue (player2.yProperty(),0);
+				KeyValue kv7 = new KeyValue (player2.scaleYProperty(),0);
+				KeyValue kv8 = new KeyValue (player2.scaleXProperty(),0);
+				KeyValue kv9 = new KeyValue (player2.rotateProperty(),1440);
+				KeyFrame kf1 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv1);
+				KeyFrame kf2 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv2);
+				KeyFrame kf3 = new KeyFrame (Duration.millis(DIEMOVEDELTA*3/2),kv3);
+				KeyFrame kf4 = new KeyFrame (Duration.millis(DIEMOVEDELTA*3/2),kv4);
+				KeyFrame kf5 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/2),kv5);
+				KeyFrame kf6 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/2),kv6);
+				KeyFrame kf7 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/2),kv7);
+				KeyFrame kf8 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/2),kv8);
+				KeyFrame kf9 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/2),kv9);
+				line.getKeyFrames().addAll(kf1,kf2,kf3,kf4,kf5,kf6,kf7,kf8,kf9);
+				line.setOnFinished(e->{
+					System.out.print("Die Finished");
+					this.getChildren().remove(ss);
+					border.setRight(player2);
+					c.countDown();
+				});
+				Platform.runLater(()->{
+					this.getChildren().add(ss);
+					p2Image.setImage(null);
+					line.play();
+				});
 			} else if (flag == GenerateParent.PLAYER_DIE) {
 				c.countDown();
 			} else if (flag == GenerateParent.NEXT_AI) {
-				c.countDown();
+				
+				Platform.runLater(()->{
+					border.setRight(null);
+					player2 = new AnchorPane();
+					p2Image = new ImageView(new Image("Graphics/Player/Player"+this.platform.getPlayer2().getPlayer().getPro()+".gif"));
+					p2Image.setFitHeight(PLAYERHEIGHT);
+					p2Image.setFitWidth(PLAYERWIDTH);
+					p2Image.setX(0);
+					p2Image.setY(0);
+					border.setRight(p2Image);
+					BorderPane.setAlignment(border.getRight(), Pos.CENTER_LEFT);
+					Timeline line = new Timeline ();
+					KeyValue kv1 = new KeyValue (p2Image.scaleXProperty(),1);
+					KeyValue kv2 = new KeyValue (p2Image.scaleYProperty(),1);
+					KeyFrame kf1 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv1);
+					KeyFrame kf2 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv2);
+					line.getKeyFrames().addAll(kf1,kf2);
+					AnchorPane sss = new AnchorPane ();
+					ImageView sssss = new ImageView ();
+					sssss.setFitHeight(Main.SCREENHEIGHT);
+					sssss.setFitWidth(Main.SCREENWIDTH);
+					sssss.setX(0);
+					sssss.setY(0);
+					sss.getChildren().add(sssss);
+					line.setOnFinished(e->{
+						System.out.println("Next AI Finished");
+						this.getChildren().remove(sss);
+						border.setBottom(null);
+						addPool(true);
+//						this.playerBoard = new PlayerBoard(this.platform);
+//						border.setBottom(playerBoard );
+//						CountDownLatch tempc = new CountDownLatch(1);
+//						playerBoard.refreshData(tempc);
+//						
+//						try {
+//							tempc.await();
+//						} catch (InterruptedException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						}
+						c.countDown();
+						
+					});
+					this.getChildren().add(sss);
+					
+					p2Image.setScaleX(0);
+					p2Image.setScaleY(0);
+					line.play();
+				});
 			}
 		}
 	}
@@ -577,8 +670,20 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if ((!this.platform.check().isBattleIsEnd())&&(!this.platform.check().isThisAIDie())) {
+		BattlePo checkResult = this.platform.check();
+		System.out.println("Finished Check");
+		if ((!checkResult.isBattleIsEnd())&&(!checkResult.isThisAIDie())) {
+			System.out.println();
 			changeRound();
+		}else{
+			if (checkResult.isBattleIsEnd()){
+				System.out.println("Battle End!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			}else if (checkResult.isThisAIDie()){
+				System.out.println("This AI DIE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				showNextAIFlash();
+				round=2;
+				changeRound();
+			}
 		}
 	}
 

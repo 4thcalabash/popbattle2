@@ -75,6 +75,7 @@ public class Battle implements BattlePlatform{
 					battlePo.setFinalWinnerID(1);
 				}else{
 					battlePo.setBattleIsEnd(false);
+					System.out.println("AI DIE");
 					paperPlayer2 = helper.loadAI(missionVo.getAIID().get(nowAIindex));
 				}
 			}
