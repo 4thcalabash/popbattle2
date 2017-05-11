@@ -61,6 +61,7 @@ public abstract class SupportParent extends AnchorPane {
 		if (temp.getMT(level)>max){
 			max=temp.getMT(level);
 		}
+		max*=2;
 		if (max<10){
 			max=10;
 		}else if (max<100){

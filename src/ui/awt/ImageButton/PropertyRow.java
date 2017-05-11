@@ -39,7 +39,7 @@ public class PropertyRow extends AnchorPane{
 			now=newnow;
 			Timeline line = new Timeline ();
 			if (newnow>max){
-				newnow=max;
+				now=max;
 			}
 			KeyValue kv = new KeyValue (picture.fitHeightProperty(),maxlength*now/max);
 			if (now==0){

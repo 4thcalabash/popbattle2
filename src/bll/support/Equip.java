@@ -20,13 +20,13 @@ public class Equip{
 	
 //ID,MAXLEVEL,ADCalcMethod,APCalcMethod,DRCalcMethod,MRCalcMethod,DTCalcMethod,MTCalcMethod,levelUpCostCalcMethod,equipIntroduction,evolveEquipID
 	public static final Equip GOLDWEARING = new Equip(Equip.ID_GOLDWEARING, 3, new Calcer(5,10,15),new Calcer(0,0,0),new Calcer(0,0,0), 
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,Equip.ID_NULL), Equip.INTRODUCTION_GOLDWEARING,Equip.ID_NULL);
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,-1), Equip.INTRODUCTION_GOLDWEARING,Equip.ID_NULL);
 	public static final Equip GOLDHEADWEARING = new Equip(Equip.ID_GOLDHEADWEARING, 3,new Calcer(10,20,30),new Calcer(0,0,0),new Calcer(0,0,0),
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,Equip.ID_NULL), Equip.INTRODUCTION_GOLDHEADWEARING,Equip.ID_NULL);
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,-1), Equip.INTRODUCTION_GOLDHEADWEARING,Equip.ID_NULL);
 	public static final Equip GOLDSWORD = new Equip (Equip.ID_GOLDSWORD,3,new Calcer(0,0,0),new Calcer(5,10,15),new Calcer(0,0,10),
-			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),new Calcer(1,2,Equip.ID_NULL),Equip.INTRODUCTION_GOLDSWORD,Equip.ID_NULL);
+			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),new Calcer(1,2,-1),Equip.INTRODUCTION_GOLDSWORD,Equip.ID_NULL);
 	public static final Equip GOLDSWINGS = new Equip (Equip.ID_GOLDWINGS,3,new Calcer(5,15,25),new Calcer(3,6,9),new Calcer(3,6,9),
-			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(1,2,Equip.ID_NULL),Equip.INTRODUCTION_GOLDWINGS,Equip.ID_NULL);
+			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(1,2,2),Equip.INTRODUCTION_GOLDWINGS,Equip.GOLDSWORD.getID());
 	
 	
 
@@ -44,6 +44,10 @@ public class Equip{
 		default:
 			return null;
 		}
+	}
+
+	public int getMAXLEVEL() {
+		return MAXLEVEL;
 	}
 
 	public static String getEquipNameByID(int i) {

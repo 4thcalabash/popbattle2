@@ -44,7 +44,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 //		System.out.println("Height:"+SCREENHEIGHT);
 //		System.out.println("Width:"+SCREENWIDTH);
 		stage.setResizable(false);
-		primaryStage = stage;
+		primaryStage= stage;
 		primaryStage.show(); 
 
 		

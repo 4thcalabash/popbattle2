@@ -44,6 +44,25 @@ public class NumberImage extends AnchorPane {
 		this.getChildren().add(oneImage);
 		refresh(number);
 	}
+	public NumberImage(int number,int height,int width,String flag){
+		this.flag = false;
+		this.height = height;
+		this.width = width;
+		tenImage = new ImageView();
+		oneImage = new ImageView();
+		tenImage.setFitHeight(height);
+		tenImage.setFitWidth(width);
+		oneImage.setFitHeight(height);
+		oneImage.setFitWidth(width);
+		tenImage.setX(0);
+		tenImage.setY(0);
+		oneImage.setX(width);
+		oneImage.setY(0);
+
+		this.getChildren().add(tenImage);
+		this.getChildren().add(oneImage);
+		refresh(number);
+	}
 	public void setSize(int height,int width){
 		this.height=height;
 		this.width=width;
@@ -68,6 +87,10 @@ public class NumberImage extends AnchorPane {
 			tenImage.setX(width);
 			oneImage.setX(2*width);
 		}
+		this.setMaxHeight(height);
+		this.setMaxWidth(2*width);
+		this.setMinHeight(height);
+		this.setMinWidth(2*width);
 	}
 	public NumberImage(int number, int height, int width) {
 		flag=true;

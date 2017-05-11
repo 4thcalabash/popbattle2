@@ -391,4 +391,70 @@ public class Player implements Calcable{
 		this.skillList[index]++;
 		System.out.println("Still Have "+skillPointNum+" Skill Point After Level UP");
 	}
+	public void eqiupLevelup(int equipID){
+		int ans =-1;
+		if (equipID==this.headWearingID){
+			ans=0;
+		}else if (equipID==this.weaponID){
+			ans=1;
+		}else if (equipID==this.wingsID){
+			ans=2;
+		}else if (equipID==this.wearingID){
+			ans=3;
+		}
+		switch(ans){
+		case 0:this.upGradeStoneNum-=Equip.getEquipByID(this.headWearingID).getLevelUpCost(this.headWearingLevel);this.headWearingLevel++;break;
+		case 1:this.upGradeStoneNum-=Equip.getEquipByID(this.weaponID).getLevelUpCost(this.weaponLevel);this.weaponLevel++;break;
+		case 2:this.upGradeStoneNum-=Equip.getEquipByID(this.wingsID).getLevelUpCost(this.wingsLevel);this.wingsLevel++;break;
+		case 3:this.upGradeStoneNum-=Equip.getEquipByID(wearingID).getLevelUpCost(this.wearingLevel);this.wearingLevel++;break;
+		default:System.out.println("装备升级ID解析错误");break;
+
+		}
+		System.out.println(headWearingLevel+"/"+weaponLevel+"/"+wingsLevel+"/"+wearingLevel);
+		renewProperty();
+	}
+	public void equipEvolve(int equipID){
+		int ans =-1;
+		if (equipID==this.headWearingID){
+			ans=0;
+		}else if (equipID==this.weaponID){
+			ans=1;
+		}else if (equipID==this.wingsID){
+			ans=2;
+		}else if (equipID==this.wearingID){
+			ans=3;
+		}
+		switch(ans){
+		case 0:this.evolveStoneNum-=Equip.getEquipByID(this.headWearingID).getLevelUpCost(this.headWearingLevel);this.headWearingLevel=1;this.headWearingID=Equip.getEquipByID(this.headWearingID).getEvolveEquipID();break;
+		case 1:this.evolveStoneNum-=Equip.getEquipByID(this.weaponID).getLevelUpCost(this.weaponLevel);this.weaponLevel=1;this.weaponID=Equip.getEquipByID(this.weaponID).getEvolveEquipID();break;
+		case 2:this.evolveStoneNum-=Equip.getEquipByID(this.wingsID).getLevelUpCost(this.wingsLevel);this.wingsLevel=1;this.wingsID=Equip.getEquipByID(this.wingsID).getEvolveEquipID();break;
+		case 3:this.evolveStoneNum-=Equip.getEquipByID(this.wearingID).getLevelUpCost(this.wearingLevel);this.wearingLevel=1;this.wearingID=Equip.getEquipByID(this.wearingID).getEvolveEquipID();break;
+		default: System.out.println("装备ID解析错误！");break;
+		}
+		renewProperty();
+	}
+	private void renewProperty(){
+		this.hp=basichp+Equip.getEquipByID(headWearingID).getHP(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getHP(this.weaponLevel)+Equip.getEquipByID(wearingID).getHP(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getHP(this.wingsLevel);
+		this.ad=basicad+Equip.getEquipByID(headWearingID).getAD(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getAD(this.weaponLevel)+Equip.getEquipByID(wearingID).getAD(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getAD(this.wingsLevel);
+		this.ap=basicap+Equip.getEquipByID(headWearingID).getAP(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getAP(this.weaponLevel)+Equip.getEquipByID(wearingID).getAP(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getAP(this.wingsLevel);
+		this.MR=basicMR+Equip.getEquipByID(headWearingID).getMR(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getMR(this.weaponLevel)+Equip.getEquipByID(wearingID).getMR(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getMR(this.wingsLevel);
+		this.DR=basicDR+Equip.getEquipByID(headWearingID).getDR(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getDR(this.weaponLevel)+Equip.getEquipByID(wearingID).getDR(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getDR(this.wingsLevel);
+		this.DT=Equip.getEquipByID(headWearingID).getDT(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getDT(this.weaponLevel)+Equip.getEquipByID(wearingID).getDT(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getDT(this.wingsLevel);
+		this.MT=Equip.getEquipByID(headWearingID).getMT(this.headWearingLevel)+
+				Equip.getEquipByID(weaponID).getMT(this.weaponLevel)+Equip.getEquipByID(wearingID).getMT(this.wearingLevel)+
+				Equip.getEquipByID(wingsID).getMT(this.wingsLevel);
+		System.out.println(ad+" "+ap+" "+hp+" "+DR+" "+MR);
+	}
 }

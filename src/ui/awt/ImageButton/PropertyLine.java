@@ -97,7 +97,7 @@ public class PropertyLine extends AnchorPane{
 			now=newnow;
 			Timeline line = new Timeline();
 			if (newnow>max){
-				newnow=max;
+				now=max;
 			}
 			if (this.dir==TOWARDS_RIGHT){
 
