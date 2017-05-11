@@ -397,7 +397,47 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					line.play();
 				});
 			} else if (flag == GenerateParent.PLAYER_DIE) {
-				c.countDown();
+				AnchorPane sss = new AnchorPane ();
+				ImageView sssss = new ImageView ();
+				sssss.setFitHeight(Main.SCREENHEIGHT);
+				sssss.setFitWidth(Main.SCREENWIDTH);
+				sssss.setX(0);
+				sssss.setY(0);
+				sss.getChildren().add(sssss);
+				Timeline line = new Timeline ();
+				KeyValue kv1 = new KeyValue (p1Image.rotateProperty(),45);
+				KeyValue kv2 = new KeyValue (p1Image.rotateProperty(),0);
+				KeyValue kv3 = new KeyValue (p1Image.rotateProperty(),-45);
+				KeyValue kv4 = new KeyValue (p1Image.scaleXProperty(),1.6);
+				KeyValue kv5 = new KeyValue (p1Image.scaleXProperty(),1);
+				KeyValue kv6 = new KeyValue (p1Image.scaleXProperty(),0.4);
+				KeyValue kv7 = new KeyValue (p1Image.scaleYProperty(),1.6);
+				KeyValue kv8 = new KeyValue (p1Image.scaleYProperty(),1);
+				KeyValue kv9 = new KeyValue (p1Image.scaleYProperty(),0.4);
+				KeyFrame kf1 = new KeyFrame (Duration.millis(DIEMOVEDELTA/3),kv1);
+				KeyFrame kf2 = new KeyFrame (Duration.millis(DIEMOVEDELTA*2/3),kv2);
+				KeyFrame kf3 = new KeyFrame (Duration.millis(DIEMOVEDELTA*3/3),kv3);
+				KeyFrame kf4 = new KeyFrame (Duration.millis(DIEMOVEDELTA*4/3),kv2);
+				KeyFrame kf5 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/3),kv1);
+				KeyFrame kf6 = new KeyFrame (Duration.millis(DIEMOVEDELTA*6/3),kv2);
+				KeyFrame kf7 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/3),kv4);
+				KeyFrame kf8 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/3),kv9);
+				KeyFrame kf9 = new KeyFrame (Duration.millis(DIEMOVEDELTA*8/3),kv5);
+				KeyFrame kf10 = new KeyFrame (Duration.millis(DIEMOVEDELTA*8/3),kv8);
+				KeyFrame kf11 = new KeyFrame (Duration.millis(DIEMOVEDELTA*9/3),kv6);
+				KeyFrame kf12 = new KeyFrame (Duration.millis(DIEMOVEDELTA*9/3),kv7);
+				KeyFrame kf13 = new KeyFrame (Duration.millis(DIEMOVEDELTA*10/3),kv5);
+				KeyFrame kf14 = new KeyFrame (Duration.millis(DIEMOVEDELTA*10/3),kv8);
+				line.getKeyFrames().addAll(kf1,kf2,kf3,kf4,kf5,kf6,kf7,kf8,
+						kf9,kf10,kf11,kf12,kf13,kf14);
+				line.setOnFinished(e->{
+					this.getChildren().remove(sss);
+					c.countDown();
+				});
+				Platform.runLater(()->{
+					this.getChildren().add(sss);
+					line.play();
+				});
 			} else if (flag == GenerateParent.NEXT_AI) {
 				
 				Platform.runLater(()->{
