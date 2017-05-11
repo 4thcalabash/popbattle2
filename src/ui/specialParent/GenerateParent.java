@@ -428,17 +428,6 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 						this.getChildren().remove(sss);
 						border.setBottom(null);
 						addPool(true);
-//						this.playerBoard = new PlayerBoard(this.platform);
-//						border.setBottom(playerBoard );
-//						CountDownLatch tempc = new CountDownLatch(1);
-//						playerBoard.refreshData(tempc);
-//						
-//						try {
-//							tempc.await();
-//						} catch (InterruptedException e1) {
-//							// TODO Auto-generated catch block
-//							e1.printStackTrace();
-//						}
 						c.countDown();
 						
 					});
