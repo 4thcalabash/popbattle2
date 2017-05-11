@@ -1,5 +1,6 @@
 package ui.supportRoot;
 import bll.platform.*;
+import bll.support.Shop;
 import bllservice.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -9,8 +10,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextAlignment;
 import ui.Main;
 import ui.abstractStage.SupportParent;
+import ui.awt.ImageButton.ButtonWorker;
+import ui.awt.ImageButton.ImageButton;
 import ui.sceneInterface.BasicScene;
 public class ShopParent extends SupportParent{
+	public static final int EXPFLAG = 1000;
+	public static final int PPFLAG=1001;
+	public static final int SPFLAG = 1002;
+	public static final int USFLAG = 1003;
+	public static final int ESFLAG = 1004;
 	public static final int BOARDHEIGHT = 800;
 	public static final int BOARDWIDTH = 1500;
 	public static final int BOARDGAP = 15;
@@ -33,6 +41,8 @@ public class ShopParent extends SupportParent{
 		private String introduction,unit;
 		private int price;
 		private Label word,priceLabel;
+		private ImageButton buy;
+		private int flag;
 		public static final int CARDGAP = 6;
 		public static final int ICONLENGTH = (CARDWIDTH-2*CARDGAP)*2/3;
 		public static final int CARDMIDGAP = ICONLENGTH/3;
@@ -40,13 +50,14 @@ public class ShopParent extends SupportParent{
 		public static final int WORDHEIGHT = WORDWIDTH*4/3;
 		public static final int PRICEHEIGHT = CARDMIDGAP;
 		public static final int PRICEWIDTH =PRICEHEIGHT*5/2;
-		public ProductCard(Image background,Image Icon,Image wordBackground,String introduction,int price,String unit){
+		public ProductCard(Image background,Image Icon,Image wordBackground,String introduction,int price,String unit,int flag){
 			this.Icon = new ImageView (Icon);
 			this.background = new ImageView (background);
 			this.wordBackground = new ImageView (wordBackground);
 			this.introduction=introduction;
 			this.price=price;
 			this.unit=unit;
+			this.flag=flag;
 			init();
 		}
 		private void init(){
@@ -92,8 +103,56 @@ public class ShopParent extends SupportParent{
 			priceLabel.setLayoutX(CARDWIDTH-CARDGAP-PRICEWIDTH);
 			priceLabel.setLayoutY(CARDGAP+ICONLENGTH+CARDMIDGAP-PRICEHEIGHT);
 			this.getChildren().add(priceLabel);
+			addButton();
+		}
+		public void checkButton(){
+			
+		}
+		private final ButtonWorker buyWorker = new ButtonWorker(){
+
+			@Override
+			public void work() {
+				// TODO Auto-generated method stub
+				Shop shop = platform.getPlayer1().getShop();
+				if (flag==EXPFLAG){
+					shop.buyExp(1);
+				}else if (flag==PPFLAG){
+					shop.buyPP(1);
+				}else if (flag==SPFLAG){
+					shop.buySkillPoint(1);
+				}else if (flag==USFLAG){
+					shop.buyUpGradeStone(1);
+				}else if (flag==ESFLAG){
+					shop.buyEvolveStone(1);
+				}else{
+					System.out.println("FLAG解析错误！");
+				}
+				EXPCard.checkButton();
+				PPCard.checkButton();
+				SPCard.checkButton();
+				USCard.checkButton();
+				ESCard.checkButton();
+			}
+			
+		};
+		private void addButton(){
+			buy = new ImageButton (buyStatic,buyEntered,buyPressed,buyWorker);
+			
 		}
 	}
+	private final Image buyStatic = new Image ("Graphics/Static/Icon/buyStatic.png");
+	private final Image buyEntered = new Image("Graphics/Static/Icon/buyEntered.png");
+	private final Image buyPressed = new Image ("Graphics/Static/Icon/buyPressed.png");
+	private final Image buyIllegal = new Image ("Graphics/Static/Icon/buyIllegal.png");
+	private final ButtonWorker illegalWorker = new ButtonWorker(){
+
+		@Override
+		public void work() {
+			// TODO Auto-generated method stub
+			System.out.println("Illegal Ckick!");
+		}
+		
+	};
 	public ShopParent(Shopable shopPlatform,BasicScene main){
 		super(shopPlatform,main);
 		ImageView background = new ImageView (new Image("Graphics/Static/Shop/background.png"));
@@ -120,13 +179,13 @@ public class ShopParent extends SupportParent{
 		board.getChildren().add(leftTable);
 		EXPCard = new ProductCard (new Image("Graphics/Static/Shop/EXPCardBackground.png"),new Image("Graphics/Static/Icon/EXP.png"),
 				new Image("Graphics/Static/Shop/EXPWordBackground.png"),"经验\n对吧\n买了可以升级啊\n你懂的",
-				this.platform.getPlayer1().getShop().getExpPrice(),"金币/百");
+				this.platform.getPlayer1().getShop().getExpPrice(),"金币/百",EXPFLAG);
 		EXPCard.setLayoutX(TABLEGAP);
 		EXPCard.setLayoutY(TABLEGAP);
 		leftTable.getChildren().add(EXPCard);
 		PPCard = new ProductCard (new Image("Graphics/Static/Shop/PPCardBackground.png"),new Image("Graphics/Static/Icon/PP.png"),
 				new Image("Graphics/Static/Shop/PPWordBackground.png"),"潜力点\n对吧\n买了可以加属性啊\n你懂啊",
-				this.platform.getPlayer1().getShop().getPPPrice(),"金币/点");
+				this.platform.getPlayer1().getShop().getPPPrice(),"金币/点",PPFLAG);
 		PPCard.setLayoutX(TABLEGAP+CARDWIDTH+TABLEMIDGAP);
 		PPCard.setLayoutY(TABLEGAP);
 		leftTable.getChildren().add(PPCard);
@@ -144,7 +203,7 @@ public class ShopParent extends SupportParent{
 		board.getChildren().add(midTable);
 		SPCard = new ProductCard (new Image("Graphics/Static/Shop/SPCardBackground.png"),new Image("Graphics/Static/Icon/SP.png"),
 				new Image("Graphics/Static/Shop/SPWordBackground.png"),"技能点\n对吧\n买了可以学技能啊\n你懂啦",
-				this.platform.getPlayer1().getShop().getSkillPointPrice(),"金币/点");
+				this.platform.getPlayer1().getShop().getSkillPointPrice(),"金币/点",SPFLAG);
 		SPCard.setLayoutX(TABLEGAP);
 		SPCard.setLayoutY(TABLEGAP);
 		midTable.getChildren().add(SPCard);
@@ -162,13 +221,13 @@ public class ShopParent extends SupportParent{
 		board.getChildren().add(rightTable);
 		USCard = new ProductCard (new Image("Graphics/Static/Shop/USCardBackground.png"),new Image("Graphics/Static/Icon/US.png"),
 				new Image("Graphics/Static/Shop/USWordBackground.png"),"升级石\n对吧\n买了可以升级装备啊\n你懂哈",
-				this.platform.getPlayer1().getShop().getUpGradeStonePrice(),"金币/个");
+				this.platform.getPlayer1().getShop().getUpGradeStonePrice(),"金币/个",USFLAG);
 		USCard.setLayoutX(TABLEGAP);
 		USCard.setLayoutY(TABLEGAP);
 		rightTable.getChildren().add(USCard);
 		ESCard = new ProductCard (new Image("Graphics/Static/Shop/ESCardBackground.png"),new Image("Graphics/Static/Icon/ES.png"),
 				new Image("Graphics/Static/Shop/ESWordBackground.png"),"升阶石\n对吧\n买了可以进化装备啊\n你懂了",
-				this.platform.getPlayer1().getShop().getEvolveStonePrice(),"金币/个");
+				this.platform.getPlayer1().getShop().getEvolveStonePrice(),"金币/个",ESFLAG);
 		ESCard.setLayoutX(TABLEGAP+CARDWIDTH+TABLEMIDGAP);
 		ESCard.setLayoutY(TABLEGAP);
 		rightTable.getChildren().add(ESCard);
