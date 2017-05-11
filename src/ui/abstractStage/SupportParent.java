@@ -14,7 +14,8 @@ import ui.sceneInterface.BasicScene;
 public abstract class SupportParent extends AnchorPane {
 	protected Supportable platform;
 	protected BasicScene main;
-	public static final int BACKLENGTH = 100;
+	public static final int BACKHEIGHT = 120;
+	public static final int BACKWIDTH =BACKHEIGHT*4/3;
 	protected int max=-1;
 	public SupportParent(Supportable supportPlatform, BasicScene main) {
 		this.platform = supportPlatform;
@@ -31,10 +32,10 @@ public abstract class SupportParent extends AnchorPane {
 					}
 
 				});
-		backButton.setFitHeight(BACKLENGTH);
-		backButton.setFitWidth(BACKLENGTH);
+		backButton.setFitHeight(BACKHEIGHT);
+		backButton.setFitWidth(BACKWIDTH);
 		backButton.setX(0);
-		backButton.setY(Main.SCREENHEIGHT-BACKLENGTH);
+		backButton.setY(Main.SCREENHEIGHT-BACKHEIGHT);
 		this.getChildren().add(backButton);
 	}
 	protected void renewEquipMax(int equipID,int level){
