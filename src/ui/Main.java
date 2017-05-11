@@ -12,10 +12,13 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import bll.platform.Battle;
 import util.*;
 public class Main extends Application implements BasicScene,DramaticScene{
-	
+	public static Font myFont;
+	public static final Color fontColor = Color.rgb(255, 0, 0);
 	private BattleParent battleParent;//每次使用时都需要重新实例化
 	private StaticParent staticParent = new StaticParent(this);//一直沿用一个staticScene，在battle时隐藏，在非battle时显示。
 	private Stage stage = new Stage();
@@ -33,6 +36,12 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		 * 当battle结束，销毁battleScene，恢复staticScene显示
 		 * 并检查battlePo查看battle结果
 		 */
+		try {
+			myFont = Font.loadFont(getClass().getClassLoader().getResourceAsStream("ui/MyFont.ttf"), 32);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		scene.getStylesheets().add(getClass().getResource("static.css").toExternalForm());
 		stage.setScene(scene);
 		stage.setTitle("消消乐");

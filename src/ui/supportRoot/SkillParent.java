@@ -83,6 +83,8 @@ public class SkillParent extends SupportParent{
 			this.getChildren().add(this.labelBackground);
 			this.labelBackground.setY(0);
 			words = new Label (introduction[nowlevel]);
+			words.setFont(Main.myFont);
+			words.setTextFill(Main.fontColor);
 			words.setMaxSize(WORDWIDTH, WORDHEIGHT);
 			words.setMinSize(WORDWIDTH, WORDHEIGHT);
 			words.setLayoutX(INNERGAP+ICONLENGTH+DELTALENGTH);

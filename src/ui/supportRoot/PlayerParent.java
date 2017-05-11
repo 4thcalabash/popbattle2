@@ -1,5 +1,8 @@
 package ui.supportRoot;
 
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.concurrent.CountDownLatch;
 
 import bll.individual.Player;
@@ -17,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import ui.Main;
 import ui.abstractStage.SupportParent;
@@ -70,8 +75,10 @@ public class PlayerParent extends SupportParent {
 	private ImageButton HPPlus, ADPlus, APPlus, DRPlus, MRPlus;
 	private ImageButton confirm,reset,levelup;
 	private NumberImage level;
+
 	public PlayerParent(Playerable playerPlatform, BasicScene main) {
 		super(playerPlatform, main);
+		
 		this.platform = playerPlatform;
 		restPP = platform.getPlayer1().getPotentialPoint();
 		hp = platform.getPlayer1().getHp();
@@ -111,15 +118,35 @@ public class PlayerParent extends SupportParent {
 		introduction.setX(LEFTGAP);
 		introduction.setY(TOPGAP + PHOTOHEIGHT);
 		board.getChildren().add(introduction);
+		
 		HPL = new Label("生命");
+		HPL.setFont(Main.myFont);
+		HPL.setTextFill(Main.fontColor);
 		ADL = new Label("物攻");
+		ADL.setFont(Main.myFont);
+		ADL.setTextFill(Main.fontColor);
 		APL = new Label("法强");
+		APL.setFont(Main.myFont);
+		APL.setTextFill(Main.fontColor);
 		DRL = new Label("物抗");
+		DRL.setFont(Main.myFont);
+		DRL.setTextFill(Main.fontColor);
 		MRL = new Label("法抗");
+		MRL.setFont(Main.myFont);
+		MRL.setTextFill(Main.fontColor);
 		DTL = new Label("物穿");
+		DTL.setFont(Main.myFont);
+		DTL.setTextFill(Main.fontColor);
 		MTL = new Label("法穿");
+		MTL.setFont(Main.myFont);
+		MTL.setTextFill(Main.fontColor);
 		EXPL = new Label("经验");
+		EXPL.setFont(Main.myFont);
+		EXPL.setTextFill(Main.fontColor);
 		PPL = new Label("潜力");
+		PPL.setFont(Main.myFont);
+		PPL.setTextFill(Main.fontColor);
+		
 		addIcon();
 		addLine();
 		addLabel();

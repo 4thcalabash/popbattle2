@@ -66,6 +66,8 @@ public class ShopParent extends SupportParent{
 			wordBackground.setY(CARDGAP+ICONLENGTH+CARDMIDGAP);
 			this.getChildren().add(wordBackground);
 			word = new Label(introduction);
+			word.setFont(Main.myFont);
+			word.setTextFill(Main.fontColor);
 			word.setWrapText(true);
 			word.setTextAlignment(TextAlignment.LEFT);
 			word.setMaxSize(WORDWIDTH, WORDHEIGHT);
@@ -80,6 +82,8 @@ public class ShopParent extends SupportParent{
 			priceBackground.setY(CARDGAP+ICONLENGTH+CARDMIDGAP-PRICEHEIGHT);
 			this.getChildren().add(priceBackground);
 			priceLabel = new Label(price+unit);
+			priceLabel.setFont(Main.myFont);
+			priceLabel.setTextFill(Main.fontColor);
 			priceLabel.setId("Price");
 			priceLabel.setMaxSize(PRICEWIDTH, PRICEHEIGHT);
 			priceLabel.setMinSize(PRICEWIDTH, PRICEHEIGHT);

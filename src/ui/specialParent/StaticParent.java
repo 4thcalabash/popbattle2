@@ -14,6 +14,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import ui.Main;
 import ui.sceneInterface.BasicScene;
@@ -22,6 +24,7 @@ public class StaticParent extends BorderPane{
 	//需要完成用户查询各系统静态信息的功能
 	private BasicScene main;
 	private BasicPlatform basicPlatform;//所有静态系统和信息存在于此，需要显示的信息通过它来获取
+
 	public StaticParent (BasicScene main){
 		this.main=main;
 		basicPlatform = new Static (0);//实例化Static时，便已经完成了默认存档的加载
