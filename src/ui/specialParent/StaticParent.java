@@ -121,7 +121,7 @@ public class StaticParent extends BorderPane{
 			@Override
 			public void work() {
 				// TODO Auto-generated method stub
-				main.setStage(new GameChooser((Chooseable)basicPlatform,main));
+				main.setStage(new GameChooser((Chooseable)basicPlatform,main,"a"));
 //				System.out.println("Graphics/Battle Chooser");
 				
 			}

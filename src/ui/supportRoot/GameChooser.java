@@ -94,9 +94,10 @@ public class GameChooser extends SupportParent {
 		if (!inSon){
 			super.returnStatic();
 		}else{
-			getChildren().remove(1);
-			getChildren().add(board);
-			inSon=false;
+			super.returnStatic();
+//			getChildren().remove(1);
+//			getChildren().add(board);
+//			inSon=false;
 		}
 	}
 }
