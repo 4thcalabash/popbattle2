@@ -11,6 +11,7 @@ import util.DamageCalcer;
 import vo.MissionVo;
 import bll.popMethod.*;
 import bll.popMethod.allMethod.MoreThanThreeLinePop;
+import bll.support.Bonus;
 import bll.support.Skill;
 public class Battle implements BattlePlatform{
 	private PopMethodHub popHub;
@@ -19,6 +20,7 @@ public class Battle implements BattlePlatform{
 	private PaperPlayer paperPlayer2;
 	private MissionVo missionVo;
 	private int nowAIindex;
+	private Bonus bonus;
 	private FileHelper helper = new FileHelper();
 //	private int [] pool1 = new int [Matrix.KIND+1];
 //	private int [] pool2 = new int [Matrix.KIND+1];
@@ -29,6 +31,7 @@ public class Battle implements BattlePlatform{
 	//PVE ģʽ
 	public Battle(int missionID,PaperPlayer paperPlayer1){
 		this.paperPlayer1=paperPlayer1;
+		bonus = Bonus.getBonusByID(missionID);
 		this.missionVo=new FileHelper().loadMission(missionID);
 		nowAIindex=0;
 		this.paperPlayer2=helper.loadAI(missionVo.getAIID().get(nowAIindex));
@@ -48,7 +51,10 @@ public class Battle implements BattlePlatform{
 		popList.add(new MoreThanThreeLinePop());
 		popHub = new PopMethodHub (popList,chessboard);
 	}
-	
+	@Override
+	public Bonus getBonus(){
+		return bonus;
+	}
 	@Override
 	public BattlePo check() {
 		// TODO Auto-generated method stub

@@ -247,6 +247,7 @@ public class PlayerParent extends SupportParent {
 			EXPLine.setNow(-1);
 			EXPLine.refresh(exp);
 			EXPnow.refresh(exp);
+			level.refresh(platform.getPlayer1().getLevel());
 			EXPfull.refresh(Player.getExpNumberToLevelUp(platform.getPlayer1().getLevel()));
 			PP.refresh(restPP);
 			checkFuncButton();

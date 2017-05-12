@@ -1,6 +1,7 @@
 package ui;
 import ui.abstractStage.*;
 import ui.sceneInterface.*;
+import ui.specialParent.BonusParent;
 import ui.specialParent.EVEParent;
 import ui.specialParent.NormalParent;
 import ui.specialParent.PVEParent;
@@ -15,6 +16,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import bll.platform.Battle;
+import bll.support.Bonus;
+import bllservice.Supportable;
 import util.*;
 public class Main extends Application implements BasicScene,DramaticScene{
 	public static Font myFont;
@@ -92,7 +95,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	
 	
 	@Override
-	public void battleEnd(boolean result) {
+	public void battleEnd(Bonus bonus) {
 		// TODO Auto-generated method stub
 		//battleScene自行销毁
 		//此方法完成从battle返回static
@@ -100,7 +103,13 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		
 		scene.getStylesheets().remove(0);
 		scene.getStylesheets().add(getClass().getResource("static.css").toExternalForm());
-		this.setStage(staticParent);
+		
+		if (bonus!=null){
+			this.setStage(new BonusParent((Supportable)staticParent.getBasicPlatform(),bonus,(BasicScene)this));
+		}else{
+//			this.setStage(new BattleFailedParent((BasicScene)this));
+			this.setStage(staticParent);
+		}
 	}
 	
 	

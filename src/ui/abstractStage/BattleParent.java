@@ -1,4 +1,5 @@
 package ui.abstractStage;
+import bll.support.Bonus;
 import bllservice.BattlePlatform;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -16,7 +17,7 @@ public abstract class BattleParent extends StackPane{
 	public BattleParent(Main main){
 		this.main=main;
 	}
-	public void returnStatic(boolean flag){
-		main.battleEnd(flag);
+	public void returnStatic(Bonus bonus){
+		main.battleEnd(bonus);
 	}
 }

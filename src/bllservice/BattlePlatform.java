@@ -1,12 +1,13 @@
 package bllservice;
 import bll.individual.PaperPlayer;
+import bll.support.Bonus;
 import po.*;
 public interface BattlePlatform {
 	public PaperPlayer getPlayer1();
 	public PaperPlayer getPlayer2();
 	public AIStrategyPo getAIStrategy();
 	public boolean move (DotPo dot1,DotPo dot2);
-	
+	public Bonus getBonus();
 	public PopPo pop(int playerID,DotPo dot1,DotPo dot2);
 	public PopPo pop(int playerID);
 	public boolean skillRequest(int playerID,int skillID);

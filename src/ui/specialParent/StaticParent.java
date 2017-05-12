@@ -1,5 +1,6 @@
 package ui.specialParent;
 import bll.platform.Static;
+import bll.support.Bonus;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
 //import bllservice.Shopable;
@@ -90,6 +91,7 @@ public class StaticParent extends BorderPane{
 			public void work() {
 				// TODO Auto-generated method stub
 				main.setStage(new AchievementParent((Achievementable)basicPlatform,main));
+//				main.setStage(new BonusParent((Supportable)basicPlatform,Bonus.getBonusByID(0),main));
 			}
 			
 		});

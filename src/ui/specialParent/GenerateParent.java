@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import bll.matrix.Dot;
 import bll.matrix.Matrix;
+import bll.support.Bonus;
 import bllservice.BattlePlatform;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -326,9 +327,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								// TODO Auto-generated method stub
 								myself.stop();
 								if (flag == GenerateParent.BATTLE_WIN) {
-									main.battleEnd(true);
+									main.battleEnd(platform.getBonus());
 								} else {
-									main.battleEnd(false);
+									main.battleEnd(null);
 								}
 
 							}

@@ -1,5 +1,7 @@
 package ui.sceneInterface;
 
+import bll.support.Bonus;
+
 public interface DramaticScene {
-	public void battleEnd(boolean flag);
+	public void battleEnd(Bonus bonus);
 }
