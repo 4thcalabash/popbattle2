@@ -35,7 +35,7 @@ public class Skill {
 	public static final String[] INTRODUCTION_HURRICANE = { "aaaa", "bbbb", "cccc","dddd" };
 	public static final String[] INTRODUCTION_PRO100_1 ={"aaaaa","bbbbb","ccccc","ddddd"};
 	public static final String[] INTRODUCTION_PRO100_2 = {"aaaaaa","bbbbbb","cccccc","dddddd"};
-	public static final Skill PRO100_2 = new Skill(Skill.ID_PRO100_1,3,Player.ENEMY,
+	public static final Skill PRO100_2 = new Skill(Skill.ID_PRO100_2,3,Player.ENEMY,
 			new SkillValueCalcMethod(){
 
 				@Override

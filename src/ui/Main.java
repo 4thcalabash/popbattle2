@@ -6,6 +6,7 @@ import ui.specialParent.EVEParent;
 import ui.specialParent.NormalParent;
 import ui.specialParent.PVEParent;
 import ui.specialParent.StaticParent;
+import ui.supportRoot.SkillChooser;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Screen;
@@ -28,6 +29,10 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	private Scene scene = new Scene (staticParent);
 	public final static int SCREENWIDTH =(int)Screen.getPrimary().getVisualBounds().getWidth();
 	public final static int SCREENHEIGHT = (int)Screen.getPrimary().getVisualBounds().getHeight();
+	
+	public StaticParent getStaticParent() {
+		return staticParent;
+	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -62,24 +67,37 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		
 		
 	}
+	public void createDone(){
+		Platform.runLater(()->{
+		scene.getStylesheets().remove(0);
+		scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
+		battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+		stage.getScene().setRoot(battleParent);
+		scene.getRoot().setId("scene110"+(int)(8*Math.random()+1));
+	});
+	}
+	MissionInfo missionInfo;
 	@Override
 	
 	public void createNewBattle(MissionInfo missionInfo) {
+		this.missionInfo=missionInfo;
 		// TODO Auto-generated method stub
 		//隐藏staticscene，切记不要销毁。
 		//负责解析missionPo，并生成PVE、PVP、NORMAL之一的BattleScene
 		//要将自身注册到battlescene里去，从而使得可以让battlescene调用battleEnd方法以返回staticscene
+		
 		if (missionInfo.getModel()==Battle.PVE){
-			Platform.runLater(()->{
-				scene.getStylesheets().remove(0);
-
-				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
-//				scene.getStylesheets().add(getClass().getResource("PVE."))
-				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-//				battleParent = new EVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
-				stage.getScene().setRoot(battleParent);
-				scene.getRoot().setId("scene110"+(int)(8*Math.random()+1));
-			});
+//			Platform.runLater(()->{
+//				
+//			});
+			this.setStage(new SkillChooser(this.staticParent.getBasicPlatform().getPlayer1(),this));
+//			Platform.runLater(()->{
+//				scene.getStylesheets().remove(0);
+//				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
+//				battleParent = new PVEParent (missionInfo.getID(),staticParent.getBasicPlatform().getPlayer1(),this);
+//				stage.getScene().setRoot(battleParent);
+//				scene.getRoot().setId("scene110"+(int)(8*Math.random()+1));
+//			});
 			 
 		}else if (missionInfo.getModel()==Battle.NORMAL){
 			Platform.runLater(()->{

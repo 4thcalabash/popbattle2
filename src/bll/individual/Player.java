@@ -132,7 +132,7 @@ public class Player implements Calcable{
 	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
 	public static final int BASICAD=2;
 	public static final int BASICAP=2;
-	public static final int BASICHP = 10;
+	public static final int BASICHP = 4;
 	public static final int BASICDR = 3;
 	public static final int BASICMR = 3;
 	public static final int BASICPOTENTIALPOINT = 5;
@@ -369,13 +369,13 @@ public class Player implements Calcable{
 	}
 	public static int getExpNumberToLevelUp(int index){
 		if (index<5){
-			return 100+index*50;
+			return 30+index*10;
 		}else if (index<10){
-			return Player.getExpNumberToLevelUp(4)+100*(index-4);
+			return Player.getExpNumberToLevelUp(4)+20*(index-4);
 		}else if (index<15){
-			return Player.getExpNumberToLevelUp(9)+150*(index-9);
+			return Player.getExpNumberToLevelUp(9)+30*(index-9);
 		}else if (index<20){
-			return Player.getExpNumberToLevelUp(14)+200*(index-14);
+			return Player.getExpNumberToLevelUp(14)+40*(index-14);
 		}else{
 			return Player.INFINITEEXP;
 		}

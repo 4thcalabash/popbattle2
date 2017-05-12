@@ -75,8 +75,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int NEXT_AI = 994;
 	public static final int ATTACK = 993;
 	public static final int DIEMOVEDELTA = 400;
-	public static final int BATTLEENDHEIGHT = (int) (Main.SCREENHEIGHT * 0.1);
-	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 3;
+	public static final int BATTLEENDHEIGHT = (int) (Main.SCREENHEIGHT * 0.2);
+	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 5/2;
 	public static final int LABELHEIGHT = TOPIMAGEHEIGHT;
 	public static final int LABELWIDTH =TOPIMAGEWIDTH*8/10;
 	private Label text;
@@ -161,6 +161,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			} else {
 				skillList2[i] = -10000;
 			}
+		}
+		for (int i=0;i<3;i++){
+			System.out.println("Takes "+skillList1[i]);
 		}
 		pool2 = new Pool(skillList2, new int[6], this);
 		if (playerBoardFlag) {
@@ -280,7 +283,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					new Thread(new Runnable() {
 						public void run() {
 							try {
-								Thread.sleep(ROUNDCHANGEDELTA / 2);
+								Thread.sleep(ROUNDCHANGEDELTA/2);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -289,7 +292,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								getChildren().remove(1);
 							});
 							try {
-								Thread.sleep(ROUNDCHANGEDELTA / 3);
+								Thread.sleep(ROUNDCHANGEDELTA /2);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
