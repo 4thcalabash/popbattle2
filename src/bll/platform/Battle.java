@@ -76,7 +76,9 @@ public class Battle implements BattlePlatform{
 				}else{
 					battlePo.setBattleIsEnd(false);
 					System.out.println("AI DIE");
+					int [] temp=paperPlayer2.getElementPool();
 					paperPlayer2 = helper.loadAI(missionVo.getAIID().get(nowAIindex));
+					paperPlayer2.setElementPool(temp);
 				}
 			}
 		}

@@ -44,4 +44,9 @@ public class PaperPlayer {
 	public int[] getElementPool() {
 		return elementPool;
 	}
+
+	public void setElementPool(int[] elementPool) {
+		this.elementPool = elementPool;
+	}
+	
 }

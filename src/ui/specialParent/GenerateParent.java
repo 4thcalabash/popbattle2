@@ -71,7 +71,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int AI_DIE = 996;
 	public static final int PLAYER_DIE = 995;
 	public static final int NEXT_AI = 994;
-	public static final int ATTACK=993;
+	public static final int ATTACK = 993;
 	public static final int DIEMOVEDELTA = 400;
 	public static final int BATTLEENDHEIGHT = (int) (Main.SCREENHEIGHT * 0.1);
 	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 3;
@@ -99,16 +99,17 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	protected AnchorPane player1 = null, player2 = null;
 	protected boolean skillRequest = false;
 	protected int skillID;
-	public static final int PLAYERWIDTH = (int)(((Main.SCREENWIDTH-TOPIMAGEWIDTH)/2-PLAYERIMAGEGAP));
-	public static final int PLAYERHEIGHT = (int)(PLAYERWIDTH*1.18);
-	public static final int SKILLPLAYERWIDTH = (int)(PLAYERWIDTH*0.7);
-	public static final int SKILLPLAYERHEIGHT = (int)(SKILLPLAYERWIDTH*1.15);
+	public static final int PLAYERWIDTH = (int) (((Main.SCREENWIDTH - TOPIMAGEWIDTH) / 2 - PLAYERIMAGEGAP));
+	public static final int PLAYERHEIGHT = (int) (PLAYERWIDTH * 1.18);
+	public static final int SKILLPLAYERWIDTH = (int) (PLAYERWIDTH * 0.7);
+	public static final int SKILLPLAYERHEIGHT = (int) (SKILLPLAYERWIDTH * 1.15);
 	public static final int SKILLMOVEDELTA = 500;
 	public static final int SKILLATTACKDELTA = 1000;
 	BattlePo result;
 	BorderPane pools = new BorderPane();
 	ImageButton battleEnd;
-	private ImageView p2Image,p1Image;
+	private ImageView p2Image, p1Image;
+
 	public void addPlayer1() {
 		player1 = new AnchorPane();
 		p1Image = new ImageView(
@@ -188,13 +189,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		if (flag == BATTLE_LOSE || flag == BATTLE_WIN || flag == BATTLE_START
 				|| flag == GenerateParent.CHANGE_ROUND_FROM_1TO2 || flag == GenerateParent.CHANGE_ROUND_FROM_2TO1) {
 			AnchorPane temp = new AnchorPane();
-			 temp.setId("showFlash");
-//			ImageView flashBackground = new ImageView(new Image("Graphics/Battle/background.png"));
-//			flashBackground.setFitHeight(Main.SCREENHEIGHT);
-//			flashBackground.setFitWidth(Main.SCREENWIDTH);
-//			flashBackground.setX(0);
-//			flashBackground.setY(0);
-//			temp.getChildren().add(flashBackground);
+			temp.setId("showFlash");
+			// ImageView flashBackground = new ImageView(new
+			// Image("Graphics/Battle/background.png"));
+			// flashBackground.setFitHeight(Main.SCREENHEIGHT);
+			// flashBackground.setFitWidth(Main.SCREENWIDTH);
+			// flashBackground.setX(0);
+			// flashBackground.setY(0);
+			// temp.getChildren().add(flashBackground);
 			if (flag == GenerateParent.CHANGE_ROUND_FROM_1TO2 || flag == GenerateParent.CHANGE_ROUND_FROM_2TO1) {
 
 				ImageView tempImage;
@@ -350,133 +352,170 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			}
 		} else {
 			if (flag == GenerateParent.AI_DIE) {
-				AnchorPane ss = new AnchorPane ();
-				ImageView sss = new ImageView ();
+				AnchorPane ss = new AnchorPane();
+				ImageView sss = new ImageView();
 				sss.setFitHeight(Main.SCREENHEIGHT);
 				sss.setFitWidth(Main.SCREENWIDTH);
 				sss.setX(0);
 				sss.setY(0);
 				ss.getChildren().add(sss);
-		
+
 				System.out.println("AI DIE!!!!!!!!!!");
-				Timeline line = new Timeline ();
-				ImageView player2 = new ImageView (this.p2Image.getImage());
+				Timeline line = new Timeline();
+				ImageView player2 = new ImageView(this.p2Image.getImage());
 				player2.setFitHeight(p2Image.getFitHeight());
 				player2.setFitWidth(p2Image.getFitWidth());
-				player2.setX(p2Image.getX()+border.getRight().getLayoutX());
-				player2.setY(p2Image.getY()+border.getRight().getLayoutY());
+				player2.setX(p2Image.getX() + border.getRight().getLayoutX());
+				player2.setY(p2Image.getY() + border.getRight().getLayoutY());
 				ss.getChildren().add(player2);
-				KeyValue kv1 = new KeyValue (player2.xProperty(),0);
-				KeyValue kv2 = new KeyValue (player2.yProperty(),0);
-				KeyValue kv3 = new KeyValue (player2.xProperty(),0);
-				KeyValue kv4 = new KeyValue (player2.yProperty(),Main.SCREENHEIGHT-player2.getFitHeight());
-				KeyValue kv5 = new KeyValue (player2.xProperty(),Main.SCREENWIDTH-player2.getFitHeight());
-				KeyValue kv6 = new KeyValue (player2.yProperty(),0);
-				KeyValue kv7 = new KeyValue (player2.scaleYProperty(),0);
-				KeyValue kv8 = new KeyValue (player2.scaleXProperty(),0);
-				KeyValue kv9 = new KeyValue (player2.rotateProperty(),1440);
-				KeyFrame kf1 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv1);
-				KeyFrame kf2 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv2);
-				KeyFrame kf3 = new KeyFrame (Duration.millis(DIEMOVEDELTA*3/2),kv3);
-				KeyFrame kf4 = new KeyFrame (Duration.millis(DIEMOVEDELTA*3/2),kv4);
-				KeyFrame kf5 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/2),kv5);
-				KeyFrame kf6 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/2),kv6);
-				KeyFrame kf7 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/2),kv7);
-				KeyFrame kf8 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/2),kv8);
-				KeyFrame kf9 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/2),kv9);
-				line.getKeyFrames().addAll(kf1,kf2,kf3,kf4,kf5,kf6,kf7,kf8,kf9);
-				line.setOnFinished(e->{
+				KeyValue kv1 = new KeyValue(player2.xProperty(), 0);
+				KeyValue kv2 = new KeyValue(player2.yProperty(), 0);
+				KeyValue kv3 = new KeyValue(player2.xProperty(), 0);
+				KeyValue kv4 = new KeyValue(player2.yProperty(), Main.SCREENHEIGHT - player2.getFitHeight());
+				KeyValue kv5 = new KeyValue(player2.xProperty(), Main.SCREENWIDTH - player2.getFitHeight());
+				KeyValue kv6 = new KeyValue(player2.yProperty(), 0);
+				KeyValue kv7 = new KeyValue(player2.scaleYProperty(), 0);
+				KeyValue kv8 = new KeyValue(player2.scaleXProperty(), 0);
+				KeyValue kv9 = new KeyValue(player2.rotateProperty(), 1440);
+				KeyFrame kf1 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv1);
+				KeyFrame kf2 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv2);
+				KeyFrame kf3 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 3 / 2), kv3);
+				KeyFrame kf4 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 3 / 2), kv4);
+				KeyFrame kf5 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 5 / 2), kv5);
+				KeyFrame kf6 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 5 / 2), kv6);
+				KeyFrame kf7 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 7 / 2), kv7);
+				KeyFrame kf8 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 7 / 2), kv8);
+				KeyFrame kf9 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 5 / 2), kv9);
+				line.getKeyFrames().addAll(kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9);
+				line.setOnFinished(e -> {
 					System.out.print("Die Finished");
 					this.getChildren().remove(ss);
 					border.setRight(player2);
 					c.countDown();
 				});
-				Platform.runLater(()->{
+				Platform.runLater(() -> {
 					this.getChildren().add(ss);
 					p2Image.setImage(null);
 					line.play();
 				});
 			} else if (flag == GenerateParent.PLAYER_DIE) {
-				AnchorPane sss = new AnchorPane ();
-				ImageView sssss = new ImageView ();
+				AnchorPane sss = new AnchorPane();
+				ImageView sssss = new ImageView();
 				sssss.setFitHeight(Main.SCREENHEIGHT);
 				sssss.setFitWidth(Main.SCREENWIDTH);
 				sssss.setX(0);
 				sssss.setY(0);
 				sss.getChildren().add(sssss);
-				Timeline line = new Timeline ();
-				KeyValue kv1 = new KeyValue (p1Image.rotateProperty(),45);
-				KeyValue kv2 = new KeyValue (p1Image.rotateProperty(),0);
-				KeyValue kv3 = new KeyValue (p1Image.rotateProperty(),-45);
-				KeyValue kv4 = new KeyValue (p1Image.scaleXProperty(),1.6);
-				KeyValue kv5 = new KeyValue (p1Image.scaleXProperty(),1);
-				KeyValue kv6 = new KeyValue (p1Image.scaleXProperty(),0.4);
-				KeyValue kv7 = new KeyValue (p1Image.scaleYProperty(),1.6);
-				KeyValue kv8 = new KeyValue (p1Image.scaleYProperty(),1);
-				KeyValue kv9 = new KeyValue (p1Image.scaleYProperty(),0.4);
-				KeyFrame kf1 = new KeyFrame (Duration.millis(DIEMOVEDELTA/3),kv1);
-				KeyFrame kf2 = new KeyFrame (Duration.millis(DIEMOVEDELTA*2/3),kv2);
-				KeyFrame kf3 = new KeyFrame (Duration.millis(DIEMOVEDELTA*3/3),kv3);
-				KeyFrame kf4 = new KeyFrame (Duration.millis(DIEMOVEDELTA*4/3),kv2);
-				KeyFrame kf5 = new KeyFrame (Duration.millis(DIEMOVEDELTA*5/3),kv1);
-				KeyFrame kf6 = new KeyFrame (Duration.millis(DIEMOVEDELTA*6/3),kv2);
-				KeyFrame kf7 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/3),kv4);
-				KeyFrame kf8 = new KeyFrame (Duration.millis(DIEMOVEDELTA*7/3),kv9);
-				KeyFrame kf9 = new KeyFrame (Duration.millis(DIEMOVEDELTA*8/3),kv5);
-				KeyFrame kf10 = new KeyFrame (Duration.millis(DIEMOVEDELTA*8/3),kv8);
-				KeyFrame kf11 = new KeyFrame (Duration.millis(DIEMOVEDELTA*9/3),kv6);
-				KeyFrame kf12 = new KeyFrame (Duration.millis(DIEMOVEDELTA*9/3),kv7);
-				KeyFrame kf13 = new KeyFrame (Duration.millis(DIEMOVEDELTA*10/3),kv5);
-				KeyFrame kf14 = new KeyFrame (Duration.millis(DIEMOVEDELTA*10/3),kv8);
-				line.getKeyFrames().addAll(kf1,kf2,kf3,kf4,kf5,kf6,kf7,kf8,
-						kf9,kf10,kf11,kf12,kf13,kf14);
-				line.setOnFinished(e->{
+				Timeline line = new Timeline();
+				KeyValue kv1 = new KeyValue(p1Image.rotateProperty(), 45);
+				KeyValue kv2 = new KeyValue(p1Image.rotateProperty(), 0);
+				KeyValue kv3 = new KeyValue(p1Image.rotateProperty(), -45);
+				KeyValue kv4 = new KeyValue(p1Image.scaleXProperty(), 1.6);
+				KeyValue kv5 = new KeyValue(p1Image.scaleXProperty(), 1);
+				KeyValue kv6 = new KeyValue(p1Image.scaleXProperty(), 0.4);
+				KeyValue kv7 = new KeyValue(p1Image.scaleYProperty(), 1.6);
+				KeyValue kv8 = new KeyValue(p1Image.scaleYProperty(), 1);
+				KeyValue kv9 = new KeyValue(p1Image.scaleYProperty(), 0.4);
+				KeyFrame kf1 = new KeyFrame(Duration.millis(DIEMOVEDELTA / 3), kv1);
+				KeyFrame kf2 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 2 / 3), kv2);
+				KeyFrame kf3 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 3 / 3), kv3);
+				KeyFrame kf4 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 4 / 3), kv2);
+				KeyFrame kf5 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 5 / 3), kv1);
+				KeyFrame kf6 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 6 / 3), kv2);
+				KeyFrame kf7 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 7 / 3), kv4);
+				KeyFrame kf8 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 7 / 3), kv9);
+				KeyFrame kf9 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 8 / 3), kv5);
+				KeyFrame kf10 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 8 / 3), kv8);
+				KeyFrame kf11 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 9 / 3), kv6);
+				KeyFrame kf12 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 9 / 3), kv7);
+				KeyFrame kf13 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 10 / 3), kv5);
+				KeyFrame kf14 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 10 / 3), kv8);
+				line.getKeyFrames().addAll(kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9, kf10, kf11, kf12, kf13, kf14);
+				line.setOnFinished(e -> {
 					this.getChildren().remove(sss);
 					c.countDown();
 				});
-				Platform.runLater(()->{
+				Platform.runLater(() -> {
 					this.getChildren().add(sss);
 					line.play();
 				});
 			} else if (flag == GenerateParent.NEXT_AI) {
-				
-				Platform.runLater(()->{
+
+				Platform.runLater(() -> {
 					border.setRight(null);
 					player2 = new AnchorPane();
-					p2Image = new ImageView(new Image("Graphics/Player/Player"+this.platform.getPlayer2().getPlayer().getPro()+".gif"));
+					p2Image = new ImageView(new Image(
+							"Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + ".gif"));
 					p2Image.setFitHeight(PLAYERHEIGHT);
 					p2Image.setFitWidth(PLAYERWIDTH);
 					p2Image.setX(0);
 					p2Image.setY(0);
 					border.setRight(p2Image);
 					BorderPane.setAlignment(border.getRight(), Pos.CENTER_LEFT);
-					Timeline line = new Timeline ();
-					KeyValue kv1 = new KeyValue (p2Image.scaleXProperty(),1);
-					KeyValue kv2 = new KeyValue (p2Image.scaleYProperty(),1);
-					KeyFrame kf1 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv1);
-					KeyFrame kf2 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv2);
-					line.getKeyFrames().addAll(kf1,kf2);
-					AnchorPane sss = new AnchorPane ();
-					ImageView sssss = new ImageView ();
+					Timeline line = new Timeline();
+					KeyValue kv1 = new KeyValue(p2Image.scaleXProperty(), 1);
+					KeyValue kv2 = new KeyValue(p2Image.scaleYProperty(), 1);
+					KeyFrame kf1 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv1);
+					KeyFrame kf2 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv2);
+					line.getKeyFrames().addAll(kf1, kf2);
+					AnchorPane sss = new AnchorPane();
+					ImageView sssss = new ImageView();
 					sssss.setFitHeight(Main.SCREENHEIGHT);
 					sssss.setFitWidth(Main.SCREENWIDTH);
 					sssss.setX(0);
 					sssss.setY(0);
 					sss.getChildren().add(sssss);
-					line.setOnFinished(e->{
+					line.setOnFinished(e -> {
 						System.out.println("Next AI Finished");
 						this.getChildren().remove(sss);
-						border.setBottom(null);
-						addPool(true);
+//						border.setBottom(null);
+//						addPool(true);
+						pools.setCenter(null);
+						playerBoard = new PlayerBoard(this.platform);
+						pools.setCenter(playerBoard);
+						BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
 						c.countDown();
+//						new Thread(new Runnable(){
+//
+//							@Override
+//							public void run() {
+//								// TODO Auto-generated method stub
+//								boolean[] flag2 = new boolean[3];
+//								CountDownLatch tempcc = new CountDownLatch (2);
+//								for (int i = 0; i < 3; i++) {
+//									if (platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
+//										flag2[i] = true;
+//									} else {
+//										flag2[i] = false;
+//									}
+//								}
+//								pool1.renewSkill(flag2,tempcc);
+//								for (int i = 0; i < 3; i++) {
+//									if (platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
+//										flag2[i] = true;
+//									} else {
+//										flag2[i] = false;
+//									}
+//								}
+//								pool2.renewSkill(flag2,tempcc);
+//								try {
+//									tempcc.await();
+//								} catch (Exception ee) {
+//									// TODO Auto-generated catch block
+//									ee.printStackTrace();
+//								}
+//							}
+//							
+//						}).start();
 						
 					});
 					this.getChildren().add(sss);
-					
+
 					p2Image.setScaleX(0);
 					p2Image.setScaleY(0);
 					line.play();
 				});
+				
 			}
 		}
 	}
@@ -520,6 +559,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			flag = true;
 			changeRound();
 		}
+
 		renewBoard();
 		// 输出着玩
 		System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
@@ -589,55 +629,60 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		}
 
 	}
-	Image actionPlayer=null;
-	Image targetPlayer=null;
-	ImageView pp1 = null;//new ImageView (p1Static);
-	ImageView pp2 = null;
-	public void showSkillFlash(ActionPo actionPo,CountDownLatch c){
-		AnchorPane temp = new AnchorPane ();
-		temp.setBackground(this.getBackground());
-		Image p1Static = new Image("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+".gif");
-		Image p2Static = new Image("Graphics/Player/Player"+this.platform.getPlayer2().getPlayer().getPro()+".gif");
 
-		pp1 = new ImageView (p1Static);
-		pp2 = new ImageView (p2Static);
+	Image actionPlayer = null;
+	Image targetPlayer = null;
+	ImageView pp1 = null;// new ImageView (p1Static);
+	ImageView pp2 = null;
+
+	public void showSkillFlash(ActionPo actionPo, CountDownLatch c) {
+		AnchorPane temp = new AnchorPane();
+		temp.setBackground(this.getBackground());
+		Image p1Static = new Image("Graphics/Player/Player" + this.platform.getPlayer1().getPlayer().getPro() + ".gif");
+		Image p2Static = new Image("Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + ".gif");
+
+		pp1 = new ImageView(p1Static);
+		pp2 = new ImageView(p2Static);
 		pp1.setFitHeight(SKILLPLAYERHEIGHT);
 		pp1.setFitWidth(SKILLPLAYERHEIGHT);
 		pp1.setX(border.getLeft().getLayoutX());
-		pp1.setY(Main.SCREENHEIGHT/2-SKILLPLAYERHEIGHT/2);
+		pp1.setY(Main.SCREENHEIGHT / 2 - SKILLPLAYERHEIGHT / 2);
 		temp.getChildren().add(pp1);
 		pp2.setFitHeight(SKILLPLAYERHEIGHT);
 		pp2.setFitWidth(SKILLPLAYERWIDTH);
 		pp2.setX(border.getRight().getLayoutX());
-		pp2.setY(Main.SCREENHEIGHT/2-SKILLPLAYERHEIGHT/2);
+		pp2.setY(Main.SCREENHEIGHT / 2 - SKILLPLAYERHEIGHT / 2);
 		temp.getChildren().add(pp2);
-		Timeline line = new Timeline ();
-		line.setOnFinished(e->{
-//			pp1.setImage(new Image ("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif"));
-			if (actionPo.getActionPlayerID()==1){
+		Timeline line = new Timeline();
+		line.setOnFinished(e -> {
+			// pp1.setImage(new Image
+			// ("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif"));
+			if (actionPo.getActionPlayerID() == 1) {
 				pp1.setImage(actionPlayer);
-				Text damage = new Text("-"+actionPo.getEffectValue());
+				Text damage = new Text("-" + actionPo.getEffectValue());
 				damage.setId("damage");
-				damage.setX(pp2.getX()+pp2.getFitWidth()/2);
+				damage.setX(pp2.getX() + pp2.getFitWidth() / 2);
 				damage.setY(pp2.getY());
 				temp.getChildren().add(damage);
 				Timeline line2 = new Timeline();
-				line2.getKeyFrames().add(new KeyFrame (Duration.millis(1000),new KeyValue (damage.yProperty(),damage.getY()-200)));
+				line2.getKeyFrames().add(
+						new KeyFrame(Duration.millis(1000), new KeyValue(damage.yProperty(), damage.getY() - 200)));
 				line2.play();
-			}else{
+			} else {
 				pp2.setImage(actionPlayer);
-				Text damage = new Text("-"+actionPo.getEffectValue());
+				Text damage = new Text("-" + actionPo.getEffectValue());
 				damage.setId("damage");
-				damage.setX(pp1.getX()+pp1.getFitWidth()/2);
+				damage.setX(pp1.getX() + pp1.getFitWidth() / 2);
 				damage.setY(pp1.getY());
 				temp.getChildren().add(damage);
 				Timeline line2 = new Timeline();
-				line2.getKeyFrames().add(new KeyFrame (Duration.millis(1000),new KeyValue (damage.yProperty(),damage.getY()-200)));
+				line2.getKeyFrames().add(
+						new KeyFrame(Duration.millis(1000), new KeyValue(damage.yProperty(), damage.getY() - 200)));
 				line2.play();
 			}
 
-			new Thread (new Runnable(){
-				
+			new Thread(new Runnable() {
+
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
@@ -647,30 +692,35 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					Platform.runLater(()->{
+					Platform.runLater(() -> {
 						getChildren().remove(1);
 						c.countDown();
 					});
 				}
-				
+
 			}).start();
-			
+
 		});
-		if (actionPo.getActionPlayerID()==1){
-			actionPlayer = new Image("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif");
-			KeyFrame kf1 = new KeyFrame (Duration.millis(SKILLMOVEDELTA),new KeyValue (pp1.xProperty(),pp2.getX()-SKILLPLAYERWIDTH/3));
+		if (actionPo.getActionPlayerID() == 1) {
+			actionPlayer = new Image("Graphics/Player/Player" + this.platform.getPlayer1().getPlayer().getPro() + "_"
+					+ actionPo.getSkillID() + ".gif");
+			KeyFrame kf1 = new KeyFrame(Duration.millis(SKILLMOVEDELTA),
+					new KeyValue(pp1.xProperty(), pp2.getX() - SKILLPLAYERWIDTH / 3));
 			line.getKeyFrames().addAll(kf1);
-		}else{
-			actionPlayer = new Image ("Graphics/Player/Player"+this.platform.getPlayer2().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif");
-			KeyFrame kf1 = new KeyFrame (Duration.millis(SKILLMOVEDELTA),new KeyValue (pp2.xProperty(),pp1.getX()+SKILLPLAYERWIDTH/3));
-			
+		} else {
+			actionPlayer = new Image("Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + "_"
+					+ actionPo.getSkillID() + ".gif");
+			KeyFrame kf1 = new KeyFrame(Duration.millis(SKILLMOVEDELTA),
+					new KeyValue(pp2.xProperty(), pp1.getX() + SKILLPLAYERWIDTH / 3));
+
 			line.getKeyFrames().addAll(kf1);
 		}
-		Platform.runLater(()->{
+		Platform.runLater(() -> {
 			this.getChildren().add(temp);
 			line.play();
 		});
 	}
+
 	public void skillaction() {
 		// 更新后端数据
 		ActionPo actionPo = this.platform.useSkill(round, skillID);
@@ -680,10 +730,10 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		} else {
 			this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
 		}
-		
+
 		// 技能动画：阻塞式
 		CountDownLatch c = new CountDownLatch(1);
-		showSkillFlash(actionPo,c);
+		showSkillFlash(actionPo, c);
 		try {
 			c.await();
 		} catch (InterruptedException e) {
@@ -699,18 +749,51 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		boolean[] flag2 = new boolean[3];
+		CountDownLatch tempcc = new CountDownLatch (2);
+		for (int i = 0; i < 3; i++) {
+			if (platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
+				flag2[i] = true;
+			} else {
+				flag2[i] = false;
+			}
+		}
+		for (int i=0;i<3;i++){
+			System.out.print(flag2[i]+"|||||||");
+		}
+		System.out.println();
+		pool1.renewSkill(flag2.clone(),tempcc);
+//		tempcc = new CountDownLatch(1);
+		for (int i = 0; i < 3; i++) {
+			if (platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
+				flag2[i] = true;
+			} else {
+				flag2[i] = false;
+			}
+		}
+		for (int i=0;i<3;i++){
+			System.out.print(flag2[i]+"|||||||");
+		}
+		System.out.println();
+		pool2.renewSkill(flag2.clone(),tempcc);
+		try {
+			tempcc.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		BattlePo checkResult = this.platform.check();
 		System.out.println("Finished Check");
-		if ((!checkResult.isBattleIsEnd())&&(!checkResult.isThisAIDie())) {
+		if ((!checkResult.isBattleIsEnd()) && (!checkResult.isThisAIDie())) {
 			System.out.println();
 			changeRound();
-		}else{
-			if (checkResult.isBattleIsEnd()){
+		} else {
+			if (checkResult.isBattleIsEnd()) {
 				System.out.println("Battle End!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			}else if (checkResult.isThisAIDie()){
+			} else if (checkResult.isThisAIDie()) {
 				System.out.println("This AI DIE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 				showNextAIFlash();
-				round=2;
+				round = 2;
 				changeRound();
 			}
 		}
@@ -809,6 +892,41 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			matrix.setVisible(true);
 			;
 		});
+		boolean[] flag2 = new boolean[3];
+		if (pool1 != null) {
+			CountDownLatch tempcc = new CountDownLatch(1);
+			for (int i = 0; i < 3; i++) {
+				if (platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
+					flag2[i] = true;
+				} else {
+					flag2[i] = false;
+				}
+			}
+			pool1.renewSkill(flag2.clone(),tempcc);
+			try {
+				tempcc.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (pool2 != null) {
+			CountDownLatch tempcc = new CountDownLatch(1);
+			for (int i = 0; i < 3; i++) {
+				if (platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
+					flag2[i] = true;
+				} else {
+					flag2[i] = false;
+				}
+			}
+			pool2.renewSkill(flag2.clone(), tempcc);
+			try {
+				tempcc.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	CountDownLatch ace;
