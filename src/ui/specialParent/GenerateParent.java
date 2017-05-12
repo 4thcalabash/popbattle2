@@ -19,6 +19,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -76,6 +77,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int DIEMOVEDELTA = 400;
 	public static final int BATTLEENDHEIGHT = (int) (Main.SCREENHEIGHT * 0.1);
 	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 3;
+	public static final int LABELHEIGHT = TOPIMAGEHEIGHT;
+	public static final int LABELWIDTH =TOPIMAGEWIDTH*8/10;
+	private Label text;
 	private BorderPane border = new BorderPane();
 	protected DotPo dot1 = new DotPo(-1, -1);
 	protected DotPo dot2 = new DotPo(-1, -1);
@@ -100,6 +104,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	protected AnchorPane player1 = null, player2 = null;
 	protected boolean skillRequest = false;
 	protected int skillID;
+	private int nowAI = 1;
+	private int allAI; 
 	public static final int PLAYERWIDTH = (int) (((Main.SCREENWIDTH - TOPIMAGEWIDTH) / 2 - PLAYERIMAGEGAP));
 	public static final int PLAYERHEIGHT = (int) (PLAYERWIDTH * 1.18);
 	public static final int SKILLPLAYERWIDTH = (int) (PLAYERWIDTH * 0.7);
@@ -184,6 +190,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		new1 = false;
 		new2 = false;
 		result = platform.check();
+		allAI = platform.getAINum();
+		nowAI =1;
 	}
 
 	public void showFlash(int flag, CountDownLatch c) {
@@ -353,6 +361,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			}
 		} else {
 			if (flag == GenerateParent.AI_DIE) {
+				nowAI++;
+			
 				AnchorPane ss = new AnchorPane();
 				ImageView sss = new ImageView();
 				sss.setFitHeight(Main.SCREENHEIGHT);
@@ -396,6 +406,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				});
 				Platform.runLater(() -> {
 					this.getChildren().add(ss);
+					
 					p2Image.setImage(null);
 					line.play();
 				});
@@ -443,6 +454,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			} else if (flag == GenerateParent.NEXT_AI) {
 
 				Platform.runLater(() -> {
+					text.setText("Battle"+nowAI+"/"+platform.getAINum());
 					border.setRight(null);
 					player2 = new AnchorPane();
 					p2Image = new ImageView(new Image(
@@ -454,11 +466,15 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					border.setRight(p2Image);
 					BorderPane.setAlignment(border.getRight(), Pos.CENTER_LEFT);
 					Timeline line = new Timeline();
+					KeyValue kv00 = new KeyValue (p2Image.scaleXProperty(),0);
+					KeyValue kv01 = new KeyValue (p2Image.scaleYProperty(),0);
 					KeyValue kv1 = new KeyValue(p2Image.scaleXProperty(), 1);
 					KeyValue kv2 = new KeyValue(p2Image.scaleYProperty(), 1);
-					KeyFrame kf1 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv1);
-					KeyFrame kf2 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv2);
-					line.getKeyFrames().addAll(kf1, kf2);
+					KeyFrame kf00 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv00);
+					KeyFrame kf01 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv01);
+					KeyFrame kf1 = new KeyFrame(Duration.millis(DIEMOVEDELTA*2), kv1);
+					KeyFrame kf2 = new KeyFrame(Duration.millis(DIEMOVEDELTA*2), kv2);
+					line.getKeyFrames().addAll(kf00,kf01,kf1, kf2);
 					AnchorPane sss = new AnchorPane();
 					ImageView sssss = new ImageView();
 					sssss.setFitHeight(Main.SCREENHEIGHT);
@@ -850,13 +866,19 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		top.setFitWidth(GenerateParent.TOPIMAGEWIDTH);
 		top.setX(0);
 		top.setY(0);
-
+		text = new Label();
+		text.setId("text");
+		text.setText("Battle"+nowAI+"/"+platform.getAINum());
+		text.setLayoutX((TOPIMAGEWIDTH)*42/100);
+		text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
+		
 		matrix = new GridPane();
 		matrix.setId("Matrix");
 		matrix.setLayoutX((TOPIMAGEWIDTH - 8 * GenerateParent.LENGTH) / 2);
 		matrix.setLayoutY(TOPIMAGEHEIGHT - DELTALENGTH);
 		center.getChildren().add(matrix);
 		center.getChildren().add(top);
+		center.getChildren().add(text);
 		matrix.setMaxHeight(GenerateParent.LENGTH * 10);
 		matrix.setMaxWidth(GenerateParent.LENGTH * 8);
 		matrixPo = this.platform.getMatrix();
@@ -968,6 +990,12 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 
 			center.getChildren().add(sub);
 			center.getChildren().add(top);
+			text = new Label();
+			text.setId("text");
+			text.setText("Battle"+nowAI+"/"+platform.getAINum());
+			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
+			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
+			center.getChildren().add(text);
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					if (i == dot1.getX() && j == dot1.getY() || i == dot2.getX() && j == dot2.getY()) {
@@ -1167,18 +1195,24 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			top.setFitWidth(GenerateParent.TOPIMAGEWIDTH);
 			top.setX(0);
 			top.setY(0);
-
+			
 			sub = new AnchorPane();
 			sub.setMaxHeight(10 * GenerateParent.LENGTH);
 			sub.setMaxWidth(8 * GenerateParent.LENGTH);
 			sub.setMinHeight(getMaxHeight());
 			sub.setMinWidth(getMaxWidth());
 			sub.setId("Matrix");
-
+			text = new Label();
+			text.setId("text");
+			text.setText("Battle"+nowAI+"/"+platform.getAINum());
+			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
+			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
+			
 			sub.setLayoutX((TOPIMAGEWIDTH - 8 * GenerateParent.LENGTH) / 2);
 			sub.setLayoutY(TOPIMAGEHEIGHT - DELTALENGTH);
 			center.getChildren().add(sub);
 			center.getChildren().add(top);
+			center.getChildren().add(text);
 			border.setCenter(center);
 
 			Timeline line = new Timeline();
@@ -1587,9 +1621,15 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			center.setMaxWidth(TOPIMAGEWIDTH);
 			center.setMinHeight(TOPIMAGEHEIGHT);
 			center.setMinWidth(getMaxWidth());
-
+			text = new Label();
+			text.setId("text");
+			text.setText("Battle"+nowAI+"/"+platform.getAINum());
+			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
+			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
+			
 			center.getChildren().add(sub);
 			center.getChildren().add(top);
+			center.getChildren().add(text);
 			border.setCenter(center);
 			// Æô¶¯¶¯»­
 			if (hasAChick) {

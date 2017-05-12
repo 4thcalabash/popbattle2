@@ -1,9 +1,7 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
-@font-face{
-	src:url('字体管家青葱体.ttf');
-}
+
 .root{
 	-fx-background-image: url("specialParent/background.png"); 
     -fx-background-size:stretch stretch;
@@ -23,6 +21,9 @@ Text{
 @font-face{
 	font-family:MyFont;
 	src: url('MyFont.ttf');
+}
+@font-face{
+	src:url('字体管家青葱体.ttf');
 }
 Label{
 	-fx-font-family:"字体管家青葱";

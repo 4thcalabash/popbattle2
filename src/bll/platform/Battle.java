@@ -21,6 +21,7 @@ public class Battle implements BattlePlatform{
 	private MissionVo missionVo;
 	private int nowAIindex;
 	private Bonus bonus;
+	private int AINum;
 	private FileHelper helper = new FileHelper();
 //	private int [] pool1 = new int [Matrix.KIND+1];
 //	private int [] pool2 = new int [Matrix.KIND+1];
@@ -40,6 +41,11 @@ public class Battle implements BattlePlatform{
 		ArrayList <Popable> popList = new ArrayList<Popable>();
 		popList.add(new MoreThanThreeLinePop());
 		popHub = new PopMethodHub (popList,chessboard);
+		AINum = missionVo.getAIID().size();
+	}
+	@Override
+	public int getAINum(){
+		return AINum;
 	}
 	//NORMALģʽ
 	public Battle (int missionID){

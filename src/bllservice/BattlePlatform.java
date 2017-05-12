@@ -3,6 +3,7 @@ import bll.individual.PaperPlayer;
 import bll.support.Bonus;
 import po.*;
 public interface BattlePlatform {
+	public int getAINum();
 	public PaperPlayer getPlayer1();
 	public PaperPlayer getPlayer2();
 	public AIStrategyPo getAIStrategy();
