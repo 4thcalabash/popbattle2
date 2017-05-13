@@ -772,7 +772,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		boolean[] flag2 = new boolean[3];
 		CountDownLatch tempcc = new CountDownLatch (2);
 		for (int i = 0; i < 3; i++) {
-			if (platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
+			if (platform.getPlayer1().getAllSkills()[i]!=null&&platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
 				flag2[i] = true;
 			} else {
 				flag2[i] = false;
@@ -922,7 +922,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		if (pool1 != null) {
 			CountDownLatch tempcc = new CountDownLatch(1);
 			for (int i = 0; i < 3; i++) {
-				if (platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
+				if (platform.getPlayer1().getAllSkills()[i]!=null&&platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
 					flag2[i] = true;
 				} else {
 					flag2[i] = false;

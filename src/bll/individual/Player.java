@@ -457,4 +457,55 @@ public class Player implements Calcable{
 				Equip.getEquipByID(wingsID).getMT(this.wingsLevel);
 		System.out.println(ad+" "+ap+" "+hp+" "+DR+" "+MR);
 	}
+	public static String[] getIntroduction(Player player){
+		String ans0="你是一个";
+		String ans1="";
+		String ans2="";
+		if (player.getLevel()<3){
+			ans0+="初级元素师,怀揣着拯救世界的理想，并为之不断努力着\n";
+		}else if (player.getLevel()<6){
+			ans0+="入门元素师，在战斗中不断磨练自己\n";
+		}else if (player.getLevel()<12){
+			ans0+="进阶元素师，追求更强大的能力\n";
+		}else{
+			ans0+="高级元素师，深谙元素之力\n";
+		}
+		int flag=-1;
+		int temp=-1;
+		if (player.getAd()>temp){
+			flag=0;
+			temp=player.getAd();
+		}else if (player.ap>temp){
+			flag=1;
+			temp = player.getAp();
+		}else if (player.getDR()>temp){
+			flag=2;
+			temp = player.getDR();
+		}else if (player.getMR()>temp){
+			flag=3;
+			temp=player.getMR();
+		}
+		if (flag==1||flag==0){
+			ans1+="你有很强的进攻性，能对敌人造成大量伤害\n";
+			int max = player.getDR()>player.getMR()?player.getDR():player.getMR();
+			if (max*3/2>=temp){
+				ans2+="同时你也很注重防守，能够做到攻守兼备";
+			}else{
+				ans2+="但是你不太注重防守，可能被敌人一波带走";
+			}
+		}else{
+			ans1+="你有很强的韧性，能够与敌人长时间周旋\n";
+			int max = player.getAd()>player.getAp()?player.getAd():player.getAp();
+			if (max*3/2>=temp){
+				ans2+="同时你也很注重进攻，能够有效消耗敌人";
+			}else{
+				ans2+="但是你不太注重进攻，不能对敌人造成致命一击";
+			}
+		}
+		String [] ans = new String [3];
+		ans[0]=ans0;
+		ans[1]=ans1;
+		ans[2]=ans2;
+		return ans;
+	}
 }

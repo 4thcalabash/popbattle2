@@ -1,6 +1,7 @@
 package ui.supportRoot;
 
 import bll.individual.Player;
+import bll.support.Skill;
 import bllservice.Chooseable;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -104,6 +105,9 @@ public class SkillChooser extends AnchorPane {
 					player.getSkillChoosed()[temp]=player.getPro()+i;
 					temp++;
 				}
+			}
+			for (int i=temp;i<3;i++){
+				player.getSkillChoosed()[i]=Skill.NULLSKILL;
 			}
 			main.createDone();
 		}

@@ -7,40 +7,40 @@ import util.*;
 //本身不记录等级，只提供计算方法
 public class Equip{
 	public static final int ID_NULL = -1;
-	public static final int ID_GOLDWEARING = 1;
-	public static final int ID_GOLDHEADWEARING =2;
-	public static final int ID_GOLDSWORD =3;
-	public static final int ID_GOLDWINGS =4;
+	public static final int ID_IRONWEARING = 1;
+	public static final int ID_IRONHEADWEARING =2;
+	public static final int ID_IRONSWORD =3;
+	public static final int ID_IRONWINGS =4;
 	
 	
-	public static final String[] INTRODUCTION_GOLDWEARING = { "GOLD", "GOLDD", "GOLDDD" };
-	public static final String[] INTRODUCTION_GOLDHEADWEARING = {"GOLD","GOLDD","GOLDDD"};
-	public static final String[] INTRODUCTION_GOLDSWORD = {"GOLD","GOLDD","GOLDDD"};
-	public static final String[] INTRODUCTION_GOLDWINGS ={"GOLD","GOLDD","GOLDDD"};
+	public static final String[] INTRODUCTION_IRONWEARING = { "IRON", "IROND", "IRONDD" };
+	public static final String[] INTRODUCTION_IRONHEADWEARING = {"IRON","IROND","IRONDD"};
+	public static final String[] INTRODUCTION_IRONSWORD = {"IRON","IROND","IRONDD"};
+	public static final String[] INTRODUCTION_IRONWINGS ={"IRON","IROND","IRONDD"};
 	
 //ID,MAXLEVEL,ADCalcMethod,APCalcMethod,DRCalcMethod,MRCalcMethod,DTCalcMethod,MTCalcMethod,levelUpCostCalcMethod,equipIntroduction,evolveEquipID
-	public static final Equip GOLDWEARING = new Equip(Equip.ID_GOLDWEARING, 3, new Calcer(5,10,15),new Calcer(0,0,0),new Calcer(0,0,0), 
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,-1), Equip.INTRODUCTION_GOLDWEARING,Equip.ID_NULL);
-	public static final Equip GOLDHEADWEARING = new Equip(Equip.ID_GOLDHEADWEARING, 3,new Calcer(10,20,30),new Calcer(0,0,0),new Calcer(0,0,0),
-			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,-1), Equip.INTRODUCTION_GOLDHEADWEARING,Equip.ID_NULL);
-	public static final Equip GOLDSWORD = new Equip (Equip.ID_GOLDSWORD,3,new Calcer(0,0,0),new Calcer(5,10,15),new Calcer(0,0,10),
-			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),new Calcer(1,2,-1),Equip.INTRODUCTION_GOLDSWORD,Equip.ID_NULL);
-	public static final Equip GOLDSWINGS = new Equip (Equip.ID_GOLDWINGS,3,new Calcer(5,15,25),new Calcer(3,6,9),new Calcer(3,6,9),
-			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(1,2,2),Equip.INTRODUCTION_GOLDWINGS,Equip.GOLDSWORD.getID());
+	public static final Equip IRONWEARING = new Equip(Equip.ID_IRONWEARING, 3, new Calcer(5,10,15),new Calcer(0,0,0),new Calcer(0,0,0), 
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,-1), Equip.INTRODUCTION_IRONWEARING,Equip.ID_NULL);
+	public static final Equip IRONHEADWEARING = new Equip(Equip.ID_IRONHEADWEARING, 3,new Calcer(10,20,30),new Calcer(0,0,0),new Calcer(0,0,0),
+			new Calcer(5,10,15), new Calcer(5,10,15), new Calcer(0,0,0), new Calcer(0,0,0),new Calcer(1,2,-1), Equip.INTRODUCTION_IRONHEADWEARING,Equip.ID_NULL);
+	public static final Equip IRONSWORD = new Equip (Equip.ID_IRONSWORD,3,new Calcer(0,0,0),new Calcer(5,10,15),new Calcer(0,0,10),
+			new Calcer(0,0,0),new Calcer(0,0,0),new Calcer(0,5,10),new Calcer(0,5,10),new Calcer(1,2,-1),Equip.INTRODUCTION_IRONSWORD,Equip.ID_NULL);
+	public static final Equip IRONSWINGS = new Equip (Equip.ID_IRONWINGS,3,new Calcer(5,15,25),new Calcer(3,6,9),new Calcer(3,6,9),
+			new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(3,6,9),new Calcer(1,2,2),Equip.INTRODUCTION_IRONWINGS,Equip.IRONSWORD.getID());
 	
 	
 
 
 	public static Equip getEquipByID(int i) {
 		switch (i) {
-		case Equip.ID_GOLDWEARING:
-			return Equip.GOLDWEARING;
-		case Equip.ID_GOLDHEADWEARING:
-			return Equip.GOLDHEADWEARING;
-		case Equip.ID_GOLDSWORD:
-			return Equip.GOLDSWORD;
-		case Equip.ID_GOLDWINGS:
-			return Equip.GOLDSWINGS;
+		case Equip.ID_IRONWEARING:
+			return Equip.IRONWEARING;
+		case Equip.ID_IRONHEADWEARING:
+			return Equip.IRONHEADWEARING;
+		case Equip.ID_IRONSWORD:
+			return Equip.IRONSWORD;
+		case Equip.ID_IRONWINGS:
+			return Equip.IRONSWINGS;
 		default:
 			return null;
 		}
@@ -52,14 +52,14 @@ public class Equip{
 
 	public static String getEquipNameByID(int i) {
 		switch (i) {
-		case Equip.ID_GOLDWEARING:
-			return "黄金甲";
-		case Equip.ID_GOLDHEADWEARING:
-			return "黄金头盔";
-		case Equip.ID_GOLDSWORD:
-			return "黄金剑";
-		case Equip.ID_GOLDWINGS:
-			return "黄金翅膀";
+		case Equip.ID_IRONWEARING:
+			return "锁子甲";
+		case Equip.ID_IRONHEADWEARING:
+			return "旧铁盔";
+		case Equip.ID_IRONSWORD:
+			return "精钢剑";
+		case Equip.ID_IRONWINGS:
+			return "夜明戒";
 		default:
 			return null;
 		}

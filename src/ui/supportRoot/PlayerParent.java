@@ -75,7 +75,7 @@ public class PlayerParent extends SupportParent {
 	private ImageButton HPPlus, ADPlus, APPlus, DRPlus, MRPlus;
 	private ImageButton confirm,reset,levelup;
 	private NumberImage level;
-
+	private Label []word;
 	public PlayerParent(Playerable playerPlatform, BasicScene main) {
 		super(playerPlatform, main);
 		
@@ -154,7 +154,31 @@ public class PlayerParent extends SupportParent {
 		addPlusButton();
 		addFunctionButton();
 		addLevel();
+		addWord();
 	}
+	private void addWord(){
+		word = new Label[3];
+		for (int i=0;i<3;i++){
+			word[i] = new Label();
+			word[i].setWrapText(true);
+			word[i].setMaxWidth(TEXTWIDTH);
+			word[i].setId("PlayerIntroduction"+i);
+		}
+		word[0].setLayoutX(LEFTGAP);
+		word[0].setLayoutY(TOPGAP+PHOTOHEIGHT+LEVELHEIGHT);
+		word[1].setLayoutX(word[0].getLayoutX());
+		word[1].setLayoutY(word[0].getLayoutY()+TEXTHEIGHT/3);
+		word[2].setLayoutX(word[0].getLayoutX());
+		word[2].setLayoutY(word[1].getLayoutY()+TEXTHEIGHT/4);
+		board.getChildren().addAll(word);
+		refreshWord();
+	}
+	private void refreshWord(){
+		String [] introduction = Player.getIntroduction(platform.getPlayer1());
+		for (int i=0;i<3;i++){
+			word[i].setText(introduction[i]);
+		}
+}
 	private void addLevel(){
 		ImageView L = new ImageView (new Image("Graphics/Static/Icon/L.png"));
 		L.setFitHeight(LEVELHEIGHT);
@@ -202,6 +226,7 @@ public class PlayerParent extends SupportParent {
 			tempDRP=0;
 			tempMRP=0;
 			checkFuncButton();
+			refreshWord();
 //			new Thread (Sub).start();
 		}
 		
@@ -251,6 +276,7 @@ public class PlayerParent extends SupportParent {
 			EXPfull.refresh(Player.getExpNumberToLevelUp(platform.getPlayer1().getLevel()));
 			PP.refresh(restPP);
 			checkFuncButton();
+			refreshWord();
 //			new Thread (Sub).start();
 		}
 		

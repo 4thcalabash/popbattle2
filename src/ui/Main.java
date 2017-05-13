@@ -27,8 +27,8 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	private StaticParent staticParent = new StaticParent(this);//一直沿用一个staticScene，在battle时隐藏，在非battle时显示。
 	private Stage stage = new Stage();
 	private Scene scene = new Scene (staticParent);
-	public final static int SCREENWIDTH =(int)Screen.getPrimary().getVisualBounds().getWidth();
-	public final static int SCREENHEIGHT = (int)Screen.getPrimary().getVisualBounds().getHeight();
+	public final static int SCREENWIDTH =(int)Screen.getPrimary().getVisualBounds().getWidth()-10;
+	public final static int SCREENHEIGHT = (int)Screen.getPrimary().getVisualBounds().getHeight()-10;
 	
 	public StaticParent getStaticParent() {
 		return staticParent;
@@ -39,7 +39,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		// TODO Auto-generated method stub
 		/**
 		 * 展示staticScene
-		 * 
+		 * .
 		 * 当玩家想要进入battle时，隐藏staticScene（但不销毁），显示battleScene，
 		 * 当battle结束，销毁battleScene，恢复staticScene显示
 		 * 并检查battlePo查看battle结果

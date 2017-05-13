@@ -29,7 +29,10 @@ public class Skill {
 	public static final int ID_HURRICANE = 103;
 	public static final int ID_PRO100_1 = 104;
 	public static final int ID_PRO100_2 = 105;
-	public static final String[] INTRODUCTION_NORMAL = { "a", "b", "c","d" };
+	public static final String[] INTRODUCTION_NORMAL = { "消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害", 
+			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害", 
+			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害",
+			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害" };
 	public static final String[] INTRODUCTION_FIREONGRASS = { "aa", "bb", "cc","dd" };
 	public static final String[] INTRODUCTION_WATERFLOW = { "aaa", "bbb", "ccc","ddd" };
 	public static final String[] INTRODUCTION_HURRICANE = { "aaaa", "bbbb", "cccc","dddd" };

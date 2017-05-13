@@ -4,6 +4,7 @@ import bll.platform.*;
 import bll.support.Equip;
 import bllservice.*;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -67,13 +68,34 @@ public class BagParent extends SupportParent {
 	}
 	private void addNum(){
 		US = new NumberImage(platform.getPlayer1().getUpGradeStoneNum(),NUMBERHEIGHT,NUMBERWIDTH);
-		US.setLayoutX(board.getLayoutX()+BOARDWIDTH);
+		US.setLayoutX(board.getLayoutX()+BOARDWIDTH+NUMBERHEIGHT);
 		US.setLayoutY(board.getLayoutY()+BOARDHEIGHT-NUMBERHEIGHT);
 		this.getChildren().add(US);
 		ES = new NumberImage(platform.getPlayer1().getEvolveStoneNum(),NUMBERHEIGHT,NUMBERWIDTH);
 		ES.setLayoutX(US.getLayoutX());
 		ES.setLayoutY(US.getLayoutY()+NUMBERHEIGHT);
 		this.getChildren().add(ES);
+		ImageView logo1 = new ImageView (new Image("Graphics/Static/Icon/us.png"));
+		logo1.setFitHeight(NUMBERHEIGHT);
+		logo1.setFitWidth(NUMBERHEIGHT);
+		logo1.setX(US.getLayoutX()-NUMBERHEIGHT);
+		logo1.setY(US.getLayoutY());
+		ImageView logo2 = new ImageView (new Image("Graphics/Static/Icon/es.png"));
+		logo2.setFitHeight(NUMBERHEIGHT);
+		logo2.setFitWidth(NUMBERHEIGHT);
+		logo2.setX(ES.getLayoutX()-NUMBERHEIGHT);
+		logo2.setY(ES.getLayoutY());
+		this.getChildren().addAll(logo1,logo2);
+	}
+	public String getVString(String input){
+		String output = "";
+		for (int i=0;i<input.length();i++){
+			output+=input.charAt(i);
+			if (i!=input.length()-1){
+				output+="\n";
+			}
+		}
+		return output;
 	}
 	public class VBoard extends AnchorPane {
 		public static final int VLEFTGAP = 10;
@@ -95,6 +117,7 @@ public class BagParent extends SupportParent {
 		public static final int NUMBERWIDTH = NUMBERHEIGHT * 2 / 3;
 		public static final int LEVELHEIGHT = ICONLENGTH * 2 / 3;
 		public static final int LEVELWIDTH = LEVELHEIGHT * 2 / 3;
+//		public static final int LABELWIDTH = 
 		private PropertyRow HPRow, ADRow, APRow, MRRow, DRRow, MTRow, DTRow;
 		private ImageView Photo;
 		private NumberImage hp, ad, ap, dr, mr, dt, mt;
@@ -103,7 +126,8 @@ public class BagParent extends SupportParent {
 		private NumberImage Level;
 		private ImageButton levelup, evolve;
 		private NumberImage USnum, ESnum;
-
+		private Label name;
+		
 		public VBoard(int equipID, int level) {
 			ImageView background = new ImageView(new Image("Graphics/Static/Equip/VBackground.png"));
 			background.setFitHeight(VBOARDHEIGHT);
@@ -125,8 +149,15 @@ public class BagParent extends SupportParent {
 			addData();
 			addOther();
 			addButton();
+			addLabel();
 		}
-
+		private void addLabel(){
+			name = new Label (getVString(Equip.getEquipNameByID(myEquip.getID())));
+			name.setLayoutX(Photo.getX()+PHOTOWIDTH);
+			name.setLayoutY(Photo.getY());
+			name.setId("SkillLabel");
+			this.getChildren().add(name);
+		}
 		private void addOther() {
 			ImageView US = new ImageView(new Image("Graphics/Static/Icon/US.png"));
 			US.setFitHeight(ICONLENGTH);
@@ -141,14 +172,25 @@ public class BagParent extends SupportParent {
 			ES.setY(VTOPGAP + ICONLENGTH + BUTTONHEIGHT + ICONLENGTH - ICONLENGTH);
 			this.getChildren().add(ES);
 			USnum = new NumberImage(myEquip.getLevelUpCost(level), ICONLENGTH, ICONLENGTH * 2 / 3, "a");
-			// USnum.setSize(ICONLENGTH, ICONLENGTH*2/3);
-			USnum.setLayoutX(US.getX() + ICONLENGTH * 3 / 2);
+			USnum.setLayoutX(US.getX() + ICONLENGTH * 3 / 2+ICONLENGTH);
 			USnum.setLayoutY(US.getY());
 			this.getChildren().add(USnum);
 			ESnum = new NumberImage(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()), ICONLENGTH, ICONLENGTH * 2 / 3, "a");
 			ESnum.setLayoutX(USnum.getLayoutX());
 			ESnum.setLayoutY(USnum.getLayoutY() + ICONLENGTH + BUTTONHEIGHT);
 			this.getChildren().add(ESnum);
+//			ImageView logo1 = new ImageView (new Image("Graphics/Static/Icon/us.png"));
+//			logo1.setFitHeight(ICONLENGTH);
+//			logo1.setFitWidth(ICONLENGTH);
+//			logo1.setX(USnum.getLayoutX()-ICONLENGTH);
+//			logo1.setY(USnum.getLayoutY());
+//			this.getChildren().add(logo1);
+//			ImageView logo2 = new ImageView (new Image ("Graphics/Static/Icon/es.png"));
+//			logo2.setFitHeight(ICONLENGTH);
+//			logo2.setFitWidth(ICONLENGTH);
+//			logo2.setX(ESnum.getLayoutX()-ICONLENGTH);
+//			logo2.setY(ESnum.getLayoutY());
+//			this.getChildren().add(logo2);
 		}
 
 		public void setNullWorker() {
@@ -201,6 +243,7 @@ public class BagParent extends SupportParent {
 				platform.getPlayer1().equipEvolve(myEquip.getID());
 				myEquip = Equip.getEquipByID(myEquip.getEvolveEquipID());
 				Photo.setImage(new Image("Graphics/Equip/" + myEquip.getID() + ".png"));
+				name.setText(getVString(Equip.getEquipNameByID(myEquip.getID())));
 				level = 1;
 				renewProperty();
 				new SetNull().start();
@@ -478,7 +521,7 @@ public class BagParent extends SupportParent {
 		private NumberImage hp, ad, ap, dr, mr, dt, mt;
 		private ImageButton levelup, evolve;
 		private NumberImage USnum, ESnum;
-
+		private Label name;
 		public HBoard(int equipID, int level) {
 			ImageView background = new ImageView(new Image("Graphics/Static/Equip/HBackground.png"));
 			background.setFitHeight(HBOARDHEIGHT);
@@ -499,8 +542,15 @@ public class BagParent extends SupportParent {
 			addData();
 			addOther();
 			addButton();
+			addLabel();
 		}
-
+		private void addLabel(){
+			name = new Label(getVString(Equip.getEquipNameByID(myEquip.getID())));
+			name.setLayoutX(Photo.getX()+PHOTOWIDTH);
+			name.setLayoutY(Photo.getY());
+			name.setId("SkillLabel");
+			this.getChildren().add(name);
+		}
 		public void setNullWorker() {
 			Platform.runLater(()->{
 				levelup.setMyWorker(illegalWorker);
@@ -558,6 +608,7 @@ public class BagParent extends SupportParent {
 				platform.getPlayer1().equipEvolve(myEquip.getID());
 				myEquip = Equip.getEquipByID(myEquip.getEvolveEquipID());
 				Photo.setImage(new Image("Graphics/Equip/" + myEquip.getID() + ".png"));
+				name.setText(getVString(Equip.getEquipNameByID(myEquip.getID())));
 				level = 1;
 				renewProperty();
 				new SetNull().start();

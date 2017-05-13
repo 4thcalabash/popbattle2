@@ -36,7 +36,7 @@ public class ShopParent extends SupportParent {
 	public static final int LEFTTABLEWIDTH = 2 * TABLEGAP + TABLEMIDGAP + 2 * CARDWIDTH;
 	public static final int MIDTABLEWIDTH = CARDWIDTH + 2 * TABLEGAP;
 	public static final int RIGHTTABLEWIDTH = LEFTTABLEWIDTH;
-	public static final int NUMBERHEIGHT = (CARDWIDTH - 2 * ProductCard.CARDGAP) / 7;
+	public static final int NUMBERHEIGHT = (CARDWIDTH - 2 * ProductCard.CARDGAP) / 6;
 	public static final int NUMBERWIDTH = NUMBERHEIGHT * 2 / 3;
 	private AnchorPane board = new AnchorPane();
 	private AnchorPane leftTable, rightTable, midTable;
@@ -226,9 +226,15 @@ public class ShopParent extends SupportParent {
 	private void addGold() {
 		this.gold = platform.getPlayer1().getGold();
 		Gold = new NumberImage(gold, NUMBERHEIGHT, NUMBERWIDTH);
-		Gold.setLayoutX(board.getLayoutX() + BOARDWIDTH);
+		Gold.setLayoutX(board.getLayoutX() + BOARDWIDTH+NUMBERHEIGHT);
 		Gold.setLayoutY(board.getLayoutY() + BOARDHEIGHT);
 		this.getChildren().add(Gold);
+		ImageView logo =new ImageView (new Image("Graphics/Static/Icon/gold.png"));
+		logo.setFitHeight(NUMBERHEIGHT);
+		logo.setFitWidth(NUMBERHEIGHT);
+		logo.setX(Gold.getLayoutX()-NUMBERHEIGHT);
+		logo.setY(Gold.getLayoutY());
+		this.getChildren().add(logo);
 	}
 
 	private void addLeft() {
