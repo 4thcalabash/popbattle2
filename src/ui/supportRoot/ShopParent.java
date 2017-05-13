@@ -251,13 +251,13 @@ public class ShopParent extends SupportParent {
 		board.getChildren().add(leftTable);
 		EXPCard = new ProductCard(new Image("Graphics/Static/Shop/EXPCardBackground.png"),
 				new Image("Graphics/Static/Icon/EXP.png"), new Image("Graphics/Static/Shop/EXPWordBackground.png"),
-				"经验\n对吧\n买了可以升级啊\n你懂的", this.platform.getPlayer1().getShop().getExpPrice(), "金币/百", EXPFLAG);
+				"经验值\n可以提升人物等级，进而获得升级潜力点奖励，提升自身能力", this.platform.getPlayer1().getShop().getExpPrice(), "金币/百", EXPFLAG);
 		EXPCard.setLayoutX(TABLEGAP);
 		EXPCard.setLayoutY(TABLEGAP);
 		leftTable.getChildren().add(EXPCard);
 		PPCard = new ProductCard(new Image("Graphics/Static/Shop/PPCardBackground.png"),
 				new Image("Graphics/Static/Icon/PP.png"), new Image("Graphics/Static/Shop/PPWordBackground.png"),
-				"潜力点\n对吧\n买了可以加属性啊\n你懂啊", this.platform.getPlayer1().getShop().getPPPrice(), "金币/点", PPFLAG);
+				"潜力点\n可以转化为人物的物攻、法强、物抗、法抗中的某一项属性\n进而增加攻击伤害或者防御能力", this.platform.getPlayer1().getShop().getPPPrice(), "金币/点", PPFLAG);
 		PPCard.setLayoutX(TABLEGAP + CARDWIDTH + TABLEMIDGAP);
 		PPCard.setLayoutY(TABLEGAP);
 		leftTable.getChildren().add(PPCard);
@@ -276,7 +276,7 @@ public class ShopParent extends SupportParent {
 		board.getChildren().add(midTable);
 		SPCard = new ProductCard(new Image("Graphics/Static/Shop/SPCardBackground.png"),
 				new Image("Graphics/Static/Icon/SP.png"), new Image("Graphics/Static/Shop/SPWordBackground.png"),
-				"技能点\n对吧\n买了可以学技能啊\n你懂啦", this.platform.getPlayer1().getShop().getSkillPointPrice(), "金币/点", SPFLAG);
+				"技能点\n技能点可用于人物技能的学习或者升级\n从而获得更强大的技能", this.platform.getPlayer1().getShop().getSkillPointPrice(), "金币/点", SPFLAG);
 		SPCard.setLayoutX(TABLEGAP);
 		SPCard.setLayoutY(TABLEGAP);
 		midTable.getChildren().add(SPCard);
@@ -295,13 +295,13 @@ public class ShopParent extends SupportParent {
 		board.getChildren().add(rightTable);
 		USCard = new ProductCard(new Image("Graphics/Static/Shop/USCardBackground.png"),
 				new Image("Graphics/Static/Icon/US.png"), new Image("Graphics/Static/Shop/USWordBackground.png"),
-				"升级石\n对吧\n买了可以升级装备啊\n你懂哈", this.platform.getPlayer1().getShop().getUpGradeStonePrice(), "金币/个", USFLAG);
+				"升级石\n升级石用于装备等级的提升\n装备等级提升可以小幅度提高装备的属性加成", this.platform.getPlayer1().getShop().getUpGradeStonePrice(), "金币/个", USFLAG);
 		USCard.setLayoutX(TABLEGAP);
 		USCard.setLayoutY(TABLEGAP);
 		rightTable.getChildren().add(USCard);
 		ESCard = new ProductCard(new Image("Graphics/Static/Shop/ESCardBackground.png"),
 				new Image("Graphics/Static/Icon/ES.png"), new Image("Graphics/Static/Shop/ESWordBackground.png"),
-				"升阶石\n对吧\n买了可以进化装备啊\n你懂了", this.platform.getPlayer1().getShop().getEvolveStonePrice(), "金币/个", ESFLAG);
+				"升阶石\n升阶石用于装备阶级的提升\n装备进阶可以全方面提升装备的属性值", this.platform.getPlayer1().getShop().getEvolveStonePrice(), "金币/个", ESFLAG);
 		ESCard.setLayoutX(TABLEGAP + CARDWIDTH + TABLEMIDGAP);
 		ESCard.setLayoutY(TABLEGAP);
 		rightTable.getChildren().add(ESCard);

@@ -201,15 +201,16 @@ public class Player implements Calcable{
 				Equip.getEquipByID(weaponID).getMT(this.weaponLevel)+Equip.getEquipByID(wearingID).getMT(this.wearingLevel)+
 				Equip.getEquipByID(wingsID).getMT(this.wingsLevel);
 		System.out.println(ad+" "+ap+" "+hp+" "+DR+" "+MR);
-		
+		skillChoosed = new int [3];
 		
 		
 		/*************
 		 * For Debug *
 		 *************/
-		this.skillChoosed[0]=pro+0;
-		this.skillChoosed[1]=pro+1;
-		this.skillChoosed[2]=pro+2;
+		
+//		this.skillChoosed[0]=pro+0;
+//		this.skillChoosed[1]=pro+1;
+//		this.skillChoosed[2]=pro+2;
 	}
 	public void setAd(int ad) {
 		this.ad = ad;

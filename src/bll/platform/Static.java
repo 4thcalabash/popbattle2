@@ -8,6 +8,8 @@ import bllservice.*;
 import dal.FileHelper;
 import po.EquipPo;
 import po.FigurePo;
+import vo.PlayerVo;
+import vo.ShopVo;
 
 public class Static implements BasicPlatform, Shopable, Achievementable, Equipable, Playerable, Skillable, Chooseable{
 	private Player player;
@@ -54,6 +56,45 @@ public class Static implements BasicPlatform, Shopable, Achievementable, Equipab
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
+	@Override
+	public void saveData(int index){
+		PlayerVo temp = new PlayerVo();
+		temp.setBasicad(player.getBasicad());
+		temp.setBasicap(player.getBasicap());
+		temp.setBasicDR(player.getBasicDR());
+		temp.setBasichp(player.getBasichp());
+		temp.setBasicMR(player.getBasicMR());
+		temp.setEvolveStoneNum(player.getEvolveStoneNum());
+		temp.setGold(player.getGold());
+		temp.setHeadWearingID(player.getHeadWearingID());
+		temp.setHeadWearingLevel(player.getHeadWearingLevel());
+		temp.setWearingID(player.getWeaponID());
+		temp.setWearingLevel(player.getWearingLevel());
+		temp.setWeaponID(player.getWeaponID());
+		temp.setWeaponLevel(player.getWeaponLevel());
+		temp.setWingsID(player.getWingsID());
+		temp.setWingsLevel(player.getWingsLevel());
+		temp.setLevel(player.getLevel());
+		temp.setNowExp(player.getNowExp());
+		temp.setPotentialPoint(player.getPotentialPoint());
+		temp.setPro(player.getPro());
+		ShopVo shopVo = new ShopVo();
+		shopVo.setEvolveStonePrice(player.getShop().getEvolveStonePrice());
+		shopVo.setExpNum(player.getShop().getExpNum());
+		shopVo.setExpPrice(player.getShop().getExpPrice());
+		shopVo.setPPNum(player.getShop().getPPNum());
+		shopVo.setPPPrice(player.getShop().getPPPrice());
+		shopVo.setSkillPointPrice(player.getShop().getSkillPointPrice());
+		shopVo.setUpGradeStonePrice(player.getShop().getUpGradeStonePrice());
+		temp.setShopVo(shopVo);
+		temp.setSkillChoosed(new int [3]);
+		temp.setSkillList(player.getSkillList().clone());
+		temp.setSkillPointNum(player.getSkillPointNum());
+		temp.setUpGradeStoneNum(player.getUpGradeStoneNum());
+		new FileHelper().saveData(temp, index);
+	}
+	@Override
+	public void loadData(int index){
+		this.player=new Player(new FileHelper().loadData(index));
+	}
 }

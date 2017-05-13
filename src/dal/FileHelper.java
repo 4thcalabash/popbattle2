@@ -23,87 +23,149 @@ public class FileHelper implements DataOperator{
 		PlayerVo playerVo = new PlayerVo();
 		playerVo.setShopVo(new ShopVo());
 		try{
-//			String filePath = FileHelper.class.getClassLoader().
-//					getResource("Data/Save"+index+".data").getPath();			
-//			System.out.println(filePath);
-//			File save = new File (filePath);
-//			FileReader filereader = new FileReader(save);
-//			BufferedReader reader = new BufferedReader (filereader);
 			BufferedReader reader = new BufferedReader (new InputStreamReader(
 					FileHelper.class.getClassLoader().getResourceAsStream("Data/Save"+index+".data")));
 			String line = null;
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			System.out.println(line);
 			playerVo.setPro(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setLevel(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setNowExp(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setPotentialPoint(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setGold(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setSkillPointNum(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setUpGradeStoneNum(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setEvolveStoneNum(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setBasichp(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setBasicad(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setBasicap(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setBasicDR(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setBasicMR(Integer.parseInt(line));
 			playerVo.setSkillList(new int [Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL]);
 			for (int i=0;i<Skill.TOTALNUMOFGENERATESKILL+Skill.TOTALNUMOFSPECIALSKILL;i++){
 				line = reader.readLine();
+				if (line==null){
+					return null;
+				}
 				playerVo.getSkillList()[i]=Integer.parseInt(line);
 			}
-			playerVo.setSkillChoosed(new int [3]);
-			for (int i=0;i<3;i++){
-				line = reader.readLine();
-				playerVo.getSkillChoosed()[i]=Integer.parseInt(line);
-			}
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setHeadWearingID(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setHeadWearingLevel(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setWeaponID(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setWeaponLevel(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setWearingID(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setWearingLevel(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setWingsID(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.setWingsLevel(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.getShopVo().setPPPrice(Integer.parseInt(line));
 			line = reader.readLine();
-			playerVo.getShopVo().setPPNum(Integer.parseInt(line));
-			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.getShopVo().setExpPrice(Integer.parseInt(line));
 			line = reader.readLine();
-			playerVo.getShopVo().setExpNum(Integer.parseInt(line));
-			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.getShopVo().setSkillPointPrice(Integer.parseInt(line));
 			line = reader.readLine();
-			
+			if (line==null){
+				return null;
+			}
 			playerVo.getShopVo().setUpGradeStonePrice(Integer.parseInt(line));
 			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
 			playerVo.getShopVo().setEvolveStonePrice(Integer.parseInt(line));
-			//return null;
 			reader.close();
-//			filereader.close();
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -118,6 +180,8 @@ public class FileHelper implements DataOperator{
 			File save = new File (filePath);
 			FileWriter filewriter = new FileWriter (save,false);
 			BufferedWriter writer = new BufferedWriter (filewriter);
+			writer.write(Integer.toString(playerVo.getPro()));
+			writer.newLine();
 			writer.write(Integer.toString(playerVo.getLevel()));
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getNowExp()));
@@ -146,10 +210,6 @@ public class FileHelper implements DataOperator{
 				writer.write(Integer.toString(playerVo.getSkillList()[i]));
 				writer.newLine();
 			}
-			for (int i=0;i<3;i++){
-				writer.write(Integer.toString(playerVo.getSkillChoosed()[i]));
-				writer.newLine();
-			}
 			writer.write(Integer.toString(playerVo.getHeadWearingID()));
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getHeadWearingLevel()));
@@ -168,11 +228,7 @@ public class FileHelper implements DataOperator{
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getShopVo().getPPPrice()));
 			writer.newLine();
-			writer.write(Integer.toString(playerVo.getShopVo().getPPNum()));
-			writer.newLine();
 			writer.write(Integer.toString(playerVo.getShopVo().getExpPrice()));
-			writer.newLine();
-			writer.write(Integer.toString(playerVo.getShopVo().getExpNum()));
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getShopVo().getSkillPointPrice()));
 			writer.newLine();

@@ -11,8 +11,7 @@
 [basicap]
 [basicdr]
 [basicmr]
-[skilllevel]\n*7
-[skillChoosed]\n*3
+[skilllevel]\n*6
 [headWearingID]
 [level]
 [weaponID]
@@ -22,9 +21,7 @@
 [wingsID]
 [level]
 [PPPrice]
-[PPNum]
 [ExpPrice]
-[ExpNum]
 [skillPointPrice]
 [upGradeStonePrice]
 [evolveStonePrice]
