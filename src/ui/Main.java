@@ -63,8 +63,6 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		stage.setResizable(false);
 		primaryStage= stage;
 		primaryStage.show(); 
-
-		
 		
 	}
 	public void createDone(){

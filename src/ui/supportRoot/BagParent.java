@@ -637,6 +637,8 @@ public class BagParent extends SupportParent {
 			dt.refresh(myEquip.getDT(level));
 			mt.refresh(myEquip.getMT(level));
 			Level.refresh(level);
+			US.refresh(platform.getPlayer1().getUpGradeStoneNum());
+			ES.refresh(platform.getPlayer1().getEvolveStoneNum());
 			// USnum.refresh(myEquip.getLevelUpCost(level));
 			// ESnum.refresh(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()));
 		}

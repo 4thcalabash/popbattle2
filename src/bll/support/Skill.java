@@ -33,7 +33,7 @@ public class Skill {
 			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害", 
 			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害",
 			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害" };
-	public static final String[] INTRODUCTION_FIREONGRASS = { "aa", "bb", "cc","dd" };
+	public static final String[] INTRODUCTION_FIREONGRASS = { "", "bb", "cc","dd" };
 	public static final String[] INTRODUCTION_WATERFLOW = { "aaa", "bbb", "ccc","ddd" };
 	public static final String[] INTRODUCTION_HURRICANE = { "aaaa", "bbbb", "cccc","dddd" };
 	public static final String[] INTRODUCTION_PRO100_1 ={"aaaaa","bbbbb","ccccc","ddddd"};
@@ -46,12 +46,12 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (skillLevel == 1) {
-						return (int) (40 + (double) paperplayer.getPlayer().getAd() * 0.3);
+						return (int) (40 + (double) paperplayer.getPlayer().getAp() * 0.25);
 					} else if (skillLevel == 2) {
-						return (int) (60 + (double) paperplayer.getPlayer().getAd() * 0.4);
+						return (int) (65 + (double) paperplayer.getPlayer().getAp() * 0.35);
 					} else {
-						return (int) (80 + (double) paperplayer.getPlayer().getAd() * 0.5
-								+ (double) paperplayer.getPlayer().getAp() * 0.2);
+						return (int) (90 + (double) paperplayer.getPlayer().getAp() * 0.45
+								+ (double) paperplayer.getPlayer().getAd() * 0.15);
 					}
 				}
 		
@@ -91,7 +91,7 @@ public class Skill {
 			}
 		}
 		
-	},Skill.INTRODUCTION_PRO100_2,Skill.DAMAGETYPE);
+	},Skill.INTRODUCTION_PRO100_2,Skill.MAGICTYPE);
 	public static final Skill PRO100_1 = new Skill(Skill.ID_PRO100_1,3,Player.ENEMY,
 			new SkillValueCalcMethod(){
 
@@ -136,9 +136,9 @@ public class Skill {
 			// TODO Auto-generated method stub
 			int level = player.getSkillList()[Skill.ID_NORMALATTACK%100];
 			if (level ==1){
-				return 5;
+				return 6;
 			}else {
-				return 8;
+				return 9;
 			}
 		}
 		
@@ -151,11 +151,11 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (skillLevel == 1) {
-						return (int) (5 + (double) paperplayer.getPlayer().getAd() * 0.2);
+						return (int) (5 + (double) paperplayer.getPlayer().getAd() * 0.5);
 					} else if (skillLevel == 2) {
-						return (int) (10 + (double) paperplayer.getPlayer().getAd() * 0.25);
+						return (int) (10 + (double) paperplayer.getPlayer().getAd() * 0.75);
 					} else {
-						return (int) (15 + (double) paperplayer.getPlayer().getAd() * 0.25
+						return (int) (15 + (double) paperplayer.getPlayer().getAd() * 1.0
 								+ (double) paperplayer.getPlayer().getAp() * 0.1);
 					}
 				}
@@ -171,9 +171,9 @@ public class Skill {
 					if (skillLevel==1){
 						num=3;
 					}else if (skillLevel==2){
-						num=4;
-					}else {
 						num=5;
+					}else {
+						num=6;
 					}
 					int sum = 0;
 					for (int i=0;i<Matrix.KIND;i++){
@@ -201,9 +201,9 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int level = player.getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (level ==1){
-						return 1;
+						return 3;
 					}else {
-						return 2;
+						return 7;
 					}
 				}
 				
@@ -253,11 +253,11 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int level = player.getSkillList()[Skill.ID_FIREONGRASS%100];
 					if (level ==0){
-						return 3;
-					}else if (level == 1){
-						return 4;
-					}else{
 						return 5;
+					}else if (level == 1){
+						return 7;
+					}else{
+						return 9;
 					}
 				}
 				
@@ -304,11 +304,11 @@ public class Skill {
 			// TODO Auto-generated method stub
 			int level = player.getSkillList()[Skill.ID_WATERFLOW%100];
 			if (level ==0){
-				return 3;
-			}else if (level ==1){
-				return 4;
-			}else{
 				return 5;
+			}else if (level ==1){
+				return 8;
+			}else{
+				return 10;
 			}
 		}
 		
