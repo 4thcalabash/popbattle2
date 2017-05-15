@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ui.Main;
-import ui.abstractStage.SupportParent;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
 import ui.awt.ImageButton.NumberImage;
@@ -86,7 +85,7 @@ public class BonusParent extends AnchorPane{
 		int tempy = TOPGAP+BONUSHEIGHT;
 		int tempx = BOARDWIDTH-RIGHTGAP-3*NUMBERWIDTH-DELTALENGTH-ICONLENGTH;
 		if (bonus.getSp()!=0){
-			ImageView spIcon = new ImageView (new Image ("Graphics/Static/Icon/sp.png"));
+			ImageView spIcon = new ImageView (new Image ("Graphics/Static/Icon/SP.png"));
 			spIcon.setFitHeight(ICONLENGTH);
 			spIcon.setFitWidth(ICONLENGTH);
 			spIcon.setX(tempx);
@@ -98,7 +97,7 @@ public class BonusParent extends AnchorPane{
 			tempy+=ICONLENGTH+MIDGAP;
 		}
 		if (bonus.getUs()!=0){
-			ImageView usIcon = new ImageView (new Image("Graphics/Static/Icon/us.png"));
+			ImageView usIcon = new ImageView (new Image("Graphics/Static/Icon/US.png"));
 			usIcon.setFitHeight(ICONLENGTH);
 			usIcon.setFitWidth(ICONLENGTH);
 			usIcon.setX(tempx);
@@ -110,7 +109,7 @@ public class BonusParent extends AnchorPane{
 			tempy+=ICONLENGTH+MIDGAP;
 		}
 		if (bonus.getEs()!=0){
-			ImageView esIcon = new ImageView (new Image ("Graphics/Static/Icon/es.png"));
+			ImageView esIcon = new ImageView (new Image ("Graphics/Static/Icon/ES.png"));
 			esIcon.setFitHeight(ICONLENGTH);
 			esIcon.setFitWidth(ICONLENGTH);
 			esIcon.setX(tempx);
@@ -122,7 +121,7 @@ public class BonusParent extends AnchorPane{
 		}
 	}
 	private void addLeftItem(){
-		ImageView expIcon = new ImageView (new Image ("Graphics/Static/Icon/exp.png"));
+		ImageView expIcon = new ImageView (new Image ("Graphics/Static/Icon/EXP.png"));
 		expIcon.setFitHeight(ICONLENGTH);
 		expIcon.setFitWidth(ICONLENGTH);
 		expIcon.setX(LEFTGAP);

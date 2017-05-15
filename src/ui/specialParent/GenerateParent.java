@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import bll.matrix.Dot;
 import bll.matrix.Matrix;
-import bll.support.Bonus;
+import bll.support.Skill;
 import bllservice.BattlePlatform;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -25,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import po.ActionPo;
@@ -33,7 +34,7 @@ import po.DotPo;
 import po.MatrixPo;
 import po.PopPo;
 import ui.awt.ImageButton.*;
-
+import util.Audio;
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 
@@ -80,6 +81,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int LABELHEIGHT = TOPIMAGEHEIGHT;
 	public static final int LABELWIDTH =TOPIMAGEWIDTH*8/10;
 	private Label text;
+	protected AudioClip battleAudio;
 	private BorderPane border = new BorderPane();
 	protected DotPo dot1 = new DotPo(-1, -1);
 	protected DotPo dot2 = new DotPo(-1, -1);
@@ -105,7 +107,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	protected boolean skillRequest = false;
 	protected int skillID;
 	private int nowAI = 1;
-	private int allAI; 
+//	private int allAI; 
 	public static final int PLAYERWIDTH = (int) (((Main.SCREENWIDTH - TOPIMAGEWIDTH) / 2 - PLAYERIMAGEGAP));
 	public static final int PLAYERHEIGHT = (int) (PLAYERWIDTH * 1.18);
 	public static final int SKILLPLAYERWIDTH = (int) (PLAYERWIDTH * 0.7);
@@ -193,7 +195,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		new1 = false;
 		new2 = false;
 		result = platform.check();
-		allAI = platform.getAINum();
+//		allAI = platform.getAINum();
 		nowAI =1;
 	}
 
@@ -337,7 +339,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 							public void work() {
 								// TODO Auto-generated method stub
 								myself.stop();
+								battleAudio.stop();
 								if (flag == GenerateParent.BATTLE_WIN) {
+									
 									main.battleEnd(platform.getBonus());
 								} else {
 									main.battleEnd(null);
@@ -487,6 +491,15 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					sss.getChildren().add(sssss);
 					line.setOnFinished(e -> {
 						System.out.println("Next AI Finished");
+						int [] skillList = new int [3];
+						for (int i=0;i<3;i++){
+							if (platform.getPlayer2().getAllSkills()[i]!=null){
+								skillList[i]=platform.getPlayer2().getAllSkills()[i].getID();
+							}else{
+								skillList[i]=Skill.NULLSKILL;
+							}
+						}
+						pool2.refreshSkill(skillList);
 						this.getChildren().remove(sss);
 //						border.setBottom(null);
 //						addPool(true);
@@ -660,7 +673,10 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		temp.setBackground(this.getBackground());
 		Image p1Static = new Image("Graphics/Player/Player" + this.platform.getPlayer1().getPlayer().getPro() + ".gif");
 		Image p2Static = new Image("Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + ".gif");
-
+		AudioClip skillAudio = Audio.skillAudio[actionPo.getSkillID()];
+				//new AudioClip (getClass().getResource("../../Audio/"+actionPo.getSkillID()+".mp3").toString());
+		skillAudio.setCycleCount(1);
+		skillAudio.play();
 		pp1 = new ImageView(p1Static);
 		pp2 = new ImageView(p2Static);
 		pp1.setFitHeight(SKILLPLAYERHEIGHT);
@@ -679,6 +695,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			// ("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif"));
 			if (actionPo.getActionPlayerID() == 1) {
 				pp1.setImage(actionPlayer);
+				pp1.setFitWidth(pp1.getFitWidth()*3/2);
 				Text damage = new Text("-" + actionPo.getEffectValue());
 				damage.setId("damage");
 				damage.setX(pp2.getX() + pp2.getFitWidth() / 2);
@@ -690,6 +707,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				line2.play();
 			} else {
 				pp2.setImage(actionPlayer);
+				pp2.setFitWidth(pp2.getFitWidth()*3/2);
 				Text damage = new Text("-" + actionPo.getEffectValue());
 				damage.setId("damage");
 				damage.setX(pp1.getX() + pp1.getFitWidth() / 2);

@@ -134,6 +134,8 @@ public class RecordParent extends SupportParent{
 		public void setNull(){
 			save.setMyWorker(illegalWorker);
 			load.setMyWorker(illegalWorker);
+			save.setPlayAudio(false);
+			load.setPlayAudio(false);
 		}
 		public void checkButton(){
 //			save.setStaticGraphics(saveStatic);
@@ -141,6 +143,8 @@ public class RecordParent extends SupportParent{
 //			save.setPressedGraphics(savePressed);
 			save.setMyWorker(saveWorker);
 			load.setMyWorker(loadWorker);
+			save.setPlayAudio(true);
+			load.setPlayAudio(true);
 		}
 		private void initBlank(){
 			Label blank = new Label("Пе");
@@ -315,6 +319,7 @@ public class RecordParent extends SupportParent{
 			load = new ImageButton(loadStatic,loadEntered,loadPressed,loadWorker);
 			}else{
 				load = new ImageButton(loadIllegal,loadIllegal,loadIllegal,illegalWorker);
+				load.setPlayAudio(false);
 			}
 			load.setX(save.getX());
 			load.setY(RECORDHEIGHT-INNERGAP-BUTTONHEIGHT);

@@ -3,30 +3,14 @@ package ui.specialParent;
 import java.util.concurrent.CountDownLatch;
 
 import bll.individual.Player;
-import bll.matrix.Matrix;
 import bll.platform.Battle;
 import bll.support.Skill;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.util.Duration;
 import po.AIStrategyPo;
-import po.ActionPo;
 import ui.Main;
-import ui.awt.ImageButton.NumberImage;
-
+import util.Audio;
 public class PVEParent extends GenerateParent {
 	public PVEParent(int missionID, Player player1, Main main) {
 		super(main, new Battle(missionID, player1.createPaper()));
-		int i = 1;
 		addPool(true);
 		addPlayer1();
 		addPlayer2();
@@ -35,7 +19,11 @@ public class PVEParent extends GenerateParent {
 
 	public void run() {
 		// TODO Auto-generated method stub
-
+//		System.out.println(getClass().getResource("../../Audio/").toString());
+//		battleAudio = new AudioClip(getClass().getResource("../../Audio/battle.mp3").toString());
+		battleAudio=Audio.battle;
+//		backgroundAudio.play();
+		battleAudio.play();
 		System.out.println("Start");
 		if (this.platform.getPlayer1().getPlayer().getLevel() < this.platform.getPlayer1().getPlayer().getLevel()) {
 			round = 1;
@@ -110,13 +98,6 @@ public class PVEParent extends GenerateParent {
 //					ActionPo actionPo=this.platform.useSkill(2, strategy.getSkillID());
 					skillID=strategy.getSkillID();
 					skillaction();
-//					skillAction(actionPo);
-					
-					
-//					this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
-					
-					
-//					this.playerBoard.refreshData();
 					System.out.println("Attack");
 				}
 //				changeRound();
@@ -133,49 +114,7 @@ public class PVEParent extends GenerateParent {
 				showNextAIFlash();
 			}
 		}
+//		backgroundAudio.stop();
 		System.out.println("End");
 	}
-
-//	public void add() {
-//
-//		pool1.setId("pool");
-//		pool2.setId("pool");
-//		pool1.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-//		pool2.setMaxSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-//		pool1.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-//		pool2.setMinSize(GenerateParent.POOLWIDTH, GenerateParent.POOLHEIGHT);
-//		for (int i = 0; i < Matrix.KIND; i++) {
-//			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
-//			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
-//			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
-//			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-//			element.setY(GenerateParent.POOLHEIGHTGAP);
-//			pool1.getChildren().add(element);
-//			pool1Number[i] = new NumberImage(0);
-//			pool1Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-//			pool1Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
-//			pool1.getChildren().add(pool1Number[i]);
-//		}
-//		// pool1.getChildren()
-//		// .addAll(pool1Number);
-//		for (int i = 0; i < Matrix.KIND; i++) {
-//			ImageView element = new ImageView(new Image("Graphics/Matrix/" + i + "_100.png"));
-//			element.setFitHeight(GenerateParent.ELEMENTLENGTH);
-//			element.setFitWidth(GenerateParent.ELEMENTLENGTH);
-//			element.setX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-//			element.setY(GenerateParent.POOLHEIGHTGAP);
-//			pool2.getChildren().add(element);
-//			pool2Number[i] = new NumberImage(0);
-//			pool2Number[i].setLayoutX((i + 1) * GenerateParent.POOLWIDTHGAP + i * NumberImage.WIDTH * 2);
-//			pool2Number[i].setLayoutY(GenerateParent.POOLHEIGHTGAP + GenerateParent.ELEMENTLENGTH);
-//			pool2.getChildren().add(pool2Number[i]);
-//		}
-//		// pool2.getChildren().addAll(pool2Number);
-//		this.setLeft(pool1);
-//		// pool1.setLayoutX((Main.SCREENWIDTH-pool1.getMaxWidth())/2);
-//		// pool1.setLayoutY(0);
-//		this.setRight(pool2);
-//		BorderPane.setAlignment(getLeft(), Pos.BOTTOM_RIGHT);
-//		BorderPane.setAlignment(getRight(), Pos.BOTTOM_LEFT);
-//	}
 }

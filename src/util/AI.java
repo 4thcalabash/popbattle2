@@ -928,41 +928,48 @@ public class AI {
 		}
 		//如果可以释放技能，将技能随机分配释放优先级。
 		if (canAttack){
-			int t= (int)(Math.random()*3);
-			order[t]=1;
+			temp-=0.1;
+			int t= (int)(Math.random()*2);
+			order[t]=-1;
 			double tt = Math.random();
 			boolean flag = false;
 			if (tt<0.5){
 				for (int i=0;i<3;i++){
 					if (order[i]==0){
 						if (!flag){
-							order[i]=2;
+							order[i]=1;
+							flag=true;
 						}else {
-							order[i]=3;
+							order[i]=2;
 						}
 					}
 				}
 			}else{
-				for (int i=3;i>=0;i--){
+				for (int i=2;i>=0;i--){
 					if (order[i]==0){
 						if (!flag){
-							order[i]=2;
+							order[i]=1;
+							flag=true;
 						}else{
-							order[i]=3;
+							order[i]=2;
 						}
 					}
 				}
 			}
+			order[t]=0;
+			for (int i=0;i<3;i++){
+				System.out.print("ORDER["+i+"]="+order[i]+"  ");
+			}
 		}
 		//随机选择消除/释放技能
-		if (temp<0.5&&canAttack){
+		if (canAttack){
 			//释放技能
 			strategy.setMoveStrategy(false);
 			strategy.setActionPlayerID(Player.AI_PLAYERID);
 			strategy.setTargetPlayerID(Player.USER_PLAYERID);
 			for (int i=0;i<3;i++){
 				//按照优先级检查
-				if (AI.getAllSkills()[order[0]].canAction(AI)){
+				if (AI.getAllSkills()[order[i]]!=null&&AI.getAllSkills()[order[i]].canAction(AI)){
 					strategy.setSkillID(AI.getAllSkills()[order[i]].getID());
 					strategy.setSkillValue(AI.getAllSkills()[order[i]].calcVaue(AI));
 					return strategy;

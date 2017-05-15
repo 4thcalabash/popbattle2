@@ -3,11 +3,9 @@ package ui.awt.ImageButton;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-import po.DotPo;
 import ui.specialParent.GenerateParent;
-
+import util.Audio;
 public class Chessman extends ImageView {
 	private Image staticImage;
 	private Image pressedImage;
@@ -18,7 +16,8 @@ public class Chessman extends ImageView {
 	private double releaseX, releaseY;
 	private int dx, dy;
 	private int myX, myY;
-	private GenerateParent pve;
+//	private GenerateParent pve;
+	public static boolean playAudio=true;
 	private Chessman mySelf = this;
 
 	public int getDx() {
@@ -34,7 +33,7 @@ public class Chessman extends ImageView {
 		this.myY = j;
 		this.staticImage = staticImage;
 		this.pressedImage = pressedImage;
-		this.pve = pve;
+//		this.pve = pve;
 		this.worker = new ChessmanWorkers() {
 
 			@Override
@@ -56,6 +55,7 @@ public class Chessman extends ImageView {
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
 				if (!isPressed) {
+					Audio.entered.play();
 					setImage(pressedImage);
 				}
 			}

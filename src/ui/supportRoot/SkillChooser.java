@@ -3,7 +3,6 @@ package ui.supportRoot;
 import bll.individual.Player;
 import bll.support.Skill;
 import bllservice.Chooseable;
-import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -11,8 +10,8 @@ import ui.Main;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
 import ui.sceneInterface.BasicScene;
-
-public class SkillChooser extends AnchorPane {
+import util
+.Audio;public class SkillChooser extends AnchorPane {
 	public static final int BOARDHEIGHT = Main.SCREENHEIGHT/2;
 	public static final int BOARDWIDTH = BOARDHEIGHT;
 	public static final int GAP = BOARDHEIGHT/10;
@@ -50,6 +49,7 @@ public class SkillChooser extends AnchorPane {
 	}
 	private void addButton(){
 		confirm = new ImageButton(confirmIllegal,confirmIllegal,confirmIllegal,illegalWorker);
+		confirm.setPlayAudio(false);
 		confirm.setFitHeight(BUTTONHEIGHT);
 		confirm.setFitWidth(BUTTONWIDTH);
 		confirm.setX(Main.SCREENWIDTH/2-BUTTONWIDTH-G);
@@ -125,11 +125,13 @@ public class SkillChooser extends AnchorPane {
 			confirm.setEnteredGraphics(confirmIllegal);
 			confirm.setPressedGraphics(confirmIllegal);
 			confirm.setMyWorker(illegalWorker);
+			confirm.setPlayAudio(false);
 		}else{
 			confirm.setStaticGraphics(confirmStatic);
 			confirm.setEnteredGraphics(confirmEntered);
 			confirm.setPressedGraphics(confirmPressed);
 			confirm.setMyWorker(confirmWorker);
+			confirm.setPlayAudio(true);
 		}
 	}
 	private final Image confirmStatic = new Image("Graphics/Static/Icon/confirmStatic.png");
@@ -155,7 +157,7 @@ public class SkillChooser extends AnchorPane {
 		private ImageView background;
 		private Image staticImage,enteredImage,pressedImage;
 		private ButtonWorker worker;
-		private boolean enter=false,press=false;
+		private boolean enter=false,press=false,playAudio=true;
 		private final ButtonWorker myWorker = new ButtonWorker(){
 
 			@Override
@@ -213,6 +215,7 @@ public class SkillChooser extends AnchorPane {
 					staticImage=enteredImage=pressedImage=skillIllegal;
 					worker=illegalWorker;
 					background.setImage(skillIllegal);
+					playAudio=false;
 				}
 			}else{
 				if (!choosed){
@@ -221,8 +224,10 @@ public class SkillChooser extends AnchorPane {
 					enteredImage =skillEntered;
 					pressedImage = skillPressed;
 					worker=myWorker;
+					playAudio=true;
 					background.setImage(skillStatic);
 				}else{
+					playAudio=false;
 					staticImage=enteredImage=pressedImage=skillIllegal;
 					worker = illegalWorker;
 				}
@@ -236,9 +241,11 @@ public class SkillChooser extends AnchorPane {
 				enteredImage =skillEntered;
 				pressedImage = skillPressed;
 				worker=myWorker;
+				playAudio=true;
 			}else{
 				staticImage=enteredImage=pressedImage=skillIllegal;
 				worker = illegalWorker;
+				playAudio=false;
 			}
 			background = new ImageView (staticImage);
 			background.setFitHeight(CARDHEIGHT);
@@ -255,6 +262,9 @@ public class SkillChooser extends AnchorPane {
 			this.setOnMouseEntered(e->{
 				enter=true;
 				if (!press){
+					if (playAudio){
+						Audio.entered.play();
+					}
 					background.setImage(enteredImage);
 				}
 			});
@@ -266,6 +276,11 @@ public class SkillChooser extends AnchorPane {
 			});
 			this.setOnMousePressed(e->{
 				press=true;
+				if (!playAudio){
+					Audio.illegal.play();
+				}else{
+					Audio.pressed.play();
+				}
 				background.setImage(pressedImage);
 			});
 			this.setOnMouseReleased(e->{

@@ -19,8 +19,9 @@ public class SettingParent extends SupportParent {
 	public static final int MIDGAP = 20;
 	public static final int BUTTONHEIGHT = 120;
 	public static final int BUTTONWIDTH = BUTTONHEIGHT*2;
-	public static final int BOARDHEIGHT = BUTTONHEIGHT*2+TOPBOTTOMGAP*2+MIDGAP;
+	public static final int BOARDHEIGHT = BUTTONHEIGHT*3+TOPBOTTOMGAP*2+MIDGAP*2;
 	public static final int BOARDWIDTH = BUTTONWIDTH+2*LEFTRIGHTGAP;
+	private final SettingParent myself = this;
 	public SettingParent(Supportable support, BasicScene main) {
 		super(support, main);
 		AnchorPane board = new AnchorPane();
@@ -48,7 +49,7 @@ public class SettingParent extends SupportParent {
 		exitGame.setFitHeight(BUTTONHEIGHT);
 		exitGame.setFitWidth(BUTTONWIDTH);
 		exitGame.setX(LEFTRIGHTGAP);
-		exitGame.setY(TOPBOTTOMGAP+BUTTONHEIGHT+MIDGAP);
+		exitGame.setY(TOPBOTTOMGAP+BUTTONHEIGHT*2+MIDGAP*2);
 		board.getChildren().add(exitGame);
 		ImageButton record = new ImageButton(new Image(basicPath + "recordStatic.png"),
 				new Image(basicPath + "recordEntered.png"), new Image(basicPath + "recordPressed.png"),
@@ -64,7 +65,23 @@ public class SettingParent extends SupportParent {
 		record.setFitHeight(BUTTONHEIGHT);
 		record.setFitWidth(BUTTONWIDTH);
 		record.setX(LEFTRIGHTGAP);
-		record.setY(TOPBOTTOMGAP);
+		record.setY(TOPBOTTOMGAP+BUTTONHEIGHT+MIDGAP);
 		board.getChildren().add(record);
+		ImageButton audioSetting = new ImageButton (new Image(basicPath +"audioSettingStatic.png"),
+				new Image (basicPath+"audioSettingEntered.png"),new Image (basicPath+"audioSettingPressed.png"),
+				new ButtonWorker(){
+
+					@Override
+					public void work() {
+						// TODO Auto-generated method stub
+						main.setStage(new AudioSettingParent(support,main,myself));
+					}
+			
+		});
+		audioSetting.setFitHeight(BUTTONHEIGHT);
+		audioSetting.setFitWidth(BUTTONWIDTH);
+		audioSetting.setX(LEFTRIGHTGAP);
+		audioSetting.setY(TOPBOTTOMGAP);
+		board.getChildren().add(audioSetting);
 	}
 }

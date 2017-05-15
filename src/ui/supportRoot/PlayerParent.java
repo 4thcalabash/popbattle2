@@ -264,6 +264,7 @@ public class PlayerParent extends SupportParent {
 		@Override
 		public void work() {
 			// TODO Auto-generated method stub
+			setnull();
 			platform.getPlayer1().levelUp();
 			exp=platform.getPlayer1().getNowExp();
 //			restPP = platform.getPlayer1().getPotentialPoint();
@@ -275,7 +276,9 @@ public class PlayerParent extends SupportParent {
 			level.refresh(platform.getPlayer1().getLevel());
 			EXPfull.refresh(Player.getExpNumberToLevelUp(platform.getPlayer1().getLevel()));
 			PP.refresh(restPP);
-			checkFuncButton();
+			
+			new Thread (Sub).start();
+//			checkFuncButton();
 			refreshWord();
 //			new Thread (Sub).start();
 		}
@@ -319,31 +322,37 @@ public class PlayerParent extends SupportParent {
 			confirm.setEnteredGraphics(confirmIllegal);
 			confirm.setPressedGraphics(confirmIllegal);
 			confirm.setMyWorker(illegalFuncWorker);
+			confirm.setPlayAudio(false);
 			reset.setStaticGraphics(resetIllegal);
 			reset.setEnteredGraphics(resetIllegal);
 			reset.setPressedGraphics(resetIllegal);
 			reset.setMyWorker(illegalFuncWorker);
+			reset.setPlayAudio(false);
 		}else{
 			//Confirm legal Reset legal
 			confirm.setStaticGraphics(confirmStatic);
 			confirm.setEnteredGraphics(confirmEntered);
 			confirm.setPressedGraphics(confirmPressed);
 			confirm.setMyWorker(confirmWorker);
+			confirm.setPlayAudio(true);
 			reset.setStaticGraphics(resetStatic);
 			reset.setEnteredGraphics(resetEntered);
 			reset.setPressedGraphics(resetPressed);
 			reset.setMyWorker(resetWorker);
+			reset.setPlayAudio(true);
 		}
 		if (exp>=Player.getExpNumberToLevelUp(this.platform.getPlayer1().getLevel())){
 			levelup.setStaticGraphics(levelupStatic);
 			levelup.setEnteredGraphics(levelupEntered);
 			levelup.setPressedGraphics(levelupPressed);
 			levelup.setMyWorker(levelupWorker);
+			levelup.setPlayAudio(true);
 		}else{
 			levelup.setStaticGraphics(levelupIllegal);
 			levelup.setEnteredGraphics(levelupIllegal);
 			levelup.setPressedGraphics(levelupIllegal);
 			levelup.setMyWorker(illegalFuncWorker);
+			levelup.setPlayAudio(false);
 		}
 		checkZero();
 	}
@@ -366,13 +375,21 @@ public class PlayerParent extends SupportParent {
 	};
 	private void setnull(){
 		HPPlus.setMyWorker(illegalWorker);
+		//HPPlus.setPlayAudio(false);
 		ADPlus.setMyWorker(illegalWorker);
+//		ADPlus.setPlayAudio(false);
 		APPlus.setMyWorker(illegalWorker);
+//		APPlus.setPlayAudio(false);
 		DRPlus.setMyWorker(illegalWorker);
+//		DRPlus.setPlayAudio(false);
 		MRPlus.setMyWorker(illegalWorker);
+//		MRPlus.setPlayAudio(false);
 		confirm.setMyWorker(illegalFuncWorker);
+//		confirm.setPlayAudio(false);
 		reset.setMyWorker(illegalFuncWorker);
+//		reset.setPlayAudio(false);
 		levelup.setMyWorker(illegalFuncWorker);
+//		levelup.setPlayAudio(false);
 	}
 	private final Image plusStatic = new Image("Graphics/Static/Player/plusStatic.png");
 	private final Image plusEntered = new Image("Graphics/Static/Player/plusEntered.png");
@@ -515,43 +532,53 @@ public class PlayerParent extends SupportParent {
 			HPPlus.setEnteredGraphics(plusIllegal);
 			HPPlus.setPressedGraphics(plusIllegal);
 			HPPlus.setMyWorker(illegalWorker);
+			HPPlus.setPlayAudio(false);
 			ADPlus.setStaticGraphics(plusIllegal);
 			ADPlus.setEnteredGraphics(plusIllegal);
 			ADPlus.setPressedGraphics(plusIllegal);
 			ADPlus.setMyWorker(illegalWorker);
+			ADPlus.setPlayAudio(false);
 			APPlus.setStaticGraphics(plusIllegal);
 			APPlus.setEnteredGraphics(plusIllegal);
 			APPlus.setPressedGraphics(plusIllegal);
 			APPlus.setMyWorker(illegalWorker);
+			APPlus.setPlayAudio(false);
 			DRPlus.setStaticGraphics(plusIllegal);
 			DRPlus.setEnteredGraphics(plusIllegal);
 			DRPlus.setPressedGraphics(plusIllegal);
 			DRPlus.setMyWorker(illegalWorker);
+			DRPlus.setPlayAudio(false);
 			MRPlus.setStaticGraphics(plusIllegal);
 			MRPlus.setEnteredGraphics(plusIllegal);
 			MRPlus.setPressedGraphics(plusIllegal);
 			MRPlus.setMyWorker(illegalWorker);
+			MRPlus.setPlayAudio(false);
 		}else{
 			HPPlus.setStaticGraphics(plusStatic);
 			HPPlus.setEnteredGraphics(plusEntered);
 			HPPlus.setPressedGraphics(plusPressed);
 			HPPlus.setMyWorker(HPPlusWorker);
+			HPPlus.setPlayAudio(true);
 			ADPlus.setStaticGraphics(plusStatic);
 			ADPlus.setEnteredGraphics(plusEntered);
 			ADPlus.setPressedGraphics(plusPressed);
 			ADPlus.setMyWorker(ADPlusWorker);
+			ADPlus.setPlayAudio(true);
 			APPlus.setStaticGraphics(plusStatic);
 			APPlus.setEnteredGraphics(plusEntered);
 			APPlus.setPressedGraphics(plusPressed);
 			APPlus.setMyWorker(APPlusWorker);
+			APPlus.setPlayAudio(true);
 			DRPlus.setStaticGraphics(plusStatic);
 			DRPlus.setEnteredGraphics(plusEntered);
 			DRPlus.setPressedGraphics(plusPressed);
 			DRPlus.setMyWorker(DRPlusWorker);
+			DRPlus.setPlayAudio(true);
 			MRPlus.setStaticGraphics(plusStatic);
 			MRPlus.setEnteredGraphics(plusEntered);
 			MRPlus.setPressedGraphics(plusPressed);
 			MRPlus.setMyWorker(MRPlusWorker);
+			MRPlus.setPlayAudio(true);
 		}
 	}
 

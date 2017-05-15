@@ -125,23 +125,26 @@ public class ShopParent extends SupportParent {
 				buy.setEnteredGraphics(buyEntered);
 				buy.setPressedGraphics(buyPressed);
 				buy.setMyWorker(buyWorker);
-
+				buy.setPlayAudio(true);
 			} else {
 				buy.setStaticGraphics(buyIllegal);
 				buy.setEnteredGraphics(buyIllegal);
 				buy.setPressedGraphics(buyIllegal);
 				buy.setMyWorker(illegalWorker);
+				buy.setPlayAudio(false);
 			}
 		}
 		public void setNull(){
 			Platform.runLater(()->{
 				buy.setMyWorker(illegalWorker);
+				//buy.setPlayAudio(false);
 			});
 
 		}
 		public void reset(){
 			Platform.runLater(()->{
-				buy.setMyWorker(buyWorker);
+//				buy.setMyWorker(buyWorker);
+				checkButton();
 			});
 		}
 		private final ButtonWorker buyWorker = new ButtonWorker() {

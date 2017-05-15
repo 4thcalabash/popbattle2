@@ -107,7 +107,7 @@ public class SkillParent extends SupportParent {
 			number.setLayoutX(INNERGAP + NUMBERHEIGHT);
 			number.setLayoutY(CARDHEIGHT-INNERGAP-BUTTONHEIGHT - NUMBERHEIGHT);
 			this.getChildren().add(number);
-			ImageView logo = new ImageView(new Image("Graphics/Static/Icon/sp.png"));
+			ImageView logo = new ImageView(new Image("Graphics/Static/Icon/SP.png"));
 			logo.setFitHeight(NUMBERHEIGHT);
 			logo.setFitWidth(NUMBERHEIGHT);
 			logo.setX(INNERGAP);
@@ -170,27 +170,32 @@ public class SkillParent extends SupportParent {
 				button.setEnteredGraphics(levelupMax);
 				button.setPressedGraphics(levelupMax);
 				button.setMyWorker(illegalWorker);
+				button.setPlayAudio(false);
 			} else if ((mySkill.getLevelUpCost(platform.getPlayer1()) >= platform.getPlayer1().getSkillPointNum())) {
 				if (nowlevel != 0) {
 					button.setStaticGraphics(levelupIllegal);
 					button.setEnteredGraphics(levelupIllegal);
 					button.setPressedGraphics(levelupIllegal);
 					button.setMyWorker(illegalWorker);
+					button.setPlayAudio(false);
 				} else {
 					button.setStaticGraphics(studyIllegal);
 					button.setEnteredGraphics(studyIllegal);
 					button.setPressedGraphics(studyIllegal);
 					button.setMyWorker(illegalWorker);
+					button.setPlayAudio(false);
 				}
 			} else {
 				if (nowlevel != 0) {
 					button.setStaticGraphics(levelupStatic);
 					button.setEnteredGraphics(levelupEntered);
 					button.setPressedGraphics(levelupPressed);
+					button.setPlayAudio(true);
 				} else {
 					button.setStaticGraphics(studyStatic);
 					button.setEnteredGraphics(studyEntered);
 					button.setPressedGraphics(studyPressed);
+					button.setPlayAudio(true);
 				}
 				button.setMyWorker(new ButtonWorker() {
 
@@ -236,7 +241,7 @@ public class SkillParent extends SupportParent {
 		skillPoint.setLayoutX(board.getLayoutX() + BOARDWIDTH+LEVELHEIGHT);
 		skillPoint.setLayoutY(board.getLayoutY() + BOARDHEIGHT);
 		this.getChildren().add(skillPoint);
-		ImageView logo = new ImageView (new Image("Graphics/Static/Icon/sp.png"));
+		ImageView logo = new ImageView (new Image("Graphics/Static/Icon/SP.png"));
 		logo.setFitHeight(LEVELHEIGHT);
 		logo.setFitWidth(LEVELHEIGHT);
 		logo.setX(skillPoint.getLayoutX()-LEVELHEIGHT);

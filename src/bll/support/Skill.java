@@ -320,17 +320,17 @@ public class Skill {
 			// TODO Auto-generated method stub
 			int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_HURRICANE%100];
 			if (skillLevel == 1) {
-				return (int) (0 + (double) paperplayer.getPlayer().getAd() * 0.4
-						+ (double) paperplayer.getPlayer().getAp() * 0.5
-						+ (double) paperplayer.getPlayer().getLevel() * 0.1);
-			} else if (skillLevel == 2) {
 				return (int) (0 + (double) paperplayer.getPlayer().getAd() * 0.5
-						+ (double) paperplayer.getPlayer().getAp() * 0.6
-						+ (double) paperplayer.getPlayer().getLevel() * 0.15);
-			} else {
-				return (int) (0 + (double) paperplayer.getPlayer().getAd() * 0.6
 						+ (double) paperplayer.getPlayer().getAp() * 0.7
 						+ (double) paperplayer.getPlayer().getLevel() * 0.2);
+			} else if (skillLevel == 2) {
+				return (int) (0 + (double) paperplayer.getPlayer().getAd() * 0.55
+						+ (double) paperplayer.getPlayer().getAp() * 0.75
+						+ (double) paperplayer.getPlayer().getLevel() * 0.25);
+			} else {
+				return (int) (0 + (double) paperplayer.getPlayer().getAd() * 0.6
+						+ (double) paperplayer.getPlayer().getAp() * 0.8
+						+ (double) paperplayer.getPlayer().getLevel() * 0.3);
 			}
 		}
 

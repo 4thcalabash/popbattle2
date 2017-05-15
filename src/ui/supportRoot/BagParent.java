@@ -75,12 +75,12 @@ public class BagParent extends SupportParent {
 		ES.setLayoutX(US.getLayoutX());
 		ES.setLayoutY(US.getLayoutY()+NUMBERHEIGHT);
 		this.getChildren().add(ES);
-		ImageView logo1 = new ImageView (new Image("Graphics/Static/Icon/us.png"));
+		ImageView logo1 = new ImageView (new Image("Graphics/Static/Icon/US.png"));
 		logo1.setFitHeight(NUMBERHEIGHT);
 		logo1.setFitWidth(NUMBERHEIGHT);
 		logo1.setX(US.getLayoutX()-NUMBERHEIGHT);
 		logo1.setY(US.getLayoutY());
-		ImageView logo2 = new ImageView (new Image("Graphics/Static/Icon/es.png"));
+		ImageView logo2 = new ImageView (new Image("Graphics/Static/Icon/ES.png"));
 		logo2.setFitHeight(NUMBERHEIGHT);
 		logo2.setFitWidth(NUMBERHEIGHT);
 		logo2.setX(ES.getLayoutX()-NUMBERHEIGHT);
@@ -197,6 +197,8 @@ public class BagParent extends SupportParent {
 			Platform.runLater(()->{
 				levelup.setMyWorker(illegalWorker);
 				evolve.setMyWorker(illegalWorker);
+				//levelup.setPlayAudio(false);
+				//evolve.setPlayAudio(false);
 			});
 
 		}
@@ -285,24 +287,28 @@ public class BagParent extends SupportParent {
 				levelup.setEnteredGraphics(maxImage);
 				levelup.setPressedGraphics(maxImage);
 				levelup.setMyWorker(illegalWorker);
+				levelup.setPlayAudio(false);
 				USnum.refresh(0);
 				if (myEquip.getEvolveEquipID() == Equip.ID_NULL) {
 					evolve.setStaticGraphics(maxImage);
 					evolve.setEnteredGraphics(maxImage);
 					evolve.setPressedGraphics(maxImage);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(0);
 				} else if (platform.getPlayer1().getEvolveStoneNum() >= myEquip.getLevelUpCost(level)) {
 					evolve.setStaticGraphics(evolveStatic);
 					evolve.setEnteredGraphics(evolveStatic);
 					evolve.setPressedGraphics(evolvePressed);
 					evolve.setMyWorker(evolveWorker);
+					evolve.setPlayAudio(true);
 					ESnum.refresh(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()));
 				} else {
 					evolve.setStaticGraphics(evolveIllegal);
 					evolve.setEnteredGraphics(evolveIllegal);
 					evolve.setPressedGraphics(evolveIllegal);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()));
 				}
 			} else {
@@ -312,12 +318,14 @@ public class BagParent extends SupportParent {
 					evolve.setEnteredGraphics(maxImage);
 					evolve.setPressedGraphics(maxImage);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(0);
 				} else {
 					evolve.setStaticGraphics(evolveIllegal);
 					evolve.setEnteredGraphics(evolveIllegal);
 					evolve.setPressedGraphics(evolveIllegal);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()));
 				}
 				if (platform.getPlayer1().getUpGradeStoneNum() >= myEquip.getLevelUpCost(level)) {
@@ -325,11 +333,13 @@ public class BagParent extends SupportParent {
 					levelup.setEnteredGraphics(levelupEntered);
 					levelup.setPressedGraphics(levelupPressed);
 					levelup.setMyWorker(levelupWorker);
+					levelup.setPlayAudio(true);
 				} else {
 					levelup.setStaticGraphics(levelupIllegal);
 					levelup.setEnteredGraphics(levelupIllegal);
 					levelup.setPressedGraphics(levelupIllegal);
 					levelup.setMyWorker(illegalWorker);
+					levelup.setPlayAudio(false);
 				}
 			}
 		}
@@ -555,6 +565,8 @@ public class BagParent extends SupportParent {
 			Platform.runLater(()->{
 				levelup.setMyWorker(illegalWorker);
 				evolve.setMyWorker(illegalWorker);
+			//	levelup.setPlayAudio(false);
+			//	evolve.setPlayAudio(false);
 			});
 		}
 
@@ -649,12 +661,14 @@ public class BagParent extends SupportParent {
 				levelup.setEnteredGraphics(maxImage);
 				levelup.setPressedGraphics(maxImage);
 				levelup.setMyWorker(illegalWorker);
+				levelup.setPlayAudio(false);
 				USnum.refresh(0);
 				if (myEquip.getEvolveEquipID() == Equip.ID_NULL) {
 					evolve.setStaticGraphics(maxImage);
 					evolve.setEnteredGraphics(maxImage);
 					evolve.setPressedGraphics(maxImage);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(0);
 				} else if (platform.getPlayer1().getEvolveStoneNum() >= myEquip.getLevelUpCost(level)) {
 					evolve.setStaticGraphics(evolveStatic);
@@ -667,6 +681,7 @@ public class BagParent extends SupportParent {
 					evolve.setEnteredGraphics(evolveIllegal);
 					evolve.setPressedGraphics(evolveIllegal);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()));
 				}
 			} else {
@@ -676,12 +691,14 @@ public class BagParent extends SupportParent {
 					evolve.setEnteredGraphics(maxImage);
 					evolve.setPressedGraphics(maxImage);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(0);
 				} else {
 					evolve.setStaticGraphics(evolveIllegal);
 					evolve.setEnteredGraphics(evolveIllegal);
 					evolve.setPressedGraphics(evolveIllegal);
 					evolve.setMyWorker(illegalWorker);
+					evolve.setPlayAudio(false);
 					ESnum.refresh(myEquip.getLevelUpCost(myEquip.getMAXLEVEL()));
 				}
 				if (platform.getPlayer1().getUpGradeStoneNum() >= myEquip.getLevelUpCost(level)) {
@@ -689,11 +706,13 @@ public class BagParent extends SupportParent {
 					levelup.setEnteredGraphics(levelupEntered);
 					levelup.setPressedGraphics(levelupPressed);
 					levelup.setMyWorker(levelupWorker);
+					levelup.setPlayAudio(true);
 				} else {
 					levelup.setStaticGraphics(levelupIllegal);
 					levelup.setEnteredGraphics(levelupIllegal);
 					levelup.setPressedGraphics(levelupIllegal);
 					levelup.setMyWorker(illegalWorker);
+					levelup.setPlayAudio(false);
 				}
 			}
 		}

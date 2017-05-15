@@ -17,6 +17,7 @@ public class Pool extends AnchorPane{
 	private final Image skillEntered = new Image ("Graphics/Other/Pool/skillBackgroundEntered.png");
 	private final Image skillPressed = new Image ("Graphics/Other/Pool/skillBackgroundPressed.png");
 	private final Image skillIllegal = new Image ("Graphics/Other/Pool/skillBackgroundIllegal.png");
+	private final ImageView[] skillIcon = new ImageView [3];
 	private final ButtonWorker illegalWorker = new ButtonWorker(){
 
 		@Override
@@ -56,11 +57,13 @@ public class Pool extends AnchorPane{
 					skill[i].setEnteredGraphics(skillEntered);
 					skill[i].setPressedGraphics(skillPressed);
 					skill[i].setMyWorker(skillWorker[i]);
+					skill[i].setPlayAudio(true);
 				}else{
 					skill[i].setStaticGraphics(skillIllegal);
 					skill[i].setEnteredGraphics(skillIllegal);
 					skill[i].setPressedGraphics(skillIllegal);
 					skill[i].setMyWorker(illegalWorker);
+					skill[i].setPlayAudio(false);
 				}
 			}
 			System.out.println("RESET THE SKILL BUTTON SUCCEED");
@@ -81,6 +84,7 @@ public class Pool extends AnchorPane{
 			skillWorker[i]=new Worker(skillList[i]);
 //			ImageView skill = new ImageView (new Image("Graphics/Other/Pool/skillBackground.png"));
 			skill[i] = new ImageButton(skillIllegal,skillIllegal,skillIllegal,illegalWorker);
+			skill[i].setPlayAudio(false);
 			skill[i].setFitWidth(GenerateParent.POOLITEMWIDTH);
 			skill[i].setFitHeight(GenerateParent.POOLITEMHEIGHT);
 			skill[i].setLayoutX(GenerateParent.POOLLEFTGAP+2*GenerateParent.POOLWIDTHGAP);
@@ -88,13 +92,13 @@ public class Pool extends AnchorPane{
 			this.getChildren().add(skill[i]);
 			System.out.println(i);
 //			System.out.println("Graphics/Skill/"+this.platform.getPlayer1().getAllSkills()[i].getID()+".png");
-			ImageView skillIcon = new ImageView (new Image ("Graphics/Skill/"+skillList[i]+".png"));
+			skillIcon[i] = new ImageView (new Image ("Graphics/Skill/"+skillList[i]+".png"));
 			int iconLength = (int)(GenerateParent.POOLITEMHEIGHT*0.8);
-			skillIcon.setFitHeight(iconLength);
-			skillIcon.setFitWidth(iconLength);
-			skillIcon.setX(1+skill[i].getLayoutX()+(GenerateParent.POOLITEMHEIGHT-iconLength)/2);
-			skillIcon.setY(skill[i].getLayoutY()+(GenerateParent.POOLITEMHEIGHT-iconLength)/2);
-			this.getChildren().add(skillIcon);
+			skillIcon[i].setFitHeight(iconLength);
+			skillIcon[i].setFitWidth(iconLength);
+			skillIcon[i].setX(1+skill[i].getLayoutX()+(GenerateParent.POOLITEMHEIGHT-iconLength)/2);
+			skillIcon[i].setY(skill[i].getLayoutY()+(GenerateParent.POOLITEMHEIGHT-iconLength)/2);
+			this.getChildren().add(skillIcon[i]);
 			//¼ÓÎÄ×Ö
 		}
 		for (int i=0;i<3;i++){
@@ -118,5 +122,17 @@ public class Pool extends AnchorPane{
 				this.getChildren().add(poolNumber[temp]);
 			}
 		}
+	}
+	public void refreshSkill(int [] skillList){
+		Platform.runLater(()->{
+			for (int i=0;i<3;i++){
+				this.getChildren().remove(skillIcon[i]);
+			}
+			for (int i=0;i<3;i++){
+//				skillIcon[i] = new ImageView (new Image ("Graphics/Skill/"+skillList[i]+".png"));
+				skillIcon[i].setImage(new Image ("Graphics/Skill/"+skillList[i]+".png"));
+				this.getChildren().add(skillIcon[i]);
+			}
+		});
 	}
 }
