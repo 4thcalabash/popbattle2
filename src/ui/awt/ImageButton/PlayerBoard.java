@@ -1,13 +1,10 @@
 package ui.awt.ImageButton;
 
 import java.util.concurrent.CountDownLatch;
-
-import bll.individual.PaperPlayer;
 import bllservice.BattlePlatform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import ui.Main;
 import ui.specialParent.GenerateParent;
@@ -25,7 +22,6 @@ public class PlayerBoard extends AnchorPane {
 	public static final int TEXTGAP = ICONLENGTH*3/2;
 	private PropertyLine P1HP,P2HP,P1AD,P2AD,P1AP,P2AP,P1DR,P2DR,P1MR,P2MR;
 	private Text HP1,HP2,AD1,AD2,AP1,AP2,DR1,DR2,MR1,MR2;
-	private Font myFont = new Font("ºÚÌå", ICONLENGTH*2/3);
 	public PlayerBoard(BattlePlatform platform){
 		this.platform=platform;
 		init();

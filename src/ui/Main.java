@@ -1,9 +1,7 @@
 package ui;
 import ui.abstractStage.*;
-import ui.awt.ImageButton.ImageButton;
 import ui.sceneInterface.*;
 import ui.specialParent.BonusParent;
-import ui.specialParent.EVEParent;
 import ui.specialParent.NormalParent;
 import ui.specialParent.PVEParent;
 import ui.specialParent.StaticParent;
@@ -79,7 +77,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	MissionInfo missionInfo;
 	@Override
 	
-	public void createNewBattle(MissionInfo missionInfo) {
+	public void createNewBattle(MissionInfo missionInfo,SupportParent father) {
 		this.missionInfo=missionInfo;
 		// TODO Auto-generated method stub
 		//隐藏staticscene，切记不要销毁。
@@ -90,7 +88,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 //			Platform.runLater(()->{
 //				
 //			});
-			this.setStage(new SkillChooser(this.staticParent.getBasicPlatform().getPlayer1(),this));
+			this.setStage(new SkillChooser(this.staticParent.getBasicPlatform().getPlayer1(),this,father));
 //			Platform.runLater(()->{
 //				scene.getStylesheets().remove(0);
 //				scene.getStylesheets().add(getClass().getResource("PVE.css").toExternalForm());
@@ -114,7 +112,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	
 	@Override
 	public void battleEnd(Bonus bonus) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub-
 		//battleScene自行销毁
 		//此方法完成从battle返回static
 		//显示关卡奖励等

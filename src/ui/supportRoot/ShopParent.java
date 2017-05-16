@@ -1,10 +1,8 @@
 package ui.supportRoot;
 
-import bll.platform.*;
 import bll.support.Shop;
-import bllservice.*;
+import bllservice.Shopable;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,7 +45,7 @@ public class ShopParent extends SupportParent {
 
 	public class ProductCard extends AnchorPane {
 		private ImageView Icon, wordBackground, background;
-		private String introduction, unit;
+		private String introduction;
 		private int price;
 		private Label word;
 		private ImageButton buy;
@@ -70,7 +68,7 @@ public class ShopParent extends SupportParent {
 			this.wordBackground = new ImageView(wordBackground);
 			this.introduction = introduction;
 			this.price = price;
-			this.unit = unit;
+//			this.unit = unit;
 			this.flag = flag;
 			init();
 		}

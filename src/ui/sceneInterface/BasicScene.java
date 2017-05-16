@@ -1,10 +1,9 @@
 package ui.sceneInterface;
 import javafx.scene.Parent;
-import javafx.stage.Stage;
-import po.*;
-import util.*;
+import ui.abstractStage.SupportParent;
+import util.MissionInfo;
 public interface BasicScene {
-	public void createNewBattle(MissionInfo missionInfo);
+	public void createNewBattle(MissionInfo missionInfo,SupportParent father);
 	public void setStage(Parent root);
 	public void returnStatic();
 	public void exitGame();

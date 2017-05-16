@@ -1,12 +1,8 @@
 package ui.specialParent;
 
 import ui.Main;
-import ui.abstractStage.BattleParent;
-
 import java.util.concurrent.CountDownLatch;
-
 import bll.platform.Battle;
-import bllservice.*;
 import po.*;
 public class NormalParent extends GenerateParent{
 //¾­µäºÍÐÝÏÐscene

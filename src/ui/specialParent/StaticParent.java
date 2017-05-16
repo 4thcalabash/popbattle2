@@ -1,24 +1,15 @@
 package ui.specialParent;
 import bll.platform.Static;
-import bll.support.Bonus;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
 //import bllservice.Shopable;
 import bllservice.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import ui.Main;
 import ui.sceneInterface.BasicScene;
 import ui.supportRoot.*;
 public class StaticParent extends BorderPane{

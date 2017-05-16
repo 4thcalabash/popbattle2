@@ -1,6 +1,4 @@
 package po;
-import java.util.ArrayList;
-
 import bll.matrix.Matrix;
 
 public class PopPo {

@@ -1,28 +1,12 @@
 package ui.supportRoot;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.concurrent.CountDownLatch;
-
 import bll.individual.Player;
-import bll.platform.*;
-import bllservice.*;
-import javafx.application.Platform;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import bllservice.Playerable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import ui.Main;
 import ui.abstractStage.SupportParent;
 import ui.awt.ImageButton.ButtonWorker;
@@ -63,7 +47,7 @@ public class PlayerParent extends SupportParent {
 	public static final int INTRODUCTIONLEFTGAP = ICONLENGTH*2;
 	public static final int INTRODUCTIONTOPGAP = ICONLENGTH/10;
 	private int restPP = -1;
-	private int hp = -1, ad = -1, ap = -1, dr = -1, mr = -1, dt = -1, mt = -1, exp = -1;
+	private int hp = -1, ad = -1, ap = -1, dr = -1, mr = -1, exp = -1;
 	private AnchorPane board = new AnchorPane();
 	private AnchorPane data = new AnchorPane();
 	private Playerable platform;
@@ -86,8 +70,8 @@ public class PlayerParent extends SupportParent {
 		ap = platform.getPlayer1().getAp();
 		dr = platform.getPlayer1().getDR();
 		mr = platform.getPlayer1().getMR();
-		dt = platform.getPlayer1().getDT();
-		mt = platform.getPlayer1().getMT();
+//		dt = platform.getPlayer1().getDT();
+//		mt = platform.getPlayer1().getMT();
 		exp = platform.getPlayer1().getNowExp();
 		ImageView background = new ImageView(new Image("Graphics/Static/Player/background.png"));
 		background.setFitHeight(BOARDHEIGHT);

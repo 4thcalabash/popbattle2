@@ -1,7 +1,5 @@
 package ui.supportRoot;
 
-import java.util.ArrayList;
-
 import bllservice.Supportable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -86,7 +84,7 @@ public class AudioSettingParent extends SupportParent{
 	private final Image closeEntered = new Image ("Graphics/Static/Icon/closeEntered.png");
 	private final Image closePressed = new Image ("Graphics/Static/Icon/closePressed.png");
 	private final Image closeIllegal = new Image ("Graphics/Static/Icon/closeIllegal.png");
-	private final Image illegalImage = new Image ("Graphics/Static/Icon/blank.png");
+//	private final Image illegalImage = new Image ("Graphics/Static/Icon/blank.png");
 	private final ButtonWorker illegalWorker = new ButtonWorker (){
 
 		@Override

@@ -1,7 +1,6 @@
 package bll.support;
 import java.util.ArrayList;
 
-import dal.FileHelper;
 import vo.MissionVo;
 public class Mission {
 	//每个关卡都需要播放片头和片尾，
@@ -11,7 +10,6 @@ public class Mission {
 	private int ID;
 	//关卡介绍信息
 	private String Introduction;
-	private Object startVideo,endVideo;
 	//每一个AI的ID号
 	private ArrayList <Integer> AIID;//从AI常量库提取
 	public Mission(MissionVo missionVo){

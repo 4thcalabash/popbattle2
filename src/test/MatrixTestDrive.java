@@ -1,15 +1,14 @@
 package test;
 
+import java.util.Scanner;
+
 import bll.individual.PaperPlayer;
 import bll.individual.Player;
-import bll.matrix.Matrix;
 import bll.platform.Battle;
 import bllservice.BattlePlatform;
 import dal.FileHelper;
 import po.DotPo;
 import po.PopPo;
-
-import java.util.Scanner;
 public class MatrixTestDrive {
 	static Scanner reader = new Scanner (System.in);
 	public static void main(String args[]){

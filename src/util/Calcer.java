@@ -2,8 +2,6 @@ package util;
 
 import java.util.ArrayList;
 
-import bll.support.Equip;
-
 public class Calcer implements CalcMethod{
 	private ArrayList <Integer> ansList = new ArrayList <Integer>();
 	public Calcer(int ans1){

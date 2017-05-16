@@ -1,11 +1,9 @@
 package ui.abstractStage;
 
 import bll.support.Equip;
-import bllservice.Playerable;
 import bllservice.Supportable;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import ui.Main;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;

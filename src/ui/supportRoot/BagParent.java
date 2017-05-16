@@ -1,6 +1,4 @@
 package ui.supportRoot;
-
-import bll.platform.*;
 import bll.support.Equip;
 import bllservice.*;
 import javafx.application.Platform;

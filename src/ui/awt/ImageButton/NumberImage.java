@@ -4,15 +4,11 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import ui.specialParent.GenerateParent;
 
@@ -115,6 +111,7 @@ public class NumberImage extends AnchorPane {
 		refresh(number);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void refresh(int number) {
 		if (!flag) {
 			Platform.runLater(() -> {
@@ -297,7 +294,8 @@ public class NumberImage extends AnchorPane {
 
 	}
 
-	public class change implements EventHandler {
+	@SuppressWarnings("rawtypes")
+	public class change implements EventHandler{
 		private ImageView tenImage2, oneImage2,hundredImage2=null;
 
 		public change(ImageView tenImage2, ImageView oneImage2) {

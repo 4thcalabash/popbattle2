@@ -1,15 +1,11 @@
 package ui.supportRoot;
 
-import bll.platform.*;
 import bll.support.Skill;
-import bllservice.*;
-import javafx.geometry.Pos;
-import javafx.scene.control.ContentDisplay;
+import bllservice.Skillable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.TextAlignment;
 import ui.Main;
 import ui.abstractStage.SupportParent;
 import ui.awt.ImageButton.ButtonWorker;

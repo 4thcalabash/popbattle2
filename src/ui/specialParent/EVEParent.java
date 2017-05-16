@@ -1,7 +1,6 @@
 package ui.specialParent;
 import bll.individual.Player;
 import bll.platform.Battle;
-import bll.support.Skill;
 import po.AIStrategyPo;
 import ui.Main;
 
@@ -22,8 +21,8 @@ public class EVEParent extends GenerateParent implements Runnable{
 		} else {
 			round = 1;
 		}
-		boolean skillRequest = false;
-		int skillID=-1;
+//		boolean skillRequest = false;
+//		int skillID=-1;
 		System.out.println("aha");
 		while (!result.isBattleIsEnd()) {
 			System.out.println(round);

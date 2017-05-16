@@ -6,11 +6,9 @@ import bll.matrix.Dot;
 import bll.matrix.Matrix;
 import bll.popMethod.Popable;
 import bll.popMethod.allMethod.MoreThanThreeLinePop;
-import bllservice.BattlePlatform;
 import po.AIStrategyPo;
 import po.DotPo;
 import po.MatrixPo;
-import po.PopPo;
 
 public class AI {
 	private Matrix matrix;
@@ -172,7 +170,7 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
@@ -190,7 +188,7 @@ public class AI {
 							while(true){
 //								System.out.println("test");
 
-								popNum = matrix3.getPopNum();
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
 //								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
@@ -234,7 +232,7 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
@@ -252,7 +250,7 @@ public class AI {
 							while(true){
 //								System.out.println("test");
 //								System.out.println("test");
-								popNum = matrix3.getPopNum();
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
 //								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
@@ -296,7 +294,7 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
@@ -313,7 +311,7 @@ public class AI {
 							}
 							while(true){
 //								System.out.println("test");
-								popNum = matrix3.getPopNum();
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
 //								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
@@ -357,7 +355,7 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
@@ -629,7 +627,7 @@ public class AI {
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
 							
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							
@@ -647,7 +645,7 @@ public class AI {
 							}
 							while(true){
 //								System.out.println("test");
-								popNum = matrix3.getPopNum();
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
 //								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
@@ -691,7 +689,7 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
@@ -708,7 +706,7 @@ public class AI {
 							}
 							while(true){
 //								System.out.println("test");
-								popNum = matrix3.getPopNum();
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
 //								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
@@ -752,7 +750,7 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
@@ -769,7 +767,7 @@ public class AI {
 							}
 							while(true){
 //								System.out.println("test");
-								popNum = matrix3.getPopNum();
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
 //								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
@@ -813,7 +811,7 @@ public class AI {
 						matrix3.getMatrix()[dot2.getX()][dot2.getY()]=tt;
 						boolean flag = popMethod.popChcek(matrix3, dot1, dot2);
 						if (flag){
-							int []popNum  = matrix3.getPopNum();
+//							int []popNum  = matrix3.getPopNum();
 							popMethod.pop(matrix3,dot1,dot2);
 //							System.out.println("end");
 							int[] popNum2 = matrix3.getPopNum();
@@ -830,7 +828,7 @@ public class AI {
 							}
 							while(true){
 //								System.out.println("test");
-								popNum = matrix3.getPopNum();
+//								popNum = matrix3.getPopNum();
 								popMethod.pop(matrix3);
 //								System.out.println("end");
 								popNum2 = matrix3.getPopNum();
@@ -917,7 +915,7 @@ public class AI {
 		//攻击时，随机排优先级，找可以释放的技能直接释放
 		//移动时，随机选取各点，上下左右检查是否可以移动，可以移动就直接采纳。
 		AIStrategyPo strategy = new AIStrategyPo();
-		double temp = Math.random();
+//		double temp = Math.random();
 		boolean canAttack = false;
 		int [] order = new int [3];
 		for (int i=0;i<3;i++){
@@ -928,7 +926,7 @@ public class AI {
 		}
 		//如果可以释放技能，将技能随机分配释放优先级。
 		if (canAttack){
-			temp-=0.1;
+//			temp-=0.1;
 			int t= (int)(Math.random()*2);
 			order[t]=-1;
 			double tt = Math.random();

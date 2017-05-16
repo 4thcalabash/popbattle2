@@ -1,8 +1,6 @@
 package ui.awt.ImageButton;
 
 import java.util.concurrent.CountDownLatch;
-
-import bllservice.BattlePlatform;
 import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +20,7 @@ public class PropertyLine extends AnchorPane{
 	public static final int DELTATIME = 500;
 	public static final int MIN=1;
 	private int maxlength;
-	private int height;
+//	private int height;
 	private ImageView picture;
 	private ImageView blank = new ImageView (new Image("Graphics/PlayerBoard/blank.png"));
 	

@@ -1,12 +1,9 @@
 package ui.supportRoot;
 
 import bllservice.Chooseable;
-import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import ui.Main;
 import ui.abstractStage.SupportParent;
 import ui.awt.ImageButton.ButtonWorker;
@@ -24,8 +21,11 @@ public class GameChooser extends SupportParent {
 	public static final int MIDGAP = 30;
 	public static final int ITEMHEIGHT = (BOARDHEIGHT -TOPBOTTOMGAP*2-MIDGAP)/2;
 	public static final int ITEMWIDTH = (BOARDWIDTH-LEFTRIGHTGAP*2);
+	public static final int INFOWIDTH = 200;
+	public static final int INFOHEIGHT = 200;
 	private AnchorPane board = new AnchorPane ();
 	private boolean inSon = false;
+	
 	public GameChooser(Chooseable basicPlatform,BasicScene main,String flag){
 		this(basicPlatform,main);
 		inSon=true;
@@ -34,6 +34,7 @@ public class GameChooser extends SupportParent {
 	}
 	public GameChooser(Chooseable basicPlatform,BasicScene main){
 		super(basicPlatform,main);
+		
 		ImageView background = new ImageView (new Image("Graphics/Static/GameChooser/background.png"));
 		background.setFitHeight(BOARDHEIGHT);
 		background.setFitWidth(BOARDWIDTH);
@@ -87,7 +88,7 @@ public class GameChooser extends SupportParent {
 		getChildren().add(board);
 	}
 	public void createNewBattle(MissionInfo missionInfo){
-		main.createNewBattle(missionInfo);
+		main.createNewBattle(missionInfo,this);
 	}
 	@Override
 	public void returnStatic(){

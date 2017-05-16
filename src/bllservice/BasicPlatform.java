@@ -1,6 +1,5 @@
 package bllservice;
 import bll.individual.Player;
-import po.*;
 public interface BasicPlatform {
 	
 	public Player getPlayer1();

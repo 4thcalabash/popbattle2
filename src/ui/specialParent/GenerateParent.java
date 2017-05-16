@@ -49,7 +49,6 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int TOPIMAGEHEIGHT = (int) (Main.SCREENHEIGHT * 155 / 1030.0);// 166;
 	public static final int TOPIMAGEWIDTH = 12 * GenerateParent.LENGTH - (int) (Main.SCREENHEIGHT * 5 / 1030.0);// 5;
 	public static final int DELTALENGTH = (int) (Main.SCREENHEIGHT * 23 / 1030.0);// 23;
-
 	public static final int POOLHEIGHT = (int) (Main.SCREENHEIGHT - TOPIMAGEHEIGHT - 9 * GenerateParent.LENGTH);
 	public static final int POOLTOPGAP = (int) (POOLHEIGHT * 0.2);
 	public static final int POOLWIDTHTEMP = (int) ((Main.SCREENWIDTH - TOPIMAGEWIDTH) / 2);
@@ -155,7 +154,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				skillList1[i] = -10000;
 			}
 		}
-		pool1 = new Pool(skillList1, new int[6], this);
+		pool1 = new Pool(skillList1,platform.getPlayer1().getPlayer().getSkillList(), new int[6], this);
 		int[] skillList2 = new int[3];
 		for (int i = 0; i < 3; i++) {
 			if (this.platform.getPlayer2().getAllSkills()[i] != null) {
@@ -167,7 +166,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		for (int i=0;i<3;i++){
 			System.out.println("Takes "+skillList1[i]);
 		}
-		pool2 = new Pool(skillList2, new int[6], this);
+		pool2 = new Pool(skillList2,platform.getPlayer2().getPlayer().getSkillList(), new int[6], this);
 		if (playerBoardFlag) {
 			playerBoard = new PlayerBoard(this.platform);
 			pools.setCenter(playerBoard);

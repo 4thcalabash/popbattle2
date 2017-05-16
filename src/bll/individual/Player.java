@@ -1,11 +1,9 @@
 package bll.individual;
-import java.util.ArrayList;
-import bllservice.*;
-import bll.support.*;
-import vo.*;
-import bll.platform.*;
-import po.*;
+import bll.support.Equip;
+import bll.support.Shop;
+import bll.support.Skill;
 import util.Calcable;
+import vo.PlayerVo;
 public class Player implements Calcable{
 	public void setPro(int pro) {
 		this.pro = pro;

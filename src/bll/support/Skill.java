@@ -1,11 +1,11 @@
 package bll.support;
 
-import java.util.ArrayList;
-
 import bll.individual.PaperPlayer;
 import bll.individual.Player;
 import bll.matrix.Matrix;
-import util.*;
+import util.SkillCostCalcMethod;
+import util.SkillLevelUpCalcMethod;
+import util.SkillValueCalcMethod;
 
 public class Skill {
 	/**
@@ -30,14 +30,29 @@ public class Skill {
 	public static final int ID_PRO100_1 = 104;
 	public static final int ID_PRO100_2 = 105;
 	public static final String[] INTRODUCTION_NORMAL = { "消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害", 
-			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害", 
-			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害",
-			"消耗：随机三个宝石\n出招时，用蛮力向敌人直刺，并产生一定的物理伤害\n增加物攻可以提高技能伤害" };
-	public static final String[] INTRODUCTION_FIREONGRASS = { "", "bb", "cc","dd" };
-	public static final String[] INTRODUCTION_WATERFLOW = { "aaa", "bbb", "ccc","ddd" };
-	public static final String[] INTRODUCTION_HURRICANE = { "aaaa", "bbbb", "cccc","dddd" };
-	public static final String[] INTRODUCTION_PRO100_1 ={"aaaaa","bbbbb","ccccc","ddddd"};
-	public static final String[] INTRODUCTION_PRO100_2 = {"aaaaaa","bbbbbb","cccccc","dddddd"};
+			"消耗：随机3颗元素石\n\n最基本的物理攻击招式，增加物攻可以提高技能伤害", 
+			"消耗：随机5颗元素石\n\n最基本的物理攻击招式，增加物攻可以提高技能伤害",
+			"消耗：随机6颗元素石\n\n最基本的物理攻击招式，增加物攻可以提高技能伤害" };
+	public static final String[] INTRODUCTION_FIREONGRASS = { "\n加成不俗的双修技能，增加物攻和法强都可以显著提升伤害", 
+			"消耗：6颗火元素石\n\n加成不俗的双修物理系技能，增加物攻和法强都可以显著提升伤害",
+			"消耗：8颗火元素石\n\n加成不俗的双修物理系技能，增加物攻和法强都可以显著提升伤害",
+			"消耗：10颗火元素石\n\n加成不俗的双修物理系技能，增加物攻和法强都可以显著提升伤害" };
+	public static final String[] INTRODUCTION_WATERFLOW = { "\n基础伤害很高的双修法系技能，升级技能性价比较高", 
+			"消耗：5颗水元素石\n\n基础伤害很高的双修法系技能，升级技能性价比较高", 
+			"消耗：7颗水元素石\n\n基础伤害很高的双修法系技能，升级技能性价比较高",
+			"消耗：9颗水元素石\n\n基础伤害很高的双修法系技能，升级技能性价比较高" };
+	public static final String[] INTRODUCTION_HURRICANE = { "\n无基础伤害，但有全面加成的物理系技能，物攻、法强、等级都可以转化为伤害值",
+			"消耗：6颗风元素石\n\n无基础伤害，但有全面加成的物理系技能，物攻、法强、等级都可以转化为伤害值", 
+			"消耗：8颗风元素石\n\n无基础伤害，但有全面加成的物理系技能，物攻、法强、等级都可以转化为伤害值",
+			"消耗：10颗风元素石\n\n无基础伤害，但有全面加成的物理系技能，物攻、法强、等级都可以转化为伤害值" };
+	public static final String[] INTRODUCTION_PRO100_1 ={"\n超高AD加成的物理系爆发技能",
+			"消耗：3颗火元素石+3颗水元素石+6颗地元素石\n\n超高AD加成的物理系爆发技能",
+			"消耗：4颗火元素石+4颗水元素石+8颗地元素石\n\n超高AD加成的物理系爆发技能",
+			"消耗：5颗火元素石+5颗水元素石+10颗地元素石\n\n超高AD加成的物理系爆发技能"};
+	public static final String[] INTRODUCTION_PRO100_2 = {"\n超高基础伤害值的法系爆发技能",
+			"消耗：10颗草元素石+10颗魄元素石\n\n超高基础伤害值的法系爆发技能",
+			"消耗：12颗草元素石+12颗魄元素石\n\n超高基础伤害值的法系爆发技能",
+			"消耗：14颗草元素石+14颗魄元素石\n\n超高基础伤害值的法系爆发技能"};
 	public static final Skill PRO100_2 = new Skill(Skill.ID_PRO100_2,3,Player.ENEMY,
 			new SkillValueCalcMethod(){
 
@@ -46,12 +61,11 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (skillLevel == 1) {
-						return (int) (40 + (double) paperplayer.getPlayer().getAp() * 0.25);
+						return (int) (55 + (double) paperplayer.getPlayer().getAp() * 0.35);
 					} else if (skillLevel == 2) {
-						return (int) (65 + (double) paperplayer.getPlayer().getAp() * 0.35);
+						return (int) (70 + (double) paperplayer.getPlayer().getAp() * 0.45);
 					} else {
-						return (int) (90 + (double) paperplayer.getPlayer().getAp() * 0.45
-								+ (double) paperplayer.getPlayer().getAd() * 0.15);
+						return (int) (105 + (double) paperplayer.getPlayer().getAp() * 0.65);
 					}
 				}
 		
@@ -63,16 +77,13 @@ public class Skill {
 			int[] cost = new int[Matrix.KIND];
 			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
 			if (skillLevel == 0) {
-				cost[Matrix.FIREELEMENT] = 5;
-				cost[Matrix.WATERELEMENT]=5;
+				cost[Matrix.GREENELEMENT]=10;
 				cost[Matrix.SPIRITELEMENT]=10;
 			} else if (skillLevel == 1) {
-				cost[Matrix.FIREELEMENT] = 7;
-				cost[Matrix.WATERELEMENT]=7;
+				cost[Matrix.GREENELEMENT]=12;
 				cost[Matrix.SPIRITELEMENT]=12;
 			} else {
-				cost[Matrix.FIREELEMENT] = 9;
-				cost[Matrix.WATERELEMENT]=9;
+				cost[Matrix.GREENELEMENT]=14;
 				cost[Matrix.SPIRITELEMENT]=14;
 			}
 			return cost;
@@ -100,12 +111,11 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (skillLevel == 1) {
-						return (int) (20 + (double) paperplayer.getPlayer().getAd() * 0.3);
+						return (int) (20 + (double) paperplayer.getPlayer().getAd() * 0.9);
 					} else if (skillLevel == 2) {
-						return (int) (30 + (double) paperplayer.getPlayer().getAd() * 0.45);
+						return (int) (30 + (double) paperplayer.getPlayer().getAd() * 1.1);
 					} else {
-						return (int) (45 + (double) paperplayer.getPlayer().getAd() * 0.5
-								+ (double) paperplayer.getPlayer().getAp() * 0.15);
+						return (int) (45 + (double) paperplayer.getPlayer().getAd() * 1.4);
 					}
 				}
 		
@@ -117,14 +127,17 @@ public class Skill {
 			int[] cost = new int[Matrix.KIND];
 			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
 			if (skillLevel == 0) {
-				cost[Matrix.FIREELEMENT] = 8;
+				cost[Matrix.FIREELEMENT] = 3;
 				cost[Matrix.WATERELEMENT]=3;
+				cost[Matrix.EARTHELEMENT]=6;
 			} else if (skillLevel == 1) {
-				cost[Matrix.FIREELEMENT] = 12;
+				cost[Matrix.FIREELEMENT] = 4;
 				cost[Matrix.WATERELEMENT]=4;
+				cost[Matrix.EARTHELEMENT]=8;
 			} else {
-				cost[Matrix.FIREELEMENT] = 15;
+				cost[Matrix.FIREELEMENT] = 5;
 				cost[Matrix.WATERELEMENT]=5;
+				cost[Matrix.EARTHELEMENT]=10;
 			}
 			return cost;
 		}
@@ -151,7 +164,7 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_NORMALATTACK%100];
 					if (skillLevel == 1) {
-						return (int) (5 + (double) paperplayer.getPlayer().getAd() * 0.5);
+						return (int) (5 + (double) paperplayer.getPlayer().getAd() * 0.6);
 					} else if (skillLevel == 2) {
 						return (int) (10 + (double) paperplayer.getPlayer().getAd() * 0.75);
 					} else {
@@ -269,14 +282,14 @@ public class Skill {
 			// TODO Auto-generated method stub
 			int skillLevel = paperplayer.getPlayer().getSkillList()[Skill.ID_WATERFLOW%100];
 			if (skillLevel == 1) {
-				return (int) (15 + (double) paperplayer.getPlayer().getAd() * 0.45
+				return (int) (25 + (double) paperplayer.getPlayer().getAd() * 0.35
 						+ (double) paperplayer.getPlayer().getAp() * 0.3);
 			} else if (skillLevel == 2) {
-				return (int) (25 + (double) paperplayer.getPlayer().getAd() * 0.5
+				return (int) (40 + (double) paperplayer.getPlayer().getAd() * 0.40
 						+ (double) paperplayer.getPlayer().getAp() * 0.35);
 			} else {
-				return (int) (40 + (double) paperplayer.getPlayer().getAd() * 0.55
-						+ (double) paperplayer.getPlayer().getAp() * 0.4);
+				return (int) (55 + (double) paperplayer.getPlayer().getAd() * 0.5
+						+ (double) paperplayer.getPlayer().getAp() * 0.35);
 			}
 		}
 
@@ -425,6 +438,7 @@ public class Skill {
 	// return level;
 	// }
 	// 技能最高等级需要在常量包中记录
+	@SuppressWarnings("unused")
 	private int effectValue;
 	private final int MAXLEVEL;
 	// 正 扣血 ，负 回复

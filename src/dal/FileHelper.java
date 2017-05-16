@@ -2,7 +2,6 @@ package dal;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -10,10 +9,11 @@ import java.util.ArrayList;
 import bll.individual.PaperPlayer;
 import bll.individual.Player;
 import bll.matrix.Matrix;
-import bll.support.Equip;
 import bll.support.Skill;
-import datahelper.*;
-import vo.*;
+import datahelper.DataOperator;
+import vo.MissionVo;
+import vo.PlayerVo;
+import vo.ShopVo;
 public class FileHelper implements DataOperator{
 
 	@Override
@@ -277,7 +277,7 @@ public class FileHelper implements DataOperator{
 			missionVo.setIntroduction(line);
 			line = reader.readLine();
 			int AInum = Integer.parseInt(line);
-			ArrayList <Integer> AIID = new ArrayList ();
+			ArrayList <Integer> AIID = new ArrayList<Integer> ();
 			for (int i=0;i<AInum;i++){
 				line = reader.readLine();
 				AIID.add(Integer.parseInt(line));
@@ -298,7 +298,7 @@ public class FileHelper implements DataOperator{
 		Player AIBasic = new Player (basic);
 		PaperPlayer AI = null;
 		try{
-			String filePath = FileHelper.class.getClassLoader().getResource("AIData/AI"+ID+".data").getPath();
+//			String filePath = FileHelper.class.getClassLoader().getResource("AIData/AI"+ID+".data").getPath();
 //			File save = new File (filePath);
 //			FileReader filereader = new FileReader(save);
 //			BufferedReader reader = new BufferedReader (filereader);

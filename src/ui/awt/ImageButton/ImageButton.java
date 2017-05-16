@@ -20,11 +20,6 @@ public class ImageButton extends ImageView{
 	private boolean pressed=false;
 	private ImageButton myself = this;
 	private boolean playAudio=true;
-//	public static final AudioClip enteredAudio = new AudioClip(ImageButton.class.getClass().getResource("../../Audio/entered.mp3").toString());
-//	public static final AudioClip illegalAudio = new AudioClip(ImageButton.class.getClass().getResource("../../Audio/illegal.mp3").toString());
-//	public static final AudioClip pressedAudio = new AudioClip(ImageButton.class.getClass().getResource("../../Audio/pressed.mp3").toString());
-
-	Audio a = new Audio();
 	private final AudioClip enteredAudio = Audio.entered;
 	private final AudioClip illegalAudio = Audio.illegal;
 	private final AudioClip pressedAudio = Audio.pressed;
@@ -35,13 +30,13 @@ public class ImageButton extends ImageView{
 		this.enteredGraphics=enteredGraphics;
 		this.myWorker=buttonWorker;
 		this.setImage(staticGraphics);
-//		System.out.println(ImageButton.class.getClass().getResource("../../Audio/").toString());
 		this.setOnMouseEntered(new EventHandler <MouseEvent>(){
 
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
 				entered=true;
+				System.out.println("is in!");
 				if (pressed==false){
 					setImage(myself.enteredGraphics);
 					if (playAudio)
@@ -68,10 +63,12 @@ public class ImageButton extends ImageView{
 		});
 		this.setOnMouseExited(new EventHandler <MouseEvent>(){
 
+//			@SuppressWarnings("deprecation")
 			@Override
 			public void handle(MouseEvent event) {
 				// TODO Auto-generated method stub
 				entered=false;
+				//move.stop();
 				if (pressed==false){
 					setImage(myself.staticGraphics);
 				}
@@ -91,6 +88,75 @@ public class ImageButton extends ImageView{
 			
 		});
 	}
+	public ImageButton(Image staticGraphics,Image enteredGraphics,Image pressedGraphics,ButtonWorker buttonWorker,ButtonWorker buttonWorker2){
+		
+		this.staticGraphics=staticGraphics;
+		this.pressedGraphics=pressedGraphics;
+		this.enteredGraphics=enteredGraphics;
+		this.myWorker=buttonWorker;
+		this.setImage(staticGraphics);
+		this.setOnMouseEntered(new EventHandler <MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				entered=true;
+				System.out.println("is in!");
+				if (pressed==false){
+					setImage(myself.enteredGraphics);
+					buttonWorker2.work();
+					if (playAudio)
+					enteredAudio.play();
+				}
+//				entered=true;
+			}
+			
+		});
+		this.setOnMousePressed(new EventHandler <MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				pressed=true;
+				if (!playAudio){
+					illegalAudio.play();
+				}else{
+					pressedAudio.play();
+				}
+				setImage(myself.pressedGraphics);
+			}
+			
+		});
+		this.setOnMouseExited(new EventHandler <MouseEvent>(){
+
+//			@SuppressWarnings("deprecation")
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				entered=false;
+				//move.stop();
+				if (pressed==false){
+					setImage(myself.staticGraphics);
+				}
+			}
+		});
+		this.setOnMouseReleased(new EventHandler <MouseEvent>(){
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				pressed=false;
+				setImage(myself.staticGraphics);
+				if (entered==true){
+					myself.myWorker.work();
+				}
+			}
+			
+		});
+	}
+	
+	
+	
 	public ButtonWorker getMyWorker() {
 		return myWorker;
 	}

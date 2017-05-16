@@ -7,7 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ui.Main;
+import ui.abstractStage.SupportParent;
 import ui.awt.ImageButton.ButtonWorker;
+import ui.awt.ImageButton.DialogableImageView;
 import ui.awt.ImageButton.ImageButton;
 import ui.sceneInterface.BasicScene;
 import util
@@ -29,8 +31,10 @@ import util
 	private AnchorPane board=new AnchorPane();
 	private SkillCard s0,s1,s2,s3,s4,s5;
 	private ImageButton confirm,back;
-	public SkillChooser(Player player,Main main){
+	private SupportParent father;
+	public SkillChooser(Player player,Main main,SupportParent father){
 		this.player=player;
+		this.father=father;
 		this.main=main;
 		init();
 	}
@@ -253,7 +257,10 @@ import util
 			background.setX(0);
 			background.setY(0);
 			this.getChildren().add(background);
-			ImageView icon = new ImageView (new Image("Graphics/Skill/"+(index+player.getPro())+".png"));
+//			ImageView icon = new ImageView (new Image("Graphics/Skill/"+(index+player.getPro())+".png"));
+//			ImageView icon = new DialogableImageView (Skill.getSkillByID(index+player.getPro()).getSkillIntroduction()[player.getSkillList()[index]],father,100,200," ");
+			ImageView icon = new ImageView ();
+			icon.setImage(new Image ("Graphics/Skill/"+(index+player.getPro())+".png"));
 			icon.setFitHeight(ICONLENGTH);
 			icon.setFitWidth(ICONLENGTH);
 			icon.setX(INNERGAP);

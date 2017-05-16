@@ -639,9 +639,9 @@ public class MoreThanThreeLinePop extends PopMethod {
 			}
 		}
 		//
-		for (DotPo temp : queue) {
+//		for (DotPo temp : queue) {
 	//		System.out.println("(" + temp.getX() + "," + temp.getY() + "):" + temp.getColor() + "|" + temp.getBonus());
-		}
+//		}
 
 		while (queue.size() > 0) {
 			DotPo head = queue.get(0);
@@ -1194,9 +1194,9 @@ public class MoreThanThreeLinePop extends PopMethod {
 			}
 		}
 		//
-		for (DotPo temp : queue) {
+//		for (DotPo temp : queue) {
 	//		System.out.println("(" + temp.getX() + "," + temp.getY() + "):" + temp.getColor() + "|" + temp.getBonus());
-		}
+//		}
 
 		while (queue.size() > 0) {
 			DotPo head = queue.get(0);

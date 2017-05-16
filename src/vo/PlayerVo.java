@@ -1,6 +1,5 @@
 package vo;
-import bll.individual.*;
-import bll.support.Equip;
+
 public class PlayerVo {
 	private int pro;
 	public int getPro() {
