@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import bll.platform.Battle;
@@ -77,7 +78,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 	MissionInfo missionInfo;
 	@Override
 	
-	public void createNewBattle(MissionInfo missionInfo,SupportParent father) {
+	public void createNewBattle(MissionInfo missionInfo,AnchorPane father) {
 		this.missionInfo=missionInfo;
 		// TODO Auto-generated method stub
 		//隐藏staticscene，切记不要销毁。

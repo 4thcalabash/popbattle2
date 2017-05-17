@@ -25,12 +25,14 @@ public class GameChooser extends SupportParent {
 	public static final int INFOHEIGHT = 200;
 	private AnchorPane board = new AnchorPane ();
 	private boolean inSon = false;
-	
+	private BattleChooser battleChooser;
 	public GameChooser(Chooseable basicPlatform,BasicScene main,String flag){
 		this(basicPlatform,main);
 		inSon=true;
 		getChildren().remove(board);
-		getChildren().add(new BattleChooser(basicPlatform,myself));
+		battleChooser=new BattleChooser(basicPlatform,myself);
+		getChildren().add(battleChooser);
+		System.out.println(this);
 	}
 	public GameChooser(Chooseable basicPlatform,BasicScene main){
 		super(basicPlatform,main);
@@ -88,7 +90,7 @@ public class GameChooser extends SupportParent {
 		getChildren().add(board);
 	}
 	public void createNewBattle(MissionInfo missionInfo){
-		main.createNewBattle(missionInfo,this);
+		main.createNewBattle(missionInfo,battleChooser);
 	}
 	@Override
 	public void returnStatic(){

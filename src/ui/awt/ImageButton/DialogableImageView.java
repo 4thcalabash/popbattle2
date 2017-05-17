@@ -20,7 +20,7 @@ public class DialogableImageView extends ImageView {
 	}
 	public DialogableImageView (String information,Pane father,int height,int width,String flag){
 		this.setOnMouseEntered(e->{
-			new InfoDialog(father,information,height,width,0,0,"");
+			new InfoDialog(father,information,height,width,(int)e.getScreenX()-DELTAWIDTH*2,(int)e.getScreenY()-height+DELTAHEIGHT*2," ");
 		});
 	}
 }

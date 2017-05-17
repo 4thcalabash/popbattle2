@@ -12,8 +12,7 @@ import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.DialogableImageView;
 import ui.awt.ImageButton.ImageButton;
 import ui.sceneInterface.BasicScene;
-import util
-.Audio;public class SkillChooser extends AnchorPane {
+import util.Audio;public class SkillChooser extends AnchorPane {
 	public static final int BOARDHEIGHT = Main.SCREENHEIGHT/2;
 	public static final int BOARDWIDTH = BOARDHEIGHT;
 	public static final int GAP = BOARDHEIGHT/10;
@@ -31,10 +30,11 @@ import util
 	private AnchorPane board=new AnchorPane();
 	private SkillCard s0,s1,s2,s3,s4,s5;
 	private ImageButton confirm,back;
-	private SupportParent father;
-	public SkillChooser(Player player,Main main,SupportParent father){
+	private AnchorPane father;
+	public SkillChooser(Player player,Main main,AnchorPane father2){
 		this.player=player;
-		this.father=father;
+//		this.father=father2;
+		father = this;
 		this.main=main;
 		init();
 	}
@@ -258,8 +258,8 @@ import util
 			background.setY(0);
 			this.getChildren().add(background);
 //			ImageView icon = new ImageView (new Image("Graphics/Skill/"+(index+player.getPro())+".png"));
-//			ImageView icon = new DialogableImageView (Skill.getSkillByID(index+player.getPro()).getSkillIntroduction()[player.getSkillList()[index]],father,100,200," ");
-			ImageView icon = new ImageView ();
+			ImageView icon = new DialogableImageView (Skill.getSkillByID(index+player.getPro()).getSkillIntroduction()[player.getSkillList()[index]]+"!",father,300,280," ");
+//			ImageView icon = new ImageView ();
 			icon.setImage(new Image ("Graphics/Skill/"+(index+player.getPro())+".png"));
 			icon.setFitHeight(ICONLENGTH);
 			icon.setFitWidth(ICONLENGTH);

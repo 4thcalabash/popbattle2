@@ -1,5 +1,6 @@
 package ui.awt.ImageButton;
 
+import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -46,13 +47,16 @@ public class InfoDialog extends AnchorPane{
 		background.setFitWidth(width);
 		background.setX(0);
 		background.setY(0);
+//		father.getChildren().add(background);
 		this.getChildren().add(background);
 		this.setLayoutX(x);
 		this.setLayoutY(y);
-		this.setMaxSize(width, height);
+//		this.setMaxSize(width, height);
 //		sub.getChildren().add(this);
 //		father.getChildren().add(sub);
-		father.getChildren().add(this);
+
+		System.out.println(father);
+		System.out.println(father.getChildren());
 //		this.setLayoutX(x);
 //		this.setLayoutY(y);
 		Label info = new Label(information);
@@ -61,9 +65,18 @@ public class InfoDialog extends AnchorPane{
 		info.setLayoutY(0);
 		info.setWrapText(true);
 		this.getChildren().add(info);
+		Platform.runLater(()->{
+			father.getChildren().add(this);
+//			father.getChildren().add(background);
+			System.out.println(this);
+			System.out.println("Successfully add Dialog!");
+
+		
+		});
 		this.setOnMouseExited(e->{
 //			father.getChildren().remove(sub);
 			father.getChildren().remove(this);
+			System.out.println("Successfully remove Dilog");
 		});
 	}
 }
