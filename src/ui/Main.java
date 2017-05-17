@@ -88,6 +88,7 @@ public class Main extends Application implements BasicScene,DramaticScene{
 		if (missionInfo.getModel()==Battle.PVE){
 //			Platform.runLater(()->{
 //				
+			
 //			});
 			this.setStage(new SkillChooser(this.staticParent.getBasicPlatform().getPlayer1(),this,father));
 //			Platform.runLater(()->{

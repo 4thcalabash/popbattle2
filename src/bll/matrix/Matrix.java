@@ -55,7 +55,7 @@ public class Matrix {
 	//产生一个爆炸效果的普通消除
 	public static final int BOMBBONUSPOP =BOMBBONUS;
 	//两个爆炸效果的交换消除
-	public static final int BIGBANG=BOMBBONUS*BOMBBONUS;
+	public static final int BIGBANG=BOMBBONUS;
 	//变成了一只CHICK
 	public static final int TOCHICK= CHICKBONUS*10;
 	//变成了一只LINEBONUS

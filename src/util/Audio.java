@@ -7,6 +7,7 @@ public class Audio {
 	public static final AudioClip entered = new AudioClip(Audio.class.getClass().getResource("/Audio/entered.mp3").toString());
 	public static final AudioClip illegal = new AudioClip(Audio.class.getClass().getResource("/Audio/illegal.mp3").toString());
 	public static final AudioClip pressed = new AudioClip(Audio.class.getClass().getResource("/Audio/pressed.mp3").toString());
+	public static final AudioClip normal = new AudioClip(Audio.class.getClass().getResource("/Audio/normal.mp3").toString());
 	public static final AudioClip [] skillAudio = new AudioClip[200];
 	static{
 		

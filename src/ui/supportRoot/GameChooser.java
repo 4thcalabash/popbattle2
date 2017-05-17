@@ -29,9 +29,10 @@ public class GameChooser extends SupportParent {
 	public GameChooser(Chooseable basicPlatform,BasicScene main,String flag){
 		this(basicPlatform,main);
 		inSon=true;
-		getChildren().remove(board);
+//		getChildren().remove(board);
 		battleChooser=new BattleChooser(basicPlatform,myself);
-		getChildren().add(battleChooser);
+//		getChildren().add(battleChooser);
+//		getChildren().add(board);
 		System.out.println(this);
 	}
 	public GameChooser(Chooseable basicPlatform,BasicScene main){

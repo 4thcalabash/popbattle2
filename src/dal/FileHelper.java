@@ -249,10 +249,10 @@ public class FileHelper implements DataOperator{
 			BufferedReader reader = new BufferedReader (new InputStreamReader (FileHelper.class.getClassLoader().getResourceAsStream("MissionData/Normal/"+index+".data")));
 			missionVo.setID(index);
 			String line = null;
-			line = reader.readLine();
-			missionVo.setAvailTime(Integer.parseInt(line));
-			line = reader.readLine();
-			missionVo.setAvailOperateTimes(Integer.parseInt(line));
+//			line = reader.readLine();
+//			missionVo.setAvailTime(Integer.parseInt(line));
+//			line = reader.readLine();
+//			missionVo.setAvailOperateTimes(Integer.parseInt(line));
 			int [] targetElementNum = new int [Matrix.KIND] ;
 			
 			for (int i=0;i<Matrix.KIND;i++){

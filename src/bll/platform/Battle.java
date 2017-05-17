@@ -56,6 +56,11 @@ public class Battle implements BattlePlatform{
 		ArrayList <Popable> popList = new ArrayList<Popable>();
 		popList.add(new MoreThanThreeLinePop());
 		popHub = new PopMethodHub (popList,chessboard);
+		Player temp = new Player (new FileHelper().loadData(0));
+		paperPlayer1 = new PaperPlayer(temp);
+		paperPlayer2 = new PaperPlayer(temp);
+		this.getPlayer1().setElementPool(new int[10]);
+		this.getPlayer2().setElementPool(new int[10]);
 	}
 	@Override
 	public Bonus getBonus(){
@@ -99,6 +104,28 @@ public class Battle implements BattlePlatform{
 	private BattlePo normalCheck(){
 		BattlePo battlePo = new BattlePo ();
 		//ª∫“ª ÷
+		boolean breakflag=false;
+		for (int i=0;i<Matrix.KIND;i++){
+			if (this.getPlayer1().getElementPool()[i]<this.missionVo.getTargetElementNum()[i]){
+				breakflag=true;
+				break;
+			}
+		}
+		if (!breakflag){
+			battlePo.setBattleIsEnd(true);
+			battlePo.setFinalWinnerID(1);
+		}
+		breakflag=false;
+		for (int i=0;i<Matrix.KIND;i++){
+			if (this.getPlayer2().getElementPool()[i]<this.missionVo.getTargetElementNum()[i]){
+				breakflag=true;
+				break;
+			}
+		}
+		if (!breakflag){
+			battlePo.setBattleIsEnd(true);
+			battlePo.setFinalWinnerID(2);
+		}
 		return battlePo;
 	}
 	@Override

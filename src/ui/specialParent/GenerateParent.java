@@ -1,13 +1,8 @@
 package ui.specialParent;
 
-import ui.Main;
-import ui.abstractStage.BattleParent;
-import ui.awt.ImageButton.Chessman;
-import ui.awt.ImageButton.ImageButton;
-import ui.awt.ImageButton.PlayerBoard;
-import ui.awt.ImageButton.Pool;
 import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
+
 import bll.matrix.Dot;
 import bll.matrix.Matrix;
 import bll.support.Skill;
@@ -33,7 +28,13 @@ import po.BattlePo;
 import po.DotPo;
 import po.MatrixPo;
 import po.PopPo;
-import ui.awt.ImageButton.*;
+import ui.Main;
+import ui.abstractStage.BattleParent;
+import ui.awt.ImageButton.ButtonWorker;
+import ui.awt.ImageButton.Chessman;
+import ui.awt.ImageButton.ImageButton;
+import ui.awt.ImageButton.PlayerBoard;
+import ui.awt.ImageButton.Pool;
 import util.Audio;
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
@@ -597,7 +598,16 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
 		return flag;
 	}
-
+	public void showWinFlash(String flag){
+		CountDownLatch c = new CountDownLatch(1);
+		showFlash(GenerateParent.BATTLE_WIN,c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void showWinFlash() {
 		// AI死掉的动画
 		CountDownLatch cc = new CountDownLatch(1);

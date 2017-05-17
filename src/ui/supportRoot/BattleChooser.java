@@ -10,6 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import ui.Main;
 import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.ImageButton;
+import ui.awt.ImageButton.InfoDialog;
 import util.MissionInfo;
 
 public class BattleChooser extends AnchorPane{
@@ -49,7 +50,8 @@ public class BattleChooser extends AnchorPane{
 			public void work() {
 				// TODO Auto-generated method stub
 				Platform.runLater(()->{
-					info.setText("第0关");
+					info.setText("第0关,对手是一只筑基期的蝎子怪，可能是功力不足的原因，行动起来似乎怪怪的。");
+//					new InfoDialog(gameChooser, basicPath, BOTTOM_INVALID, BOTTOM_INVALID, BOTTOM_INVALID, BOTTOM_INVALID, basicPath);
 				});
 			}
 			
