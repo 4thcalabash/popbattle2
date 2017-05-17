@@ -50,7 +50,7 @@ public class Battle implements BattlePlatform{
 	//NORMALģʽ
 	public Battle (int missionID){
 		this.missionVo=new FileHelper().loadNormal(missionID);
-		
+		bonus=Bonus.getBonusByID(missionID+100);
 		chessboard = new Matrix ();
 		chessboard.remake();
 		ArrayList <Popable> popList = new ArrayList<Popable>();
@@ -330,6 +330,11 @@ public class Battle implements BattlePlatform{
 //		// TODO Auto-generated method stub
 //		return pool2.clone();
 //	}
+	@Override
+	public int[] getTarget() {
+		// TODO Auto-generated method stub
+		return this.missionVo.getTargetElementNum().clone();
+	}
 
 
 	

@@ -34,6 +34,7 @@ import ui.awt.ImageButton.ButtonWorker;
 import ui.awt.ImageButton.Chessman;
 import ui.awt.ImageButton.ImageButton;
 import ui.awt.ImageButton.PlayerBoard;
+import ui.awt.ImageButton.PointBoard;
 import ui.awt.ImageButton.Pool;
 import util.Audio;
 public abstract class GenerateParent extends BattleParent implements Runnable {
@@ -81,6 +82,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int LABELHEIGHT = TOPIMAGEHEIGHT;
 	public static final int LABELWIDTH =TOPIMAGEWIDTH*8/10;
 	private Label text;
+	protected boolean normal = false;
 	protected AudioClip battleAudio;
 	private BorderPane border = new BorderPane();
 	protected DotPo dot1 = new DotPo(-1, -1);
@@ -93,6 +95,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	private GridPane matrix;
 	private Dot[][] chessboard;
 	private AnchorPane center;
+	private PointBoard point;
 	private Chessman[][] imageMatrix = new Chessman[Matrix.TOTALLINE][Matrix.TOTALROW];
 	protected Thread myself, check;
 	private Chessman selected;
@@ -114,9 +117,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int SKILLPLAYERHEIGHT = (int) (SKILLPLAYERWIDTH * 1.15);
 	public static final int SKILLMOVEDELTA = 500;
 	public static final int SKILLATTACKDELTA = 1000;
-	BattlePo result;
-	BorderPane pools = new BorderPane();
-	ImageButton battleEnd;
+	protected BattlePo result;
+	private BorderPane pools = new BorderPane();
+	private ImageButton battleEnd;
 	private ImageView p2Image, p1Image;
 
 	public void addPlayer1() {
@@ -172,6 +175,10 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			playerBoard = new PlayerBoard(this.platform);
 			pools.setCenter(playerBoard);
 			BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
+		}else{
+			point = new PointBoard(platform);
+			pools.setCenter(point);
+			BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
 		}
 		pools.setLeft(pool1);
 		pools.setRight(pool2);
@@ -187,7 +194,13 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		init();
 		this.getChildren().add(border);
 	}
+	public GenerateParent (Main main,BattlePlatform platform,String flag){
+		this(main,platform);
+		Platform.runLater(()->{
+			text.setText("极限挑战");
+		});
 
+	}
 	public void init() {
 		myself = new Thread(this);
 		renewBoard();
@@ -507,40 +520,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 						playerBoard = new PlayerBoard(this.platform);
 						pools.setCenter(playerBoard);
 						BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
-						c.countDown();
-//						new Thread(new Runnable(){
-//
-//							@Override
-//							public void run() {
-//								// TODO Auto-generated method stub
-//								boolean[] flag2 = new boolean[3];
-//								CountDownLatch tempcc = new CountDownLatch (2);
-//								for (int i = 0; i < 3; i++) {
-//									if (platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
-//										flag2[i] = true;
-//									} else {
-//										flag2[i] = false;
-//									}
-//								}
-//								pool1.renewSkill(flag2,tempcc);
-//								for (int i = 0; i < 3; i++) {
-//									if (platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
-//										flag2[i] = true;
-//									} else {
-//										flag2[i] = false;
-//									}
-//								}
-//								pool2.renewSkill(flag2,tempcc);
-//								try {
-//									tempcc.await();
-//								} catch (Exception ee) {
-//									// TODO Auto-generated catch block
-//									ee.printStackTrace();
-//								}
-//							}
-//							
-//						}).start();
-						
+						c.countDown();	
 					});
 					this.getChildren().add(sss);
 
@@ -628,7 +608,16 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		}
 		// 胜利动画 阻塞式 用showFlash方法
 	}
-
+	public void showLoseFlash(String flag){
+		CountDownLatch c = new CountDownLatch(1);
+		showFlash(GenerateParent.BATTLE_LOSE, c);
+		try {
+			c.await();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void showLoseFlash() {
 		// 玩家死掉的动画
 		CountDownLatch c = new CountDownLatch(1);
@@ -898,7 +887,11 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		top.setY(0);
 		text = new Label();
 		text.setId("text");
+		if(!normal){
 		text.setText("Battle"+nowAI+"/"+platform.getAINum());
+		}else{
+			text.setText("极限挑战");
+		}
 		text.setLayoutX((TOPIMAGEWIDTH)*42/100);
 		text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
 		
@@ -1022,7 +1015,11 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			center.getChildren().add(top);
 			text = new Label();
 			text.setId("text");
-			text.setText("Battle"+nowAI+"/"+platform.getAINum());
+			if (!normal){
+				text.setText("Battle"+nowAI+"/"+platform.getAINum());
+			}else{
+				text.setText("极限挑战");
+			}
 			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
 			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
 			center.getChildren().add(text);
@@ -1189,10 +1186,16 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				// this.platform.
 				// pool1.refreshElementNum(elementPool1);
 				this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
+				if (point!=null){
+					point.refresh();
+				}
 				// this.playerBoard.refreshData();
 			} else if (round == 2 && pool2 != null) {
 				// int[] elementPool2 = this.platform.getPool2();
 				// pool2.refreshElementNum(elementPool2);
+				if (point!=null){
+					point.refresh();
+				}
 				this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
 			}
 			chessboard = this.platform.getMatrix().getMatrix();
@@ -1234,7 +1237,11 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			sub.setId("Matrix");
 			text = new Label();
 			text.setId("text");
+			if (!normal){
 			text.setText("Battle"+nowAI+"/"+platform.getAINum());
+			}else{
+				text.setText("极限挑战");
+			}
 			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
 			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
 			
@@ -1653,7 +1660,11 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			center.setMinWidth(getMaxWidth());
 			text = new Label();
 			text.setId("text");
+			if(!normal){
 			text.setText("Battle"+nowAI+"/"+platform.getAINum());
+			}else{
+				text.setText("极限挑战");
+			}
 			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
 			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
 			

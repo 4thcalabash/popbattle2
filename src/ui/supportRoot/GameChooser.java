@@ -28,7 +28,7 @@ public class GameChooser extends SupportParent {
 	private BattleChooser battleChooser;
 	public GameChooser(Chooseable basicPlatform,BasicScene main,String flag){
 		this(basicPlatform,main);
-		inSon=true;
+//		inSon=true;
 //		getChildren().remove(board);
 		battleChooser=new BattleChooser(basicPlatform,myself);
 //		getChildren().add(battleChooser);
@@ -98,10 +98,10 @@ public class GameChooser extends SupportParent {
 		if (!inSon){
 			super.returnStatic();
 		}else{
-			super.returnStatic();
-//			getChildren().remove(1);
-//			getChildren().add(board);
-//			inSon=false;
+//			super.returnStatic();
+			getChildren().remove(1);
+			getChildren().add(board);
+			inSon=false;
 		}
 	}
 }

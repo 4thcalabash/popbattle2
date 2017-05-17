@@ -10,3 +10,23 @@
 	-fx-background-image:url("../Graphics/Battle/background.png");
 	-fx-background-size:stretch stretch
 }
+@font-face{
+	src:url('字体管家青葱体.ttf');
+}
+Label{
+	-fx-font-family:"字体管家青葱";
+
+ 	-fx-text-fill:#00ffff ;
+  	-fx-font-size:32px;
+	-fx-font-weight:bold;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
+
+}
+#lineNumber{
+	-fx-font-family:"字体管家青葱";
+ 	-fx-text-fill:#ffff00;
+  	-fx-font-size:19px;
+	-fx-font-weight:bold;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
+		
+}

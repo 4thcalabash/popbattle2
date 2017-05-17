@@ -549,7 +549,7 @@ public class AI {
 		}
 		//随机进行消除/释放技能
 		double temp = Math.random();
-		if (value[1]!=-1&&AI.getAllSkills()[order[1]].canAction(AI)){
+		if (AI!=null&&AI.getAllSkills()!=null&&order[1]!=-1&&value[1]!=-1&&AI.getAllSkills()[order[1]]!=null&&AI.getAllSkills()[order[1]].canAction(AI)){
 			//如果第二优先级技能存在且可以释放，概率不做调整
 			//根据hp 较大幅度增加攻击概率
 			double tttt = AI.getHp()/AI.getPlayer().getHp();
@@ -560,7 +560,7 @@ public class AI {
 			}else if (tttt<0.7){
 				temp-=0.14;
 			}
-		}else if(value[2]!=-1&&AI.getAllSkills()[order[2]].canAction(AI)){
+		}else if(AI!=null&&AI.getAllSkills()!=null&&value[2]!=-1&&AI.getAllSkills()[order[2]]!=null&&AI.getAllSkills()[order[2]].canAction(AI)){
 			//如果只能释放第三优先级技能，就调整概率，使其更有可能去移动棋盘
 			temp+=0.16;
 			//根据hp 较小幅度增加攻击概率
@@ -573,7 +573,7 @@ public class AI {
 				temp-=0.1;
 			}
 		}
-		if (temp<0.36&&canAttack){
+		if (AI!=null&&temp<0.36&&canAttack&&AI.getAllSkills()!=null){
 			//释放技能
 			strategy.setMoveStrategy(false);
 			strategy.setActionPlayerID(Player.AI_PLAYERID);
