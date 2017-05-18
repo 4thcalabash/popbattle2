@@ -474,13 +474,16 @@ public class Player implements Calcable{
 		if (player.getAd()>temp){
 			flag=0;
 			temp=player.getAd();
-		}else if (player.ap>temp){
+		}
+		if (player.ap>temp){
 			flag=1;
 			temp = player.getAp();
-		}else if (player.getDR()>temp){
+		}
+		if (player.getDR()>temp){
 			flag=2;
 			temp = player.getDR();
-		}else if (player.getMR()>temp){
+		}
+		if (player.getMR()>temp){
 			flag=3;
 			temp=player.getMR();
 		}

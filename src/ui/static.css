@@ -1,7 +1,4 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-
-
 .root{
 	-fx-background-image: url("specialParent/background.png"); 
     -fx-background-size:stretch stretch;
@@ -10,17 +7,6 @@
 	-fx-background-image: url("specialParent/ButtonFrame.png");
 	-fx-background-position:top  ;
 	-fx-background-size:stretch stretch;
-}
-
-Text{
-	-fx-font-size:32px;
-	-fx-font-family: "MyFont";
-	-fx-fill: #001eff;
-	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
-}
-@font-face{
-	font-family:MyFont;
-	src: url('MyFont.ttf');
 }
 @font-face{
 	src:url('字体管家青葱体.ttf');
