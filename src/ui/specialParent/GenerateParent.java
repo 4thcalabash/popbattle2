@@ -886,6 +886,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		top.setX(0);
 		top.setY(0);
 		text = new Label();
+		text.setWrapText(true);
 		text.setId("text");
 		if(!normal){
 		text.setText("Battle"+nowAI+"/"+platform.getAINum());
@@ -1014,6 +1015,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			center.getChildren().add(sub);
 			center.getChildren().add(top);
 			text = new Label();
+			text.setWrapText(true);
 			text.setId("text");
 			if (!normal){
 				text.setText("Battle"+nowAI+"/"+platform.getAINum());
@@ -1236,6 +1238,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			sub.setMinWidth(getMaxWidth());
 			sub.setId("Matrix");
 			text = new Label();
+			text.setWrapText(true);
 			text.setId("text");
 			if (!normal){
 			text.setText("Battle"+nowAI+"/"+platform.getAINum());
@@ -1659,6 +1662,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			center.setMinHeight(TOPIMAGEHEIGHT);
 			center.setMinWidth(getMaxWidth());
 			text = new Label();
+			text.setWrapText(true);
 			text.setId("text");
 			if(!normal){
 			text.setText("Battle"+nowAI+"/"+platform.getAINum());

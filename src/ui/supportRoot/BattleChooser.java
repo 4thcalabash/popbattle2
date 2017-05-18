@@ -21,6 +21,8 @@ public class BattleChooser extends AnchorPane{
 	public static final int INFOWIDTH = 200;
 	public static final int INFOHEIGHT = 200;
 	public BattleChooser(Chooseable basicPlatform,GameChooser gameChooser){
+		info.setWrapText(true);
+		info.setId("info");
 		ImageView background = new ImageView (new Image("Graphics/Static/BattleChooser/background.jpg"));
 		background.setFitHeight(HEIGHT);
 		background.setFitWidth(WIDTH);

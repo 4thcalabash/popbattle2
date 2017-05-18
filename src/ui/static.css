@@ -114,7 +114,13 @@ Label{
 	-fx-font-weight:bold;
 	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
 }
-
+#info{
+	-fx-font-size:24px;
+	-fx-font-family:"字体管家青葱";
+	-fx-text-fill:bisque ;
+	-fx-font-weight:bold;
+	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2);
+}
 #Price{
 	-fx-font-size:26px;
 	-fx-font-family: "Arial Black";
