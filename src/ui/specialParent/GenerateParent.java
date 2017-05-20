@@ -322,9 +322,12 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				});
 			} else if (flag == GenerateParent.BATTLE_LOSE || flag == GenerateParent.BATTLE_WIN) {
 				ImageView tempImage;
+				AudioClip myAudio ;
 				if (flag == GenerateParent.BATTLE_LOSE) {
+					myAudio = Audio.lose;
 					tempImage = new ImageView(new Image("Graphics/Battle/lose.png"));
 				} else {
+					myAudio = Audio.win;
 					tempImage = new ImageView(new Image("Graphics/Battle/win.png"));
 				}
 				tempImage.setX(Main.SCREENWIDTH / 2);
@@ -376,6 +379,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				});
 				Platform.runLater(() -> {
 					this.getChildren().add(temp);
+					myAudio.play();
 					line.play();
 				});
 			}
@@ -1121,6 +1125,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	protected void popFlash() {
 		popPo = platform.pop(round, dot1, dot2);
 		while (popPo.hasAnyPop()) {
+
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					if (popPo.getPopInfo()[i][j] == Matrix.TOBOMBBONUS) {
@@ -1440,6 +1445,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				}
 
 			});
+			boolean normalPop=false,lineOrRowPop=false,bombPop=false,chickPop=false;
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					String basicPath = createBasicPath(i, j, chessboard);
@@ -1465,6 +1471,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 						if (popPo.getPopInfo()[i][j] == Matrix.LINEBONUSPOP
 								|| popPo.getPopInfo()[i][j] == Matrix.ROWBONUSPOP) {
 							int bonusID = popPo.getPopInfo()[i][j];
+							lineOrRowPop=true;
 							tt = new ImageView(new Image("Graphics/Matrix/" + bonusID + ".gif"));
 							// 设定位置以及大小
 							if (bonusID == Matrix.LINEBONUS) {
@@ -1481,6 +1488,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 							sub.getChildren().add(tt);
 
 						} else if (popPo.getPopInfo()[i][j] == Matrix.BOMBBONUSPOP) {
+							bombPop=true;
 							for (int di = -2; di <= 2; di++) {
 								for (int dj = -2; dj <= 2; dj++) {
 									if (i + di >= 0 && i + di < Matrix.TOTALLINE && j + dj >= 0
@@ -1500,6 +1508,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								}
 							}
 						} else if (popPo.getPopInfo()[i][j] == Matrix.CHICKITSELFPOP) {
+							chickPop=true;
 							ImageView ttt = new ImageView(new Image("Graphics/Matrix/104.gif"));
 							ttt.setFitHeight(8 * GenerateParent.LENGTH);
 							ttt.setFitWidth(8 * GenerateParent.LENGTH);
@@ -1529,6 +1538,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								|| (chessboard[i][j].getBonus() == Matrix.NORMAL
 										&& (popPo.getPopInfo()[i][j] == Matrix.LINEBONUS
 												|| popPo.getPopInfo()[i][j] == Matrix.ROWBONUS))) {
+							normalPop = true;
 							KeyValue kv1 = new KeyValue(tt.scaleXProperty(), 1.25);
 							KeyValue kv2 = new KeyValue(tt.scaleYProperty(), 1.25);
 							KeyValue kvv1 = new KeyValue(tt.scaleXProperty(), 0);
@@ -1676,10 +1686,23 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			center.getChildren().add(top);
 			center.getChildren().add(text);
 			border.setCenter(center);
+			
 			// 启动动画
 			if (hasAChick) {
 				new Thread(new myRunnable(timeline)).start();
 			} else {
+				if (normalPop){
+					Audio.normalPop.play();
+				}
+				if (lineOrRowPop){
+					Audio.lineOrRowPop.play();
+				}
+				if (bombPop){
+					Audio.bombPop.play();
+				}
+				if (chickPop){
+					Audio.chickPop.play();
+				}
 				timeline.play();
 			}
 			// System.out.println("PopFlash Start At " +
