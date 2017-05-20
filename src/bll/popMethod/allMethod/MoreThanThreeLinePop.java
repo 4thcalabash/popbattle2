@@ -750,13 +750,14 @@ public class MoreThanThreeLinePop extends PopMethod {
 
 	public void pop(Matrix chessboard) {
 		// Êä³ö¼ì²â
-//		System.out.println("Matrix For Pop:");
-//		for (int i = 0; i < Matrix.TOTALLINE; i++) {
-//			for (int j = 0; j < Matrix.TOTALROW; j++) {
-//				System.out.print(chessboard.getMatrix()[i][j].getColor() + " ");
-//			}
-//			System.out.println();
-//		}
+		System.out.println("The Matrix Used To Further Pop-Check");
+		System.out.println("Matrix For Pop:");
+		for (int i = 0; i < Matrix.TOTALLINE; i++) {
+			for (int j = 0; j < Matrix.TOTALROW; j++) {
+				System.out.print(chessboard.getMatrix()[i][j].getColor() + " ");
+			}
+			System.out.println();
+		}
 
 		int[] popNum1 = chessboard.getNum();
 		ArrayList<DotPo> queue = new ArrayList<DotPo>();

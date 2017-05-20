@@ -37,6 +37,7 @@ import ui.awt.ImageButton.PlayerBoard;
 import ui.awt.ImageButton.PointBoard;
 import ui.awt.ImageButton.Pool;
 import util.Audio;
+
 public abstract class GenerateParent extends BattleParent implements Runnable {
 	// 玩家单机闯关scene
 
@@ -78,9 +79,9 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	public static final int ATTACK = 993;
 	public static final int DIEMOVEDELTA = 400;
 	public static final int BATTLEENDHEIGHT = (int) (Main.SCREENHEIGHT * 0.2);
-	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 5/2;
+	public static final int BATTLEENDWIDTH = BATTLEENDHEIGHT * 5 / 2;
 	public static final int LABELHEIGHT = TOPIMAGEHEIGHT;
-	public static final int LABELWIDTH =TOPIMAGEWIDTH*8/10;
+	public static final int LABELWIDTH = TOPIMAGEWIDTH * 8 / 10;
 	private Label text;
 	protected boolean normal = false;
 	protected AudioClip battleAudio;
@@ -110,7 +111,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 	protected boolean skillRequest = false;
 	protected int skillID;
 	private int nowAI = 1;
-//	private int allAI; 
+	// private int allAI;
 	public static final int PLAYERWIDTH = (int) (((Main.SCREENWIDTH - TOPIMAGEWIDTH) / 2 - PLAYERIMAGEGAP));
 	public static final int PLAYERHEIGHT = (int) (PLAYERWIDTH * 1.18);
 	public static final int SKILLPLAYERWIDTH = (int) (PLAYERWIDTH * 0.7);
@@ -158,7 +159,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				skillList1[i] = -10000;
 			}
 		}
-		pool1 = new Pool(skillList1,platform.getPlayer1().getPlayer().getSkillList(), new int[6], this);
+		pool1 = new Pool(skillList1, platform.getPlayer1().getPlayer().getSkillList(), new int[6], this);
 		int[] skillList2 = new int[3];
 		for (int i = 0; i < 3; i++) {
 			if (this.platform.getPlayer2().getAllSkills()[i] != null) {
@@ -167,15 +168,15 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				skillList2[i] = -10000;
 			}
 		}
-		for (int i=0;i<3;i++){
-			System.out.println("Takes "+skillList1[i]);
+		for (int i = 0; i < 3; i++) {
+			System.out.println("Takes " + skillList1[i]);
 		}
-		pool2 = new Pool(skillList2,platform.getPlayer2().getPlayer().getSkillList(), new int[6], this);
+		pool2 = new Pool(skillList2, platform.getPlayer2().getPlayer().getSkillList(), new int[6], this);
 		if (playerBoardFlag) {
 			playerBoard = new PlayerBoard(this.platform);
 			pools.setCenter(playerBoard);
 			BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
-		}else{
+		} else {
 			point = new PointBoard(platform);
 			pools.setCenter(point);
 			BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
@@ -194,13 +195,15 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		init();
 		this.getChildren().add(border);
 	}
-	public GenerateParent (Main main,BattlePlatform platform,String flag){
-		this(main,platform);
-		Platform.runLater(()->{
+
+	public GenerateParent(Main main, BattlePlatform platform, String flag) {
+		this(main, platform);
+		Platform.runLater(() -> {
 			text.setText("极限挑战");
 		});
 
 	}
+
 	public void init() {
 		myself = new Thread(this);
 		renewBoard();
@@ -208,8 +211,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		new1 = false;
 		new2 = false;
 		result = platform.check();
-//		allAI = platform.getAINum();
-		nowAI =1;
+		// allAI = platform.getAINum();
+		nowAI = 1;
 	}
 
 	public void showFlash(int flag, CountDownLatch c) {
@@ -298,7 +301,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					new Thread(new Runnable() {
 						public void run() {
 							try {
-								Thread.sleep(ROUNDCHANGEDELTA/2);
+								Thread.sleep(ROUNDCHANGEDELTA / 2);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -307,7 +310,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								getChildren().remove(1);
 							});
 							try {
-								Thread.sleep(ROUNDCHANGEDELTA /2);
+								Thread.sleep(ROUNDCHANGEDELTA / 2);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -322,7 +325,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				});
 			} else if (flag == GenerateParent.BATTLE_LOSE || flag == GenerateParent.BATTLE_WIN) {
 				ImageView tempImage;
-				AudioClip myAudio ;
+				AudioClip myAudio;
 				if (flag == GenerateParent.BATTLE_LOSE) {
 					myAudio = Audio.lose;
 					tempImage = new ImageView(new Image("Graphics/Battle/lose.png"));
@@ -357,7 +360,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								myself.stop();
 								battleAudio.stop();
 								if (flag == GenerateParent.BATTLE_WIN) {
-									
+
 									main.battleEnd(platform.getBonus());
 								} else {
 									main.battleEnd(null);
@@ -386,7 +389,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		} else {
 			if (flag == GenerateParent.AI_DIE) {
 				nowAI++;
-			
+
 				AnchorPane ss = new AnchorPane();
 				ImageView sss = new ImageView();
 				sss.setFitHeight(Main.SCREENHEIGHT);
@@ -430,7 +433,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				});
 				Platform.runLater(() -> {
 					this.getChildren().add(ss);
-					
+
 					p2Image.setImage(null);
 					line.play();
 				});
@@ -478,7 +481,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			} else if (flag == GenerateParent.NEXT_AI) {
 
 				Platform.runLater(() -> {
-					text.setText("Battle"+nowAI+"/"+platform.getAINum());
+					text.setText("Battle" + nowAI + "/" + platform.getAINum());
 					border.setRight(null);
 					player2 = new AnchorPane();
 					p2Image = new ImageView(new Image(
@@ -490,15 +493,15 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					border.setRight(p2Image);
 					BorderPane.setAlignment(border.getRight(), Pos.CENTER_LEFT);
 					Timeline line = new Timeline();
-					KeyValue kv00 = new KeyValue (p2Image.scaleXProperty(),0);
-					KeyValue kv01 = new KeyValue (p2Image.scaleYProperty(),0);
+					KeyValue kv00 = new KeyValue(p2Image.scaleXProperty(), 0);
+					KeyValue kv01 = new KeyValue(p2Image.scaleYProperty(), 0);
 					KeyValue kv1 = new KeyValue(p2Image.scaleXProperty(), 1);
 					KeyValue kv2 = new KeyValue(p2Image.scaleYProperty(), 1);
-					KeyFrame kf00 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv00);
-					KeyFrame kf01 = new KeyFrame (Duration.millis(DIEMOVEDELTA),kv01);
-					KeyFrame kf1 = new KeyFrame(Duration.millis(DIEMOVEDELTA*2), kv1);
-					KeyFrame kf2 = new KeyFrame(Duration.millis(DIEMOVEDELTA*2), kv2);
-					line.getKeyFrames().addAll(kf00,kf01,kf1, kf2);
+					KeyFrame kf00 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv00);
+					KeyFrame kf01 = new KeyFrame(Duration.millis(DIEMOVEDELTA), kv01);
+					KeyFrame kf1 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 2), kv1);
+					KeyFrame kf2 = new KeyFrame(Duration.millis(DIEMOVEDELTA * 2), kv2);
+					line.getKeyFrames().addAll(kf00, kf01, kf1, kf2);
 					AnchorPane sss = new AnchorPane();
 					ImageView sssss = new ImageView();
 					sssss.setFitHeight(Main.SCREENHEIGHT);
@@ -508,23 +511,23 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					sss.getChildren().add(sssss);
 					line.setOnFinished(e -> {
 						System.out.println("Next AI Finished");
-						int [] skillList = new int [3];
-						for (int i=0;i<3;i++){
-							if (platform.getPlayer2().getAllSkills()[i]!=null){
-								skillList[i]=platform.getPlayer2().getAllSkills()[i].getID();
-							}else{
-								skillList[i]=Skill.NULLSKILL;
+						int[] skillList = new int[3];
+						for (int i = 0; i < 3; i++) {
+							if (platform.getPlayer2().getAllSkills()[i] != null) {
+								skillList[i] = platform.getPlayer2().getAllSkills()[i].getID();
+							} else {
+								skillList[i] = Skill.NULLSKILL;
 							}
 						}
 						pool2.refreshSkill(skillList);
 						this.getChildren().remove(sss);
-//						border.setBottom(null);
-//						addPool(true);
+						// border.setBottom(null);
+						// addPool(true);
 						pools.setCenter(null);
 						playerBoard = new PlayerBoard(this.platform);
 						pools.setCenter(playerBoard);
 						BorderPane.setAlignment(pools.getCenter(), Pos.BOTTOM_CENTER);
-						c.countDown();	
+						c.countDown();
 					});
 					this.getChildren().add(sss);
 
@@ -532,7 +535,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					p2Image.setScaleY(0);
 					line.play();
 				});
-				
+
 			}
 		}
 	}
@@ -582,9 +585,10 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
 		return flag;
 	}
-	public void showWinFlash(String flag){
+
+	public void showWinFlash(String flag) {
 		CountDownLatch c = new CountDownLatch(1);
-		showFlash(GenerateParent.BATTLE_WIN,c);
+		showFlash(GenerateParent.BATTLE_WIN, c);
 		try {
 			c.await();
 		} catch (InterruptedException e) {
@@ -592,6 +596,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			e.printStackTrace();
 		}
 	}
+
 	public void showWinFlash() {
 		// AI死掉的动画
 		CountDownLatch cc = new CountDownLatch(1);
@@ -612,7 +617,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		}
 		// 胜利动画 阻塞式 用showFlash方法
 	}
-	public void showLoseFlash(String flag){
+
+	public void showLoseFlash(String flag) {
 		CountDownLatch c = new CountDownLatch(1);
 		showFlash(GenerateParent.BATTLE_LOSE, c);
 		try {
@@ -622,6 +628,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			e.printStackTrace();
 		}
 	}
+
 	public void showLoseFlash() {
 		// 玩家死掉的动画
 		CountDownLatch c = new CountDownLatch(1);
@@ -676,7 +683,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		Image p1Static = new Image("Graphics/Player/Player" + this.platform.getPlayer1().getPlayer().getPro() + ".gif");
 		Image p2Static = new Image("Graphics/Player/Player" + this.platform.getPlayer2().getPlayer().getPro() + ".gif");
 		AudioClip skillAudio = Audio.skillAudio[actionPo.getSkillID()];
-				//new AudioClip (getClass().getResource("../../Audio/"+actionPo.getSkillID()+".mp3").toString());
+		// new AudioClip
+		// (getClass().getResource("../../Audio/"+actionPo.getSkillID()+".mp3").toString());
 		skillAudio.setCycleCount(1);
 		skillAudio.play();
 		pp1 = new ImageView(p1Static);
@@ -697,7 +705,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			// ("Graphics/Player/Player"+this.platform.getPlayer1().getPlayer().getPro()+"_"+actionPo.getSkillID()+".gif"));
 			if (actionPo.getActionPlayerID() == 1) {
 				pp1.setImage(actionPlayer);
-				pp1.setFitWidth(pp1.getFitWidth()*3/2);
+				pp1.setFitWidth(pp1.getFitWidth() * 3 / 2);
 				Text damage = new Text("-" + actionPo.getEffectValue());
 				damage.setId("damage");
 				damage.setX(pp2.getX() + pp2.getFitWidth() / 2);
@@ -709,7 +717,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				line2.play();
 			} else {
 				pp2.setImage(actionPlayer);
-				pp2.setFitWidth(pp2.getFitWidth()*3/2);
+				pp2.setFitWidth(pp2.getFitWidth() * 3 / 2);
 				Text damage = new Text("-" + actionPo.getEffectValue());
 				damage.setId("damage");
 				damage.setX(pp1.getX() + pp1.getFitWidth() / 2);
@@ -790,32 +798,34 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			e.printStackTrace();
 		}
 		boolean[] flag2 = new boolean[3];
-		CountDownLatch tempcc = new CountDownLatch (2);
+		CountDownLatch tempcc = new CountDownLatch(2);
 		for (int i = 0; i < 3; i++) {
-			if (platform.getPlayer1().getAllSkills()[i]!=null&&platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
+			if (platform.getPlayer1().getAllSkills()[i] != null
+					&& platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
 				flag2[i] = true;
 			} else {
 				flag2[i] = false;
 			}
 		}
-		for (int i=0;i<3;i++){
-			System.out.print(flag2[i]+"|||||||");
+		for (int i = 0; i < 3; i++) {
+			System.out.print(flag2[i] + "|||||||");
 		}
 		System.out.println();
-		pool1.renewSkill(flag2.clone(),tempcc);
-//		tempcc = new CountDownLatch(1);
+		pool1.renewSkill(flag2.clone(), tempcc);
+		// tempcc = new CountDownLatch(1);
 		for (int i = 0; i < 3; i++) {
-			if (platform.getPlayer2().getAllSkills()[i]!=null&&platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
+			if (platform.getPlayer2().getAllSkills()[i] != null
+					&& platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
 				flag2[i] = true;
 			} else {
 				flag2[i] = false;
 			}
 		}
-		for (int i=0;i<3;i++){
-			System.out.print(flag2[i]+"|||||||");
+		for (int i = 0; i < 3; i++) {
+			System.out.print(flag2[i] + "|||||||");
 		}
 		System.out.println();
-		pool2.renewSkill(flag2.clone(),tempcc);
+		pool2.renewSkill(flag2.clone(), tempcc);
 		try {
 			tempcc.await();
 		} catch (InterruptedException e) {
@@ -892,14 +902,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		text = new Label();
 		text.setWrapText(true);
 		text.setId("text");
-		if(!normal){
-		text.setText("Battle"+nowAI+"/"+platform.getAINum());
-		}else{
+		if (!normal) {
+			text.setText("Battle" + nowAI + "/" + platform.getAINum());
+		} else {
 			text.setText("极限挑战");
 		}
-		text.setLayoutX((TOPIMAGEWIDTH)*42/100);
-		text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
-		
+		text.setLayoutX((TOPIMAGEWIDTH) * 42 / 100);
+		text.setLayoutY((TOPIMAGEHEIGHT - text.getPrefHeight()) / 2);
+
 		matrix = new GridPane();
 		matrix.setId("Matrix");
 		matrix.setLayoutX((TOPIMAGEWIDTH - 8 * GenerateParent.LENGTH) / 2);
@@ -947,13 +957,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		if (pool1 != null) {
 			CountDownLatch tempcc = new CountDownLatch(1);
 			for (int i = 0; i < 3; i++) {
-				if (platform.getPlayer1().getAllSkills()[i]!=null&&platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
+				if (platform.getPlayer1().getAllSkills()[i] != null
+						&& platform.getPlayer1().getAllSkills()[i].canAction(platform.getPlayer1())) {
 					flag2[i] = true;
 				} else {
 					flag2[i] = false;
 				}
 			}
-			pool1.renewSkill(flag2.clone(),tempcc);
+			pool1.renewSkill(flag2.clone(), tempcc);
 			try {
 				tempcc.await();
 			} catch (InterruptedException e) {
@@ -964,7 +975,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		if (pool2 != null) {
 			CountDownLatch tempcc = new CountDownLatch(1);
 			for (int i = 0; i < 3; i++) {
-				if (platform.getPlayer2().getAllSkills()[i]!=null&&platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
+				if (platform.getPlayer2().getAllSkills()[i] != null
+						&& platform.getPlayer2().getAllSkills()[i].canAction(platform.getPlayer2())) {
 					flag2[i] = true;
 				} else {
 					flag2[i] = false;
@@ -1021,13 +1033,13 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			text = new Label();
 			text.setWrapText(true);
 			text.setId("text");
-			if (!normal){
-				text.setText("Battle"+nowAI+"/"+platform.getAINum());
-			}else{
+			if (!normal) {
+				text.setText("Battle" + nowAI + "/" + platform.getAINum());
+			} else {
 				text.setText("极限挑战");
 			}
-			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
-			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
+			text.setLayoutX((TOPIMAGEWIDTH) * 42 / 100);
+			text.setLayoutY((TOPIMAGEHEIGHT - text.getPrefHeight()) / 2);
 			center.getChildren().add(text);
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
@@ -1124,8 +1136,30 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 
 	protected void popFlash() {
 		popPo = platform.pop(round, dot1, dot2);
+		int times = 0;
 		while (popPo.hasAnyPop()) {
-
+			times++;
+			if (times == 1) {
+				DotPo d1 = null, d2 = null;
+				if (chessboard[dot1.getX()][dot1.getY()].getBonus() == Matrix.CHICKBONUS) {
+					d1 = new DotPo(dot1.getX(), dot1.getY());
+					d2 = new DotPo(dot2.getX(), dot2.getY());
+				} else if (chessboard[dot2.getX()][dot2.getY()].getBonus() == Matrix.CHICKBONUS) {
+					d1 = new DotPo(dot2.getX(), dot2.getY());
+					d2 = new DotPo(dot1.getX(), dot1.getY());
+				}
+				if (d1 != null && chessboard[d2.getX()][d2.getY()].getBonus() != Matrix.CHICKBONUS) {
+					int color = chessboard[d2.getX()][d2.getY()].getColor();
+					int bonus = chessboard[d2.getX()][d2.getY()].getBonus();
+					for (int i = 0; i < Matrix.TOTALLINE; i++) {
+						for (int j = 0; j < Matrix.TOTALROW; j++) {
+							if (chessboard[i][j].getColor() == color) {
+								chessboard[i][j].setBonus(bonus);
+							}
+						}
+					}
+				}
+			}
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					if (popPo.getPopInfo()[i][j] == Matrix.TOBOMBBONUS) {
@@ -1140,25 +1174,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 					}
 				}
 			}
-			DotPo d1 = null, d2 = null;
-			if (chessboard[dot1.getX()][dot1.getY()].getBonus() == Matrix.CHICKBONUS) {
-				d1 = new DotPo(dot1.getX(), dot1.getY());
-				d2 = new DotPo(dot2.getX(), dot2.getY());
-			} else if (chessboard[dot2.getX()][dot2.getY()].getBonus() == Matrix.CHICKBONUS) {
-				d1 = new DotPo(dot2.getX(), dot2.getY());
-				d2 = new DotPo(dot1.getX(), dot1.getY());
-			}
-			if (d1 != null && chessboard[d2.getX()][d2.getY()].getBonus() != Matrix.CHICKBONUS) {
-				int color = chessboard[d2.getX()][d2.getY()].getColor();
-				int bonus = chessboard[d2.getX()][d2.getY()].getBonus();
-				for (int i = 0; i < Matrix.TOTALLINE; i++) {
-					for (int j = 0; j < Matrix.TOTALROW; j++) {
-						if (chessboard[i][j].getColor() == color) {
-							chessboard[i][j].setBonus(bonus);
-						}
-					}
-				}
-			}
+
 			System.out.println("OK AT HERE2");
 			p = new CountDownLatch(1);
 			// 演示一次元消除动画
@@ -1177,6 +1193,16 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			/********
+			 * Debug*
+			 ********/
+			System.out.println("The Matrix Send To Drop Worker:");
+			for (int i = 0; i < Matrix.TOTALLINE; i++) {
+				for (int j = 0; j < Matrix.TOTALROW; j++) {
+					System.out.print(chessboard[i][j].getBonus() + " ");
+				}
+				System.out.println();
+			}
 
 			// 演示元下落动画
 			count = new CountDownLatch(1);
@@ -1193,14 +1219,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				// this.platform.
 				// pool1.refreshElementNum(elementPool1);
 				this.pool1.refreshElementNum(this.platform.getPlayer1().getElementPool());
-				if (point!=null){
+				if (point != null) {
 					point.refresh();
 				}
 				// this.playerBoard.refreshData();
 			} else if (round == 2 && pool2 != null) {
 				// int[] elementPool2 = this.platform.getPool2();
 				// pool2.refreshElementNum(elementPool2);
-				if (point!=null){
+				if (point != null) {
 					point.refresh();
 				}
 				this.pool2.refreshElementNum(this.platform.getPlayer2().getElementPool());
@@ -1235,7 +1261,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			top.setFitWidth(GenerateParent.TOPIMAGEWIDTH);
 			top.setX(0);
 			top.setY(0);
-			
+
 			sub = new AnchorPane();
 			sub.setMaxHeight(10 * GenerateParent.LENGTH);
 			sub.setMaxWidth(8 * GenerateParent.LENGTH);
@@ -1245,14 +1271,14 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			text = new Label();
 			text.setWrapText(true);
 			text.setId("text");
-			if (!normal){
-			text.setText("Battle"+nowAI+"/"+platform.getAINum());
-			}else{
+			if (!normal) {
+				text.setText("Battle" + nowAI + "/" + platform.getAINum());
+			} else {
 				text.setText("极限挑战");
 			}
-			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
-			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
-			
+			text.setLayoutX((TOPIMAGEWIDTH) * 42 / 100);
+			text.setLayoutY((TOPIMAGEHEIGHT - text.getPrefHeight()) / 2);
+
 			sub.setLayoutX((TOPIMAGEWIDTH - 8 * GenerateParent.LENGTH) / 2);
 			sub.setLayoutY(TOPIMAGEHEIGHT - DELTALENGTH);
 			center.getChildren().add(sub);
@@ -1445,7 +1471,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 				}
 
 			});
-			boolean normalPop=false,lineOrRowPop=false,bombPop=false,chickPop=false;
+			boolean normalPop = false, lineOrRowPop = false, bombPop = false, chickPop = false;
 			for (int i = 0; i < Matrix.TOTALLINE; i++) {
 				for (int j = 0; j < Matrix.TOTALROW; j++) {
 					String basicPath = createBasicPath(i, j, chessboard);
@@ -1471,7 +1497,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 						if (popPo.getPopInfo()[i][j] == Matrix.LINEBONUSPOP
 								|| popPo.getPopInfo()[i][j] == Matrix.ROWBONUSPOP) {
 							int bonusID = popPo.getPopInfo()[i][j];
-							lineOrRowPop=true;
+							lineOrRowPop = true;
 							tt = new ImageView(new Image("Graphics/Matrix/" + bonusID + ".gif"));
 							// 设定位置以及大小
 							if (bonusID == Matrix.LINEBONUS) {
@@ -1488,7 +1514,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 							sub.getChildren().add(tt);
 
 						} else if (popPo.getPopInfo()[i][j] == Matrix.BOMBBONUSPOP) {
-							bombPop=true;
+							bombPop = true;
 							for (int di = -2; di <= 2; di++) {
 								for (int dj = -2; dj <= 2; dj++) {
 									if (i + di >= 0 && i + di < Matrix.TOTALLINE && j + dj >= 0
@@ -1508,7 +1534,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								}
 							}
 						} else if (popPo.getPopInfo()[i][j] == Matrix.CHICKITSELFPOP) {
-							chickPop=true;
+							chickPop = true;
 							ImageView ttt = new ImageView(new Image("Graphics/Matrix/104.gif"));
 							ttt.setFitHeight(8 * GenerateParent.LENGTH);
 							ttt.setFitWidth(8 * GenerateParent.LENGTH);
@@ -1674,33 +1700,33 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 			text = new Label();
 			text.setWrapText(true);
 			text.setId("text");
-			if(!normal){
-			text.setText("Battle"+nowAI+"/"+platform.getAINum());
-			}else{
+			if (!normal) {
+				text.setText("Battle" + nowAI + "/" + platform.getAINum());
+			} else {
 				text.setText("极限挑战");
 			}
-			text.setLayoutX((TOPIMAGEWIDTH)*42/100);
-			text.setLayoutY((TOPIMAGEHEIGHT-text.getPrefHeight())/2);
-			
+			text.setLayoutX((TOPIMAGEWIDTH) * 42 / 100);
+			text.setLayoutY((TOPIMAGEHEIGHT - text.getPrefHeight()) / 2);
+
 			center.getChildren().add(sub);
 			center.getChildren().add(top);
 			center.getChildren().add(text);
 			border.setCenter(center);
-			
+
 			// 启动动画
 			if (hasAChick) {
 				new Thread(new myRunnable(timeline)).start();
 			} else {
-				if (normalPop){
+				if (normalPop) {
 					Audio.normalPop.play();
 				}
-				if (lineOrRowPop){
+				if (lineOrRowPop) {
 					Audio.lineOrRowPop.play();
 				}
-				if (bombPop){
+				if (bombPop) {
 					Audio.bombPop.play();
 				}
-				if (chickPop){
+				if (chickPop) {
 					Audio.chickPop.play();
 				}
 				timeline.play();

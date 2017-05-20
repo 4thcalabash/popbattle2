@@ -160,10 +160,15 @@ public class Matrix {
 			}
 //			matrix[1][3].setColor(Matrix.NONE);
 //			matrix[1][3].setBonus(Matrix.CHICKBONUS);
-			matrix[5][6].setBonus(Matrix.BOMBBONUS);
-			matrix[5][5].setBonus(Matrix.BOMBBONUS);
+//			matrix[5][6].setBonus(Matrix.BOMBBONUS);
+//			matrix[5][5].setBonus(Matrix.BOMBBONUS);
 //			matrix[1][2].setColor(0);
-
+			matrix[2][2].setColor(0);
+			matrix[2][3].setColor(0);
+			matrix[3][4].setColor(0);
+			matrix[2][5].setColor(0);
+			matrix[2][6].setColor(0);
+			matrix[2][4].setBonus(Matrix.LINEBONUS);
 		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
 		
 		
