@@ -258,7 +258,7 @@ import util.Audio;public class SkillChooser extends AnchorPane {
 			background.setY(0);
 			this.getChildren().add(background);
 //			ImageView icon = new ImageView (new Image("Graphics/Skill/"+(index+player.getPro())+".png"));
-			ImageView icon = new DialogableImageView (Skill.getSkillByID(index+player.getPro()).getSkillIntroduction()[player.getSkillList()[index]]+"!",father,300,280," ");
+			ImageView icon = new DialogableImageView (Skill.getSkillByID(index+player.getPro()).getSkillIntroduction()[player.getSkillList()[index]]+"!",father,320,400," ");
 //			ImageView icon = new ImageView ();
 			icon.setImage(new Image ("Graphics/Skill/"+(index+player.getPro())+".png"));
 			icon.setFitHeight(ICONLENGTH);

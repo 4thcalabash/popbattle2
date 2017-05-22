@@ -27,10 +27,12 @@ public class InfoDialog extends AnchorPane{
 		father.getChildren().add(sub);
 		this.setLayoutX(x);
 		this.setLayoutY(y);
+		int XDELTA = width/10;
+		int YDELTA = height/5;
 		Label info = new Label(information);
-		info.setMaxWidth(width);
-		info.setLayoutX(0);
-		info.setLayoutY(0);
+		info.setMaxWidth(width-XDELTA*2);
+		info.setLayoutX(XDELTA);
+		info.setLayoutY(YDELTA);
 		info.setWrapText(true);
 		this.getChildren().add(info);
 		this.setOnMouseExited(e->{
@@ -60,9 +62,12 @@ public class InfoDialog extends AnchorPane{
 //		this.setLayoutX(x);
 //		this.setLayoutY(y);
 		Label info = new Label(information);
-		info.setMaxWidth(width);
-		info.setLayoutX(0);
-		info.setLayoutY(0);
+		int XDELTA = width/10;
+		info.setMaxWidth(width-XDELTA*2);
+		
+		int YDELTA = height/5;
+		info.setLayoutX(XDELTA);
+		info.setLayoutY(YDELTA);
 		info.setWrapText(true);
 		this.getChildren().add(info);
 		Platform.runLater(()->{

@@ -249,9 +249,9 @@ public class Skill {
 					// TODO Auto-generated method stub
 					int[] cost = new int[Matrix.KIND];
 					int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
-					if (skillLevel == 0) {
+					if (skillLevel == 1) {
 						cost[Matrix.FIREELEMENT] = 6;
-					} else if (skillLevel == 1) {
+					} else if (skillLevel == 2) {
 						cost[Matrix.FIREELEMENT] = 8;
 					} else {
 						cost[Matrix.FIREELEMENT] = 10;

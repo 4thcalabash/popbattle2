@@ -11,11 +11,12 @@ import ui.awt.ImageButton.ImageButton;
 import util.MissionInfo;
 
 public class NormalChooser extends AnchorPane{
-	public static final int LENGTH = 100;
+	public static final int LENGTH = 120;
 	public static final int ROW = 5;
-	public static final int LINE = 5;
+	public static final int LINE = 3;
+	public static final int TOPGAP= 12;
 	public static final int BOARDWIDTH= ROW*LENGTH;
-	public static final int BOARDHEIGHT  = LINE*LENGTH;
+	public static final int BOARDHEIGHT  = LINE*LENGTH+2*TOPGAP;
 	public NormalChooser (Chooseable basicPlatform,GameChooser gameChooser){
 		AnchorPane board = new AnchorPane ();
 		ImageView background = new ImageView (new Image ("Graphics/Static/NormalChooser/background.png"));
@@ -34,15 +35,15 @@ public class NormalChooser extends AnchorPane{
 			for (int j=0;j<ROW;j++){
 				int temp = i*ROW+j;
 				Image StaticImage,EnteredImage,PressedImage;
-				if (temp<now){
-					StaticImage = new Image (basicPath+"FinishedStatic.png");
-					EnteredImage = new Image (basicPath +"FinishedEntered.png");
-					PressedImage = new Image (basicPath+"FinishedPressed.png");
+				if (temp<=now+1){
+					StaticImage = new Image (basicPath+temp+"Static.png");
+					EnteredImage = new Image (basicPath +temp+"Entered.png");
+					PressedImage = new Image (basicPath+temp+"Pressed.png");
 					
 				}else if (temp<total){
-					StaticImage = new Image (basicPath+"UnfinishedStatic.png");
-					EnteredImage = new Image (basicPath+"UnfinishedEntered.png");
-					PressedImage = new Image (basicPath+"UnfinishedPressed.png");
+					StaticImage = new Image (basicPath+temp+"Static.png");
+					EnteredImage = new Image (basicPath+temp+"Entered.png");
+					PressedImage = new Image (basicPath+temp+"Pressed.png");
 					
 				}else{
 					StaticImage = EnteredImage=PressedImage=null;
@@ -62,7 +63,10 @@ public class NormalChooser extends AnchorPane{
 				a.setFitHeight(LENGTH);
 				a.setFitWidth(LENGTH);
 				a.setX(j*LENGTH);
-				a.setY(i*LENGTH);
+				a.setY(i*LENGTH+TOPGAP);
+				if (i==1){
+					a.setY(2*LENGTH+TOPGAP);
+				}
 				board.getChildren().add(a);
 			}
 		}

@@ -19,8 +19,8 @@ public class Pool extends AnchorPane {
 	private final Image skillPressed = new Image("Graphics/Other/Pool/skillBackgroundPressed.png");
 	private final Image skillIllegal = new Image("Graphics/Other/Pool/skillBackgroundIllegal.png");
 	private final ImageView[] skillIcon = new ImageView[3];
-	public static final int INFOHEIGHT = 325;
-	public static final int INFOWIDTH = 300;
+	public static final int INFOHEIGHT = 320;
+	public static final int INFOWIDTH = 400;
 	private final ButtonWorker illegalWorker = new ButtonWorker() {
 
 		@Override

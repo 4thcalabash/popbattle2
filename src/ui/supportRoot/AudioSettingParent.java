@@ -50,8 +50,8 @@ public class AudioSettingParent extends SupportParent{
 		pressedSetter = new SettingItem("按钮点击",new Image("Graphics/Static/Icon/ADLine.png"),audios);
 		battleSetter = new SettingItem("战斗背景",new Image("Graphics/Static/Icon/DRLine.png"),Audio.battle);
 		skillSetter = new SettingItem("技能特效",new Image("Graphics/Static/Icon/EXPLine.png"),Audio.skillAudio);
-		AudioClip a = null;
-		popSetter = new SettingItem("消除特效",new Image("Graphics/Static/Icon/MTLine.png"),a);
+		AudioClip []audios2 = {Audio.bombPop,Audio.chickPop,Audio.lineOrRowPop,Audio.normalPop};
+		popSetter = new SettingItem("消除特效",new Image("Graphics/Static/Icon/MTLine.png"),audios2);
 		enteredSetter.setLayoutX(GAP);
 		enteredSetter.setLayoutY(GAP);
 		pressedSetter.setLayoutX(GAP);
@@ -118,6 +118,13 @@ public class AudioSettingParent extends SupportParent{
 			init();
 		}
 		private void init(){
+			for (AudioClip audio :audio){
+				if (audio!=null){
+					this.now=(int)((audio.getVolume()+0.01)*10);
+					break;
+				}
+			}
+
 			nameLabel = new Label (name);
 			nameLabel.setMaxSize(LABELWIDTH, LABELHEIGHT);
 			nameLabel.setLayoutX(0);
@@ -146,6 +153,29 @@ public class AudioSettingParent extends SupportParent{
 			close.setFitWidth(BUTTONWIDTH);
 			close.setX(open.getX()+BUTTONWIDTH+INNERMIDGAP);
 			close.setY(0);
+			if (now==0){
+				now=5;
+				close.setStaticGraphics(closeIllegal);
+				close.setEnteredGraphics(closeIllegal);
+				close.setPressedGraphics(closeIllegal);
+				close.setMyWorker(illegalWorker);
+				close.setPlayAudio(false);
+				open.setStaticGraphics(openStatic);
+				open.setEnteredGraphics(openEntered);
+				open.setPressedGraphics(openPressed);
+				open.setMyWorker(openWorker);
+				open.setPlayAudio(true);
+				add.setStaticGraphics(addIllegal);
+				add.setEnteredGraphics(addIllegal);
+				add.setPressedGraphics(addIllegal);
+				add.setMyWorker(illegalWorker);
+				add.setPlayAudio(false);
+				reduce.setStaticGraphics(reduceIllegal);
+				reduce.setEnteredGraphics(reduceIllegal);
+				reduce.setPressedGraphics(reduceIllegal);
+				reduce.setMyWorker(illegalWorker);
+				reduce.setPlayAudio(false);
+			}
 			this.getChildren().addAll(nameLabel,reduce,line,add,open,close);
 		}
 		private final ButtonWorker openWorker = new ButtonWorker(){
@@ -154,6 +184,7 @@ public class AudioSettingParent extends SupportParent{
 			public void work() {
 				// TODO Auto-generated method stub
 				for (AudioClip audio:audio){
+					if (audio!=null)
 					audio.setVolume(now*0.1);
 				}
 				//set open illegal
@@ -193,6 +224,7 @@ public class AudioSettingParent extends SupportParent{
 			public void work() {
 				// TODO Auto-generated method stub
 				for (AudioClip audio:audio){
+					if (audio!=null)
 					audio.setVolume(0);
 				}
 				line.refresh(0);
@@ -259,8 +291,10 @@ public class AudioSettingParent extends SupportParent{
 			public void work() {
 				// TODO Auto-generated method stub
 				now++;
-				if (audio[0]==null){
-					return;
+				for (AudioClip audio :audio){
+					if (audio!=null){
+						audio.setVolume(now*0.1);
+					}
 				}
 				line.refresh(now);
 				for (AudioClip audio:audio){

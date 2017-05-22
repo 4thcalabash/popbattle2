@@ -23,5 +23,22 @@ public class Audio {
 		skillAudio[103]=new AudioClip(Audio.class.getClass().getResource("/Audio/100.mp3").toString());
 		skillAudio[104]=new AudioClip(Audio.class.getClass().getResource("/Audio/100.mp3").toString());
 		skillAudio[105]=new AudioClip(Audio.class.getClass().getResource("/Audio/100.mp3").toString());
+		battle.setVolume(0.5);
+		entered.setVolume(0.5);
+		illegal.setVolume(0.5);
+		pressed.setVolume(0.5);
+		normal.setVolume(0.5);
+		normalPop.setVolume(0.5);
+		lineOrRowPop.setVolume(0.5);
+		bombPop.setVolume(0.5);
+		chickPop.setVolume(0.5);
+		lose.setVolume(0.5);
+		win.setVolume(0.5);	
+		skillAudio[100].setVolume(0.5);
+		skillAudio[101].setVolume(0.5);
+		skillAudio[102].setVolume(0.5);
+		skillAudio[103].setVolume(0.5);
+		skillAudio[104].setVolume(0.5);
+		skillAudio[105].setVolume(0.5);
 	}
 }

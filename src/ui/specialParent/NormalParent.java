@@ -10,9 +10,9 @@ public class NormalParent extends GenerateParent {
 	// 经典和休闲scene
 	public NormalParent(int missionID, Main main) {
 
-		super(main, new Battle(missionID)," ");
+		super(main, new Battle(missionID), " ");
 		addPool(false);
-		normal=true;
+		normal = true;
 		myself.start();
 		// 用missionPo来申请一个Normalplatform
 	}
@@ -34,25 +34,27 @@ public class NormalParent extends GenerateParent {
 					if (new1 && new2) {
 						new1 = new2 = false;
 						// 移动动画演示
-						moveFlash();
-						System.out.println("OK AT HERE");
-						// 连续消除动画演示
-						abcd = new CountDownLatch(1);
-						popFlash();
-						try {
-							abcd.await();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						boolean flag = moveFlash();
+						if (flag) {
+							System.out.println("OK AT HERE");
+							// 连续消除动画演示
+							abcd = new CountDownLatch(1);
+							popFlash();
+							try {
+								abcd.await();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							renewBoard();
+							// 输出着玩
+							System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
+							result = platform.check();
+							if (!result.isBattleIsEnd()) {
+								changeRound();
+							}
+							break;
 						}
-						renewBoard();
-						// 输出着玩
-						System.out.println(dot1.getX() + "," + dot1.getY() + " " + dot2.getX() + "," + dot2.getY());
-						result = platform.check();
-						if (!result.isBattleIsEnd()) {
-							changeRound();
-						}
-						break;
 					} else {
 						// 每10ms做一次用户操作检测
 
@@ -94,7 +96,7 @@ public class NormalParent extends GenerateParent {
 			}
 		}
 		System.out.println("End");
-		
+
 	}
 
 }

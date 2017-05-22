@@ -180,6 +180,8 @@ public class FileHelper implements DataOperator{
 			File save = new File (filePath);
 			FileWriter filewriter = new FileWriter (save,false);
 			BufferedWriter writer = new BufferedWriter (filewriter);
+//			BufferedWriter writer = new BufferedWriter(new FileWriter("/Data/Save"+index+".data",false));
+
 			writer.write(Integer.toString(playerVo.getPro()));
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getLevel()));
