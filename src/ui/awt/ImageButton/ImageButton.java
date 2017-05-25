@@ -12,7 +12,7 @@ public class ImageButton extends ImageView{
 	 * pressedGraphics->按钮被按下状态
 	 * myWorker->按钮被点击一次的动作执行类
 	 */
-	private ButtonWorker myWorker;
+	private ButtonWorker myWorker,enteredWorker;
 	private Image staticGraphics;
 	private Image pressedGraphics;
 	private Image enteredGraphics;
@@ -94,6 +94,7 @@ public class ImageButton extends ImageView{
 		this.pressedGraphics=pressedGraphics;
 		this.enteredGraphics=enteredGraphics;
 		this.myWorker=buttonWorker;
+		this.enteredWorker=buttonWorker2;
 		this.setImage(staticGraphics);
 		this.setOnMouseEntered(new EventHandler <MouseEvent>(){
 
@@ -104,7 +105,7 @@ public class ImageButton extends ImageView{
 				System.out.println("is in!");
 				if (pressed==false){
 					setImage(myself.enteredGraphics);
-					buttonWorker2.work();
+					enteredWorker.work();
 					if (playAudio)
 					enteredAudio.play();
 				}
@@ -165,6 +166,9 @@ public class ImageButton extends ImageView{
 			this.myWorker = myWorker;
 		});
 
+	}
+	public void setEnteredWorker(ButtonWorker enteredWorker){
+		this.enteredWorker=enteredWorker;
 	}
 	public Image getStaticGraphics() {
 		return staticGraphics;

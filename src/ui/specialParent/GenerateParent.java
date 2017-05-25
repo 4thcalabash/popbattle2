@@ -360,7 +360,7 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								myself.stop();
 								battleAudio.stop();
 								if (flag == GenerateParent.BATTLE_WIN) {
-
+									platform.getPlayer1().getPlayer().setNowMission(platform.getPlayer1().getPlayer().getNowMission()+1);
 									main.battleEnd(platform.getBonus());
 								} else {
 									main.battleEnd(null);

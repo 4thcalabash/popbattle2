@@ -165,6 +165,11 @@ public class FileHelper implements DataOperator{
 				return null;
 			}
 			playerVo.getShopVo().setEvolveStonePrice(Integer.parseInt(line));
+			line = reader.readLine();
+			if (line==null){
+				return null;
+			}
+			playerVo.setNowMission(Integer.parseInt(line));
 			reader.close();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -237,6 +242,8 @@ public class FileHelper implements DataOperator{
 			writer.write(Integer.toString(playerVo.getShopVo().getUpGradeStonePrice()));
 			writer.newLine();
 			writer.write(Integer.toString(playerVo.getShopVo().getEvolveStonePrice()));
+			writer.newLine();
+			writer.write(Integer.toString(playerVo.getNowMission()));
 			writer.flush();
 			writer.close();
 			filewriter.close();

@@ -12,7 +12,7 @@ public class PlayerVo {
 	private int level,nowExp;
 	private int gold;
 	private int skillPointNum,upGradeStoneNum,evolveStoneNum;
-
+	private int nowMission;
 	private int [] skillList;
 	private int [] skillChoosed;
 	public int[] getSkillChoosed() {
@@ -26,6 +26,13 @@ public class PlayerVo {
 
 	private int potentialPoint;
 	private ShopVo shopVo;
+	
+	public int getNowMission() {
+		return nowMission;
+	}
+	public void setNowMission(int nowMission) {
+		this.nowMission = nowMission;
+	}
 	public int getSkillPointNum() {
 		return skillPointNum;
 	}

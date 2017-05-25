@@ -127,6 +127,7 @@ public class Player implements Calcable{
 	private int weaponID;
 	private int wearingID;
 	private int wingsID;
+	private int nowMission;
 	private int headWearingLevel,weaponLevel,wearingLevel,wingsLevel;
 	public static final int BASICAD=2;
 	public static final int BASICAP=2;
@@ -198,6 +199,7 @@ public class Player implements Calcable{
 		this.MT=Equip.getEquipByID(headWearingID).getMT(this.headWearingLevel)+
 				Equip.getEquipByID(weaponID).getMT(this.weaponLevel)+Equip.getEquipByID(wearingID).getMT(this.wearingLevel)+
 				Equip.getEquipByID(wingsID).getMT(this.wingsLevel);
+		this.nowMission=playerVo.getNowMission();
 		System.out.println(ad+" "+ap+" "+hp+" "+DR+" "+MR);
 		skillChoosed = new int [3];
 		
@@ -209,6 +211,12 @@ public class Player implements Calcable{
 //		this.skillChoosed[0]=pro+0;
 //		this.skillChoosed[1]=pro+1;
 //		this.skillChoosed[2]=pro+2;
+	}
+	public int getNowMission(){
+		return this.nowMission;
+	}
+	public void setNowMission(int nowMission){
+		this.nowMission=nowMission;
 	}
 	public void setAd(int ad) {
 		this.ad = ad;
