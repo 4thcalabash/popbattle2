@@ -76,10 +76,10 @@ public class Skill {
 			// TODO Auto-generated method stub
 			int[] cost = new int[Matrix.KIND];
 			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
-			if (skillLevel == 0) {
+			if (skillLevel == 1) {
 				cost[Matrix.GREENELEMENT]=10;
 				cost[Matrix.SPIRITELEMENT]=10;
-			} else if (skillLevel == 1) {
+			} else if (skillLevel == 2) {
 				cost[Matrix.GREENELEMENT]=12;
 				cost[Matrix.SPIRITELEMENT]=12;
 			} else {
@@ -126,11 +126,11 @@ public class Skill {
 			// TODO Auto-generated method stub
 			int[] cost = new int[Matrix.KIND];
 			int skillLevel = paperPlayer.getPlayer().getSkillList()[Skill.ID_FIREONGRASS%100];
-			if (skillLevel == 0) {
+			if (skillLevel == 1) {
 				cost[Matrix.FIREELEMENT] = 3;
 				cost[Matrix.WATERELEMENT]=3;
 				cost[Matrix.EARTHELEMENT]=6;
-			} else if (skillLevel == 1) {
+			} else if (skillLevel == 2) {
 				cost[Matrix.FIREELEMENT] = 4;
 				cost[Matrix.WATERELEMENT]=4;
 				cost[Matrix.EARTHELEMENT]=8;
