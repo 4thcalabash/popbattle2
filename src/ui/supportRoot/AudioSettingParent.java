@@ -16,7 +16,7 @@ import util.Audio;
 public class AudioSettingParent extends SupportParent{
 	private SettingParent back;
 	public static final int GAP = 10;
-	public static final int LABELHEIGHT = Main.SCREENHEIGHT/22;
+	public static final int LABELHEIGHT = Main.SCREENHEIGHT/18;
 	public static final int LABELWIDTH = LABELHEIGHT*3;
 	public static final int MIDGAP = 10;
 	public static final int BUTTONHEIGHT = LABELHEIGHT;

@@ -171,13 +171,14 @@ public class Player implements Calcable{
 
 		this.potentialPoint= playerVo.getPotentialPoint();
 		this.shop = new Shop(this);
+//		System.out.println("Price:"+this.shop.getSkillPointPrice());
 		this.shop.setPPPrice(playerVo.getShopVo().getPPPrice());
 		this.shop.setPPNum(playerVo.getShopVo().getPPNum());
 		this.shop.setExpPrice(playerVo.getShopVo().getExpPrice());
 		this.shop.setExpNum(playerVo.getShopVo().getExpNum());
-		this.shop.setSkillPointPrice(playerVo.getSkillPointNum());
-		this.shop.setUpGradeStonePrice(playerVo.getUpGradeStoneNum());
-		this.shop.setEvolveStonePrice(playerVo.getEvolveStoneNum());
+		this.shop.setSkillPointPrice(playerVo.getShopVo().getSkillPointPrice());
+		this.shop.setUpGradeStonePrice(playerVo.getShopVo().getUpGradeStonePrice());
+		this.shop.setEvolveStonePrice(playerVo.getShopVo().getEvolveStonePrice());
 		this.hp=basichp+Equip.getEquipByID(headWearingID).getHP(this.headWearingLevel)+
 				Equip.getEquipByID(weaponID).getHP(this.weaponLevel)+Equip.getEquipByID(wearingID).getHP(this.wearingLevel)+
 				Equip.getEquipByID(wingsID).getHP(this.wingsLevel);

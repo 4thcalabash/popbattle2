@@ -360,7 +360,8 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 								myself.stop();
 								battleAudio.stop();
 								if (flag == GenerateParent.BATTLE_WIN) {
-									platform.getPlayer1().getPlayer().setNowMission(platform.getPlayer1().getPlayer().getNowMission()+1);
+									platform.getPlayer1().getPlayer()
+											.setNowMission(platform.getPlayer1().getPlayer().getNowMission() + 1);
 									main.battleEnd(platform.getBonus());
 								} else {
 									main.battleEnd(null);
@@ -693,12 +694,19 @@ public abstract class GenerateParent extends BattleParent implements Runnable {
 		pp1.setFitWidth(SKILLPLAYERHEIGHT);
 		pp1.setX(border.getLeft().getLayoutX());
 		pp1.setY(Main.SCREENHEIGHT / 2 - SKILLPLAYERHEIGHT / 2);
-		temp.getChildren().add(pp1);
+
 		pp2.setFitHeight(SKILLPLAYERHEIGHT);
 		pp2.setFitWidth(SKILLPLAYERWIDTH);
 		pp2.setX(border.getRight().getLayoutX());
 		pp2.setY(Main.SCREENHEIGHT / 2 - SKILLPLAYERHEIGHT / 2);
-		temp.getChildren().add(pp2);
+		if (actionPo.getActionPlayerID() == 1) {
+
+			temp.getChildren().add(pp2);
+			temp.getChildren().add(pp1);
+		} else {
+			temp.getChildren().add(pp1);
+			temp.getChildren().add(pp2);
+		}
 		Timeline line = new Timeline();
 		line.setOnFinished(e -> {
 			// pp1.setImage(new Image

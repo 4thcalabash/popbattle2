@@ -188,7 +188,7 @@ public class RecordParent extends SupportParent{
 			level.setLayoutY(INNERGAP);
 			hp.setLayoutX(level.getLayoutX()-NUMBERWIDTH);
 			hp.setLayoutY(level.getLayoutY()+NUMBERHEIGHT+MIDGAP);
-			pp.setLayoutX(level.getLayoutX());
+			pp.setLayoutX(level.getLayoutX()-NUMBERWIDTH);
 			pp.setLayoutY(hp.getLayoutY()+NUMBERHEIGHT+MIDGAP);
 			this.getChildren().addAll(level,hp,pp);	
 		}

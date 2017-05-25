@@ -155,6 +155,7 @@ public class FileHelper implements DataOperator{
 				return null;
 			}
 			playerVo.getShopVo().setSkillPointPrice(Integer.parseInt(line));
+			System.out.println("Data:"+Integer.parseInt(line));
 			line = reader.readLine();
 			if (line==null){
 				return null;

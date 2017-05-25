@@ -11,12 +11,13 @@ import ui.awt.ImageButton.ImageButton;
 import util.MissionInfo;
 
 public class NormalChooser extends AnchorPane{
-	public static final int LENGTH = 120;
+	public static final int LENGTH = 115;
 	public static final int ROW = 5;
 	public static final int LINE = 3;
-	public static final int TOPGAP= 12;
-	public static final int BOARDWIDTH= ROW*LENGTH;
-	public static final int BOARDHEIGHT  = LINE*LENGTH+2*TOPGAP;
+	public static final int TOPGAP= 45;
+	public static final int LEFTGAP = 70;
+	public static final int BOARDWIDTH= ROW*LENGTH+2*LEFTGAP;
+	public static final int BOARDHEIGHT  = LINE*LENGTH-LENGTH/2+2*TOPGAP;
 	public NormalChooser (Chooseable basicPlatform,GameChooser gameChooser){
 		AnchorPane board = new AnchorPane ();
 		ImageView background = new ImageView (new Image ("Graphics/Static/NormalChooser/background.png"));
@@ -62,10 +63,10 @@ public class NormalChooser extends AnchorPane{
 				});
 				a.setFitHeight(LENGTH);
 				a.setFitWidth(LENGTH);
-				a.setX(j*LENGTH);
+				a.setX(j*LENGTH+LEFTGAP);
 				a.setY(i*LENGTH+TOPGAP);
 				if (i==1){
-					a.setY(2*LENGTH+TOPGAP);
+					a.setY(BOARDHEIGHT-LENGTH-TOPGAP);
 				}
 				board.getChildren().add(a);
 			}

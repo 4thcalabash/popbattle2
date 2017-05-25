@@ -3,6 +3,7 @@ package ui.supportRoot;
 import bll.individual.Player;
 import bll.support.Skill;
 import bllservice.Chooseable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -50,6 +51,27 @@ import util.Audio;public class SkillChooser extends AnchorPane {
 		this.getChildren().add(board);
 		addSkill();
 		addButton();
+		addText();
+	}
+	private void addText(){
+		AnchorPane textBoard = new AnchorPane ();
+		textBoard.setMaxSize(BOARDWIDTH/2, BOARDHEIGHT/2);
+		textBoard.setMinSize(BOARDWIDTH/2, BOARDHEIGHT/2);
+		textBoard.setLayoutX(board.getLayoutX()+BOARDWIDTH);
+		textBoard.setLayoutY(board.getLayoutY()+BOARDHEIGHT/2);
+		ImageView background = new ImageView (new Image ("Graphics/Other/SkillChooser/textBackground.png"));
+		background.setX(0);
+		background.setY(0);
+		background.setFitHeight(BOARDHEIGHT/2);
+		background.setFitWidth(BOARDWIDTH/2);
+		textBoard.getChildren().add(background);
+		Label text = new Label("你最多可以选择3个技能\n点击确认开始游戏");
+		text.setMaxWidth(BOARDWIDTH/3);
+		text.setLayoutX(BOARDWIDTH/12);
+		text.setLayoutY(BOARDWIDTH/12);
+		text.setWrapText(true);
+		textBoard.getChildren().add(text);
+		this.getChildren().add(textBoard);
 	}
 	private void addButton(){
 		confirm = new ImageButton(confirmIllegal,confirmIllegal,confirmIllegal,illegalWorker);

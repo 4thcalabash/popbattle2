@@ -15,12 +15,12 @@ public class GameChooser extends SupportParent {
 	private final GameChooser myself = this;
 	public static final int BUTTONLENGTH=200;
 	public static final int BOARDHEIGHT = 500;
-	public static final int BOARDWIDTH = 350;
+	public static final int BOARDWIDTH = 550;
 	public static final int LEFTRIGHTGAP = 20;
 	public static final int TOPBOTTOMGAP = 50;
 	public static final int MIDGAP = 30;
-	public static final int ITEMHEIGHT = (BOARDHEIGHT -TOPBOTTOMGAP*2-MIDGAP)/2;
-	public static final int ITEMWIDTH = (BOARDWIDTH-LEFTRIGHTGAP*2);
+	public static final int ITEMHEIGHT = (BOARDHEIGHT -TOPBOTTOMGAP*2-MIDGAP)/2*2/3;
+	public static final int ITEMWIDTH = (BOARDWIDTH-LEFTRIGHTGAP*2)*2/3;
 	public static final int INFOWIDTH = 200;
 	public static final int INFOHEIGHT = 200;
 	private AnchorPane board = new AnchorPane ();
@@ -63,8 +63,8 @@ public class GameChooser extends SupportParent {
 		});
 		PVE.setFitHeight(ITEMHEIGHT);
 		PVE.setFitWidth(ITEMWIDTH);
-		PVE.setX(LEFTRIGHTGAP);
-		PVE.setY(TOPBOTTOMGAP);
+		PVE.setX(BOARDWIDTH/2-ITEMWIDTH/2);
+		PVE.setY(TOPBOTTOMGAP+ITEMHEIGHT/2);
 		
 		ImageButton Normal = new ImageButton (new Image(basicPath+"normalStatic.png"),new Image(basicPath+"normalEntered.png"),
 				new Image(basicPath+"normalPressed.png"),new ButtonWorker(){
@@ -80,8 +80,8 @@ public class GameChooser extends SupportParent {
 		});
 		Normal.setFitHeight(ITEMHEIGHT);
 		Normal.setFitWidth(ITEMWIDTH);
-		Normal.setX(LEFTRIGHTGAP);
-		Normal.setY(TOPBOTTOMGAP+ITEMHEIGHT+MIDGAP);
+		Normal.setX(BOARDWIDTH/2-ITEMWIDTH/2);
+		Normal.setY(TOPBOTTOMGAP+ITEMHEIGHT+MIDGAP+ITEMHEIGHT/2);
 		board.getChildren().addAll(PVE,Normal);
 		this.getChildren().add(board);
 //		board.setAlignment(Pos.CENTER);

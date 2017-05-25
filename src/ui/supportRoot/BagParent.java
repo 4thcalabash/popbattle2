@@ -16,9 +16,9 @@ import ui.awt.ImageButton.PropertyRow;
 import ui.sceneInterface.BasicScene;
 
 public class BagParent extends SupportParent {
-	public static final int BOARDHEIGHT = 950;
-	public static final int BOARDWIDTH = 950;
-	public static final int CENTERLENGTH = 230;
+	public static final int BOARDHEIGHT = 1000;
+	public static final int BOARDWIDTH = 1000;
+	public static final int CENTERLENGTH = 200;
 	public static final int PAUSETIME = 1000;
 	public static final int NUMBERHEIGHT = 80;
 	public static final int NUMBERWIDTH=NUMBERHEIGHT*2/3;
@@ -96,13 +96,13 @@ public class BagParent extends SupportParent {
 		return output;
 	}
 	public class VBoard extends AnchorPane {
-		public static final int VLEFTGAP = 10;
-		public static final int VRIGHTGAP = VLEFTGAP;
-		public static final int VTOPGAP = VLEFTGAP;
-		public static final int VBOTTOMGAP = VLEFTGAP;
+		public static final int VLEFTGAP = 25;
+		public static final int VRIGHTGAP = VLEFTGAP-15;
+		public static final int VTOPGAP = VLEFTGAP-5;
+		public static final int VBOTTOMGAP = VLEFTGAP-15;
 		public static final int VBOARDHEIGHT = CENTERLENGTH + (BOARDHEIGHT - CENTERLENGTH) / 2;
 		public static final int VBOARDWIDTH = (BOARDHEIGHT - CENTERLENGTH) / 2;
-		public static final int ICONLENGTH = VBOARDWIDTH / 10;
+		public static final int ICONLENGTH = VBOARDWIDTH*9/100;
 		public static final int VMIDGAP = ICONLENGTH / 3;
 		public static final int PHOTOHEIGHT = ICONLENGTH * 3;
 		public static final int PHOTOWIDTH = ICONLENGTH * 3;
@@ -502,13 +502,13 @@ public class BagParent extends SupportParent {
 	};
 
 	public class HBoard extends AnchorPane {
-		public static final int HLEFTGAP = 10;
-		public static final int HTOPGAP = HLEFTGAP;
-		public static final int HRIGHTGAP = HLEFTGAP;
-		public static final int HBOTTOMGAP = HLEFTGAP;
+		public static final int HLEFTGAP = 20;
+		public static final int HTOPGAP = HLEFTGAP+5;
+		public static final int HRIGHTGAP = HLEFTGAP-10;
+		public static final int HBOTTOMGAP = HLEFTGAP-10;
 		public static final int HBOARDHEIGHT = (BOARDHEIGHT - CENTERLENGTH) / 2;
 		public static final int HBOARDWIDTH = BOARDWIDTH - HBOARDHEIGHT;
-		public static final int ICONLENGTH = HBOARDHEIGHT / 10;
+		public static final int ICONLENGTH = HBOARDHEIGHT*9/100;
 		public static final int HMIDGAP = ICONLENGTH / 3;
 		public static final int PHOTOHEIGHT = ICONLENGTH * 3;
 		public static final int PHOTOWIDTH = PHOTOHEIGHT;
