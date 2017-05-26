@@ -16,7 +16,7 @@ import ui.sceneInterface.BasicScene;
 public class SkillParent extends SupportParent {
 	public final static int BOARDHEIGHT = 1000;
 	public final static int BOARDWIDTH = 1000;
-	public final static int BOARDGAP = 10;
+	public final static int BOARDGAP = 100;
 	public final static int INNERGAP = 7;
 	public final static int NORMALHEIGHT = (BOARDHEIGHT - 2 * BOARDGAP) / 3;
 	public final static int NORMALWIDTH = (BOARDWIDTH - 2 * BOARDGAP) / 2 + 3;
@@ -167,7 +167,7 @@ public class SkillParent extends SupportParent {
 				button.setPressedGraphics(levelupMax);
 				button.setMyWorker(illegalWorker);
 				button.setPlayAudio(false);
-			} else if ((mySkill.getLevelUpCost(platform.getPlayer1()) >= platform.getPlayer1().getSkillPointNum())) {
+			} else if ((mySkill.getLevelUpCost(platform.getPlayer1()) >platform.getPlayer1().getSkillPointNum())) {
 				if (nowlevel != 0) {
 					button.setStaticGraphics(levelupIllegal);
 					button.setEnteredGraphics(levelupIllegal);
@@ -271,7 +271,7 @@ public class SkillParent extends SupportParent {
 		background.setX(0);
 		background.setY(0);
 		profession.getChildren().add(background);
-		profession.setLayoutX(BOARDWIDTH - PROFESSIONWIDTH);
+		profession.setLayoutX(BOARDWIDTH - PROFESSIONWIDTH-BOARDGAP);
 		profession.setLayoutY(BOARDGAP);
 		board.getChildren().add(profession);
 		skill3 = new SkillCard(new Image("Graphics/Static/Skill/skill3Background.png"),

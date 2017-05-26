@@ -2,6 +2,7 @@ package ui.supportRoot;
 
 import bll.platform.Battle;
 import bllservice.Chooseable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -71,5 +72,21 @@ public class NormalChooser extends AnchorPane{
 				board.getChildren().add(a);
 			}
 		}
+	AnchorPane word = new AnchorPane ();
+	word.setLayoutX(board.getLayoutX()+BOARDWIDTH);
+	word.setLayoutY(board.getLayoutY()+BOARDHEIGHT/8);
+	ImageView background2 = new ImageView (new Image("Graphics/Other/MissionGraphics/Normal/textBackground.png"));
+	background2.setFitHeight(BOARDHEIGHT-BOARDHEIGHT/4);
+	background2.setFitWidth(BOARDHEIGHT*2/3);
+	background2.setX(0);
+	background2.setY(0);
+	word.getChildren().add(background2);
+	Label text = new Label("在挑战模式中，你将挑战最强AI，先达到目标分数者获胜，虽然AI很强，但还是可以依靠套路取胜");
+	text.setWrapText(true);
+	text.setMaxWidth(BOARDHEIGHT*2/3);
+	text.setLayoutX(0);
+	text.setLayoutY(0);
+	word.getChildren().add(text);
+	this.getChildren().add(word);
 	}
 }

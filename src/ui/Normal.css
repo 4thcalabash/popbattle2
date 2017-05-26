@@ -1,5 +1,5 @@
 .root{
-	-fx-background-image:url("specialParent/PVE.png");
+	-fx-background-image:url("../Graphics/Scene/Normal.png");
 	-fx-background-size:stretch stretch; 
 }
 #Matrix{

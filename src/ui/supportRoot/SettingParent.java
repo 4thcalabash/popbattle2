@@ -12,11 +12,11 @@ import ui.sceneInterface.BasicScene;
 
 public class SettingParent extends SupportParent {
 
-	public static final int TOPBOTTOMGAP = 40;
-	public static final int LEFTRIGHTGAP = 30;
-	public static final int MIDGAP = 20;
-	public static final int BUTTONHEIGHT = 120;
-	public static final int BUTTONWIDTH = BUTTONHEIGHT*2;
+	public static final int TOPBOTTOMGAP = 70;
+	public static final int LEFTRIGHTGAP = 40;
+	public static final int MIDGAP = 40;
+	public static final int BUTTONHEIGHT = 100;
+	public static final int BUTTONWIDTH = BUTTONHEIGHT*7/3;
 	public static final int BOARDHEIGHT = BUTTONHEIGHT*3+TOPBOTTOMGAP*2+MIDGAP*2;
 	public static final int BOARDWIDTH = BUTTONWIDTH+2*LEFTRIGHTGAP;
 	private final SettingParent myself = this;

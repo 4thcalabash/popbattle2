@@ -23,7 +23,7 @@ Label{
 #SkillLabel{
 	-fx-font-family:"字体管家青葱";
 
- 	-fx-text-fill:red  ;
+ 	-fx-text-fill:darkred   ;
   	-fx-font-size:32px;
 	-fx-font-weight:bold;
 	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
@@ -80,7 +80,7 @@ Label{
 
 #SkillIntroduction3{
 	-fx-font-family:"字体管家青葱";
- 	-fx-text-fill:red   ;
+ 	-fx-text-fill:purple   ;
   	-fx-font-size:32px;
 	-fx-font-weight:bold;
 	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
@@ -88,14 +88,14 @@ Label{
 
 #SkillIntroduction4{
 	-fx-font-family:"字体管家青葱";
- 	-fx-text-fill:red   ;
+ 	-fx-text-fill:purple   ;
   	-fx-font-size:32px;
 	-fx-font-weight:bold;
 	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 
 }
 #SkillIntroduction5{
 	-fx-font-family:"字体管家青葱";
- 	-fx-text-fill:red   ;
+ 	-fx-text-fill:purple  ;
   	-fx-font-size:32px;
 	-fx-font-weight:bold;
 	-fx-effect:innershadow(three-pass-box,rgba(0,0,0,0,8),6,0.0,0,2); 

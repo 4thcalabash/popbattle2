@@ -40,5 +40,7 @@ public class Audio {
 		skillAudio[103].setVolume(0.5);
 		skillAudio[104].setVolume(0.5);
 		skillAudio[105].setVolume(0.5);
+		battle.setCycleCount(AudioClip.INDEFINITE);
+		normal.setCycleCount(AudioClip.INDEFINITE);
 	}
 }
