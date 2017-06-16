@@ -148,24 +148,6 @@ public class Matrix {
 		/***************
 		 *Debug×¨ÓÃÆåÅÌ *
 		 ***************/
-//		do{
-//			for (int i = 0; i < TOTALLINE * 2; i++) {
-//				for (int j = 0; j < TOTALROW; j++) {
-//					matrix[i][j].setColor((int) (Math.random() * (KIND )));
-//					matrix[i][j].setBonus(Matrix.getrandombonus());
-//					if (matrix[i][j].getBonus()==Matrix.CHICKBONUS){
-//						matrix[i][j].setColor(Matrix.NONE);
-//					}
-//				}
-//			}
-//			matrix[2][2].setColor(0);
-//			matrix[2][3].setColor(0);
-//			matrix[3][4].setColor(0);
-//			matrix[3][4].setBonus(Matrix.LINEBONUS);
-//			matrix[2][5].setColor(0);
-//		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
-		
-		
 		do{
 			for (int i = 0; i < TOTALLINE * 2; i++) {
 				for (int j = 0; j < TOTALROW; j++) {
@@ -176,8 +158,26 @@ public class Matrix {
 					}
 				}
 			}
+			matrix[2][2].setColor(0);
+			matrix[2][3].setColor(0);
+			matrix[3][4].setColor(0);
+			matrix[3][4].setBonus(Matrix.LINEBONUS);
+			matrix[2][5].setColor(0);
 		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
 		
+		
+//		do{
+//			for (int i = 0; i < TOTALLINE * 2; i++) {
+//				for (int j = 0; j < TOTALROW; j++) {
+//					matrix[i][j].setColor((int) (Math.random() * (KIND )));
+//					matrix[i][j].setBonus(Matrix.getrandombonus());
+//					if (matrix[i][j].getBonus()==Matrix.CHICKBONUS){
+//						matrix[i][j].setColor(Matrix.NONE);
+//					}
+//				}
+//			}
+//		}while(succ()==false||new MoreThanThreeLinePop().hasLegalMove(this)==false);
+//		
 	}
 	
 	private boolean succ(){
